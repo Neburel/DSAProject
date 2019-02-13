@@ -13,7 +13,8 @@ namespace DSAProject.util
         InvalidValue = 3,
         NetworkConnectionError = 4,         //Netzwerkfehler
         NetworkAuthentificationError = 5,   //Authentifizierungsfehler
-        WebExceptionError = 6               //Fehler auf einem Server
+        WebExceptionError = 6,              //Fehler auf einem Server
+        SerializationError = 7
     };
 
     public enum LogLevel

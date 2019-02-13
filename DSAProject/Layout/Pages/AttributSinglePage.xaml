@@ -23,27 +23,25 @@
             <ColumnDefinition Width="{x:Bind GetBoxLength}"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition x:Name="XML_TitleRow" Height="{x:Bind GetBoxLength}"/>
             <RowDefinition Height="{x:Bind GetBoxLength}"/>
         </Grid.RowDefinitions>
         <Border BorderBrush="Black" Grid.Row="1" Grid.Column="0">
-            <TextBlock x:Name="XML_AttributName" Foreground="Black" Margin="0,0,0,0" Text="AttributName" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Left"/>
+            <TextBlock x:Name="XML_AttributName" Foreground="Black" Margin="0,0,0,0" Text="{x:Bind ViewModel.AttributeName}" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="24"/>
         </Border>
-        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="XML_TitleCurrentValue" Foreground="Black" Margin="0,0,0,0" Text="AKT" FontSize="8" TextAlignment="Center" VerticalAlignment="Bottom"  HorizontalAlignment="Center"/>
         <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="1">
-            <TextBlock x:Name="XML_CurrentValue" Foreground="Black" Margin="0,0,0,0" Text="0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center"/>
+            <TextBlock x:Name="XML_CurrentValue" Text="{x:Bind ViewModel.AKTValue, Mode=OneWay}" Foreground="Black" Margin="0,0,0,0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center"/>
         </Border>
         <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="2">
-            <TextBlock x:Name="XML_ExtraValue" Foreground="Black" Margin="0,0,0,0" Text="0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center"/>
+            <TextBlock x:Name="XML_ExtraValue" Text="{x:Bind ViewModel.MODValue, Mode=OneWay}" Foreground="Black" Margin="0,0,0,0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center"/>
         </Border>
         <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="3">
-            <TextBlock x:Name="XML_MaxValue" Foreground="Black" Margin="0,0,0,0" Text="0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center"/>
+            <TextBlock x:Name="XML_MaxValue" Text="{x:Bind ViewModel.MaxValue, Mode=OneWay}" Foreground="Black" Margin="0,0,0,0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center" FontFamily="Segoe UI"/>
         </Border>
         <Border BorderBrush="Green" BorderThickness="1"  Grid.Row="1" Grid.Column="4">
-            <Button x:Name="XML_ButtonHigherValue" Foreground="Black" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="12" FontWeight="Bold">+</Button>
+            <Button x:Name="XML_ButtonHigherValue" Foreground="Black" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="12" FontWeight="Bold" Click="XML_ButtonHigherValue_Click">+</Button>
         </Border>
         <Border BorderBrush="Red" BorderThickness="1" Grid.Row="1" Grid.Column="5">
-            <Button x:Name="XML_ButtonReduceValue" Foreground="Black" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="12" FontWeight="Bold">-</Button>
+            <Button x:Name="XML_ButtonReduceValue" Foreground="Black" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="12" FontWeight="Bold" Click="XML_ButtonReduceValue_Click">-</Button>
         </Border>
     </Grid>
 </Page>

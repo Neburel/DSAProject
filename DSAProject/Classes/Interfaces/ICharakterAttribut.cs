@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 
 namespace DSAProject.Classes.Interfaces
 {
-    public interface ICharakterAttribut
+    public interface ICharakterAttribut 
     {
+        event EventHandler<CharakterAttribut> ChangedAttributAKTEvent;
+
         List<CharakterAttribut> UsedAttributs { get; }
-        void SetAttributValue(CharakterAttribut attribut, int value, out Error error);
-        int GetAttributValue(CharakterAttribut attribut, out Error error);
+        void SetAttributAKTValue(CharakterAttribut attribut, int value, out Error error);
+        int GetAttributAKTValue(CharakterAttribut attribut, out Error error);
     }
 }

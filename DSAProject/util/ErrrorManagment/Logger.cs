@@ -17,12 +17,6 @@ namespace DSAProject.util.ErrrorManagment
         private static readonly string fileExtension = ".log";
         private static readonly string folder = "Logging";
         #endregion
-        private static void Log(string message)
-        {
-            var currentTime = DateTime.Now.ToString();
-            message = currentTime + ": " + message + Environment.NewLine;
-            WriteToFile(message);
-        }
         public static void Log(LogLevel logLevel, string message)
         {
             if (logLevel == LogLevel.ErrorLog)
@@ -37,24 +31,16 @@ namespace DSAProject.util.ErrrorManagment
         }
         public static void Log(LogLevel logLevel, string message, string sendingClass, string sendingMethod)
         {
-            Log(logLevel, "Klasse: " + sendingClass + " Methode: " + sendingMethod + " Nachricht: " + message + "\n");
+            Log(logLevel, "Klasse: " + sendingClass + ", Methode: " + sendingMethod + ", Nachricht: " + message);
         }
-        private static void WriteToFile(string message)
+        private static void Log(string message)
         {
-            var semaphoreSlim = new SemaphoreSlim(0);
-            var task = new Task(async () =>
-            {
-                #region FileStringErstellen
-                var date        = DateTime.Today.ToString("d").Replace(".", "");
-                var fileString  = Path.Combine(folder, fileName + "_" + date + fileExtension);
-                #endregion
-                var file        = await GetFileAsync(fileString);
-                await FileIO.AppendTextAsync(file, message);
+            var currentTime = DateTime.Now.ToString();
+            message = currentTime + ": " + message + Environment.NewLine;
+            var date = DateTime.Today.ToString("d").Replace(".", "");
+            var fileString = Path.Combine(folder, fileName + "_" + date + fileExtension);
 
-                semaphoreSlim.Release();
-            });
-            task.Start();
-            semaphoreSlim.Wait();
+            FileManagment.FileManagment.WriteToFile(message, fileString, out Error error);
         }
         private static void DebugPrint(LogLevel logLevel, string message)
         {
@@ -63,16 +49,6 @@ namespace DSAProject.util.ErrrorManagment
                 System.Diagnostics.Debug.Print(DateTime.Now.ToString() + " " + logLevel.ToString() + ": " + message);
             }
         }
-        private static async Task<StorageFile> GetFileAsync(string file)
-        {
-
-            var appInstalledFolder  = Windows.ApplicationModel.Package.Current.InstalledLocation;
-            var localFolder         = ApplicationData.Current.LocalFolder;
-
-            System.Diagnostics.Debug.Print("Log File Folder Path: " + localFolder.Path.ToString() + "\n");
-
-            var sfile       = await localFolder.CreateFileAsync(file, CreationCollisionOption.OpenIfExists);
-            return sfile;
-        }
+      
     }
 }

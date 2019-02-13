@@ -11,5 +11,7 @@ namespace DSAProject.Classes.Interfaces
     public interface ICharakter
     {
         ICharakterAttribut Attribute { get; }
+        void Save(string fileName, out Error error);
+        void Load(string fileName, out Error error);
     }
 }

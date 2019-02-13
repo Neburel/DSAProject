@@ -10,14 +10,15 @@
 
     <Grid
         x:Name="XAML_Grid"
-        Margin="0, 0, 0, 0"
+        Margin="5, 0, 0, 0"
         Padding="0, 0, 0, 0"
         RowSpacing="1">
-        <StackPanel Orientation="Horizontal" Spacing="2">
-            <TextBlock Text="" Width="130"></TextBlock>
-            <TextBlock Text="Akt" Width="30" TextAlignment="Center" Foreground="Black" FontSize="8"></TextBlock>
-            <TextBlock Text="Mod" Width="30" TextAlignment="Center" Foreground="Black" FontSize="8"></TextBlock>
-            <TextBlock Text="Max" Width="30" TextAlignment="Center" Foreground="Black" FontSize="8" FontFamily="Segoe UI"></TextBlock>
+        <Grid.RowDefinitions></Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="1">
+            <TextBlock Width="110"></TextBlock>
+            <TextBlock Text="Akt" Width="30" TextAlignment="Center" VerticalAlignment="Bottom"  Foreground="Black" FontSize="8"></TextBlock>
+            <TextBlock Text="Mod" Width="30" TextAlignment="Center" VerticalAlignment="Bottom" Foreground="Black" FontSize="8"></TextBlock>
+            <TextBlock Text="Max" Width="30" TextAlignment="Center" VerticalAlignment="Bottom" Foreground="Black" FontSize="8"></TextBlock>
         </StackPanel>
     </Grid>
 </Page>

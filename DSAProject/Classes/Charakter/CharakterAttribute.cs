@@ -24,7 +24,7 @@ namespace DSAProject.Classes.Charakter
     public class CharakterAttribute : ICharakterAttribut
     {
         #region Events
-        public event EventHandler<CharakterAttribut> ChangedAttributBaseEvent;
+        public event EventHandler<CharakterAttribut> ChangedAttributAKTEvent;
         public event EventHandler<CharakterAttribut> ChangedAttributTotalEvent;
         #endregion
         #region Properties
@@ -32,21 +32,20 @@ namespace DSAProject.Classes.Charakter
         #endregion
         #region Variables
         private Dictionary<CharakterAttribut, int> attributValues;
-        private Dictionary<CharakterAttribut, int> attributTotalValues;
-        private Dictionary<CharakterAttribut, int> attributMaxValues;
+        private Dictionary<CharakterAttribut, int> attributMaxValues;               //Dicionary für Maximale Werte, also das Maximum welches der Charakter erreichen kann
         #endregion
 
         public CharakterAttribute(List<CharakterAttribut> attributs)
         {
-            attributValues = new Dictionary<CharakterAttribut, int>();
-            attributMaxValues = new Dictionary<CharakterAttribut, int>();
+            attributValues      = new Dictionary<CharakterAttribut, int>();
+            attributMaxValues   = new Dictionary<CharakterAttribut, int>();
 
             foreach(var item in attributs)
             {
                 attributValues.Add(item, 0);
             }
         }
-        public void SetAttributValue(CharakterAttribut attribut, int value, out Error error)
+        public void SetAttributAKTValue(CharakterAttribut attribut, int value, out Error error)
         {
             error = null; 
             try
@@ -69,16 +68,18 @@ namespace DSAProject.Classes.Charakter
                             error = new Error { ErrorCode = util.ErrorCode.InvalidValue, Message = "Der Maximum wert des Charakters wurde überschritten" };
                         }
                     }
-                    attributValues[attribut] = value; 
+                    attributValues[attribut] = value;
+                    ChangedAttributAKTEvent?.Invoke(this, attribut);
+                    ChangedAttributTotalEvent?.Invoke(this, attribut);
                 }
             }
             catch(Exception ex)
             {
-                Logger.Log(util.LogLevel.ErrorLog, ex.Message, nameof(CharakterAttribute), nameof(SetAttributValue));
+                Logger.Log(util.LogLevel.ErrorLog, ex.Message, nameof(CharakterAttribute), nameof(SetAttributAKTValue));
                 error = new Error { ErrorCode = util.ErrorCode.Error, Message = ex.Message };
             }
         }
-        public int GetAttributValue(CharakterAttribut attribut, out Error error)
+        public int GetAttributAKTValue(CharakterAttribut attribut, out Error error)
         {
             error = null;
             var ret = -1;
@@ -98,10 +99,14 @@ namespace DSAProject.Classes.Charakter
             }
             catch (Exception ex)
             {
-                Logger.Log(util.LogLevel.ErrorLog, ex.Message, nameof(CharakterAttribute), nameof(SetAttributValue));
+                Logger.Log(util.LogLevel.ErrorLog, ex.Message, nameof(CharakterAttribute), nameof(SetAttributAKTValue));
                 error = new Error { ErrorCode = util.ErrorCode.Error, Message = ex.Message };
             }
             return ret;
-        }  
+        }
+        public int GetAttributeMAXValue(CharakterAttribut attribut, out Error error)
+        {
+            return GetAttributAKTValue(attribut, out error);
+        }
     }
 }
