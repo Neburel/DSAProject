@@ -1,7 +1,8 @@
-﻿using DSAProject.Classes.Charakter;
+﻿using DSAProject;
+using DSAProject.Classes.Charakter;
 using DSAProject.util.ErrrorManagment;
 using DSAProjektKomponententest.Classes.Charakter.util;
-using DSAProjektKomponententest.util;
+using DSAProjektKomponententest.Classes.util;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -12,33 +13,22 @@ using System.Threading.Tasks;
 namespace DSAProjektKomponententest.Classes.Charakter
 {
     [TestClass]
-    public class CharakterAttributTestClass
+    public class CharakterAttributTest
     {
         [TestMethod]
-        public void BasisAttributTest()
+        public void BasisAttributAKTTest()
         {
             var value                       = 5;
             var list                        = new List<CharakterAttribut> { CharakterAttribut.Charisma, CharakterAttribut.Fingerfertigkeit, CharakterAttribut.Gewandheit };
             CharakterAttribute attribute    = new CharakterAttribute(list);
+
             attribute.SetAttributAKTValue(CharakterAttribut.Charisma, value, out Error error);
+            ErrorHelper.ExpectErrorNull(error);
 
-            if (error != null)
-            {
-                Assert.Fail(ErrorHelper.AssertFailMessage(error, ""));  
-            } 
-            else
-            {
-                var x = attribute.GetAttributAKTValue(CharakterAttribut.Charisma, out error);
+            var x = attribute.GetAttributAKTValue(CharakterAttribut.Charisma, out error);
+            ErrorHelper.ExpectErrorNull(error);
 
-                if (error != null)
-                {
-                    Assert.Fail(ErrorHelper.AssertFailMessage(error, ""));
-                } 
-                else
-                {
-                    Assert.AreEqual(value, x);
-                }
-            }
+            Assert.AreEqual(value, x);
         }
         [TestMethod]
         public void RandomGeneratetTest()
@@ -49,24 +39,15 @@ namespace DSAProjektKomponententest.Classes.Charakter
             foreach(var key in dic.Keys)
             {
                 attribute.SetAttributAKTValue(key, dic[key], out Error error);
-                if (error != null)
-                {
-                    Assert.Fail(ErrorHelper.AssertFailMessage(error, ""));
-                }
+                ErrorHelper.ExpectErrorNull(error);
             }
 
             foreach (var key in dic.Keys)
             {
                 var x = attribute.GetAttributAKTValue(key, out Error error);
 
-                if (error != null)
-                {
-                    Assert.Fail(ErrorHelper.AssertFailMessage(error, ""));
-                } 
-                else
-                {
-                    Assert.AreEqual(dic[key], x);
-                }
+                ErrorHelper.ExpectErrorNull(error);
+                Assert.AreEqual(dic[key], x);
             }
         }
     }

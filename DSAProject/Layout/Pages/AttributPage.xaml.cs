@@ -35,7 +35,7 @@ namespace DSAProject.Layout.Views
         {
             this.InitializeComponent();
 
-            var chara = new Charakter_DSA();
+            var chara = new CharakterDSA();
             Attribute = chara.Attribute;
             XAML_Grid.RowDefinitions.Add(new RowDefinition());
 

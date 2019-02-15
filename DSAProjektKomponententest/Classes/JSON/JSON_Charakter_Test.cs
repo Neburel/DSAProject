@@ -1,4 +1,5 @@
-﻿using DSAProject.Classes.Charakter;
+﻿using DSAProject;
+using DSAProject.Classes.Charakter;
 using DSAProject.Classes.JSON;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;

@@ -15,7 +15,8 @@ namespace DSAProject.Classes.Charakter
     {
         #region Properties
         public ICharakterAttribut Attribute { get; private set; }
-        private static string SaveFolder => "Saves";
+        public IRace Race { get; private set; }
+        private static string SaveFolder => "CharakterSaves";
         #endregion
         public AbstractCharakter()
         {
@@ -50,10 +51,10 @@ namespace DSAProject.Classes.Charakter
                 {
                     var internError = new Error
                     {
-                        ErrorCode = util.ErrorCode.Error,
+                        ErrorCode = ErrorCode.Error,
                         Message = "Beim Speichern des Attributes " + attribut.ToString() + " ist ein Fehler aufgetreten: " + error.Message
                     };
-                    Logger.Log(util.LogLevel.ErrorLog, internError.Message, nameof(AbstractCharakter), nameof(Save));
+                    Logger.Log(LogLevel.ErrorLog, internError.Message, nameof(AbstractCharakter), nameof(Save));
                     error = internError;
                     break;
                 }
@@ -82,7 +83,7 @@ namespace DSAProject.Classes.Charakter
                 {
                     error = new Error
                     {
-                        ErrorCode = util.ErrorCode.SerializationError,
+                        ErrorCode = ErrorCode.SerializationError,
                         Message = errorstring
                     };
                 }

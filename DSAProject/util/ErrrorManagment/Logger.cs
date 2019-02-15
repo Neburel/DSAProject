@@ -17,6 +17,13 @@ namespace DSAProject.util.ErrrorManagment
         private static readonly string fileExtension = ".log";
         private static readonly string folder = "Logging";
         #endregion
+        public static void Log(Error error, string sendingClass, string sendingMethod)
+        {
+            if(error != null)
+            {
+                Log(LogLevel.ErrorLog, error.ErrorCode.ToString() + " " + error.Message, sendingClass, sendingMethod);
+            }
+        }
         public static void Log(LogLevel logLevel, string message)
         {
             if (logLevel == LogLevel.ErrorLog)

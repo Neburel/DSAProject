@@ -31,7 +31,7 @@ namespace DSAProject
         public App()
         {
             ///Welches Spiel wird Gestartet
-            Logger.Log(util.LogLevel.ActionLog, "GameStart", nameof(App), nameof(App));
+            Logger.Log(LogLevel.ActionLog, "GameStart", nameof(App), nameof(App));
 
             this.InitializeComponent();
             this.Suspending += OnSuspending;

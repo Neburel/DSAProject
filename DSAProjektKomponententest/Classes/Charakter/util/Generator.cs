@@ -1,4 +1,5 @@
-﻿using DSAProject.Classes.Charakter;
+﻿using DSAProject;
+using DSAProject.Classes.Charakter;
 using System;
 using System.Collections.Generic;
 using System.Linq;

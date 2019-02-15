@@ -1,13 +1,13 @@
-﻿using DSAProject.Classes.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSAProject.Classes.Interfaces;
 
 namespace DSAProject.Classes.Charakter
 {
-    public class Charakter_DSA : AbstractCharakter
+    public class CharakterPNP : AbstractCharakter
     {
         protected override ICharakterAttribut CharakterCreateAttribute()
         {
@@ -20,8 +20,7 @@ namespace DSAProject.Classes.Charakter
                 CharakterAttribut.Fingerfertigkeit,
                 CharakterAttribut.Gewandheit,
                 CharakterAttribut.Konstitution,
-                CharakterAttribut.Körperkraft,
-                CharakterAttribut.Sozialstatus
+                CharakterAttribut.Körperkraft
             };
             return new CharakterAttribute(list);
         }
