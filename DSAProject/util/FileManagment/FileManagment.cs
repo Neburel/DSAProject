@@ -11,7 +11,7 @@ namespace DSAProject.util.FileManagment
 {
     public static class FileManagment
     {
-        public static void WriteToFile(string message, string fileString, out Error error)
+        public static void WriteToFile(string message, string fileString, CreationCollisionOption option, out Error error)
         {
             error = null;
             try
@@ -19,7 +19,7 @@ namespace DSAProject.util.FileManagment
                 var semaphoreSlim = new SemaphoreSlim(0);
                 var task = new Task(async () =>
                 {
-                    var file = await GetFileAsync(fileString);
+                    var file = await GetFileAsync(fileString, option);
                     await FileIO.AppendTextAsync(file, message);
 
                     semaphoreSlim.Release();
@@ -47,7 +47,7 @@ namespace DSAProject.util.FileManagment
             {
                 var task = new Task(async () =>
                 {
-                    var file    = await GetFileAsync(fileString);
+                    var file    = await GetFileAsync(fileString, CreationCollisionOption.OpenIfExists);
                     retText     = await FileIO.ReadTextAsync(file);
                     semaphoreSlim.Release();
                 });
@@ -65,10 +65,10 @@ namespace DSAProject.util.FileManagment
             }
             return retText;
         }
-        private static async Task<StorageFile> GetFileAsync(string file)
+        private static async Task<StorageFile> GetFileAsync(string file, CreationCollisionOption option)
         {
             var localFolder = ApplicationData.Current.LocalFolder;
-            var sfile       = await localFolder.CreateFileAsync(file, CreationCollisionOption.OpenIfExists);
+            var sfile       = await localFolder.CreateFileAsync(file, option);
             return sfile;
         }
     }

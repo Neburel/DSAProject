@@ -102,7 +102,6 @@
     <Compile Include="Classes\Charakter\CharakterDSA.cs" />
     <Compile Include="Classes\Charakter\CharakterPNP.cs" />
     <Compile Include="Classes\Charakter\Values\Attribute\AbstractAttributeValues.cs" />
-    <Compile Include="Classes\Charakter\Values\Attribute\ArtefactControll.cs" />
     <Compile Include="Classes\Charakter\Values\Attribute\BaseAttack.cs" />
     <Compile Include="Classes\Charakter\Values\Attribute\BaseInitiative.cs" />
     <Compile Include="Classes\Charakter\Values\Attribute\BaseParade.cs" />

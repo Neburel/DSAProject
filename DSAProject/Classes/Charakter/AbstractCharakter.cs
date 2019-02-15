@@ -65,7 +65,7 @@ namespace DSAProject.Classes.Charakter
             if(error == null)
             {
                 var file = Path.Combine(SaveFolder, fileName);
-                FileManagment.WriteToFile(charakter.JSONContent, file, out error);
+                FileManagment.WriteToFile(charakter.JSONContent, file, Windows.Storage.CreationCollisionOption.ReplaceExisting, out error);
             }
             #endregion
         }

@@ -47,7 +47,7 @@ namespace DSAProject.util.ErrrorManagment
             var date = DateTime.Today.ToString("d").Replace(".", "");
             var fileString = Path.Combine(folder, fileName + "_" + date + fileExtension);
 
-            FileManagment.FileManagment.WriteToFile(message, fileString, out Error error);
+            FileManagment.FileManagment.WriteToFile(message, fileString, CreationCollisionOption.OpenIfExists, out Error error);
         }
         private static void DebugPrint(LogLevel logLevel, string message)
         {

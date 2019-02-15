@@ -101,6 +101,10 @@
     <Compile Include="Classes\Charakter\util\Generator.cs" />
     <Compile Include="Classes\Charakter\Values\Attribute\AbstractAttributeValuesTest.cs" />
     <Compile Include="Classes\Charakter\Values\Attribute\BaseAttackTest.cs" />
+    <Compile Include="Classes\Charakter\Values\Attribute\BaseInitiativeTest.cs" />
+    <Compile Include="Classes\Charakter\Values\Attribute\BaseParadeTest.cs" />
+    <Compile Include="Classes\Charakter\Values\Attribute\BaseRangeTest.cs" />
+    <Compile Include="Classes\Charakter\Values\Attribute\WoundSwellTest.cs" />
     <Compile Include="Classes\JSON\JSON_Charakter_Test.cs" />
     <Compile Include="Classes\util\ErrorHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
