@@ -104,14 +104,13 @@ namespace DSAProject.Classes.Charakter
 
             try
             {
-                var regularValue = modValue.TryGetValue(attribut, out int currentValue);
-
-                if (regularValue == false)
+                if (UsedAttributs.Contains(attribut))
+                {
+                    ret = modValue[attribut];
+                } 
+                else
                 {
                     error = new Error { ErrorCode = ErrorCode.InvalidValue, Message = "Das Gewählte Attribut exestiert bei diesem Charakter nicht" };
-                } else
-                {
-                    ret = aktValues[attribut];
                 }
             }
             catch (Exception ex)

@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 
 namespace DSAProject.Layout.ViewModels
 {
-    public class AttributeSinglePageViewModel : INotifyPropertyChanged
-    {   
+    public class AttributeSinglePageViewModel : AbstractPropertyChanged
+    {
         #region Variables
-        private string attributeName;
+        private string name;
         private int aktValue;
         private int modValue;
         #endregion
         #region Properties
-        public string AttributeName
+        public string Name
         {
-            get => attributeName;
+            get => name;
             set
             {
-                attributeName = value;
-                OnPropertyChanged(nameof(AttributeName));
+                name = value;
+                OnPropertyChanged(nameof(Name));
             }
         }
         public int AKTValue
@@ -51,13 +51,5 @@ namespace DSAProject.Layout.ViewModels
             get => AKTValue + MODValue;
         }
         #endregion
-
-        #region Events
-        public event PropertyChangedEventHandler PropertyChanged;
-        #endregion
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

@@ -23,11 +23,12 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
         public AbstractAttributeValues(ICharakterAttribut attribute)
         {
             Attribute   = attribute;
-            Value       = Calculate();
+            Value       = (int) Math.Ceiling(Calculate());
             Attribute.ChangedAttributMAXEvent += (object sender, CharakterAttribut args) =>
             {
                 var oldValue    = Value;
-                Value           = Calculate();
+                var calculateV  = Calculate();
+                Value           = (int)Math.Ceiling(calculateV); ;
                 if (Value != oldValue)
                 {
                     ValueChanged(this, null);
@@ -35,7 +36,7 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
             };
         }
         #region Methoden
-        protected abstract int Calculate();
+        protected abstract double Calculate();
         #endregion
     }
 }

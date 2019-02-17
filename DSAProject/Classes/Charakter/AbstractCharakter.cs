@@ -1,5 +1,6 @@
 ﻿using DSAProject.Classes.Interfaces;
 using DSAProject.Classes.JSON;
+using DSAProject.Classes.Race;
 using DSAProject.util.ErrrorManagment;
 using DSAProject.util.FileManagment;
 using System;
@@ -14,21 +15,29 @@ namespace DSAProject.Classes.Charakter
     public abstract class AbstractCharakter : ICharakter
     {
         #region Properties
-        public ICharakterAttribut Attribute { get; private set; }
         public IRace Race { get; private set; }
-        private static string SaveFolder => "CharakterSaves";
+        public ICharakterValues Values { get; private set; }
+        public ICharakterAttribut Attribute { get; private set; }
+        private static string SaveFolder => Game.Game.CharakterSaveFolder;
         #endregion
         public AbstractCharakter()
         {
-            Attribute = CharakterCreateAttribute();
+            Race        = new Human();
+            Attribute   = CreateAttribute();
+            Values      = CreateValues();
 
-            if(Attribute == null)
+            if(Attribute == null )
             {
                 throw new ArgumentNullException(nameof(Attribute) + " Die Attribute wurde nicht gesetzt. Bitte Implementieren sie die dazu Notwendige Methode");
             }
+            else if(Values == null)
+            {
+                throw new ArgumentNullException(nameof(Values) + " Die Values wurde nicht gesetzt. Bitte Implementieren sie die dazu Notwendige Methode");
+            }
         }
         #region AbstractMethods
-        protected abstract ICharakterAttribut CharakterCreateAttribute();
+        protected abstract ICharakterValues CreateValues();
+        protected abstract ICharakterAttribut CreateAttribute();
         #endregion
         #region Methods
         public void Save(string fileName, out Error error)

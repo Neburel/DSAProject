@@ -24,10 +24,18 @@ namespace DSAProject.Classes.Charakter
         #endregion
         public CharakterValues(List<IValue> values)
         {
+            AktValues   = new Dictionary<IValue, int>();
+            ModValue    = new Dictionary<IValue, int>();
+
             foreach(var item in values)
             {
-                AktValues.Add(item, 0);
+                AktValues.Add(item, item.Value);
                 ModValue.Add(item, 0);
+                item.ValueChanged += (sender, args) =>
+                {
+                    AktValues[item] = item.Value;
+                    ChangedAKTEvent(this, item);
+                };
             }
         }
         #region Getter

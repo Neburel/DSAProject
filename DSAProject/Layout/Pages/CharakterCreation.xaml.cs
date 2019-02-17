@@ -20,9 +20,9 @@ namespace DSAProject.Layout.Pages
     /// <summary>
     /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
     /// </summary>
-    public sealed partial class ChracterDescriptionView : Page
+    public sealed partial class CharakterCreation : Page
     {
-        public ChracterDescriptionView()
+        public CharakterCreation()
         {
             this.InitializeComponent();
         }

@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSAProject.Classes.Charakter.Values;
+using DSAProject.Classes.Charakter.Values.Attribute;
 using DSAProject.Classes.Interfaces;
 
 namespace DSAProject.Classes.Charakter
 {
     public class CharakterPNP : AbstractCharakter
     {
-        protected override ICharakterAttribut CharakterCreateAttribute()
+        protected override ICharakterAttribut CreateAttribute()
         {
             var list = new List<CharakterAttribut>
             {
@@ -23,6 +25,21 @@ namespace DSAProject.Classes.Charakter
                 CharakterAttribut.Körperkraft
             };
             return new CharakterAttribute(list);
+        }
+        protected override ICharakterValues CreateValues()
+        {
+            var list = new List<IValue>()
+            {
+                new BaseAttack(Attribute),
+                new BaseParade(Attribute),
+                new BaseRange(Attribute),
+                new BaseInitiative(Attribute),
+                new ControllValue(),
+                new WoundSwell(Attribute),
+                new Rapture(),
+                new SpeedLand(Race),
+            };
+            return new CharakterValues(list);
         }
     }
 }

@@ -25,47 +25,41 @@ namespace DSAProject.Layout.Pages
     /// <summary>
     /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
     /// </summary>
-    public sealed partial class AttributPage : Page
+    public sealed partial class ValuePage : Page
     {
-        public AttributPage()
+        private Dictionary<IValue, AKT_MOD_MAX_ItemPage> dic = new Dictionary<IValue, AKT_MOD_MAX_ItemPage>();
+
+        public ValuePage()
         {
             this.InitializeComponent();
             XAML_Grid.RowDefinitions.Add(new RowDefinition());
 
-            var attribute   = Game.Charakter.Attribute;
-            var i           = 1;
-            foreach(var item in attribute.UsedAttributs)
+            var values  = Game.Charakter.Values;
+            var i       = 1;
+        
+            foreach(var item in values.UsedValues)
             {
                 XAML_Grid.RowDefinitions.Add(new RowDefinition());
                 var newView = new AKT_MOD_MAX_ItemPage
                 {
-                    ItemName = item.ToString(),
-                    AKTValue = attribute.GetAttributAKTValue(item, out Error error)
+                    ItemName = item.Name,
+                    AKTValue = values.GetAKTValue(item, out Error error)
                 };
-                attribute.ChangedAttributAKTEvent += (sender, args) =>
-                {
-                    if (args == item)
-                    {
-                        var value = attribute.GetAttributAKTValue(item, out error);
-                        newView.AKTValue = value;
-                    }
-                };
-                newView.Event_ValueHigher += (sender, args) =>
-                {
-                    var currentValue = attribute.GetAttributAKTValue(item, out error);
-                    attribute.SetAttributAKTValue(item, currentValue + 1, out error);
-                };
-                newView.Event_ValueLower += (sender, agrs) =>
-                {
-                    var currentValue = attribute.GetAttributAKTValue(item, out error);
-                    attribute.SetAttributAKTValue(item, currentValue - 1, out error);
-                };
-                
-
+                dic.Add(item, newView);
                 XAML_Grid.Children.Add(newView);
                 Grid.SetRow(newView, i);
                 i++;
             }
+
+            values.ChangedAKTEvent += (sender, args) =>
+            {
+                var ok = dic.TryGetValue(args, out AKT_MOD_MAX_ItemPage value);
+                if(ok == true)
+                {
+                    value.AKTValue = values.GetAKTValue(args, out Error error);
+                    Logger.Log(error, nameof(ValuePage), "ChangedAKTEvent");
+                }
+            };
         }
     }
 }

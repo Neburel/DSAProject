@@ -1,4 +1,8 @@
-﻿using DSAProject.Layout;
+﻿using DSAProject.Classes.Charakter;
+using DSAProject.Classes.Game;
+using DSAProject.Classes.Interfaces;
+using DSAProject.Layout;
+using DSAProject.Layout.MessageDialoge;
 using DSAProject.Layout.Pages;
 using System;
 using System.Collections.Generic;
@@ -8,6 +12,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -23,40 +28,54 @@ namespace DSAProject
     /// <summary>
     /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class GamePage : Page
     {
-        public MainPage()
+        #region Pages
+        private string currentPage      = string.Empty;        
+        #endregion
+        public GamePage()
         {
             this.InitializeComponent();
+            currentPage = "HeroLetter";
             ContentFrame.Navigate(typeof(HeroLetterPage));
-        }
 
+            Game.StartPage += (sender, args) =>
+            {
+                currentPage = "HeroLetter";
+                ContentFrame.Navigate(typeof(HeroLetterPage));
+            };
+        }
         private void NavigationView_Loaded(object sender, RoutedEventArgs e)
         {
-            Debug.Print("MainPage_NavigationView_Loaded");
         }
-
         private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
-            Debug.Print("MainPage_NavigationView_ItemInvoked");
-
             var item = sender.MenuItems.OfType<NavigationViewItem>().First(x => (string)x.Content == (string)args.InvokedItem);
             NavView_Navigate(item as NavigationViewItem);
         }
-
         private void NavigationView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
         {
 
         }
-
         private void NavView_Navigate(NavigationViewItem item)
         {
-            switch (item.Tag)
+            if(currentPage != (string)item.Tag)
             {
-
-                case "HeroLetter":
-                    ContentFrame.Navigate(typeof(HeroLetterPage));
-                    break;
+                switch (item.Tag)
+                {
+                    case "HeroLetter":
+                        ContentFrame.Navigate(typeof(HeroLetterPage));
+                        currentPage = "HeroLetter";
+                        break;
+                    case "save":
+                        Game.Charakter.Save("Test", out util.ErrrorManagment.Error error);
+                        SaveDialog.ShowDialog(error);
+                        break;
+                    case "load":
+                        ContentFrame.Navigate(typeof(LoadPage));
+                        currentPage = "load";
+                        break;
+                }
             }
         }
     }

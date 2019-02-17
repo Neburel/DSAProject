@@ -23,29 +23,22 @@ namespace DSAProject.Layout.Views
     /// <summary>
     /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
     /// </summary>
-    public sealed partial class AttributSingleView : Page
+    public sealed partial class AKT_MOD_MAX_ItemPage : Page
     {
         #region Event
         public event EventHandler Event_ValueHigher;
         public event EventHandler Event_ValueLower;
         #endregion
-        #region Variables
-        CharakterAttribut attribute;
-        #endregion
         #region Properties
         public AttributeSinglePageViewModel ViewModel = new AttributeSinglePageViewModel();
         public GridLength GetWidthName { get; } = new GridLength(110);
         public GridLength GetBoxLength { get; } = new GridLength(30);
-        public CharakterAttribut Attribute 
+        public string ItemName 
         {
-            get => attribute;
-            set
-            {
-                attribute = value;
-                ViewModel.AttributeName = attribute.ToString();
-            }
+            get => ViewModel.Name;
+            set { ViewModel.Name = value; }
         }
-        public int AttributeAKTValue
+        public int AKTValue
         {
             get => ViewModel.AKTValue;
             set
@@ -53,13 +46,13 @@ namespace DSAProject.Layout.Views
                 ViewModel.AKTValue = value;
             }
         }
-        public int AttributeMODValue
+        public int MODValue
         {
             get => ViewModel.MODValue;
             set => ViewModel.MODValue = value;
         }
         #endregion
-        public AttributSingleView()
+        public AKT_MOD_MAX_ItemPage()
         {
             InitializeComponent();
         }

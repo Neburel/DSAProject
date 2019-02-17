@@ -1,6 +1,7 @@
 ﻿using DSAProject.util.ErrrorManagment;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -65,11 +66,53 @@ namespace DSAProject.util.FileManagment
             }
             return retText;
         }
+        public static List<string> GetFilesDictionary(string dictionaryString, out Error error)
+        {
+            var ret = new List<string>();
+            error   = null;
+
+            try
+            {
+                var semaphoreSlim   = new SemaphoreSlim(0);
+                var task = new Task(async () =>
+                {
+                    var files = await GetFilesinFolderAsync(dictionaryString);
+                    foreach (var item in files)
+                    {
+                        ret.Add(item.Name);
+                    }
+
+                    semaphoreSlim.Release();
+                });
+                task.Start();
+                semaphoreSlim.Wait();
+            }
+            catch (Exception ex)
+            {
+                error = new Error
+                {
+                    ErrorCode = ErrorCode.Error,
+                    Message = ex.Message
+                };
+                Logger.Log(LogLevel.ErrorLog, "Laden aus einer Datei fehlgeschlagen " + ex.Message, nameof(FileManagment), nameof(GetFilesDictionary));
+            }
+
+            return ret;
+        }
+
         private static async Task<StorageFile> GetFileAsync(string file, CreationCollisionOption option)
         {
             var localFolder = ApplicationData.Current.LocalFolder;
             var sfile       = await localFolder.CreateFileAsync(file, option);
             return sfile;
+        }
+        private static async Task<IReadOnlyList<StorageFile>> GetFilesinFolderAsync(string folder)
+        {
+            var localFolder = ApplicationData.Current.LocalFolder.Path;
+            var sFolder     = await StorageFolder.GetFolderFromPathAsync(Path.Combine(localFolder, folder));
+            var files       = await sFolder.GetFilesAsync();
+
+            return files;
         }
     }
 }

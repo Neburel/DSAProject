@@ -11,7 +11,7 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
     {
         public BaseInitiative(Interfaces.ICharakterAttribut attribute) : base(attribute) { }
         public override string Name => "Initiative-Basis";
-        protected override int Calculate()
+        protected override double Calculate()
         {
             var var1 = Attribute.GetAttributMAXValue(CharakterAttribut.Mut, out Error error);
             Logger.Log(error, nameof(BaseInitiative), nameof(Calculate));
@@ -22,7 +22,7 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
             var var4 = Attribute.GetAttributMAXValue(CharakterAttribut.Gewandheit, out error);
             Logger.Log(error, nameof(BaseInitiative), nameof(Calculate));
 
-            return (var1 + var2 + var3 + var4) / 5;
+            return (var1 + var2 + var3 + var4) / 5.0;
         }
     }
 }
