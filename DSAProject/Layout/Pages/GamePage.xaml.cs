@@ -67,6 +67,10 @@ namespace DSAProject
                         ContentFrame.Navigate(typeof(HeroLetterPage));
                         currentPage = "HeroLetter";
                         break;
+                    case "create":
+                        ContentFrame.Navigate(typeof(CharakterCreation));
+                        currentPage = "create";
+                        break;
                     case "save":
                         Game.Charakter.Save("Test", out util.ErrrorManagment.Error error);
                         SaveDialog.ShowDialog(error);

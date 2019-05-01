@@ -9,31 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="208.552" Width="664.966">
 
     <Grid>
-        <TextBlock Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" HorizontalTextAlignment="Center" FontSize="15" TextWrapping="Wrap" Margin="10,8,0,0"      x:Name="TextBlock_Name"         Text="Name"/>
         <TextBlock Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" HorizontalTextAlignment="Center" FontSize="15" TextWrapping="Wrap" Margin="10,33,0,0"     x:Name="TextBlock_ALter"        Text="Alter"/>
-        <TextBlock Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" HorizontalTextAlignment="Center" FontSize="15" TextWrapping="Wrap" Margin="10,58,0,0"     x:Name="TextBlock_Geschlecht"   Text="Geschlecht"/>
-        <TextBlock Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" HorizontalTextAlignment="Center" FontSize="15" TextWrapping="Wrap" Margin="10,83,0,0"     x:Name="TextBlock_Größe"        Text="Größe"/>
-        <TextBlock Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" HorizontalTextAlignment="Center" FontSize="15" TextWrapping="Wrap" Margin="10,108,0,0"    x:Name="TextBlock_Gewicht"      Text="Gewicht"/>
-
-        <TextBlock Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" HorizontalTextAlignment="Center" FontSize="15" TextWrapping="Wrap" x:Name="TextBlock_06" Margin="350,8,0,0" Text="Name"/>
-        <TextBlock Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" HorizontalTextAlignment="Center" FontSize="15" TextWrapping="Wrap" x:Name="TextBlock_07" Margin="350,33,0,0" Text="Name"/>
-        <TextBlock Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" HorizontalTextAlignment="Center" FontSize="15" TextWrapping="Wrap" x:Name="TextBlock_08" Margin="350,58,0,0" Text="Name"/>
-        <TextBlock Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" HorizontalTextAlignment="Center" FontSize="15" TextWrapping="Wrap" x:Name="TextBlock_09" Margin="350,83,0,0" Text="Name"/>
-        <TextBlock Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" HorizontalTextAlignment="Center" FontSize="15" TextWrapping="Wrap" x:Name="TextBlock_10" Margin="350,108,0,0" Text="Name"/>
-
-        <TextBox HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" HorizontalTextAlignment="Center" Width="200" FontSize="10" MinHeight="25" Height="25" x:Name="TextField_01" Margin="100,5,0,0" Text="TextBox"/>
-        <TextBox HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" HorizontalTextAlignment="Center" Width="200" FontSize="10" MinHeight="25" Height="25" Margin="100,30,0,0" Text="TextBox"/>
-        <TextBox HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" HorizontalTextAlignment="Center" Width="200" FontSize="10" MinHeight="25" Height="25" Margin="100,55,0,0" Text="TextBox"/>
-        <TextBox HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" HorizontalTextAlignment="Center" Width="200" FontSize="10" MinHeight="25" Height="25" Margin="100,80,0,0" Text="TextBox"/>
-        <TextBox HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" HorizontalTextAlignment="Center" Width="200" FontSize="10" MinHeight="25" Height="25" Margin="100,105,0,0" Text="TextBox"/>
-
-        <TextBox HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" HorizontalTextAlignment="Center" Width="200" FontSize="10" MinHeight="25" Height="25" Margin="440,5,0,0" Text="TextBox"/>
-        <TextBox HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" HorizontalTextAlignment="Center" Width="200" FontSize="10" MinHeight="25" Height="25" Margin="440,30,0,0" Text="TextBox"/>
-        <TextBox HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" HorizontalTextAlignment="Center" Width="200" FontSize="10" MinHeight="25" Height="25" Margin="440,55,0,0" Text="TextBox"/>
-        <TextBox HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" HorizontalTextAlignment="Center" Width="200" FontSize="10" MinHeight="25" Height="25" Margin="440,80,0,0" Text="TextBox"/>
-        <TextBox HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" HorizontalTextAlignment="Center" Width="200" FontSize="10" MinHeight="25" Height="25" Margin="440,105,0,0" Text="TextBox"/>
-
-        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="129,163,0,0" FontSize="10" VerticalAlignment="Top" MinHeight="25" Height="25" Width="261"/>
 
 
     </Grid>

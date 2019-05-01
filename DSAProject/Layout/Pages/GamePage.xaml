@@ -16,16 +16,10 @@
             <NavigationViewItemHeader Content="Briefe" ></NavigationViewItemHeader>
             <NavigationViewItem Icon="Home" IsEnabled="True" Tag="HeroLetter" Content="Heldenbrief"></NavigationViewItem>
             <NavigationViewItemHeader Content="Talente" ></NavigationViewItemHeader>
-            <NavigationViewItem Icon="Home" IsEnabled="True" Content="Waffen Talente"></NavigationViewItem>
-            <NavigationViewItem Icon="Home" IsEnabled="True" Content="??? Talente"></NavigationViewItem>
-            <NavigationViewItem Icon="Home" IsEnabled="True" Content="Sprachen"></NavigationViewItem>
-            <NavigationViewItem Icon="Home" IsEnabled="True" Content="Gaben"></NavigationViewItem>
             <NavigationViewItemHeader Content="Erfolge" ></NavigationViewItemHeader>
             <NavigationViewItem Icon="Home" IsEnabled="True" Content="Belohnungen"></NavigationViewItem>
             <NavigationViewItemHeader Content="Tools" ></NavigationViewItemHeader>
-            <NavigationViewItem Icon="Home" IsEnabled="True" Content="Neuer Charakter" Tag="create"></NavigationViewItem>
-            <NavigationViewItem Icon="Home" IsEnabled="True" Content="Speichern" Tag="save"></NavigationViewItem>
-            <NavigationViewItem Icon="Home" IsEnabled="True" Content="Laden" Tag="load"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Content="Charakter erstellen/editieren" Tag="create"></NavigationViewItem>
         </NavigationView.MenuItems>
         <Frame 
             x:Name="ContentFrame" 

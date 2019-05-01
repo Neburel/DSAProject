@@ -17,10 +17,14 @@ namespace DSAProject.Classes.Game
         #region Properties
         public static ICharakter Charakter { get; set; } = new CharakterDSA();
         public static string CharakterSaveFolder { get; } = "CharakterSaves";
+        public static string CurrentYearDSA { get; } = "? nach Bosporos Fall";
+        public static string CurrentYearPNP { get; } = "3135";
         #endregion
         public static void GoStartPage()
         {
             StartPage?.Invoke(null, null);
+
+
         }
     }
 }

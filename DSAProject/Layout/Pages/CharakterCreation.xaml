@@ -9,6 +9,169 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Grid.Background>
+            <ImageBrush Stretch="Fill" ImageSource="/Assets/Images/Paper.jpg"/>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="340"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="340"/>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="340"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
+            <TextBlock Grid.Row="1" Grid.Column="1" x:Name="XAML_GameTypTitle" Foreground="Black" Text="Spiel:" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+            <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch">
+                <RadioButton Content="DSA" Tag="DSA" x:Name="XAML_GameTypValueDSA" Checked="RadioButton_Checked" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" IsChecked="True"/>
+                <RadioButton Content="PNP" Tag="PNP" x:Name="XAML_GameTypValuePNP" Checked="RadioButton_Checked" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}"/>
+            </StackPanel>
+            
+            <TextBlock Grid.Row="2" Grid.Column="1" x:Name="XAML_NameTitle" Foreground="Black" Text="Name:" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+            <TextBox Grid.Row="2" Grid.Column="2" x:Name="XAML_NameValue" Text="{x:Bind ViewModel.PlayerName, Mode=TwoWay}" Foreground="Black" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Width="300" Margin="0,0,0,0"/>
+            <TextBlock Grid.Row="2" Grid.Column="3" x:Name="XAML_AdressNameTitle" Foreground="Black" Text="Anrede:" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+            <TextBox Grid.Row="2" Grid.Column="4" x:Name="XAML_AdressNameValue" Text="{x:Bind ViewModel.PlayerAdressName, Mode=TwoWay}" Foreground="Black" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Width="300" Margin="0,0,0,0"/>
+
+            <TextBlock Grid.Row="3" Grid.Column="1" x:Name="XAML_RaceTitle" Foreground="Black" Text="Rasse:" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+            <TextBox Grid.Row="3" Grid.Column="2" x:Name="XAML_RaceValue" Text="{x:Bind ViewModel.Race, Mode=TwoWay}" Foreground="Black" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Width="300" Margin="0,0,0,0"/>
+
+            <TextBlock Grid.Row="4" Grid.Column="1" x:Name="XAML_CultureTitle" Foreground="Black" Text="Kutlur/-en:" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+            <TextBox Grid.Row="4" Grid.Column="2" x:Name="XAML_CultureValue" Foreground="Black" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Text="{x:Bind ViewModel.Culture}" Width="300" Margin="0,0,0,0"/>
+
+            <TextBlock Grid.Row="5" Grid.Column="1" x:Name="XAML_ProfessionTitle" Foreground="Black" Text="Profession/-en:" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+            <TextBox Grid.Row="5" Grid.Column="2" x:Name="XAML_ProefessionValue" Foreground="Black" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Text="{x:Bind ViewModel.Profession}" Width="300" Margin="0,0,0,0"/>
+            
+            <TextBlock Grid.Row="6" Grid.Column="1" x:Name="XAML_AgeTitle" Foreground="Black" Text="Alter:" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+            <TextBox Grid.Row="6" Grid.Column="2" x:Name="XAML_AgeValue" Foreground="Black" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Text="{x:Bind ViewModel.Age}" Width="300" Margin="0,0,0,0"/>
+            <TextBlock Grid.Row="6" Grid.Column="3" x:Name="XAML_BirthdayTitle" Foreground="Black" Text="Geburstag:" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+            <TextBox Grid.Row="6" Grid.Column="4" x:Name="XAML_BirthdayValue" Foreground="Black" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Text="{x:Bind ViewModel.BirthDate}" Width="300" Margin="0,0,0,0"/>
+            <TextBlock Grid.Row="6" Grid.Column="5" x:Name="XAML_CurrentDateTitle" Foreground="Black" Text="Aktuelles Jahr:" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+            <TextBlock Grid.Row="6" Grid.Column="6" x:Name="XAML_CurrentDateValue" Foreground="Black" Text="{x:Bind ViewModel.CurrentDate}" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+
+
+            <TextBlock Grid.Row="7" Grid.Column="1" x:Name="XAML_GenderTitle" Foreground="Black" Text="Geschlecht:" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+            <ComboBox Grid.Row="7" Grid.Column="2" x:Name="XAML_GenderComboBox" Foreground="Black" PlaceholderText="wähle ein Geschlecht aus" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" SelectionChanged="XAML_GenderComboBox_SelectionChanged" Width="300" Margin="0,0,0,0">
+                <x:String>Männlich</x:String>
+                <x:String>Weiblich</x:String>
+                <x:String>Geschlechtslos</x:String>
+            </ComboBox>
+            <TextBlock Grid.Row="7" Grid.Column="3" x:Name="XAML_FamilyStatus" Foreground="Black" Text="Familienstand:" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"></TextBlock>
+            <ComboBox Grid.Row="7" Grid.Column="4" x:Name="XAML_FamilyStatuscomboBox" Foreground="Black" PlaceholderText="Wähle einen Familienstand aus" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" SelectionChanged="XAML_FamilyStatuscomboBox_SelectionChanged" Width="300" Margin="0,0,0,0">
+                <x:String>Ledig</x:String>
+                <x:String>Verheiratet</x:String>
+                <x:String>Gechieden</x:String>
+                <x:String>Verwitfet</x:String>
+            </ComboBox>
+
+            <TextBlock Grid.Row="8" Grid.Column="1" x:Name="XAML_SkinColorTitle" Foreground="Black" Text="Hautfarbe:" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+            <TextBox Grid.Row="8" Grid.Column="2" x:Name="XAML_SkinColorValue" Foreground="Black" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Text="{x:Bind ViewModel.SkinColor}" Width="300" Margin="0,0,0,0"/>
+            <TextBlock Grid.Row="8" Grid.Column="3" x:Name="XAML_HairColorTitle" Foreground="Black" Text="Haar-/Fellfarbe:" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+            <TextBox Grid.Row="8" Grid.Column="4" x:Name="XAML_HairColorValue" Foreground="Black" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Text="{x:Bind ViewModel.HairColor}" Width="300" Margin="0,0,0,0"/>
+            <TextBlock Grid.Row="8" Grid.Column="5" x:Name="XAML_EyeColorTitle" Foreground="Black" Text="Augenfarbe:" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+            <TextBox Grid.Row="8" Grid.Column="6" x:Name="XAML_EyeColorValue" Foreground="Black" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Text="{x:Bind ViewModel.EyeColor}" Width="300" Margin="0,0,0,0"/>
+
+            <TextBlock Grid.Row="9" Grid.Column="3" x:Name="XAML_HeightTitle" Foreground="Black" Text="Größe:" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+            <TextBox Grid.Row="9" Grid.Column="4" x:Name="XAML_HeightValue" Foreground="Black" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Text="{x:Bind ViewModel.PlayerHeight}" Width="300" Margin="0,0,0,0"/>
+            <TextBlock Grid.Row="9" Grid.Column="5" x:Name="XAML_WeightTitle" Foreground="Black" Text="Gewicht:" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+            <TextBox Grid.Row="9" Grid.Column="6" x:Name="XAML_WeughtValue" Foreground="Black" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Text="{x:Bind ViewModel.PlayerWeight}" Width="300" Margin="0,0,0,0"/>
+            <TextBlock Grid.Row="9" Grid.Column="1" x:Name="XAML_FaithTitle" Foreground="Black" Text="Glaube:" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+            <TextBox Grid.Row="9" Grid.Column="2" x:Name="XAML_FaithValue" Foreground="Black" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Text="{x:Bind ViewModel.Faith}" Width="300" Margin="0,0,0,0"/>
+
+            <TextBlock Grid.Row="10" Grid.Column="1" x:Name="XAML_SpeedGroundTitle" Foreground="Black" Text="Geschwindigkeit &#x0a; Boden:" TextAlignment="Left" VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+            <StackPanel Grid.Row="10" Grid.Column="2" Orientation="Horizontal">
+                <TextBlock Text="{x:Bind ViewModel.GroundSpeed, Mode=TwoWay}" Foreground="Black" TextAlignment="Center" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+                <Border BorderBrush="Green" BorderThickness="1"  Grid.Row="1" Grid.Column="4" Width="40" Height="40">
+                    <Button x:Name="XAML_GroundSpeedPlus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Margin="0,0,0,0" Padding="0,0,0,0" FontSize="24" FontWeight="Bold" Click="XAML_GroundSpeedPlus_Click">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="+" FontSize="20"></TextBlock>
+                    </Button>
+                </Border>
+                <Border BorderBrush="Red" BorderThickness="1" Grid.Row="1" Grid.Column="5" Width="40" Height="40">
+                    <Button x:Name="XAML_GroundSpeedMinus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Margin="0,0,0,0" Padding="0,0,0,0" FontSize="24" FontWeight="Bold" Click="XAML_GroundSpeedMinus_Click">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="-" FontSize="20"></TextBlock>
+                    </Button>
+                </Border>
+            </StackPanel>
+            <TextBlock Grid.Row="10" Grid.Column="3" x:Name="XAML_SpeedWaterTitle" Foreground="Black" Text="Geschwindigkeit &#x0a; Wasser:" TextAlignment="Left"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+            <StackPanel Grid.Row="10" Grid.Column="4" Orientation="Horizontal">
+                <TextBlock Text="{x:Bind ViewModel.WaterSpeed, Mode=TwoWay}" Foreground="Black" TextAlignment="Center" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+                <Border BorderBrush="Green" BorderThickness="1"  Grid.Row="1" Grid.Column="4" Width="40" Height="40">
+                    <Button x:Name="XAML_WaterSpeedPlus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Margin="0,0,0,0" Padding="0,0,0,0" FontSize="24" FontWeight="Bold" Click="XAML_WaterSpeedPlus_Click">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="+" FontSize="20"></TextBlock>
+                    </Button>
+                </Border>
+                <Border BorderBrush="Red" BorderThickness="1" Grid.Row="1" Grid.Column="5" Width="40" Height="40">
+                    <Button x:Name="XAML_GroundWaterMinus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Margin="0,0,0,0" Padding="0,0,0,0" FontSize="24" FontWeight="Bold" Click="XAML_GroundWaterMinus_Click">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="-" FontSize="20"></TextBlock>
+                    </Button>
+                </Border>
+            </StackPanel>
+            <TextBlock Grid.Row="10" Grid.Column="5" x:Name="XAML_SpeedAirTitle" Foreground="Black" Text="Geschwindigkeit &#x0a; Luft:" TextAlignment="Left"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+            <StackPanel Grid.Row="10" Grid.Column="6" Orientation="Horizontal">
+                <TextBlock Text="{x:Bind ViewModel.AirSpeed, Mode=TwoWay}" Foreground="Black" TextAlignment="Center" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+                <Border BorderBrush="Green" BorderThickness="1"  Grid.Row="1" Grid.Column="4" Width="40" Height="40">
+                    <Button x:Name="XAML_AirSpeedPlus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Margin="0,0,0,0" Padding="0,0,0,0" FontSize="24" FontWeight="Bold" Click="XAML_AirSpeedPlus_Click">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="+" FontSize="20"></TextBlock>
+                    </Button>
+                </Border>
+                <Border BorderBrush="Red" BorderThickness="1" Grid.Row="1" Grid.Column="5" Width="40" Height="40">
+                    <Button x:Name="XAML_AirSpeedMinus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Margin="0,0,0,0" Padding="0,0,0,0" FontSize="24" FontWeight="Bold" Click="XAML_AirSpeedMinus_Click">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="-" FontSize="20"></TextBlock>
+                    </Button>
+                </Border>
+            </StackPanel>
+
+            <TextBlock Grid.Row="11" Grid.Column="1" x:Name="XAML_TechMinValue" Foreground="Black" Text="Techstufe Min:" TextAlignment="Left" VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+            <StackPanel Grid.Row="11" Grid.Column="2" x:Name="XAML_StackPanelTechMin"  Orientation="Horizontal">
+                <TextBlock Text="{x:Bind ViewModel.TechstufeMin, Mode=TwoWay}" Foreground="Black" TextAlignment="Center" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+                <Border BorderBrush="Green" BorderThickness="1"  Grid.Row="1" Grid.Column="4" Width="40" Height="40">
+                    <Button x:Name="XAML_TechMinValuePlus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Margin="0,0,0,0" Padding="0,0,0,0" FontSize="24" FontWeight="Bold" Click="XAML_TechMinValuePlus_Click">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="+" FontSize="20"></TextBlock>
+                    </Button>
+                </Border>
+                <Border BorderBrush="Red" BorderThickness="1" Grid.Row="1" Grid.Column="5" Width="40" Height="40">
+                    <Button x:Name="XAML_TechMinValueMinus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Margin="0,0,0,0" Padding="0,0,0,0" FontSize="24" FontWeight="Bold" Click="XAML_TechMinValueMinus_Click">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="-" FontSize="20"></TextBlock>
+                    </Button>
+                </Border>
+            </StackPanel>
+            <TextBlock Grid.Row="11" Grid.Column="3" x:Name="XAML_TechMaxValue" Foreground="Black" Text="Techstufe Max:" TextAlignment="Left"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+            <StackPanel Grid.Row="11" Grid.Column="4" x:Name="XAML_StackPanelTechMax" Orientation="Horizontal">
+                <TextBlock Text="{x:Bind ViewModel.TechstufeMax, Mode=TwoWay}" Foreground="Black" TextAlignment="Center" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
+                <Border BorderBrush="Green" BorderThickness="1"  Grid.Row="1" Grid.Column="4" Width="40" Height="40">
+                    <Button x:Name="XAML_TechMaxValuePlus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Margin="0,0,0,0" Padding="0,0,0,0" FontSize="24" FontWeight="Bold" Click="XAML_TechMaxValuePlus_Click">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="+" FontSize="20"></TextBlock>
+                    </Button>
+                </Border>
+                <Border BorderBrush="Red" BorderThickness="1" Grid.Row="1" Grid.Column="5" Width="40" Height="40">
+                    <Button x:Name="XAML_TechMaxValueMinus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Margin="0,0,0,0" Padding="0,0,0,0" FontSize="24" FontWeight="Bold" Click="XAML_TechMaxValueMinus_Click">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="-" FontSize="20"></TextBlock>
+                    </Button>
+                </Border>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>
