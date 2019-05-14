@@ -1,28 +1,24 @@
-﻿using DSAProject.Classes.Interfaces;
+﻿using DSAProject.Classes.Charakter.Description;
+using DSAProject.Classes.Interfaces;
 using DSAProject.Classes.JSON;
-using DSAProject.Classes.Race;
 using DSAProject.util.ErrrorManagment;
 using DSAProject.util.FileManagment;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DSAProject.Classes.Charakter
 {
     public abstract class AbstractCharakter : ICharakter
     {
         #region Properties
-        public IRace Race { get; private set; }
         public ICharakterValues Values { get; private set; }
         public ICharakterAttribut Attribute { get; private set; }
         private static string SaveFolder => Game.Game.CharakterSaveFolder;
+        public CharakterDescription CharakterDescriptions { get; private set; } = new CharakterDescription();
         #endregion
         public AbstractCharakter()
         {
-            Race        = new Human();
             Attribute   = CreateAttribute();
             Values      = CreateValues();
 

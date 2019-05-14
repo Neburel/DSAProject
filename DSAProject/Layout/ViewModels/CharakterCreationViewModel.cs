@@ -1,7 +1,9 @@
-﻿using DSAProject.util;
+﻿using DSAProject.Classes.Charakter.Description;
+using DSAProject.util;
 
 namespace DSAProject.Layout.ViewModels
 {
+    
     public class CharakterCreationViewModel : AbstractPropertyChanged
     {
         #region Variables
@@ -11,22 +13,22 @@ namespace DSAProject.Layout.ViewModels
         private int techstufeMin;
         private int techstufeMax;
 
-        private string playerName;
-        private string playerAdressName;
-        private string race;
-        private string birthDate;
-        private string age;
-        private string gender;
-        private string hairColor;
-        private string skinColor;
-        private string eyeColor;
-        private string faith;
-        private string playerHeight;
-        private string playerWeight;
-        private string culture;
-        private string profession;
-        private string familyStatus;
-        private string currentDate;
+        private Descriptor age                  = new Descriptor { };
+        private Descriptor race                 = new Descriptor { };
+        private Descriptor faith                = new Descriptor { };
+        private Descriptor gender               = new Descriptor { };
+        private Descriptor culture              = new Descriptor { };
+        private Descriptor eyeColor             = new Descriptor { };
+        private Descriptor hairColor            = new Descriptor { };
+        private Descriptor skinColor            = new Descriptor { };
+        private Descriptor birthDate            = new Descriptor { };
+        private Descriptor playerName           = new Descriptor { };
+        private Descriptor profession           = new Descriptor { };
+        private Descriptor currentDate          = new Descriptor { };
+        private Descriptor familyStatus         = new Descriptor { };
+        private Descriptor playerHeight         = new Descriptor { };
+        private Descriptor playerWeight         = new Descriptor { };
+        private Descriptor playerAdressName     = new Descriptor { };
         #endregion
         #region Properties
         public int AirSpeed
@@ -75,43 +77,7 @@ namespace DSAProject.Layout.ViewModels
             }
         }
 
-        public string PlayerName
-        {
-            get => playerName;
-            set
-            {
-                playerName = value;
-                OnPropertyChanged(nameof(PlayerName));
-            }
-        }
-        public string PlayerAdressName
-        {
-            get => playerAdressName;
-            set
-            {
-                playerAdressName = value;
-                OnPropertyChanged(nameof(PlayerAdressName));
-            }
-        }
-        public string Race
-        {
-            get => race;
-            set
-            {
-                race = value;
-                OnPropertyChanged(nameof(Race));
-            }
-        }
-        public string BirthDate
-        {
-            get => birthDate;
-            set
-            {
-                birthDate = value;
-                OnPropertyChanged(nameof(BirthDate));
-            }
-        }
-        public string Age
+        public Descriptor Age
         {
             get => age;
             set
@@ -120,52 +86,16 @@ namespace DSAProject.Layout.ViewModels
                 OnPropertyChanged(nameof(Age));
             }
         }
-        public string CurrentDate
+        public Descriptor Race
         {
-            get => currentDate;
+            get => race;
             set
             {
-                currentDate = value;
-                OnPropertyChanged(nameof(CurrentDate));
+                race = value;
+                OnPropertyChanged(nameof(Race));
             }
         }
-        public string Gender
-        {
-            get => gender;
-            set
-            {
-                gender = value;
-                OnPropertyChanged(nameof(Gender));
-            }
-        }
-        public string EyeColor
-        {
-            get => eyeColor;
-            set
-            {
-                eyeColor = value;
-                OnPropertyChanged(nameof(EyeColor));
-            }
-        }
-        public string HairColor
-        {
-            get => hairColor;
-            set
-            {
-                hairColor = value;
-                OnPropertyChanged(nameof(HairColor));
-            }
-        }
-        public string SkinColor
-        {
-            get => skinColor;
-            set
-            {
-                skinColor = value;
-                OnPropertyChanged(nameof(SkinColor));
-            }
-        }
-        public string Faith
+        public Descriptor Faith
         {
             get => faith;
             set
@@ -174,7 +104,79 @@ namespace DSAProject.Layout.ViewModels
                 OnPropertyChanged(nameof(Faith));
             }
         }
-        public string PlayerHeight
+        public Descriptor PlayerName
+        {
+            get => playerName;
+            set
+            {
+                playerName = value;
+                OnPropertyChanged(nameof(PlayerName));
+            }
+        }
+        public Descriptor PlayerAdressName
+        {
+            get => playerAdressName;
+            set
+            {
+                playerAdressName = value;
+                OnPropertyChanged(nameof(PlayerAdressName));
+            }
+        }
+        public Descriptor BirthDate
+        {
+            get => birthDate;
+            set
+            {
+                birthDate = value;
+                OnPropertyChanged(nameof(BirthDate));
+            }
+        }
+        public Descriptor CurrentDate
+        {
+            get => currentDate;
+            set
+            {
+                currentDate = value;
+                OnPropertyChanged(nameof(CurrentDate));
+            }
+        }
+        public Descriptor Gender
+        {
+            get => gender;
+            set
+            {
+                gender = value;
+                OnPropertyChanged(nameof(Gender));
+            }
+        }
+        public Descriptor EyeColor
+        {
+            get => eyeColor;
+            set
+            {
+                eyeColor = value;
+                OnPropertyChanged(nameof(EyeColor));
+            }
+        }
+        public Descriptor HairColor
+        {
+            get => hairColor;
+            set
+            {
+                hairColor = value;
+                OnPropertyChanged(nameof(HairColor));
+            }
+        }
+        public Descriptor SkinColor
+        {
+            get => skinColor;
+            set
+            {
+                skinColor = value;
+                OnPropertyChanged(nameof(SkinColor));
+            }
+        }
+        public Descriptor PlayerHeight
         {
             get => playerHeight;
             set
@@ -183,7 +185,7 @@ namespace DSAProject.Layout.ViewModels
                 OnPropertyChanged(nameof(PlayerHeight));
             }
         }
-        public string PlayerWeight
+        public Descriptor PlayerWeight
         {
             get => playerWeight;
             set
@@ -192,7 +194,7 @@ namespace DSAProject.Layout.ViewModels
                 OnPropertyChanged(nameof(PlayerWeight));
             }
         }
-        public string Culture
+        public Descriptor Culture
         {
             get => culture;
             set
@@ -201,7 +203,7 @@ namespace DSAProject.Layout.ViewModels
                 OnPropertyChanged(nameof(Culture));
             }
         }
-        public string Profession
+        public Descriptor Profession
         {
             get => profession;
             set
@@ -210,13 +212,13 @@ namespace DSAProject.Layout.ViewModels
                 OnPropertyChanged(nameof(Profession));
             }
         }
-        public string Familistatus
+        public Descriptor Familistatus
         {
             get => familyStatus;
             set
             {
                 familyStatus = value;
-                OnPropertyChanged(Familistatus);
+                OnPropertyChanged(nameof(Familistatus));
             }
         }
         #endregion

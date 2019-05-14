@@ -1,4 +1,5 @@
 ﻿using DSAProject.Classes.Charakter;
+using DSAProject.Classes.Interfaces;
 using DSAProject.Layout.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,8 @@ namespace DSAProject.Layout.Views
         public event EventHandler Event_ValueLower;
         #endregion
         #region Properties
-        public AttributeSinglePageViewModel ViewModel = new AttributeSinglePageViewModel();
+        public AKT_MOD_MAX_ViewModel ViewModel = new AKT_MOD_MAX_ViewModel();
+        public CharakterAttribut Item { get; set; }
         public GridLength GetWidthName { get; } = new GridLength(110);
         public GridLength GetBoxLength { get; } = new GridLength(30);
         public string ItemName 

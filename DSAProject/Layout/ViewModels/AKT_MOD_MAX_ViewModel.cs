@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DSAProject.Layout.ViewModels
 {
-    public class AttributeSinglePageViewModel : AbstractPropertyChanged
+    public class AKT_MOD_MAX_ViewModel : AbstractPropertyChanged
     {
         #region Variables
         private string name;

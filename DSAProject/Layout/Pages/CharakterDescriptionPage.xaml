@@ -3,14 +3,50 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:DSAProject.Layout.Views"
+    xmlns:views="using:DSAProject.Layout.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="208.552" Width="664.966">
+    Background="Transparent">
 
     <Grid>
-        <TextBlock Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Left" HorizontalTextAlignment="Center" FontSize="15" TextWrapping="Wrap" Margin="10,33,0,0"     x:Name="TextBlock_ALter"        Text="Alter"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="300"/>
+        </Grid.ColumnDefinitions>
+        
+        <views:Descriptor_ItemPage Grid.Row="0" Grid.Column="0" x:Name="XAML_Descriptor0" WidthTitle="80"></views:Descriptor_ItemPage>
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+            <views:Descriptor_ItemPage x:Name="XAML_Descriptor1" WidthTitle="50" WIdthText="50"></views:Descriptor_ItemPage>
+            <views:Descriptor_ItemPage x:Name="XAML_Descriptor2" WidthTitle="50" WIdthText="50"></views:Descriptor_ItemPage>
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal">
+            <views:Descriptor_ItemPage x:Name="XAML_Descriptor3" WidthTitle="65" WIdthText="50"></views:Descriptor_ItemPage>
+            <views:Descriptor_ItemPage x:Name="XAML_Descriptor4" WidthTitle="65" WIdthText="40"></views:Descriptor_ItemPage>
+        </StackPanel>
+        <views:Descriptor_ItemPage Grid.Row="0" Grid.Column="3" x:Name="XAML_Descriptor5" WidthTitle="100"></views:Descriptor_ItemPage>
 
+        <views:Descriptor_ItemPage Grid.Row="1" Grid.Column="0" x:Name="XAML_Descriptor6" WidthTitle="80"></views:Descriptor_ItemPage>
+        <views:Descriptor_ItemPage Grid.Row="1" Grid.Column="1" x:Name="XAML_Descriptor7" WidthTitle="80"></views:Descriptor_ItemPage>
+        <views:Descriptor_ItemPage Grid.Row="1" Grid.Column="2" x:Name="XAML_Descriptor8" WidthTitle="80"></views:Descriptor_ItemPage>
+        <views:Descriptor_ItemPage Grid.Row="1" Grid.Column="3" x:Name="XAML_Descriptor9" WidthTitle="100"></views:Descriptor_ItemPage>
 
+        <views:Descriptor_ItemPage Grid.Row="2" Grid.Column="0" x:Name="XAML_Descriptor10" WidthTitle="80"></views:Descriptor_ItemPage>
+        <views:Descriptor_ItemPage Grid.Row="2" Grid.Column="1" x:Name="XAML_Descriptor11" WidthTitle="80"></views:Descriptor_ItemPage>
+        <views:Descriptor_ItemPage Grid.Row="2" Grid.Column="2" x:Name="XAML_Descriptor12" WidthTitle="80"></views:Descriptor_ItemPage>
+        <views:Descriptor_ItemPage Grid.Row="2" Grid.Column="3" x:Name="XAML_Descriptor13" WidthTitle="100"></views:Descriptor_ItemPage>
+
+        <views:Descriptor_ItemPage Grid.Row="3" Grid.Column="0" x:Name="XAML_Descriptor14" WidthTitle="80"></views:Descriptor_ItemPage>
+        <views:Descriptor_ItemPage Grid.Row="3" Grid.Column="1" x:Name="XAML_Descriptor15" WidthTitle="80"></views:Descriptor_ItemPage>
+        <views:Descriptor_ItemPage Grid.Row="3" Grid.Column="2" x:Name="XAML_Descriptor16" WidthTitle="80"></views:Descriptor_ItemPage>
+        <views:Descriptor_ItemPage Grid.Row="3" Grid.Column="3" x:Name="XAML_Descriptor17" WidthTitle="100"></views:Descriptor_ItemPage>
     </Grid>
 </Page>

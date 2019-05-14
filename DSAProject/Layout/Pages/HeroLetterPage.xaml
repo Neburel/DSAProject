@@ -13,10 +13,9 @@
             <ImageBrush Stretch="Fill" ImageSource="/Assets/Images/Paper.jpg"/>
         </Grid.Background>
         <StackPanel>
-            <views:ChracterDescriptionView VerticalAlignment="Top" HorizontalAlignment="Left"></views:ChracterDescriptionView>
-            <StackPanel Orientation="Horizontal" Spacing="5">
-                <views:AttributPage VerticalAlignment="Top"></views:AttributPage>
-                <views:ValuePage VerticalAlignment="Top"></views:ValuePage>
+            <views:ChracterDescriptionView VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0" Width="1492"></views:ChracterDescriptionView>
+            <StackPanel>
+                <views:AttributPage></views:AttributPage>
             </StackPanel>
         </StackPanel>
     </Grid>

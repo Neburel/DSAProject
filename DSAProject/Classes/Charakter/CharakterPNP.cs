@@ -37,7 +37,6 @@ namespace DSAProject.Classes.Charakter
                 new ControllValue(),
                 new WoundSwell(Attribute),
                 new Rapture(),
-                new SpeedLand(Race),
             };
             return new CharakterValues(list);
         }

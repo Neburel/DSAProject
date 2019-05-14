@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="Transparent">
 
     <Grid
         x:Name="XML_AttributSingleViewGrid"
@@ -37,11 +37,15 @@
         <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="3">
             <TextBlock x:Name="XML_MaxValue" Text="{x:Bind ViewModel.MaxValue, Mode=OneWay}" Foreground="Black" Margin="0,0,0,0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center" FontFamily="Segoe UI"/>
         </Border>
-        <Border BorderBrush="Green" BorderThickness="1"  Grid.Row="1" Grid.Column="4">
-            <Button x:Name="XML_ButtonHigherValue" Foreground="Black" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="12" FontWeight="Bold" Click="XML_ButtonHigherValue_Click">+</Button>
+        <Border BorderBrush="Green" BorderThickness="1" Grid.Row="1" Grid.Column="4" Width="30" Height="30">
+            <Button x:Name="XAML_GroundWaterMinus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Click="XML_ButtonHigherValue_Click">
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="+" FontSize="20"></TextBlock>
+            </Button>
         </Border>
-        <Border BorderBrush="Red" BorderThickness="1" Grid.Row="1" Grid.Column="5">
-            <Button x:Name="XML_ButtonReduceValue" Foreground="Black" Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="12" FontWeight="Bold" Click="XML_ButtonReduceValue_Click">-</Button>
+        <Border BorderBrush="Red" BorderThickness="1"  Grid.Row="1" Grid.Column="5" Width="30" Height="30">
+            <Button x:Name="XML_ButtonReduceValue" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" FontWeight="Bold" Click="XML_ButtonReduceValue_Click">
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="-" FontSize="20"></TextBlock>
+            </Button>
         </Border>
     </Grid>
 </Page>
