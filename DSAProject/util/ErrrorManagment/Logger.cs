@@ -53,7 +53,7 @@ namespace DSAProject.util.ErrrorManagment
         {
             if (isDebugging)
             {
-                System.Diagnostics.Debug.Print(DateTime.Now.ToString() + " " + logLevel.ToString() + ": " + message);
+                System.Diagnostics.Debug.Print(DateTime.Now.ToString() + " " + logLevel.ToString() + ": " + message + "\n");
             }
         }
       

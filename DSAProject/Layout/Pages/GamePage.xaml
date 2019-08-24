@@ -16,10 +16,21 @@
             <NavigationViewItemHeader Content="Briefe" ></NavigationViewItemHeader>
             <NavigationViewItem Icon="Home" IsEnabled="True" Tag="HeroLetter" Content="Heldenbrief"></NavigationViewItem>
             <NavigationViewItemHeader Content="Talente" ></NavigationViewItemHeader>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="TalentWeaponless" Content="Waffenlose Kampftechniken"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="TalentClose" Content="Bewaffnete Kampftechniken"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="TalentRange" Content="Fehrnkampf Kampftechniken"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="PhysicalTalent" Content="Körperliche Talente"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="SocialTalent" Content="Gesellschaftliche Talente"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="NatureTalent" Content="Natur Talente"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="KnowldageTalent" Content="Wissenstalente"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="CraftingTalent" Content="Handwerkstalente"></NavigationViewItem>
             <NavigationViewItemHeader Content="Erfolge" ></NavigationViewItemHeader>
             <NavigationViewItem Icon="Home" IsEnabled="True" Content="Belohnungen"></NavigationViewItem>
             <NavigationViewItemHeader Content="Tools" ></NavigationViewItemHeader>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Content="Charakter Speichern" Tag="save"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Content="Charakter Laden" Tag="load"></NavigationViewItem>
             <NavigationViewItem Icon="Home" IsEnabled="True" Content="Charakter erstellen/editieren" Tag="create"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Content="Talent erstellen" Tag="createTalent"></NavigationViewItem>
         </NavigationView.MenuItems>
         <Frame 
             x:Name="ContentFrame" 

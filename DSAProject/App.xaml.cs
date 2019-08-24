@@ -1,4 +1,5 @@
-﻿using DSAProject.Layout.Pages;
+﻿using DSAProject.Classes.Game;
+using DSAProject.Layout.Pages;
 using DSAProject.util.ErrrorManagment;
 
 using System;
@@ -10,6 +11,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -33,6 +35,9 @@ namespace DSAProject
         {
             ///Welches Spiel wird Gestartet
             Logger.Log(LogLevel.ActionLog, "GameStart", nameof(App), nameof(App));
+            Logger.Log(LogLevel.DebugInfo, "CurrentFolder: " + ApplicationData.Current.LocalFolder.Path, nameof(App), nameof(App));
+
+            Game.LoadTalente();
 
             this.InitializeComponent();
             this.Suspending += OnSuspending;

@@ -1,9 +1,13 @@
 ﻿using DSAProject.Classes.Charakter;
+using DSAProject.Classes.Charakter.Talente;
+using DSAProject.Classes.Charakter.Talente.TalentFighting;
+using DSAProject.Classes.Charakter.Talente.TalentGeneral;
 using DSAProject.Classes.Game;
 using DSAProject.Classes.Interfaces;
 using DSAProject.Layout;
 using DSAProject.Layout.MessageDialoge;
 using DSAProject.Layout.Pages;
+using DSAProject.Layout.Pages.ToolPages;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -50,8 +54,18 @@ namespace DSAProject
         }
         private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
-            var item = sender.MenuItems.OfType<NavigationViewItem>().First(x => (string)x.Content == (string)args.InvokedItem);
-            NavView_Navigate(item as NavigationViewItem);
+            var y = args.InvokedItem;
+            
+            if(args.InvokedItem.GetType() == typeof(string))
+            {
+                var item = sender.MenuItems.OfType<NavigationViewItem>().First(x => (string)x.Content == (string)args.InvokedItem);
+                NavView_Navigate(item as NavigationViewItem);
+            }
+            else
+            {
+                NavView_Navigate(args.InvokedItem as NavigationViewItem);
+            }
+
         }
         private void NavigationView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
         {
@@ -59,6 +73,8 @@ namespace DSAProject
         }
         private void NavView_Navigate(NavigationViewItem item)
         {
+            TalentPage page;
+
             if(currentPage != (string)item.Tag)
             {
                 switch (item.Tag)
@@ -67,12 +83,64 @@ namespace DSAProject
                         ContentFrame.Navigate(typeof(HeroLetterPage));
                         currentPage = "HeroLetter";
                         break;
+                    case "TalentWeaponless":
+                        ContentFrame.Navigate(typeof(TalentPage));
+                        page = (TalentPage)ContentFrame.Content;
+                        page.SetTalents(Game.GetTalentForCurrentCharakter().Where(x => x.GetType() == typeof(TalentWeaponless)).ToList());
+                        currentPage = "TalentWeaponless";
+                        break;
+                    case "TalentClose":
+                        ContentFrame.Navigate(typeof(TalentPage));
+                        page = (TalentPage)ContentFrame.Content;
+                        page.SetTalents(Game.GetTalentForCurrentCharakter().Where(x => x.GetType() == typeof(TalentClose)).ToList());
+                        currentPage = "TalentClose";
+                        break;
+                    case "TalentRange":
+                        ContentFrame.Navigate(typeof(TalentPage));
+                        page = (TalentPage)ContentFrame.Content;
+                        page.SetTalents(Game.GetTalentForCurrentCharakter().Where(x => x.GetType() == typeof(TalentRange)).ToList());
+                        currentPage = "TalentRange";
+                        break;
+                    case "PhysicalTalent":
+                        ContentFrame.Navigate(typeof(TalentPage));
+                        page = (TalentPage)ContentFrame.Content;
+                        page.SetTalents(Game.GetTalentForCurrentCharakter().Where(x => x.GetType() == typeof(TalentPhysical)).ToList());
+                        currentPage = "PhysicalTalent";
+                        break;
+                    case "SocialTalent":
+                        ContentFrame.Navigate(typeof(TalentPage));
+                        page = (TalentPage)ContentFrame.Content;
+                        page.SetTalents(Game.GetTalentForCurrentCharakter().Where(x => x.GetType() == typeof(TalentSocial)).ToList());
+                        currentPage = "SocialTalent";
+                        break;
+                    case "NatureTalent":
+                        ContentFrame.Navigate(typeof(TalentPage));
+                        page = (TalentPage)ContentFrame.Content;
+                        page.SetTalents(Game.GetTalentForCurrentCharakter().Where(x => x.GetType() == typeof(TalentNature)).ToList());
+                        currentPage = "NatureTalent";
+                        break;
+                    case "KnowldageTalent":
+                        ContentFrame.Navigate(typeof(TalentPage));
+                        page = (TalentPage)ContentFrame.Content;
+                        page.SetTalents(Game.GetTalentForCurrentCharakter().Where(x => x.GetType() == typeof(TalentKnowldage)).ToList());
+                        currentPage = "KnowldageTalent";
+                        break;
+                    case "CraftingTalent":
+                        ContentFrame.Navigate(typeof(TalentPage));
+                        page = (TalentPage)ContentFrame.Content;
+                        page.SetTalents(Game.GetTalentForCurrentCharakter().Where(x => x.GetType() == typeof(TalentCrafting)).ToList());
+                        currentPage = "CraftingTalent";
+                        break;
                     case "create":
                         ContentFrame.Navigate(typeof(CharakterCreation));
                         currentPage = "create";
                         break;
+                    case "createTalent":
+                        ContentFrame.Navigate(typeof(CreateTalent));
+                        currentPage = "createTalent";
+                        break;
                     case "save":
-                        Game.Charakter.Save("Test", out util.ErrrorManagment.Error error);
+                        Game.Charakter.Save(out util.ErrrorManagment.Error error);
                         SaveDialog.ShowDialog(error);
                         break;
                     case "load":

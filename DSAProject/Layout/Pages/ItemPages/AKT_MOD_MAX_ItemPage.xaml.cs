@@ -32,30 +32,28 @@ namespace DSAProject.Layout.Views
         #endregion
         #region Properties
         public AKT_MOD_MAX_ViewModel ViewModel = new AKT_MOD_MAX_ViewModel();
-        public CharakterAttribut Item { get; set; }
-        public GridLength GetWidthName { get; } = new GridLength(110);
-        public GridLength GetBoxLength { get; } = new GridLength(30);
-        public string ItemName 
+        public bool IsValueEditable
         {
-            get => ViewModel.Name;
-            set { ViewModel.Name = value; }
-        }
-        public int AKTValue
-        {
-            get => ViewModel.AKTValue;
+            get => ViewModel.IsValueEditable;
             set
             {
-                ViewModel.AKTValue = value;
+                ViewModel.IsValueEditable = value;
             }
         }
-        public int MODValue
+        public bool IsModVisible
         {
-            get => ViewModel.MODValue;
-            set => ViewModel.MODValue = value;
+            get => ViewModel.IsModVisible;
+            set
+            {
+                ViewModel.IsModVisible = value;
+            }
         }
+        public GridLength GetWidthName { get; } = new GridLength(130);
+        public GridLength GetBoxLength { get; } = new GridLength(30);
         #endregion
-        public AKT_MOD_MAX_ItemPage()
+        public AKT_MOD_MAX_ItemPage(double WidthName)
         {
+            GetWidthName = new GridLength(WidthName);
             InitializeComponent();
         }
         private void XML_ButtonReduceValue_Click(object sender, RoutedEventArgs e)

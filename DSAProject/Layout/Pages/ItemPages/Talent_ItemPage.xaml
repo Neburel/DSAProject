@@ -1,0 +1,133 @@
+﻿<Page
+    x:Class="DSAProject.Layout.Pages.ItemPages.Talent_ItemPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DSAProject.Layout.Pages.ItemPages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="Transparent">
+    
+    <Grid Margin="0, 0, 0, 0" Padding="0, 0, 0, 0" RowSpacing="0" ColumnSpacing="0" BorderThickness="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="Auto" MaxWidth="80"/>
+            <ColumnDefinition Width="2*" MaxWidth="100"/>
+            <ColumnDefinition Width="Auto" MaxWidth="200"/>
+            <ColumnDefinition Width="2*" MaxWidth="40"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <Border BorderBrush="LightSlateGray" Grid.Row="0" Grid.Column="0" BorderThickness="1">
+            <TextBlock x:Name="XAML_Title" TextWrapping="Wrap" Text="{x:Bind ViewModel.TalentName }" TextAlignment="Center" HorizontalTextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        </Border>
+
+        <Border BorderBrush="LightSlateGray" Grid.Row="1" Grid.Column="1" BorderThickness="1">
+            <TextBlock x:Name="XAML_ProbeValue" TextWrapping="Wrap" Text="{x:Bind ViewModel.Probe, Mode=TwoWay}" TextAlignment="Center" HorizontalTextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        </Border>
+        <Border BorderBrush="LightSlateGray" Grid.Row="1" Grid.Column="2" BorderThickness="1" Visibility="{x:Bind ViewModel.IsProbeTextVisibility, Mode=TwoWay}" Width="80">
+            <TextBlock x:Name="XAML_ProbeText" TextWrapping="Wrap" Text="{x:Bind ViewModel.ProbeText, Mode=TwoWay}" TextAlignment="Center" HorizontalTextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        </Border>
+        
+        <Border BorderBrush="LightSlateGray" Grid.Row="2" Grid.Column="3" BorderThickness="1">
+            <Grid ColumnSpacing="1" Padding="1,1,1,1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto" MaxWidth="26"/>
+                    <ColumnDefinition Width="Auto" MaxWidth="26"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock          TextWrapping="Wrap" Text="{x:Bind ViewModel.TAW, Mode=TwoWay}" Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <Border             BorderBrush="Green" BorderThickness="1" Grid.Column="1" Width="26" Height="26">
+                    <Button         x:Name="XAML_PlusTAWButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Click="XAML_PlusTAWButton_Click">
+                        <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="+" FontSize="10" FontStretch="UltraExpanded" FontWeight="ExtraBold"></TextBlock>
+                    </Button>
+                </Border>
+                <Border             BorderBrush="Red" BorderThickness="1"  Grid.Column="2" Width="26" Height="26">
+                    <Button         x:Name="XAML_MinusTAWButton" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" Click="XAML_MinusTAWButton_Click">
+                        <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="-" FontSize="10"></TextBlock>
+                    </Button>
+                </Border>
+            </Grid>
+        </Border>
+
+        <Border BorderBrush="LightSlateGray" Grid.Row="3" Grid.Column="4" BorderThickness="1" Visibility="{x:Bind ViewModel.IsATPAVisibility, Mode=TwoWay}" Width="200">
+            <Grid ColumnSpacing="1" Padding="1,1,1,1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" MaxWidth="26"/>
+                    <ColumnDefinition Width="*" MaxWidth="26"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" MaxWidth="26"/>
+                    <ColumnDefinition Width="*" MaxWidth="26"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock          TextWrapping="Wrap" Text="{x:Bind ViewModel.AT, Mode=TwoWay}" Grid.Column="0"  TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <Border             BorderBrush="Green" BorderThickness="1" Grid.Column="1" Width="26" Height="26">
+                    <Button         x:Name="XAML_PlusATButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Click="XAML_PlusATButton_Click">
+                        <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="+" FontSize="8" FontStretch="UltraExpanded" FontWeight="ExtraBold"></TextBlock>
+                    </Button>
+                </Border>
+                <Border             BorderBrush="Red" BorderThickness="1"  Grid.Column="2" Width="26" Height="26">
+                    <Button         x:Name="XAML_MinusATButton"  HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" Click="XAML_MinusATButton_Click">
+                        <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="-" FontSize="10"></TextBlock>
+                    </Button>
+                </Border>
+
+                <TextBlock          TextWrapping="Wrap" Text="{x:Bind ViewModel.PA, Mode=TwoWay}" Grid.Column="3"  TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <Border             BorderBrush="Green" BorderThickness="1" Grid.Column="4" Width="26" Height="26">
+                    <Button         x:Name="XAML_PlusPAButton"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Click="XAML_PlusPAButton_Click">
+                        <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="+" FontSize="8" FontStretch="UltraExpanded" FontWeight="ExtraBold"></TextBlock>
+                    </Button>
+                </Border>
+                <Border             BorderBrush="Red" BorderThickness="1"  Grid.Column="5" Width="26" Height="26">
+                    <Button         x:Name="XAML_MinusPAButton"  HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" Click="XAML_MinusPAButton_Click">
+                        <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="-" FontSize="10"></TextBlock>
+                    </Button>
+                </Border>
+            </Grid>
+        </Border>
+
+        <Border BorderBrush="LightSlateGray" Grid.Row="4" Grid.Column="5" BorderThickness="1">
+            <TextBlock x:Name="XAML_BE" TextWrapping="Wrap" Text="{x:Bind ViewModel.BE }" TextAlignment="Center" HorizontalTextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" ></TextBlock>
+        </Border>
+
+        <Border BorderBrush="LightSlateGray" Grid.Row="0" Grid.Column="6" BorderThickness="1">
+            <TextBlock x:Name="Spezialisierung" TextWrapping="Wrap"></TextBlock>
+        </Border>
+
+        <Border BorderBrush="LightSlateGray" Grid.Row="0" Grid.Column="7" BorderThickness="1">
+            <TextBlock 
+                x:Name="XANL_Requirements" 
+                TextWrapping="Wrap" 
+                VerticalAlignment="Center" 
+                HorizontalAlignment="Center" 
+                TextAlignment="Center" FontFamily="Segoe UI"> 
+                
+                <Run Foreground="Red" Text="{x:Bind ViewModel.RequirementStringFreeText}" FontSize="10"/>
+                <Run Foreground="White" Text="{x:Bind ViewModel.RequirementStringRest}" FontSize="10"/>
+            </TextBlock>
+        </Border>
+
+        <Border BorderBrush="LightSlateGray" Grid.Row="0" Grid.Column="8" BorderThickness="1">
+            <TextBlock
+                x:Name="XAML_DeductionString"
+                TextWrapping="Wrap" 
+                VerticalAlignment="Center" 
+                HorizontalAlignment="Center" 
+                TextAlignment="Center">
+                
+                <Run Foreground="Red"   Text="{x:Bind ViewModel.DeductionStringFreeText}"   FontSize="10"></Run>
+                <Run Foreground="White" Text="{x:Bind ViewModel.DeductionStringTalent}"     FontSize="10"></Run>
+            </TextBlock>
+        </Border>
+
+    </Grid>
+</Page>

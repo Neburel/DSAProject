@@ -17,10 +17,10 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300"/>
-            <ColumnDefinition Width="300"/>
-            <ColumnDefinition Width="300"/>
-            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*" MaxWidth="300"/>
+            <ColumnDefinition Width="*" MaxWidth="300"/>
+            <ColumnDefinition Width="*" MaxWidth="300"/>
+            <ColumnDefinition Width="*" MaxWidth="300"/>
         </Grid.ColumnDefinitions>
         
         <views:Descriptor_ItemPage Grid.Row="0" Grid.Column="0" x:Name="XAML_Descriptor0" WidthTitle="80"></views:Descriptor_ItemPage>

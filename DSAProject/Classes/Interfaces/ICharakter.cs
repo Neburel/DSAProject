@@ -11,11 +11,14 @@ namespace DSAProject.Classes.Interfaces
 {
     public interface ICharakter
     {
+        string Name { get; set; }
         ICharakterValues Values { get; }
         ICharakterAttribut Attribute { get; }
+        CharakterTalente CharakterTalente { get; }
         CharakterDescription CharakterDescriptions { get; }
+        
 
-        void Save(string fileName, out Error error);
+        void Save(out Error error);
         void Load(string fileName, out Error error);
     }
 }

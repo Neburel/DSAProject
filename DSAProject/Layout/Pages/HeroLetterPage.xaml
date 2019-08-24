@@ -12,10 +12,22 @@
         <Grid.Background>
             <ImageBrush Stretch="Fill" ImageSource="/Assets/Images/Paper.jpg"/>
         </Grid.Background>
-        <StackPanel>
-            <views:ChracterDescriptionView VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,0" Width="1492"></views:ChracterDescriptionView>
-            <StackPanel>
-                <views:AttributPage></views:AttributPage>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border BorderBrush="Gray" BorderThickness="1">
+            <views:ChracterDescriptionView Grid.Row="0" VerticalAlignment="Top" Margin="0,0,0,0" HorizontalAlignment="Stretch"/>
+        </Border>
+
+        <StackPanel Grid.Row="1">
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <views:AttributPage/>
+                <views:ValuePage VerticalAlignment="Top"/>
             </StackPanel>
         </StackPanel>
     </Grid>

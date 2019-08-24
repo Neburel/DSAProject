@@ -31,7 +31,7 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
                 Value           = (int)Math.Ceiling(calculateV); ;
                 if (Value != oldValue)
                 {
-                    ValueChanged(this, null);
+                    ValueChanged?.Invoke(this, null);
                 }
             };
         }

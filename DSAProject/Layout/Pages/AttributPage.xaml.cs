@@ -18,27 +18,35 @@ namespace DSAProject.Layout.Pages
             XAML_Grid.RowDefinitions.Add(new RowDefinition());
 
             var attribute   = Game.Charakter.Attribute;
+
+            #region Create Summe
+            XAML_Grid.RowDefinitions.Add(new RowDefinition());
+            var newSumView = new AKT_MOD_MAX_ItemPage(110);
+            newSumView.ViewModel.Name = "Gesamt";
+            newSumView.ViewModel.IsModVisible = false;
+            newSumView.ViewModel.IsValueEditable = false;
+            newSumView.ViewModel.AKTValue = attribute.GetSumValueAttributeAKT;
+            newSumView.ViewModel.MODValue = attribute.GetSumValueAttributMod;
+            #endregion
+
             var i           = 1;
             foreach(var item in attribute.UsedAttributs)
             {
                 XAML_Grid.RowDefinitions.Add(new RowDefinition());
-                var newView = new AKT_MOD_MAX_ItemPage
-                {
-                    Item = item,
-                    ItemName = item.ToString(),
-                    AKTValue = attribute.GetAttributAKTValue(item, out Error error)
-                };
-
-                /*
+                #region NewView
+                var newView = new AKT_MOD_MAX_ItemPage(110);
+                newView.ViewModel.AKTValue  = attribute.GetAttributAKTValue(item, out Error error);
+                newView.ViewModel.Name      = item.ToString();
+                #endregion
                 attribute.ChangedAttributAKTEvent += (sender, args) =>
                 {
                     if (args == item)
                     {
                         var value = attribute.GetAttributAKTValue(item, out error);
-                        newView.AKTValue = value;
+                        newView.ViewModel.AKTValue = value;
+                        newSumView.ViewModel.AKTValue = attribute.GetSumValueAttributeAKT; 
                     }
                 };
-                */
 
 
                 newView.Event_ValueHigher += (sender, args) =>
@@ -57,6 +65,10 @@ namespace DSAProject.Layout.Pages
                 Grid.SetRow(newView, i);
                 i++;
             }
+            #region Set Summe Row
+            XAML_Grid.Children.Add(newSumView);
+            Grid.SetRow(newSumView, i);
+            #endregion
         }
     }
 }

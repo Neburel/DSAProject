@@ -17,6 +17,8 @@ namespace DSAProject.Classes.Interfaces
         #endregion
         #region Properties
         List<CharakterAttribut> UsedAttributs { get; }
+        int GetSumValueAttributeAKT { get; }
+        int GetSumValueAttributMod { get; }
         #endregion
         #region Setter
         void SetAttributAKTValue(CharakterAttribut attribut, int value, out Error error);

@@ -34,7 +34,7 @@ namespace DSAProject.Classes.Charakter
                 item.ValueChanged += (sender, args) =>
                 {
                     AktValues[item] = item.Value;
-                    ChangedAKTEvent(this, item);
+                    ChangedAKTEvent?.Invoke(this, item);
                 };
             }
         }

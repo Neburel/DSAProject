@@ -32,19 +32,20 @@ namespace DSAProject.Layout.Pages
         public ValuePage()
         {
             this.InitializeComponent();
-            XAML_Grid.RowDefinitions.Add(new RowDefinition());
+            XAML_Grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0, GridUnitType.Star), MaxHeight = 200 });
 
             var values  = Game.Charakter.Values;
             var i       = 1;
         
             foreach(var item in values.UsedValues)
             {
-                XAML_Grid.RowDefinitions.Add(new RowDefinition());
-                var newView = new AKT_MOD_MAX_ItemPage
-                {
-                    ItemName = item.Name,
-                    AKTValue = values.GetAKTValue(item, out Error error)
-                };
+                XAML_Grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0, GridUnitType.Star), MaxHeight = 200 });
+                #region NewView
+                var newView                 = new AKT_MOD_MAX_ItemPage(130);
+                newView.ViewModel.Name      = item.Name;
+                newView.ViewModel.AKTValue  = values.GetAKTValue(item, out Error error);
+                newView.IsValueEditable     = false;
+                #endregion
                 dic.Add(item, newView);
                 XAML_Grid.Children.Add(newView);
                 Grid.SetRow(newView, i);
@@ -56,7 +57,7 @@ namespace DSAProject.Layout.Pages
                 var ok = dic.TryGetValue(args, out AKT_MOD_MAX_ItemPage value);
                 if(ok == true)
                 {
-                    value.AKTValue = values.GetAKTValue(args, out Error error);
+                    value.ViewModel.AKTValue = values.GetAKTValue(args, out Error error);
                     Logger.Log(error, nameof(ValuePage), "ChangedAKTEvent");
                 }
             };

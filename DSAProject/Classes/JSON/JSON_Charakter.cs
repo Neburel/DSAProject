@@ -12,6 +12,8 @@ namespace DSAProject.Classes.JSON
     public class JSON_Charakter : AbstractJSONSerializable<JSON_Charakter>
     {
         [DataMember]
-        public Dictionary<CharakterAttribut, int> AttributeBaseValue {get; set;}
+        public Dictionary<CharakterAttribut, int> AttributeBaseValue { get; set; }
+        [DataMember]
+        public List<JSON_Descriptor> Descriptors { get; set; }
     }
 }

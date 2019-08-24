@@ -25,26 +25,26 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="{x:Bind GetBoxLength}"/>
         </Grid.RowDefinitions>
-        <Border BorderBrush="Black" Grid.Row="1" Grid.Column="0">
+        <Border BorderBrush="Gray" Grid.Row="1" Grid.Column="0">
             <TextBlock x:Name="XML_AttributName" Foreground="Black" Margin="0,0,0,0" Text="{x:Bind ViewModel.Name}" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="24"/>
         </Border>
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="1">
+        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="1" Grid.Column="1">
             <TextBlock x:Name="XML_CurrentValue" Text="{x:Bind ViewModel.AKTValue, Mode=OneWay}" Foreground="Black" Margin="0,0,0,0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center"/>
         </Border>
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="2">
+        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="1" Grid.Column="2" Visibility="{x:Bind ViewModel.IsModVisible }">
             <TextBlock x:Name="XML_ExtraValue" Text="{x:Bind ViewModel.MODValue, Mode=OneWay}" Foreground="Black" Margin="0,0,0,0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center"/>
         </Border>
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="3">
+        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="1" Grid.Column="3">
             <TextBlock x:Name="XML_MaxValue" Text="{x:Bind ViewModel.MaxValue, Mode=OneWay}" Foreground="Black" Margin="0,0,0,0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center" FontFamily="Segoe UI"/>
         </Border>
-        <Border BorderBrush="Green" BorderThickness="1" Grid.Row="1" Grid.Column="4" Width="30" Height="30">
-            <Button x:Name="XAML_GroundWaterMinus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Click="XML_ButtonHigherValue_Click">
-                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="+" FontSize="20"></TextBlock>
+        <Border x:Name="XML_ButtonHigherValueBorder" BorderBrush="Green" BorderThickness="1" Grid.Row="1" Grid.Column="4" Width="26" Height="26" Visibility="{x:Bind IsValueEditable}">
+            <Button x:Name="XML_ButtonHigherValue" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Click="XML_ButtonHigherValue_Click">
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="+" FontSize="8" FontStretch="UltraExpanded" FontWeight="ExtraBold"></TextBlock>
             </Button>
         </Border>
-        <Border BorderBrush="Red" BorderThickness="1"  Grid.Row="1" Grid.Column="5" Width="30" Height="30">
-            <Button x:Name="XML_ButtonReduceValue" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" FontWeight="Bold" Click="XML_ButtonReduceValue_Click">
-                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="-" FontSize="20"></TextBlock>
+        <Border x:Name="XML_ButtonReduceValueBorder" BorderBrush="Red" BorderThickness="1"  Grid.Row="1" Grid.Column="5" Width="26" Height="26" Visibility="{x:Bind IsValueEditable}">
+            <Button x:Name="XML_ButtonReduceValue" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" Click="XML_ButtonReduceValue_Click">
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="-" FontSize="10"></TextBlock>
             </Button>
         </Border>
     </Grid>

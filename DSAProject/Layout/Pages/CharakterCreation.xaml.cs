@@ -31,6 +31,12 @@ namespace DSAProject.Layout.Pages
         faith               = 15
         
     }
+    enum CreateNewChar
+    {
+        DSA = 1,
+        PNP = 2,
+        Abbruch = 3
+    }
     /// <summary>
     /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
     /// </summary>
@@ -38,9 +44,6 @@ namespace DSAProject.Layout.Pages
     {
         #region Variables
         private string DSA_CultureName = "Kultur-/en";
-
-        private bool checkboxDisplayLayoutOnly;
-        private string lastRadioButtonTag;
         #endregion
         #region Properties Seiten Einstellugen
         public int TextFontSize { get; } = 26;
@@ -120,6 +123,10 @@ namespace DSAProject.Layout.Pages
             ViewModel.PlayerWeight.Priority     = (int)CreationOrder.playerWight;
             ViewModel.PlayerAdressName.Priority = (int)CreationOrder.playerAdressName;
             #endregion
+            ViewModel.PlayerName.PropertyChanged += (sender, args) =>
+            {
+                Game.Charakter.Name = ViewModel.PlayerName.DescriptionText;
+            };
             #region ExampleDate
             ViewModel.Age.DescriptionText               = "25";
             ViewModel.Race.DescriptionText              = "Tiefling";
@@ -136,42 +143,8 @@ namespace DSAProject.Layout.Pages
             ViewModel.PlayerHeight.DescriptionText      = "168";
             ViewModel.PlayerWeight.DescriptionText      = "50";
             ViewModel.PlayerAdressName.DescriptionText  = "Kaza";
-
             #endregion
-
-
-
             CharakterChange();
-            checkboxDisplayLayoutOnly = true;
-            XAML_RadioButtonGameTypValueDSA.IsChecked = true;
-        }
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-
-            checkboxDisplayLayoutOnly = true;
-            var ctype = Game.Charakter.GetType();
-            if(ctype == typeof(CharakterDSA))
-            {
-                XAML_RadioButtonGameTypValueDSA.IsChecked = true;
-            } 
-            else if(ctype == typeof(CharakterPNP))
-            {
-                XAML_RadioButtonGameTypValuePNP.IsChecked = true;
-            }
-        }
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            base.OnNavigatedFrom(e);
-
-            System.Diagnostics.Debug.WriteLine("----------------------------------------------------------------------------------------------------------------");
-            foreach (var item in Game.Charakter.CharakterDescriptions.Descriptions)
-            {
-                System.Diagnostics.Debug.WriteLine(item.DescriptionTitle + " " + item.DescriptionText);
-            }
-            System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
-            System.Diagnostics.Debug.WriteLine(ViewModel.EyeColor.DescriptionTitle + " " + ViewModel.EyeColor.DescriptionText);
-            System.Diagnostics.Debug.WriteLine("----------------------------------------------------------------------------------------------------------------");
         }
         /// <summary>
         /// Der Charakter muss vor dem Aufruf angepasst worden sein
@@ -215,77 +188,53 @@ namespace DSAProject.Layout.Pages
             }
             return ret;
         }
-        private async void RadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-            var createdNewChar = false;
-
-            if (sender is RadioButton rb)
-            {
-                string gameTypeName = rb.Tag.ToString();
-                switch (gameTypeName)
-                {
-                    case "DSA":
-                        if (!checkboxDisplayLayoutOnly)
-                        {
-                            if (await DisplayWarningDialog())
-                            {
-                                Game.Charakter = new CharakterDSA();
-                                createdNewChar = true;
-                            }
-                        }
-                        if(createdNewChar || checkboxDisplayLayoutOnly)
-                        {
-                            #region setDSALayout
-                            ViewModel.CurrentDate.DescriptionText   = Game.CurrentYearDSA;
-                            ViewModel.Culture.DescriptionTitle      = DSA_CultureName;
-                            DisplayTech = false;
-                            #endregion
-                        }
-                        break;
-                    case "PNP":
-                        if (!checkboxDisplayLayoutOnly)
-                        {
-                            if (await DisplayWarningDialog())
-                            {
-                                Game.Charakter = new CharakterPNP();
-                                createdNewChar = true;
-                            }
-                        }
-                        if(createdNewChar || checkboxDisplayLayoutOnly)
-                        {
-                            #region setDSALayout
-                            ViewModel.CurrentDate.DescriptionText = Game.CurrentYearPNP;
-                            ViewModel.Culture.DescriptionTitle = "Vorgeschichte-/en:";
-                            DisplayTech = true;
-                            #endregion
-                        }
-                        break;
-                }
-                if (createdNewChar)
-                {
-                    lastRadioButtonTag = gameTypeName;
-                    CharakterChange();
-                } 
-                else if(checkboxDisplayLayoutOnly) 
-                {
-                    checkboxDisplayLayoutOnly = false;
-                    lastRadioButtonTag = gameTypeName;
-                } 
-                else
-                {
-                    checkboxDisplayLayoutOnly = true;
-                    if (lastRadioButtonTag == "DSA")
-                    {
-                        XAML_RadioButtonGameTypValueDSA.IsChecked = true;
-                    } 
-                    else if (lastRadioButtonTag == "PNP")
-                    {
-                        XAML_RadioButtonGameTypValuePNP.IsChecked = true;
-                    }
-                }
-            }
-        }
         #region Buttons
+        private async void XAML_ButtonCreate_Click(object sender, RoutedEventArgs e)
+        {
+            var result = await DisplayCreateNewDialog();
+            if (result == CreateNewChar.DSA)
+            {
+                Game.Charakter = new CharakterDSA();
+                #region setDSALayout
+                ViewModel.CurrentDate.DescriptionText = Game.CurrentYearDSA;
+                ViewModel.Culture.DescriptionTitle = DSA_CultureName;
+                DisplayTech = false;
+                #endregion
+
+            } else if (result == CreateNewChar.PNP)
+            {
+                Game.Charakter = new CharakterPNP();
+                #region setPNPLayout
+                ViewModel.CurrentDate.DescriptionText = Game.CurrentYearPNP;
+                ViewModel.Culture.DescriptionTitle = "Vorgeschichte-/en:";
+                DisplayTech = true;
+                #endregion
+            }
+
+            if(result != CreateNewChar.Abbruch)
+            {
+                #region Clear
+                ViewModel.Age.DescriptionText = string.Empty;
+                ViewModel.Race.DescriptionText = string.Empty;
+                ViewModel.Faith.DescriptionText = string.Empty;
+                ViewModel.Gender.DescriptionText = string.Empty;
+                ViewModel.Culture.DescriptionText = string.Empty;
+                ViewModel.EyeColor.DescriptionText = string.Empty;
+                ViewModel.HairColor.DescriptionText = string.Empty;
+                ViewModel.SkinColor.DescriptionText = string.Empty;
+                ViewModel.BirthDate.DescriptionText = string.Empty;
+                ViewModel.PlayerName.DescriptionText = string.Empty;
+                ViewModel.Profession.DescriptionText = string.Empty;
+                ViewModel.Familistatus.DescriptionText = string.Empty;
+                ViewModel.PlayerHeight.DescriptionText = string.Empty;
+                ViewModel.PlayerWeight.DescriptionText = string.Empty;
+                ViewModel.PlayerAdressName.DescriptionText = string.Empty;
+                #endregion
+                CharakterChange();
+            }
+
+
+        }
         private void XAML_AirSpeedMinus_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.AirSpeed = ViewModel.AirSpeed - 1;
@@ -337,6 +286,35 @@ namespace DSAProject.Layout.Pages
         }
         #endregion
         #region Dialog
+
+        private async Task<CreateNewChar> DisplayCreateNewDialog()
+        {
+            ContentDialog newDialog = new ContentDialog
+            {
+                Title = "Charakter Erstellen",
+                Content = "Sie sind nun Dabei einen neuen Charakter zu erstellen",
+                CloseButtonText = "Abbrechen",
+                PrimaryButtonText = "DSA",
+                SecondaryButtonText = "PNP",
+
+                FontFamily =  new Windows.UI.Xaml.Media.FontFamily("French Script MT"),
+                FontSize = TextFontSize
+            };
+            var result = await newDialog.ShowAsync();
+            CreateNewChar ret = CreateNewChar.Abbruch;
+
+            if(result == ContentDialogResult.Primary)
+            {
+                ret = CreateNewChar.DSA;
+            }
+            else if(result == ContentDialogResult.Secondary)
+            {
+                ret = CreateNewChar.PNP;
+            }
+
+            return ret;
+        }
+
         private async Task<bool> DisplayWarningDialog()
         {
             ContentDialog noWifiDialog = new ContentDialog

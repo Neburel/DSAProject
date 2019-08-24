@@ -12,6 +12,8 @@ namespace DSAProject.Layout.ViewModels
     public class AKT_MOD_MAX_ViewModel : AbstractPropertyChanged
     {
         #region Variables
+        private bool isModVisible = true;
+        private bool isValueEditable = true;
         private string name;
         private int aktValue;
         private int modValue;
@@ -50,6 +52,25 @@ namespace DSAProject.Layout.ViewModels
         {
             get => AKTValue + MODValue;
         }
+        public bool IsValueEditable
+        {
+            get => isValueEditable;
+            set
+            {
+                isValueEditable = value;
+                OnPropertyChanged(nameof(IsValueEditable));
+            }
+        }
+        public bool IsModVisible
+        {
+            get => isModVisible;
+            set
+            {
+                isModVisible = value;
+                OnPropertyChanged(nameof(IsModVisible));
+            }
+        }
         #endregion
+
     }
 }

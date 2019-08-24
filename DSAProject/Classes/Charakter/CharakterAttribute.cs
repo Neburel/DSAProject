@@ -17,6 +17,11 @@ namespace DSAProject.Classes.Charakter
         #endregion
         #region Properties
         public List<CharakterAttribut> UsedAttributs { get => aktValues.Keys.ToList(); }
+        public int GetSumValueAttributeAKT
+        {
+            get => aktValues.Sum(x => x.Value);
+        }
+        public int GetSumValueAttributMod { get => modValue.Sum(x => x.Value); }
         #endregion
         #region Variables
         private Dictionary<CharakterAttribut, int> aktValues;

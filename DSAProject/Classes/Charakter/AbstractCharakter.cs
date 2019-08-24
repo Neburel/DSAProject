@@ -12,17 +12,22 @@ namespace DSAProject.Classes.Charakter
     public abstract class AbstractCharakter : ICharakter
     {
         #region Properties
+        private Guid ID { get; set; } 
+        public String Name { get; set; }
         public ICharakterValues Values { get; private set; }
         public ICharakterAttribut Attribute { get; private set; }
-        private static string SaveFolder => Game.Game.CharakterSaveFolder;
-        public CharakterDescription CharakterDescriptions { get; private set; } = new CharakterDescription();
+        public CharakterTalente  CharakterTalente { get; private set; }
+        public CharakterDescription CharakterDescriptions { get; private set; } 
         #endregion
         public AbstractCharakter()
         {
-            Attribute   = CreateAttribute();
-            Values      = CreateValues();
+            ID                      = Game.Game.GenerateNextCharakterGUID();
+            Attribute               = CreateAttribute();
+            Values                  = CreateValues();
+            CharakterTalente        = new CharakterTalente(this);
+            CharakterDescriptions   = new CharakterDescription();
 
-            if(Attribute == null )
+            if (Attribute == null )
             {
                 throw new ArgumentNullException(nameof(Attribute) + " Die Attribute wurde nicht gesetzt. Bitte Implementieren sie die dazu Notwendige Methode");
             }
@@ -36,48 +41,90 @@ namespace DSAProject.Classes.Charakter
         protected abstract ICharakterAttribut CreateAttribute();
         #endregion
         #region Methods
-        public void Save(string fileName, out Error error)
+        public void Save(out Error error)
         {
             error           = new Error();
             var charakter   = new JSON_Charakter();
-            #region Attribute Speichern
-            var attributeDictionary = new Dictionary<CharakterAttribut, int>();
-            var attribute           = Attribute.UsedAttributs;
 
-            foreach(var attribut in attribute)
+            if(Name == null || Name == string.Empty)
             {
-                error = null;
-                var value = Attribute.GetAttributAKTValue(attribut, out error);
+                error = new Error
+                {
+                    ErrorCode = ErrorCode.Error,
+                    Message = "Der Charakter benötigt einen Namen"
+                };
+            }
+            else
+            {
+                #region Descriptor Speichern
+                charakter.Descriptors = new List<JSON_Descriptor>();
+                foreach(var item in this.CharakterDescriptions.Descriptions)
+                {
+                    charakter.Descriptors.Add(new JSON_Descriptor
+                    {
+                        Priority            = item.Priority,
+                        DescriptionTitle    = item.DescriptionTitle,
+                        DescriptionText     = item.DescriptionText
+                    });
+                }
+
+
+                #endregion
+                #region Attribute Speichern
+                var attributeDictionary = new Dictionary<CharakterAttribut, int>();
+                var attribute           = Attribute.UsedAttributs;
+
+                foreach(var attribut in attribute)
+                {
+                    error = null;
+                    var value = Attribute.GetAttributAKTValue(attribut, out error);
+                    if(error == null)
+                    {
+                        attributeDictionary.Add(attribut, value);
+                    } 
+                    else
+                    {
+                        var internError = new Error
+                        {
+                            ErrorCode = ErrorCode.Error,
+                            Message = "Beim Speichern des Attributes " + attribut.ToString() + " ist ein Fehler aufgetreten: " + error.Message
+                        };
+                        Logger.Log(LogLevel.ErrorLog, internError.Message, nameof(AbstractCharakter), nameof(Save));
+                        error = internError;
+                        break;
+                    }
+                }
+                charakter.AttributeBaseValue = attributeDictionary;
+                #endregion
+                #region Speichern in Datei
                 if(error == null)
                 {
-                    attributeDictionary.Add(attribut, value);
-                } 
-                else
-                {
-                    var internError = new Error
-                    {
-                        ErrorCode = ErrorCode.Error,
-                        Message = "Beim Speichern des Attributes " + attribut.ToString() + " ist ein Fehler aufgetreten: " + error.Message
-                    };
-                    Logger.Log(LogLevel.ErrorLog, internError.Message, nameof(AbstractCharakter), nameof(Save));
-                    error = internError;
-                    break;
+                    var filePath = Path.Combine(Game.Game.CharakterSaveFolder, ID.ToString() + ".save");
+                    FileManagment.WriteToFile(charakter.JSONContent, filePath, Windows.Storage.CreationCollisionOption.ReplaceExisting, out error);
+
+                    if(error == null) {
+                        #region Meta File
+                        var metaFile = new JSON_CharakterMetaData
+                        {
+                            ID          = ID,
+                            Name        = Name,
+                            SaveFile    = ID.ToString() + ".save",
+                            SaveTime    = DateTime.Now,
+                            Game        = this.GetType().ToString()
+                        };
+                        var y = DateTime.Now;
+                        var metaFilePath = Path.Combine(Game.Game.CharakterMetaFolder, ID.ToString() + ".save");
+                        FileManagment.WriteToFile(metaFile.JSONContent, metaFilePath, Windows.Storage.CreationCollisionOption.ReplaceExisting, out error);
+                        #endregion
+                    }
                 }
+                #endregion
             }
-            charakter.AttributeBaseValue = attributeDictionary;
-            #endregion
-            #region Speichern in Datei
-            if(error == null)
-            {
-                var file = Path.Combine(SaveFolder, fileName);
-                FileManagment.WriteToFile(charakter.JSONContent, file, Windows.Storage.CreationCollisionOption.ReplaceExisting, out error);
-            }
-            #endregion
         }
         public void Load(string fileName, out Error error)
         {
             error       = new Error();
-            var file    = Path.Combine(SaveFolder, fileName);
+            var file    = Path.Combine(Game.Game.CharakterSaveFolder, fileName);
             var ret     = FileManagment.LoadTextFile(file, out error);
 
             if(error == null)
@@ -95,8 +142,19 @@ namespace DSAProject.Classes.Charakter
                 #endregion
                 else
                 {
+                    #region Descriptoren Laden
+                    foreach(var item in json_charakter.Descriptors)
+                    {
+                        this.CharakterDescriptions.AddDescripton(new Descriptor
+                        {
+                            Priority = item.Priority,
+                            DescriptionText = item.DescriptionText,
+                            DescriptionTitle = item.DescriptionTitle
+                        });
+                    }
+                    #endregion
                     #region Attribute Laden
-                    foreach(var item in json_charakter.AttributeBaseValue.Keys)
+                    foreach (var item in json_charakter.AttributeBaseValue.Keys)
                     {
                         Attribute.SetAttributAKTValue(item, json_charakter.AttributeBaseValue[item], out error);
                         if(error != null)

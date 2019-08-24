@@ -19,10 +19,7 @@ namespace DSAProject.Classes.JSON
         {
             get
             {
-                if (this._jsonContent == null)
-                {
-                    this._jsonContent = this.ToJSON(error: out string error);
-                }
+                this._jsonContent = this.ToJSON(error: out string error);
                 return this._jsonContent;
             }
             set { this._jsonContent = value; }

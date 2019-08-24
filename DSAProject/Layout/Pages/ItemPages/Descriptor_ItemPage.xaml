@@ -8,8 +8,13 @@
     mc:Ignorable="d"
     Background="Transparent">
 
-    <StackPanel Orientation="Horizontal" Spacing="5">
-        <TextBlock x:Name="XAML_Title" Text="{x:Bind Descriptor.DescriptionTitle,  Mode=OneWay}" Width="{x:Bind WidthTitle, Mode=TwoWay}" Foreground="Black" TextAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind OwnFontSize, Mode=TwoWay}" TextWrapping="Wrap" MaxLines="1" ></TextBlock>
-        <TextBlock x:Name="XAML_Text"  Text="{x:Bind Descriptor.DescriptionText, Mode=OneWay}" Width="{x:Bind WIdthText, Mode=TwoWay}"  Foreground="Black" TextAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind OwnFontSize, Mode=TwoWay}" TextWrapping="Wrap" MaxLines="1"></TextBlock>
-    </StackPanel>
+    <Grid ColumnSpacing="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Column="0" x:Name="XAML_Title" Text="{x:Bind Descriptor.DescriptionTitle,  Mode=OneWay}" Width="{x:Bind WidthTitle, Mode=TwoWay}"   Foreground="Black" TextAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind OwnFontSize, Mode=TwoWay}" TextWrapping="Wrap"></TextBlock>
+        <TextBlock Grid.Column="1" x:Name="XAML_Text"  Text="{x:Bind Descriptor.DescriptionText, Mode=OneWay}" Width="{x:Bind WIdthText, Mode=TwoWay}"      Foreground="Black" TextAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind OwnFontSize, Mode=TwoWay}" TextWrapping="Wrap"></TextBlock>
+    </Grid>
 </Page>
