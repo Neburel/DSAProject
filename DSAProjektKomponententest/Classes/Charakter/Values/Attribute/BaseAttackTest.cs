@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DSAProject.Classes.Charakter.Values.Attribute;
-using DSAProject.Classes.Interfaces;
-using DSAProject.util.ErrrorManagment;
+using DSALib.Classes.Charakter.Values.Attribute;
+using DSALib.Classes.Interfaces;
+using DSALib.util.ErrrorManagment;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DSAProjektKomponententest.Classes.Charakter.Values.Attribute
@@ -15,11 +15,11 @@ namespace DSAProjektKomponententest.Classes.Charakter.Values.Attribute
     {
         public override int ExpectedValue()
         {
-            var var1 = Attribute.GetAttributMAXValue(DSAProject.CharakterAttribut.Mut, out Error error);
+            var var1 = Attribute.GetAttributMAXValue(DSALib.CharakterAttribut.Mut, out Error error);
             Assert.AreEqual(error, null);
-            var var2 = Attribute.GetAttributMAXValue(DSAProject.CharakterAttribut.Gewandheit, out error);
+            var var2 = Attribute.GetAttributMAXValue(DSALib.CharakterAttribut.Gewandheit, out error);
             Assert.AreEqual(error, null);
-            var var3 = Attribute.GetAttributMAXValue(DSAProject.CharakterAttribut.Körperkraft, out error);
+            var var3 = Attribute.GetAttributMAXValue(DSALib.CharakterAttribut.Körperkraft, out error);
             Assert.AreEqual(error, null);
 
             return (var1 + var2 + var3) / 5;

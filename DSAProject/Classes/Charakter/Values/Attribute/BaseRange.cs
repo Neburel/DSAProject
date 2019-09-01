@@ -1,10 +1,7 @@
-﻿using DSAProject.Classes.Interfaces;
+﻿using DSALib;
+
+using DSAProject.Classes.Interfaces;
 using DSAProject.util.ErrrorManagment;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DSAProject.Classes.Charakter.Values.Attribute
 {

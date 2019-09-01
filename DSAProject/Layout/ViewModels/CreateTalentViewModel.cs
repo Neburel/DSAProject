@@ -1,13 +1,9 @@
-﻿using DSAProject.Classes.Charakter.Talente;
+﻿using DSALib;
 using DSAProject.Classes.Interfaces;
 using DSAProject.util;
+
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 

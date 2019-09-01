@@ -1,4 +1,4 @@
-﻿using DSAProject.util.ErrrorManagment;
+﻿using DSALib.util.ErrrorManagment;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;

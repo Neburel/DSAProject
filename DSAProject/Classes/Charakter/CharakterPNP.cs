@@ -1,8 +1,7 @@
-﻿using System;
+﻿using DSALib;
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using DSAProject.Classes.Charakter.Values;
 using DSAProject.Classes.Charakter.Values.Attribute;
 using DSAProject.Classes.Interfaces;

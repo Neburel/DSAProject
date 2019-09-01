@@ -1,9 +1,11 @@
-﻿using DSAProject.Classes.Charakter.Talente;
+﻿using DSALib;
+
+using DSAProject.Classes.Charakter.Talente;
 using DSAProject.Classes.Charakter.Talente.TalentFighting;
-using DSAProject.Classes.Charakter.Talente.TalentRequirement;
 using DSAProject.Classes.Charakter.Values.Attribute;
 using DSAProject.Classes.Interfaces;
 using DSAProject.util.ErrrorManagment;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,6 +1,6 @@
-﻿using DSAProject;
-using DSAProject.Classes.Charakter;
-using DSAProject.util.ErrrorManagment;
+﻿using DSALib;
+using DSALib.Classes.Charakter;
+using DSALib.util.ErrrorManagment;
 using DSAProjektKomponententest.Classes.Charakter.util;
 using DSAProjektKomponententest.Classes.util;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

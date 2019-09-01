@@ -1,6 +1,6 @@
-﻿using DSAProject;
-using DSAProject.Classes.Charakter;
-using DSAProject.Classes.JSON;
+﻿using DSALib;
+using DSALib.Classes.Charakter;
+using DSALib.Classes.JSON;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using DSALib;
+using DSALib.Classes.JSON;
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DSAProject.Classes.Charakter.Talente.TalentGeneral
 {

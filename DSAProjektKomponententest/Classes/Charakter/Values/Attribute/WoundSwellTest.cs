@@ -1,6 +1,6 @@
-﻿using DSAProject.Classes.Charakter.Values.Attribute;
-using DSAProject.Classes.Interfaces;
-using DSAProject.util.ErrrorManagment;
+﻿using DSALib.Classes.Charakter.Values.Attribute;
+using DSALib.Classes.Interfaces;
+using DSALib.util.ErrrorManagment;
 using DSAProjektKomponententest.Classes.util;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -16,7 +16,7 @@ namespace DSAProjektKomponententest.Classes.Charakter.Values.Attribute
     {
         public override int ExpectedValue()
         {
-            var var1 = Attribute.GetAttributMAXValue(DSAProject.CharakterAttribut.Konstitution, out Error error);
+            var var1 = Attribute.GetAttributMAXValue(DSALib.CharakterAttribut.Konstitution, out Error error);
             ErrorHelper.ExpectErrorNull(error);
 
             return (var1) / 2;

@@ -1,10 +1,7 @@
-﻿using DSAProject;
-using DSAProject.Classes.Charakter;
+﻿
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace DSAProjektKomponententest.Classes.Charakter.util
 {

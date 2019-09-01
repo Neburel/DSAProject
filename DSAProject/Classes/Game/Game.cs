@@ -1,4 +1,7 @@
-﻿using DSAProject.Classes.Charakter;
+﻿using DSALib;
+using DSALib.Classes.JSON;
+
+using DSAProject.Classes.Charakter;
 using DSAProject.Classes.Charakter.Talente;
 using DSAProject.Classes.Charakter.Talente.TalentDeductions;
 using DSAProject.Classes.Charakter.Talente.TalentFighting;
@@ -6,19 +9,14 @@ using DSAProject.Classes.Charakter.Talente.TalentGeneral;
 using DSAProject.Classes.Charakter.Talente.TalentLanguage;
 using DSAProject.Classes.Charakter.Talente.TalentRequirement;
 using DSAProject.Classes.Interfaces;
-using DSAProject.Classes.JSON;
-using DSAProject.util;
 using DSAProject.util.ErrrorManagment;
 using DSAProject.util.FileManagment;
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Storage;
 
 namespace DSAProject.Classes.Game
 {
