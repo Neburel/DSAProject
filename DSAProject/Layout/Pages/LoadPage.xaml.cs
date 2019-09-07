@@ -1,6 +1,6 @@
 ﻿using DSALib;
 using DSALib.Classes.JSON;
-
+using DSALib.Utils;
 using DSAProject.Classes.Charakter;
 using DSAProject.Classes.Game;
 using DSAProject.Classes.Interfaces;
@@ -27,7 +27,7 @@ namespace DSAProject.Layout.Pages
         {
             this.InitializeComponent();
 
-            var fileList = FileManagment.GetFilesDictionary(Game.CharakterMetaFolder, out util.ErrrorManagment.Error error);
+            var fileList = FileManagment.GetFilesDictionary(Game.CharakterMetaFolder, out Error error);
             var items = new ObservableCollection<JSON_CharakterMetaData>();
 
             foreach(var item in fileList)

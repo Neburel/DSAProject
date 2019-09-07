@@ -64,6 +64,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DSATalente.xsd</DependentUpon>
     </Compile>
+    <Compile Include="MySQL\SQLManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -71,6 +72,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Util\EmbeddedResources.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -89,6 +91,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <EmbeddedResource Include="Resources\TalentFiles\Talente_01092019.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DSADatabase.mdf">
@@ -120,5 +123,6 @@
       <Name>DSALib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,5 +1,6 @@
 ﻿using DSALib;
-
+using DSALib.Utils;
+using DSAProject.Classes;
 using DSAProject.Classes.Charakter.Talente;
 using DSAProject.Classes.Charakter.Talente.TalentDeductions;
 using DSAProject.Classes.Charakter.Talente.TalentFighting;
@@ -39,16 +40,16 @@ namespace DSAProject.Layout.Pages.ToolPages
         public int TextFontSize { get; } = 26;
         private string TalentType_DSA { get => "DSA"; }
         private string TalentType_PNP { get => "PNP"; }
-        private string TalentChoice_Weaponless { get => Game.TalentContent_Weaponless; }
-        private string TalentChoice_Close { get => Game.TalentContent_Close; }
-        private string TalentChoice_Range { get => Game.TalentContent_Range; }
-        private string TalentChoice_Physical { get => Game.TalentContent_Physical; }
-        private string TalentChoice_Social { get => Game.TalentContent_Social; }
-        private string TalentChoice_Nature { get => Game.TalentContent_Nature; }
-        private string TalentChoice_Knwoldage { get => Game.TalentContent_Knwoldage; }
-        private string TalentChoice_Crafting { get => Game.TalentContent_Crafting; }
-        private string TalentChoice_LanguageFamily { get => Game.TalentContent_LanguageFamily; }
-        private string TalentChoice_Language { get => Game.TalentContent_Language; }
+        private string TalentChoice_Weaponless { get => nameof(TalentWeaponless); }
+        private string TalentChoice_Close { get => nameof(TalentClose); }
+        private string TalentChoice_Range { get => nameof(TalentRange); }
+        private string TalentChoice_Physical { get => nameof(TalentPhysical); }
+        private string TalentChoice_Social { get => nameof(TalentSocial); }
+        private string TalentChoice_Nature { get => nameof(TalentNature); }
+        private string TalentChoice_Knwoldage { get => nameof(TalentKnowldage); }
+        private string TalentChoice_Crafting { get => nameof(TalentCrafting); }
+        private string TalentChoice_LanguageFamily { get => nameof(TalentLanguageFamily); }
+        private string TalentChoice_Language { get => nameof(TalentLanguageBase); }
         #endregion
         private CreateTalentViewModel ViewModel = new CreateTalentViewModel();
         public CreateTalent()
@@ -320,56 +321,7 @@ namespace DSAProject.Layout.Pages.ToolPages
 
             if (selectedTalent == null)
             {
-                Guid guid;
-                if (ViewModel.ID == Guid.Empty)
-                {
-                    guid = Game.GeneretNextTalentGUID();
-                } else
-                {
-                    guid = ViewModel.ID;
-                }
-                #region Talent Choice
-                if (currentContent == TalentChoice_Weaponless)
-                {
-                    currentTalent = new TalentWeaponless(guid);
-                } 
-                else if (currentContent == TalentChoice_Close)
-                {
-                    currentTalent = new TalentClose(guid);
-                } 
-                else if (currentContent == TalentChoice_Range)
-                {
-                    currentTalent = new TalentRange(guid);
-                }
-                else if (currentContent == TalentChoice_Physical)
-                {
-                    currentTalent = new TalentPhysical(guid, ViewModel.Probes.ToList());
-                } 
-                else if (currentContent == TalentChoice_Social)
-                {
-                    currentTalent = new TalentSocial(guid, ViewModel.Probes.ToList());
-                }
-                else if (currentContent == TalentChoice_Nature)
-                {
-                    currentTalent = new TalentNature(guid, ViewModel.Probes.ToList());
-                }
-                else if (currentContent == TalentChoice_Knwoldage)
-                {
-                    currentTalent = new TalentKnowldage(guid, ViewModel.Probes.ToList());
-                }
-                else if (currentContent == TalentChoice_Crafting)
-                {
-                    currentTalent = new TalentCrafting(guid, ViewModel.Probes.ToList());
-                }
-                else if (currentContent == TalentChoice_LanguageFamily)
-                {
-                    currentTalent = new TalentLanguageFamily(guid);
-                } 
-                else if (currentContent == Language)
-                {
-                    currentTalent = new TalentLanguageBase(guid);
-                } 
-                else
+                if (!TalentHelper.IsTalentTypeAvaivible(currentContent))
                 {
                     ViewModel.TalentTypeBorderColor = borderColorWarning;
                     error = new Error
@@ -378,47 +330,39 @@ namespace DSAProject.Layout.Pages.ToolPages
                         Message = "Es muss ein gültiger Talent Typ ausgewählt"
                     };
                 }
-                #endregion
-            } 
-            if (error == null)
-            {
-                #region for All
-                currentTalent.BE            = ViewModel.BEString.Trim();
-                currentTalent.Name          = ViewModel.TalentName.Trim();
-                currentTalent.NameExtension = ViewModel.TalentNameExtension.Trim();
-
-                //Wenn editiert muss zunächst geleert werden
-                currentTalent.Deductions.Clear();
-                foreach(var deduction in ViewModel.Deductions)
-                {
-                    currentTalent.Deductions.Add(deduction);
-                }
-                #endregion
-                #region GeneralTalent
-                if (typeof(AbstractTalentGeneral).IsAssignableFrom(currentTalent.GetType()))
-                {
-                    var abstractTalentGeneral                   = (AbstractTalentGeneral)currentTalent;
-                    abstractTalentGeneral.Requirements          = ViewModel.Req.ToList();
-                    abstractTalentGeneral.FatherTalent          = (AbstractTalentGeneral) XAML_ComboBoxFatherTalent.SelectedValue;
-                }
-                #endregion
-                #region Save
-                if (ViewModel.TalentName != null && ViewModel.TalentName != string.Empty)
-                {
-                    Game.SaveTalent(currentTalent, gameType, out error);
-                } 
                 else
                 {
-                    ViewModel.TalentNameBorderColor = borderColorWarning;
-
-                    error = new Error
-                    {
-                        ErrorCode = ErrorCode.InvalidValue,
-                        Message = "Es wird ein Talent Name Benötigt"
-                    };
+                    currentTalent = TalentHelper.CreateTalent(
+                        contentType: currentContent,
+                        guid:           new Guid(),
+                        probe:          ViewModel.Probes.ToList(),
+                        be:             ViewModel.BEString.Trim(),
+                        name:           ViewModel.TalentName.Trim(),
+                        nameExtension:  ViewModel.TalentNameExtension.Trim());
                 }
-                #endregion
             }
+            currentTalent = TalentHelper.EditTalent(
+                talent: currentTalent,
+                deductions: ViewModel.Deductions.ToList(),
+                requirements: ViewModel.Req.ToList(),
+                fatherTalent: (AbstractTalentGeneral)XAML_ComboBoxFatherTalent.SelectedValue);
+
+            #region Save
+            if (ViewModel.TalentName != null && ViewModel.TalentName != string.Empty)
+            {
+                Game.SaveTalent(currentTalent, gameType, out error);
+            }
+            else
+            {
+                ViewModel.TalentNameBorderColor = borderColorWarning;
+
+                error = new Error
+                {
+                    ErrorCode = ErrorCode.InvalidValue,
+                    Message = "Es wird ein Talent Name Benötigt"
+                };
+            }
+            #endregion
             #region Dialog
             var dialog = new ContentDialog
             {

@@ -1,4 +1,5 @@
-﻿using DSAProject.util.ErrrorManagment;
+﻿using DSALib.Utils;
+using DSAProject.util.ErrrorManagment;
 using System;
 using System.Collections.Generic;
 using System.Linq;

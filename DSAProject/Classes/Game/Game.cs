@@ -1,6 +1,6 @@
 ﻿using DSALib;
 using DSALib.Classes.JSON;
-
+using DSALib.Utils;
 using DSAProject.Classes.Charakter;
 using DSAProject.Classes.Charakter.Talente;
 using DSAProject.Classes.Charakter.Talente.TalentDeductions;
@@ -58,7 +58,6 @@ namespace DSAProject.Classes.Game
         private static string talentSaveFile                = "Talente.json";
         private static ICharakter charakter;
         private static JSON_TalentSaveFile jSON_talentLocal = new JSON_TalentSaveFile();
-        private static List<Guid> talentGuids               = new List<Guid>();
         #endregion
         #region Properties
         public static ICharakter Charakter
@@ -121,134 +120,41 @@ namespace DSAProject.Classes.Game
                 throw new Exception();
             }
             #endregion
-            //Alle nötigen Allegemeinen Variablen Gefüllt
-            if (talent.Name != null && talent.Name != string.Empty)
+
+            try
             {
-                var jsonTalent = new JSON_Talent
-                {
-                    ID              = talent.ID,
-                    BE              = talent.BE,
-                    Name            = talent.Name,
-                    NameExtension   = talent.NameExtension,
-                    ContentType     = talenttype,
-                    SaveTime        = DateTime.Now
-                };
-                foreach(var item in talent.Deductions)
-                {
-                    if (typeof(TalentDeductionTalent).IsAssignableFrom(item.GetType()))
-                    {
-                        var deduction = (TalentDeductionTalent)item;
-                        if (jsonTalent.DeductionTalents.ContainsKey(deduction.Talent.ID))
-                        {
-                            jsonTalent.DeductionTalents.Remove(deduction.Talent.ID);
-                        }
+                var jsonTalent = TalentHelper.CreateJSON(
+                    talent: talent,
+                    gameType: GameType.DSA);
 
-                        jsonTalent.DeductionTalents.Add(deduction.Talent.ID, deduction.Value);
-                    }
-                    else if (typeof(TalentDeductionFreeText).IsAssignableFrom(item.GetType()))
-                    {
-                        var deduction = (TalentDeductionFreeText)item;
-                        jsonTalent.DeductionStrings.Add(deduction.Text);
-                    }
+                #region Doppelte Elemente Entfernen
+                var jdoppledID = jTalentList.Where(x => x.ID == talent.ID).ToList();
+                if (jdoppledID.Count > 0)
+                {
+                    jTalentList.Remove(jdoppledID[0]);
                 }
-                #region AbstractTalentGeneral
-                if (typeof(AbstractTalentGeneral).IsAssignableFrom(talent.GetType()))
+                var tdoppledID = talentList.Where(x => x.ID == talent.ID).ToList();
+                if (tdoppledID.Count > 0)
                 {
-                    var abstractTalentGeneral   = (AbstractTalentGeneral)talent;
-                    jsonTalent.Probe            = abstractTalentGeneral.Attributs;
-
-                    foreach (var requirement in abstractTalentGeneral.Requirements)
-                    {
-                        if(requirement.GetType() == typeof(TalentRequirementTalent))
-                        {
-                            var req = (TalentRequirementTalent)requirement;
-                            if(jsonTalent.RequirementNeed == null)
-                            {
-                                jsonTalent.RequirementNeed = new Dictionary<Guid, int>();
-                                jsonTalent.RequirementOff = new Dictionary<Guid, int>();
-                            }
-                            if (jsonTalent.RequirementOff.ContainsKey(req.Talent.ID))
-                            {
-                                error = new Error
-                                {
-                                    ErrorCode = ErrorCode.InvalidValue,
-                                    Message = "Versuch als Anforderung zweimal das gleiche Talent einzufügen"
-                                };
-
-                                break;
-                            }
-                            else
-                            {
-                                jsonTalent.RequirementNeed.Add(req.Talent.ID, req.ReqNeed);
-                                jsonTalent.RequirementOff.Add(req.Talent.ID, req.ReqOff);
-                            }
-                        }
-                        else if (requirement.GetType() == typeof(TalentRequirementAttribut))
-                        {
-                            var req = (TalentRequirementAttribut)requirement;
-                            if(jsonTalent.RequirementAttributs == null) jsonTalent.RequirementAttributs = new Dictionary<CharakterAttribut, int>();
-                            jsonTalent.RequirementAttributs.Add(req.Attribut, req.AttributValue);
-                        }
-                        else if (requirement.GetType() == typeof(TalentRequirementFreeText))
-                        {
-                            var req = (TalentRequirementFreeText)requirement;
-                            if (jsonTalent.RequirementStrings == null) jsonTalent.RequirementStrings = new List<string>();
-                            jsonTalent.RequirementStrings.Add(req.FreeText);
-                        }
-                        else
-                        {
-                            error = new Error
-                            {
-                                ErrorCode = ErrorCode.InvalidValue,
-                                Message = "Unbekannter Requirement Typ"
-                            };
-                            break;
-                        }
-                    }
-                    if(abstractTalentGeneral.FatherTalent != null)
-                    {
-                        jsonTalent.FatherTalent = abstractTalentGeneral.FatherTalent.ID;
-                    }
+                    tdoppledID.Remove(tdoppledID[0]);
                 }
                 #endregion
-                if (error == null)
+                #region Speichern
+                jTalentList.Add(jsonTalent);
+
+                if (!talentList.Contains(talent))
                 {
-                    #region Doppelte Elemente Entfernen
-                    var jdoppledID = jTalentList.Where(x => x.ID == talent.ID).ToList();
-                    if (jdoppledID.Count > 0)
-                    {
-                        jTalentList.Remove(jdoppledID[0]);
-                    }
-                    var tdoppledID = talentList.Where(x => x.ID == talent.ID).ToList();
-                    if (tdoppledID.Count > 0)
-                    {
-                        tdoppledID.Remove(tdoppledID[0]);
-                    }
-                    #endregion
-                    #region Speichern
-                    jTalentList.Add(jsonTalent);
-
-                    if (!talentList.Contains(talent))
-                    {
-                        talentList.Add(talent);
-                    }
-                    if (talentGuids.Contains(talent.ID))
-                    {
-                        talentGuids.Remove(talent.ID);
-                    }
-                    talentGuids.Add(talent.ID);
-
-
-                    FileManagment.WriteToFile(jSON_talentLocal.JSONContent, talentSaveFile, Windows.Storage.CreationCollisionOption.ReplaceExisting, out error);
-                    #endregion
+                    talentList.Add(talent);
                 }
-            } 
-            else
+                FileManagment.WriteToFile(jSON_talentLocal.JSONContent, talentSaveFile, Windows.Storage.CreationCollisionOption.ReplaceExisting, out error);
+                #endregion
+            }
+            catch (Exception ex)
             {
                 error = new Error
                 {
                     ErrorCode = ErrorCode.InvalidValue,
-                    Message = "Dem Talent muss ein Name gegeben werden"
+                    Message = ex.Message
                 };
             }
         }
@@ -263,8 +169,8 @@ namespace DSAProject.Classes.Game
                 
                 if(serror == null)
                 {
-                    LoadTalent(jSON_talentLocal.Talente_DSA, TalenteDSA);
-                    LoadTalent(jSON_talentLocal.Talente_PNP, TalentePNP);
+                    TalentHelper.LoadTalent(jSON_talentLocal.Talente_DSA, TalenteDSA);
+                    TalentHelper.LoadTalent(jSON_talentLocal.Talente_PNP, TalentePNP);
                 }
 
             }
@@ -276,201 +182,11 @@ namespace DSAProject.Classes.Game
 
                 if (serror == null)
                 {
-                    LoadTalent(jSON_talentAssests.Talente_DSA, TalenteDSA);
-                    LoadTalent(jSON_talentAssests.Talente_PNP, TalentePNP);
-                }
-            }
-        }
-        private static ObservableCollection<ITalent> LoadTalent(List<JSON_Talent> talents, ObservableCollection<ITalent> list)
-        {
-            Dictionary<ITalent, JSON_Talent> talentwithDedcut = new Dictionary<ITalent, JSON_Talent>();
-            Dictionary<AbstractTalentGeneral, JSON_Talent> talentWithRequirement = new Dictionary<AbstractTalentGeneral, JSON_Talent>();
-            Dictionary<AbstractTalentGeneral, JSON_Talent> talentWithFather = new Dictionary<AbstractTalentGeneral, JSON_Talent>();
-
-            if (talents != null)
-            {
-                try
-                {
-                    #region Talente Erstellen, Dedurctions vorbereiten
-                    foreach (var item in talents)
-                    {
-                        ITalent talent = null;
-                        if (item.ContentType == nameof(TalentWeaponless))
-                        {
-                            talent = new TalentWeaponless(item.ID);
-                        } else if (item.ContentType == nameof(TalentClose))
-                        {
-                            talent = new TalentClose(item.ID);
-                        } else if (item.ContentType == nameof(TalentRange))
-                        {
-                            talent = new TalentRange(item.ID);
-                        } else if (item.ContentType == nameof(TalentCrafting))
-                        {
-                            talent = new TalentCrafting(item.ID, item.Probe);
-                        } else if (item.ContentType == nameof(TalentKnowldage))
-                        {
-                            talent = new TalentKnowldage(item.ID, item.Probe);
-                        } else if (item.ContentType == nameof(TalentNature))
-                        {
-                            talent = new TalentNature(item.ID, item.Probe);
-                        } else if (item.ContentType == nameof(TalentPhysical))
-                        {
-                            talent = new TalentPhysical(item.ID, item.Probe);
-                        } else if (item.ContentType == nameof(TalentSocial))
-                        {
-                            talent = new TalentSocial(item.ID, item.Probe);
-                        } else if (item.ContentType == nameof(TalentLanguageBase))
-                        {
-                            talent = new TalentLanguageBase(item.ID);
-                        } else if (item.ContentType == nameof(TalentLanguageFamily))
-                        {
-                            talent = new TalentLanguageFamily(item.ID);
-                        } else
-                        {
-                            Logger.Log(LogLevel.ErrorLog, nameof(Game), nameof(LoadTalent), "Der Angegebene Talent Typ ist unbekannt");
-                        }
-                        if (talent != null)
-                        {
-                            #region AllgemeineTalentWerte
-                            talent.BE = item.BE;
-                            talent.Name = item.Name;
-                            talent.NameExtension = item.NameExtension;
-                            #endregion
-
-                            if ((item.DeductionTalents != null && item.DeductionTalents.Count > 0) || (item.DeductionStrings != null && item.DeductionTalents.Count > 0))
-                            {
-                                if (item.DeductionTalents.Keys.Count > 0)
-                                {
-                                    talentwithDedcut.Add(talent, item);
-                                }
-                            }
-                            #region AbstractTalentGeneral
-                            if (typeof(AbstractTalentGeneral).IsAssignableFrom(talent.GetType()))
-                            {
-                                var abstractTalentGeneral = (AbstractTalentGeneral)talent;
-                                talentWithRequirement.Add(abstractTalentGeneral, item);
-
-                                if(item.FatherTalent != Guid.Empty)
-                                {
-                                    talentWithFather.Add(abstractTalentGeneral, item);
-                                }
-                            }
-                            #endregion
-                            list.Add(talent);
-                            talentGuids.Add(talent.ID);
-                        }
-
-
-                    }
-                    #endregion
-                    #region Deductions
-                    foreach (var item in talentwithDedcut)
-                    {
-                        if (item.Value.DeductionTalents != null)
-                        {
-                            foreach(var deduction in item.Value.DeductionTalents)
-                            {
-                                var items = list.Where(x => x.ID == deduction.Key).ToList();
-                                if (items.Count != 1)
-                                {
-                                    Logger.Log(LogLevel.ErrorLog, "Deuction not found: " + deduction.Key, nameof(Game), nameof(LoadTalent));
-                                }
-                                else
-                                {
-                                    item.Key.Deductions.Add(new TalentDeductionTalent(items[0], deduction.Value, item.Key.BaseDeduction));
-                                }
-
-                            }
-                        }
-                        if (item.Value.DeductionStrings != null)
-                        {
-                            foreach(var deduction in item.Value.DeductionStrings)
-                            {
-                                item.Key.Deductions.Add(new TalentDeductionFreeText(deduction));
-                            }
-                        }
-                    }
-                    #endregion
-                    #region Requirements
-                    foreach (var item in talentWithRequirement)
-                    {
-                        var talent = item.Key;
-                        var jObject = item.Value;
-
-                        if (jObject.RequirementStrings != null)
-                        {
-                            foreach (var reqItem in jObject.RequirementStrings)
-                            {
-                                talent.Requirements.Add(new TalentRequirementFreeText(reqItem));
-                            }
-                        }
-                        if (jObject.RequirementAttributs != null)
-                        {
-                            foreach (var reqItem in jObject.RequirementAttributs)
-                            {
-                                talent.Requirements.Add(new TalentRequirementAttribut(reqItem.Key, reqItem.Value));
-                            }
-                        }
-                        if (jObject.RequirementNeed != null)
-                        {
-                            foreach (var reqItem in jObject.RequirementNeed)
-                            {
-                                var reqTalent   = list.Where(x => x.ID == reqItem.Key).First();
-                                var reqNeed     = reqItem.Value;
-                                jObject.RequirementOff.TryGetValue(reqItem.Key, out int reqOff);
-
-                                if (reqTalent == null)
-                                {
-                                    Logger.Log(LogLevel.ErrorLog, "Requriement not found: " + reqItem.Key.ToString(), nameof(Game), nameof(LoadTalent));
-                                }
-                                else
-                                {
-                                    talent.Requirements.Add(new TalentRequirementTalent(reqTalent, reqNeed, reqOff));
-                                }
-                            }
-                        }
-                        else
-                        {
-                            //Es exestiert keine Requirement, oder sie ist unbekannt
-                        }
-                    }
-                    #endregion
-                    #region Father Talent
-                    foreach(var item in talentWithFather)
-                    {
-                        var talent = item.Key;
-                        var jobject = item.Value;
-                        var fatherTalent = list.Where(x => x.ID == jobject.FatherTalent).ToList().First();
-                        if(fatherTalent == null || !(typeof(AbstractTalentGeneral).IsAssignableFrom(fatherTalent.GetType())))
-                        {
-                            Logger.Log(LogLevel.ErrorLog, "Das Vater Talent mit der folgenden Id ist fehlerhaft: " + jobject.FatherTalent.ToString(), nameof(Game), nameof(LoadTalent));
-                        }
-                        else
-                        {
-                            talent.FatherTalent = (AbstractTalentGeneral)fatherTalent;
-                        }
-
-                    }
-                    #endregion
-                }
-                catch (Exception ex)
-                {
-                    Logger.Log(LogLevel.ErrorLog, nameof(Game), nameof(LoadTalent), ex.Message);
+                    TalentHelper.LoadTalent(jSON_talentAssests.Talente_DSA, TalenteDSA);
+                    TalentHelper.LoadTalent(jSON_talentAssests.Talente_PNP, TalentePNP);
                 }
             }
 
-            return new ObservableCollection<ITalent>(list.OrderBy(x => x.Name).ToList());
-        }
- 
-        public static Guid GeneretNextTalentGUID()
-        {
-            var guid = Guid.NewGuid();
-
-            while (talentGuids.Contains(guid))
-            {
-                guid = Guid.NewGuid();
-            }
-            return guid;
         }
         public static Guid GenerateNextCharakterGUID()
         {
@@ -495,7 +211,6 @@ namespace DSAProject.Classes.Game
 
             return guid;
         }
-        
         public static ObservableCollection<ITalent> GetTalentForCurrentCharakter()
         {
             ObservableCollection<ITalent> talents = null;

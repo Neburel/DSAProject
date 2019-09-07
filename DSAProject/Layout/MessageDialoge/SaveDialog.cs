@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Popups;
 
 namespace DSAProject.Layout.MessageDialoge
 {
     public static class SaveDialog
     {
-        public static async void ShowDialog(util.ErrrorManagment.Error error)
+        public static async void ShowDialog(DSALib.Utils.Error error)
         {
             var title = "Speicher Dialog";
             var message = string.Empty;

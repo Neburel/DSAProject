@@ -1,4 +1,5 @@
-﻿using DSAProject.Classes.Charakter;
+﻿using DSALib.Utils;
+using DSAProject.Classes.Charakter;
 using DSAProject.Classes.Charakter.Talente;
 using DSAProject.Classes.Charakter.Talente.TalentFighting;
 using DSAProject.Classes.Charakter.Talente.TalentGeneral;
@@ -140,7 +141,7 @@ namespace DSAProject
                         currentPage = "createTalent";
                         break;
                     case "save":
-                        Game.Charakter.Save(out util.ErrrorManagment.Error error);
+                        Game.Charakter.Save(out Error error);
                         SaveDialog.ShowDialog(error);
                         break;
                     case "load":

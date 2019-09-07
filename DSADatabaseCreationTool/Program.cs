@@ -1,4 +1,8 @@
-﻿using System;
+﻿using DSADatabaseCreationTool.MySQL;
+using DSADatabaseCreationTool.Util;
+using DSALib.Classes.JSON;
+using DSALib.Utils;
+using System;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -8,11 +12,30 @@ namespace DSADatabaseCreationTool
     {
         static void Main(string[] args)
         {
+            var p = LogStrings.GetLogString("Hallo");
+
+            return;
+
+            var jsonConent  = EmbeddedResources.LoadTextResource(EmbedddedRes.JSONTalentFiles, "Talente_01092019.json");
+            var jsonFile    = JSON_TalentSaveFile.DeSerializeJson(jsonConent, out string error);
+
+            foreach(var talent in jsonFile.Talente_DSA)
+            {
+                new SQLManager().InsertTalent(talent, out error);
+                if(error != null)
+                {
+                    Console.WriteLine(error);
+                }
+            }
+
+            return;
+
+
+
             var talentAdapter       = new DSATalenteTableAdapters.DSATalenteTableAdapter();
             var connection          = talentAdapter.Connection;
             connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\DSADatabase.mdf;Integrated Security=True");
             connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\04_Projekte\\DSAProject\\DSADatabaseCreationTool\\DSADatabase.mdf;Integrated Security=True");
-        //connection = new SqlConnection("Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename =| DataDirectory |\DSADatabase.mdf; Integrated Security = True");
 
             var talentTable         = new DSATalente.DSATalenteDataTable();
             var talentdataset       = new DSATalente();
