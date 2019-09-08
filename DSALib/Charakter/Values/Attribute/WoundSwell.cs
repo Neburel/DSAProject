@@ -1,6 +1,5 @@
 ﻿using DSALib;
 using DSALib.Utils;
-using DSAProject.util.ErrrorManagment;
 
 namespace DSAProject.Classes.Charakter.Values.Attribute
 {
@@ -11,7 +10,6 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
         protected override double Calculate()
         {
             var var1 = Attribute.GetAttributMAXValue(CharakterAttribut.Konstitution, out Error error);
-            Logger.Log(error, nameof(WoundSwell), nameof(Calculate));
             return (var1) / 2.0;
         }
     }

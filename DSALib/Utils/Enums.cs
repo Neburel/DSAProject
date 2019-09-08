@@ -1,5 +1,10 @@
 ﻿namespace DSALib
 {
+    public enum GameType
+    {
+        DSA,
+        PNP
+    }
     public enum CharakterAttribut
     {
         Mut = 1,

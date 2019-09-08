@@ -1,6 +1,6 @@
 ﻿using DSALib;
-
 using DSAProject.Classes.Interfaces;
+
 using System;
 
 namespace DSAProject.Classes.Charakter.Values.Attribute

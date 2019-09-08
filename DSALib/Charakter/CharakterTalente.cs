@@ -4,7 +4,6 @@ using DSAProject.Classes.Charakter.Talente;
 using DSAProject.Classes.Charakter.Talente.TalentFighting;
 using DSAProject.Classes.Charakter.Values.Attribute;
 using DSAProject.Classes.Interfaces;
-using DSAProject.util.ErrrorManagment;
 
 using System;
 using System.Collections.Generic;
@@ -153,7 +152,8 @@ namespace DSAProject.Classes.Charakter
 
             else
             {
-                Logger.Log(LogLevel.ErrorLog, talentType + " Das System weiß nicht wie es das Talent zu handhaben hat", nameof(CharakterTalente), nameof(GetProbeString));
+                throw new Exception();
+                //Logger.Log(LogLevel.ErrorLog, talentType + " Das System weiß nicht wie es das Talent zu handhaben hat", nameof(CharakterTalente), nameof(GetProbeString));
             }
 
             return probe;

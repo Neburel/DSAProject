@@ -39,11 +39,11 @@ namespace DSAProject.Classes.Charakter.Talente
             {
                 if (i == 0)
                 {
-                    ret = Game.Game.GetProbeShort(item);
+                    ret = TalentHelper.GetProbeShort(item);
                 } 
                 else
                 {
-                    ret = ret + "/" + Game.Game.GetProbeShort(item);
+                    ret = ret + "/" + TalentHelper.GetProbeShort(item);
                 }
                 i++;
             }
