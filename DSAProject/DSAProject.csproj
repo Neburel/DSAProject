@@ -96,7 +96,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Charakter\AbstractCharakter.cs" />
     <Compile Include="Classes\Charakter\CharakterAttribute.cs" />
     <Compile Include="Classes\Charakter\CharakterValues.cs" />
     <Compile Include="Classes\Charakter\CharakterDSA.cs" />

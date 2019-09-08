@@ -3,6 +3,7 @@
 using DSAProject.Classes.Charakter.Values;
 using DSAProject.Classes.Charakter.Values.Attribute;
 using DSAProject.Classes.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace DSAProject.Classes.Charakter
@@ -41,5 +42,6 @@ namespace DSAProject.Classes.Charakter
             };
             return new CharakterValues(list);
         }
+        public CharakterDSA(Guid id) : base(id) { }
     }
 }

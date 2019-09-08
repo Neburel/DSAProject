@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using DSAProject.Classes.Charakter.Values;
 using DSAProject.Classes.Charakter.Values.Attribute;
 using DSAProject.Classes.Interfaces;
+using System;
 
 namespace DSAProject.Classes.Charakter
 {
@@ -39,5 +40,6 @@ namespace DSAProject.Classes.Charakter
             };
             return new CharakterValues(list);
         }
+        public CharakterPNP(Guid id) : base(id) { }
     }
 }

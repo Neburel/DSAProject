@@ -194,7 +194,7 @@ namespace DSAProject.Layout.Pages
             var result = await DisplayCreateNewDialog();
             if (result == CreateNewChar.DSA)
             {
-                Game.Charakter = new CharakterDSA();
+                Game.Charakter = new CharakterDSA(Game.GenerateNextCharakterGUID());
                 #region setDSALayout
                 ViewModel.CurrentDate.DescriptionText = Game.CurrentYearDSA;
                 ViewModel.Culture.DescriptionTitle = DSA_CultureName;
@@ -203,7 +203,7 @@ namespace DSAProject.Layout.Pages
 
             } else if (result == CreateNewChar.PNP)
             {
-                Game.Charakter = new CharakterPNP();
+                Game.Charakter = new CharakterPNP(Game.GenerateNextCharakterGUID());
                 #region setPNPLayout
                 ViewModel.CurrentDate.DescriptionText = Game.CurrentYearPNP;
                 ViewModel.Culture.DescriptionTitle = "Vorgeschichte-/en:";

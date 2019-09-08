@@ -141,7 +141,7 @@ namespace DSAProject
                         currentPage = "createTalent";
                         break;
                     case "save":
-                        Game.Charakter.Save(out Error error);
+                        Game.CharakterSave(out Error error);
                         SaveDialog.ShowDialog(error);
                         break;
                     case "load":

@@ -52,40 +52,23 @@ namespace DSAProject.Layout.Pages
         }
         private void XAML_LoadListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Error error = null;
-            var metaData = (JSON_CharakterMetaData)e.ClickedItem;
-            var gamingType = Type.GetType(metaData.Game);
-            ICharakter charakter = null;
+            Error error             = null;
+            var metaData            = (JSON_CharakterMetaData)e.ClickedItem;
+            
+            Game.LoadCharakter(metaData, out error);
 
-            if (gamingType == typeof(CharakterDSA))
-            {
-                charakter = new CharakterDSA();
-                charakter.Load(metaData.SaveFile, out error);
-            }
-            else if (gamingType == typeof(CharakterPNP))
-            {
-                charakter = new CharakterPNP();
-                charakter.Load(metaData.SaveFile, out error);
-            } 
-            else
-            {
-                error = new Error
-                {
-                    ErrorCode = ErrorCode.Error,
-                    Message = "Der Geladene Charakter Typ ist unbekannt"
-                };
-            }
+            
 
 
-            if (error != null)
-            {
-                Logger.Log(LogLevel.ErrorLog, error.Message, nameof(LoadPage), nameof(XAML_LoadListView));
-            } 
-            else
-            {
-                Game.Charakter = charakter;
-                Game.GoStartPage();
-            }
+            //if (error != null)
+            //{
+            //    Logger.Log(LogLevel.ErrorLog, error.Message, nameof(LoadPage), nameof(XAML_LoadListView));
+            //} 
+            //else
+            //{
+            //    Game.Charakter = charakter;
+            //    Game.GoStartPage();
+            //}
 
         }
     }

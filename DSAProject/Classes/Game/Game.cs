@@ -60,7 +60,7 @@ namespace DSAProject.Classes.Game
                 } 
                 else
                 {
-                    charakter = new CharakterDSA();
+                    charakter = new CharakterDSA(GenerateNextCharakterGUID());
                     return charakter;
                 }
             }
@@ -221,6 +221,82 @@ namespace DSAProject.Classes.Game
 
             return talents;
         }
+        public static void CharakterSave(out Error error)
+        {
+            error = null;
+            try
+            {
+                var saveFile = Charakter.CreateSave();
+                var filePath = Path.Combine(CharakterSaveFolder, Charakter.ID.ToString() + ".save");
+                FileManagment.WriteToFile(saveFile.JSONContent, filePath, Windows.Storage.CreationCollisionOption.ReplaceExisting, out error);
+                if(error == null)
+                {
+                    #region Meta File
+                    var metaFile = new JSON_CharakterMetaData
+                    {
+                        ID = Charakter.ID,
+                        Name = Charakter.Name,
+                        SaveFile = Charakter.ID.ToString() + ".save",
+                        SaveTime = DateTime.Now,
+                        Game = Charakter.GetType().ToString()
+                    };
+                    var y = DateTime.Now;
+                    var metaFilePath = Path.Combine(CharakterMetaFolder, Charakter.ID.ToString() + ".save");
+                    FileManagment.WriteToFile(metaFile.JSONContent, metaFilePath, Windows.Storage.CreationCollisionOption.ReplaceExisting, out error);
+                    #endregion
+                }
+
+            }
+            catch (Exception ex)
+            {
+                error = new Error
+                {
+                    ErrorCode = ErrorCode.Error,
+                    Message = ex.Message
+                };
+            }
+        }
+        public static void LoadCharakter(JSON_CharakterMetaData metaDataFile, out Error error)
+        {
+            error = null;
+            var gamingType = Type.GetType(metaDataFile.Game);
+
+            var file = Path.Combine(CharakterSaveFolder, metaDataFile.SaveFile);
+            var jsonFile = FileManagment.LoadTextFile(file, out error);
+            var json_charakter = JSON_Charakter.DeSerializeJson(jsonFile, out string errorstring);
+            if (string.IsNullOrEmpty(errorstring))
+            {
+                error = new Error
+                {
+                    ErrorCode = ErrorCode.Error,
+                    Message = "errorString"
+                };
+            }
+            else
+            {
+                charakter.Load(json_charakter);
+            }
+
+            if (gamingType == typeof(CharakterDSA))
+            {
+                charakter = new CharakterDSA(metaDataFile.ID);
+                charakter.Load(json_charakter);
+            }
+            else if (gamingType == typeof(CharakterPNP))
+            {
+                charakter = new CharakterPNP(metaDataFile.ID);
+                charakter.Load(json_charakter);
+            }
+            else
+            {
+                error = new Error
+                {
+                    ErrorCode = ErrorCode.Error,
+                    Message = "Der Geladene Charakter Typ ist unbekannt"
+                };
+            }
+        }
+
         #endregion
         public static string GetProbeShort(CharakterAttribut attribut)
         {
