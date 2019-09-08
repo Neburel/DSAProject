@@ -1,7 +1,6 @@
 ﻿using DSALib;
 using DSALib.Utils;
 using DSAProject.Classes.Interfaces;
-using DSAProject.util.ErrrorManagment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,7 +70,8 @@ namespace DSAProject.Classes.Charakter
             }
             catch(Exception ex)
             {
-                Logger.Log(LogLevel.ErrorLog, ex.Message, nameof(CharakterAttribute), nameof(SetAttributAKTValue));
+                throw ex;
+                //Logger.Log(LogLevel.ErrorLog, ex.Message, nameof(CharakterAttribute), nameof(SetAttributAKTValue));
                 error = new Error { ErrorCode = ErrorCode.Error, Message = ex.Message };
             }
         }
@@ -97,7 +97,8 @@ namespace DSAProject.Classes.Charakter
             }
             catch (Exception ex)
             {
-                Logger.Log(LogLevel.ErrorLog, ex.Message, nameof(CharakterAttribute), nameof(SetAttributAKTValue));
+                throw ex;
+                //Logger.Log(LogLevel.ErrorLog, ex.Message, nameof(CharakterAttribute), nameof(SetAttributAKTValue));
                 error = new Error { ErrorCode = ErrorCode.Error, Message = ex.Message };
             }
             return ret;
@@ -120,7 +121,8 @@ namespace DSAProject.Classes.Charakter
             }
             catch (Exception ex)
             {
-                Logger.Log(LogLevel.ErrorLog, ex.Message, nameof(CharakterAttribute), nameof(GetAttributMODValue));
+                throw ex;
+                //Logger.Log(LogLevel.ErrorLog, ex.Message, nameof(CharakterAttribute), nameof(GetAttributMODValue));
                 error = new Error { ErrorCode = ErrorCode.Error, Message = ex.Message };
             }
             return ret;

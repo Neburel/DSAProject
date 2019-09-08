@@ -96,11 +96,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Charakter\CharakterAttribute.cs" />
-    <Compile Include="Classes\Charakter\CharakterValues.cs" />
-    <Compile Include="Classes\Charakter\CharakterDSA.cs" />
-    <Compile Include="Classes\Charakter\CharakterPNP.cs" />
-    <Compile Include="Classes\TalentHelper.cs" />
     <Compile Include="Classes\Game\Game.cs" />
     <Compile Include="Layout\MessageDialoge\SaveDialog.cs" />
     <Compile Include="Layout\Pages\CharakterCreation.xaml.cs">
