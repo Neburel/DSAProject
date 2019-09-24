@@ -98,40 +98,43 @@
     </Compile>
     <Compile Include="Game.cs" />
     <Compile Include="Layout\MessageDialoge\SaveDialog.cs" />
-    <Compile Include="Layout\Pages\CharakterCreation.xaml.cs">
-      <DependentUpon>CharakterCreation.xaml</DependentUpon>
+    <Compile Include="Layout\Pages\BasePages\ResourcePage.xaml.cs">
+      <DependentUpon>ResourcePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Layout\Pages\ToolPages\CreateCharakter.xaml.cs">
+      <DependentUpon>CreateCharakter.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\Pages\ItemPages\Descriptor_ItemPage.xaml.cs">
       <DependentUpon>Descriptor_ItemPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Layout\Pages\HeroLetterPage.xaml.cs">
+    <Compile Include="Layout\Pages\MainPages\HeroLetterPage.xaml.cs">
       <DependentUpon>HeroLetterPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Layout\Pages\GamePage.xaml.cs">
+    <Compile Include="Layout\Pages\MainPages\GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\Pages\ItemPages\AKT_MOD_MAX_ItemPage.xaml.cs">
       <DependentUpon>AKT_MOD_MAX_ItemPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Layout\Pages\AttributPage.xaml.cs">
+    <Compile Include="Layout\Pages\BasePages\AttributPage.xaml.cs">
       <DependentUpon>AttributPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Layout\Pages\CharakterDescriptionPage.xaml.cs">
-      <DependentUpon>CharakterDescriptionPage.xaml</DependentUpon>
+    <Compile Include="Layout\Pages\BasePages\DescriptionPage.xaml.cs">
+      <DependentUpon>DescriptionPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\Pages\ItemPages\Talent_ItemPage.xaml.cs">
       <DependentUpon>Talent_ItemPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Layout\Pages\LoadPage.xaml.cs">
+    <Compile Include="Layout\Pages\ToolPages\LoadPage.xaml.cs">
       <DependentUpon>LoadPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Layout\Pages\TalentPage.xaml.cs">
+    <Compile Include="Layout\Pages\MainPages\TalentPage.xaml.cs">
       <DependentUpon>TalentPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\Pages\ToolPages\CreateTalent.xaml.cs">
       <DependentUpon>CreateTalent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Layout\Pages\ValuePage.xaml.cs">
+    <Compile Include="Layout\Pages\BasePages\ValuePage.xaml.cs">
       <DependentUpon>ValuePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\ViewModels\AKT_MOD_MAX_ViewModel.cs" />
@@ -165,7 +168,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Layout\Pages\CharakterCreation.xaml">
+    <Page Include="Layout\Pages\BasePages\ResourcePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Layout\Pages\ToolPages\CreateCharakter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -173,11 +180,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Layout\Pages\HeroLetterPage.xaml">
+    <Page Include="Layout\Pages\MainPages\HeroLetterPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Layout\Pages\GamePage.xaml">
+    <Page Include="Layout\Pages\MainPages\GamePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -185,11 +192,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Layout\Pages\AttributPage.xaml">
+    <Page Include="Layout\Pages\BasePages\AttributPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Layout\Pages\CharakterDescriptionPage.xaml">
+    <Page Include="Layout\Pages\BasePages\DescriptionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -197,11 +204,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Layout\Pages\LoadPage.xaml">
+    <Page Include="Layout\Pages\ToolPages\LoadPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Layout\Pages\TalentPage.xaml">
+    <Page Include="Layout\Pages\MainPages\TalentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -209,7 +216,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Layout\Pages\ValuePage.xaml">
+    <Page Include="Layout\Pages\BasePages\ValuePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

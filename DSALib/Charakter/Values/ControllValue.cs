@@ -8,5 +8,6 @@ namespace DSAProject.Classes.Charakter.Values
         public event EventHandler ValueChanged;
         public int Value => 0;
         public string Name => "Beherschungswert";
+        public string InfoText => "";
     }
 }

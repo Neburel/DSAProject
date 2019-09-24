@@ -1,7 +1,9 @@
 ﻿using DSALib;
+using DSALib.Utils;
 using DSAProject.Classes.Interfaces;
 
 using System;
+using System.Collections.Generic;
 
 namespace DSAProject.Classes.Charakter.Values.Attribute
 {
@@ -15,8 +17,30 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
         #endregion
         #region Properties
         public int Value { get; private set; }
+        internal abstract int CalculateValue { get; }
         protected ICharakterAttribut Attribute { get; private set; }
         public abstract string Name { get; }
+        public string InfoText
+        {
+            get
+            {
+                string result = string.Empty;
+                foreach(var item in attributeList)
+                {
+                    if (string.IsNullOrEmpty(result))
+                    {
+                        result = "(" + item.ToString();
+                    }
+                    else
+                    {
+                        result = result + "+" + item.ToString();
+                    }
+                }
+                result = result + ")" + "/" + CalculateValue;
+                return result;
+            }
+        }
+        internal abstract List<CharakterAttribut> attributeList { get; }
         #endregion
         public AbstractAttributeValues(ICharakterAttribut attribute)
         {
@@ -34,7 +58,15 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
             };
         }
         #region Methoden
-        protected abstract double Calculate();
+        protected double Calculate()
+        {
+            double value = 0;
+            foreach(var item in attributeList)
+            {
+               value = value + Attribute.GetAttributMAXValue(item, out Error error);
+            }
+            return (value) / CalculateValue;
+        }
         #endregion
     }
 }

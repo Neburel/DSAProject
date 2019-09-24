@@ -1,21 +1,7 @@
-﻿using DSAProject.Classes.Charakter;
-using DSAProject.Classes.Interfaces;
-using DSAProject.Layout.ViewModels;
+﻿using DSAProject.Layout.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -29,6 +15,9 @@ namespace DSAProject.Layout.Views
         #region Event
         public event EventHandler Event_ValueHigher;
         public event EventHandler Event_ValueLower;
+        #endregion
+        #region Variables
+        private bool isTitleVisible = false;
         #endregion
         #region Properties
         public AKT_MOD_MAX_ViewModel ViewModel = new AKT_MOD_MAX_ViewModel();
@@ -46,8 +35,42 @@ namespace DSAProject.Layout.Views
             set
             {
                 ViewModel.IsModVisible = value;
+                if (IsTitleVisible)
+                {
+                    XAML_TitleMod.Visibility = Visibility.Visible;
+                }
             }
         }
+        public bool IsTitleVisible
+        {
+            get => isTitleVisible;
+            set
+            {
+                isTitleVisible = value;
+                if (value)
+                {
+                    XAML_TitleAKT.Visibility    = Visibility.Visible;
+                    if (IsModVisible)
+                    {
+                        XAML_TitleMod.Visibility = Visibility.Visible;
+                    }
+                    XAML_TitleResult.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    XAML_TitleAKT.Visibility    = Visibility.Collapsed;
+                    XAML_TitleMod.Visibility    = Visibility.Collapsed;
+                    XAML_TitleResult.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
+
+        public string MaxString
+        {
+            get => XAML_TitleResult.Text;
+            set => XAML_TitleResult.Text = value;
+        }
+
         public GridLength GetWidthName { get; } = new GridLength(130);
         public GridLength GetBoxLength { get; } = new GridLength(30);
         #endregion
@@ -63,6 +86,13 @@ namespace DSAProject.Layout.Views
         private void XML_ButtonHigherValue_Click(object sender, RoutedEventArgs e)
         {
             Event_ValueHigher?.Invoke(this, null);
+        }
+
+        public void SetTooltip(string toolTipText)
+        {
+            ToolTip toolTip = new ToolTip();
+            toolTip.Content = toolTipText;
+            ToolTipService.SetToolTip(XAML_AttributName, toolTip);
         }
     }
 }

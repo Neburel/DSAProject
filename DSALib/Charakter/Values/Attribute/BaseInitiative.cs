@@ -1,5 +1,5 @@
 ﻿using DSALib;
-using DSALib.Utils;
+using System.Collections.Generic;
 
 namespace DSAProject.Classes.Charakter.Values.Attribute
 {
@@ -7,14 +7,13 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
     {
         public BaseInitiative(Interfaces.ICharakterAttribut attribute) : base(attribute) { }
         public override string Name => "Initiative-Basis";
-        protected override double Calculate()
+        internal override List<CharakterAttribut> attributeList => new List<CharakterAttribut>()
         {
-            var var1 = Attribute.GetAttributMAXValue(CharakterAttribut.Mut, out Error error);
-            var var2 = Attribute.GetAttributMAXValue(CharakterAttribut.Mut, out error);
-            var var3 = Attribute.GetAttributMAXValue(CharakterAttribut.Intuition, out error);
-            var var4 = Attribute.GetAttributMAXValue(CharakterAttribut.Gewandheit, out error);
-
-            return (var1 + var2 + var3 + var4) / 5.0;
-        }
+            CharakterAttribut.Mut,
+            CharakterAttribut.Mut,
+            CharakterAttribut.Intuition,
+            CharakterAttribut.Gewandheit
+        };
+        internal override int CalculateValue => 5;
     }
 }

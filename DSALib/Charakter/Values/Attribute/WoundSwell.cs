@@ -1,5 +1,5 @@
 ﻿using DSALib;
-using DSALib.Utils;
+using System.Collections.Generic;
 
 namespace DSAProject.Classes.Charakter.Values.Attribute
 {
@@ -7,10 +7,11 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
     {
         public WoundSwell(Interfaces.ICharakterAttribut attribute) : base(attribute) { }
         public override string Name => "Wundschwelle";
-        protected override double Calculate()
+        internal override List<CharakterAttribut> attributeList => new List<CharakterAttribut>()
         {
-            var var1 = Attribute.GetAttributMAXValue(CharakterAttribut.Konstitution, out Error error);
-            return (var1) / 2.0;
-        }
+            CharakterAttribut.Konstitution,
+        };
+        internal override int CalculateValue => 2;
+
     }
 }

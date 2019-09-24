@@ -36,7 +36,7 @@ namespace DSAProject.Layout.Pages
             XAML_Grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0, GridUnitType.Star), MaxHeight = 200 });
 
             var values  = Game.Charakter.Values;
-            var i       = 1;
+            var i       = 0;
         
             foreach(var item in values.UsedValues)
             {
@@ -46,6 +46,12 @@ namespace DSAProject.Layout.Pages
                 newView.ViewModel.Name      = item.Name;
                 newView.ViewModel.AKTValue  = values.GetAKTValue(item, out Error error);
                 newView.IsValueEditable     = false;
+
+                if (!string.IsNullOrEmpty(item.InfoText))
+                {
+                    newView.SetTooltip(item.InfoText);
+                }
+                if (i == 0) { newView.IsTitleVisible = true; newView.MaxString = "Ergebnis"; }
                 #endregion
                 dic.Add(item, newView);
                 XAML_Grid.Children.Add(newView);

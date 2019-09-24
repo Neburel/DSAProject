@@ -11,7 +11,7 @@ namespace DSAProject.Classes.Charakter.Values
     {
         public int Value { get; }
         public string Name => "Geschwindigkeit Wasser";
-
+        public string InfoText => "";
         public event EventHandler ValueChanged;
     }
 }

@@ -15,10 +15,6 @@
         RowSpacing="1">
         <Grid.RowDefinitions></Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="1">
-            <TextBlock Width="130"></TextBlock>
-            <TextBlock Text="Akt" Width="30" TextAlignment="Center" VerticalAlignment="Bottom"  Foreground="Black" FontSize="8"></TextBlock>
-            <TextBlock Text="Mod" Width="30" TextAlignment="Center" VerticalAlignment="Bottom" Foreground="Black" FontSize="8"></TextBlock>
-            <TextBlock Text="Ergebnis" Width="30" TextAlignment="Center" VerticalAlignment="Bottom" Foreground="Black" FontSize="8"></TextBlock>
         </StackPanel>
     </Grid>
 </Page>

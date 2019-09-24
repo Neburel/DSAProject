@@ -23,10 +23,16 @@
             <ColumnDefinition Width="{x:Bind GetBoxLength}"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="{x:Bind GetBoxLength}"/>
+            <RowDefinition x:Name="XAML_Row1" Height="Auto"/>
+            <RowDefinition x:Name="XAML_Row2" Height="{x:Bind GetBoxLength}"/>
         </Grid.RowDefinitions>
+
+        <TextBlock x:Name="XAML_TitleAKT"       Grid.Row="0" Grid.Column="1" Text="Akt"     TextAlignment="Center" VerticalAlignment="Bottom" Foreground="Black" FontSize="8" Visibility="Collapsed"></TextBlock>
+        <TextBlock x:Name="XAML_TitleMod"       Grid.Row="0" Grid.Column="2" Text="Mod"     TextAlignment="Center" VerticalAlignment="Bottom" Foreground="Black" FontSize="8" Visibility="Collapsed"></TextBlock>
+        <TextBlock x:Name="XAML_TitleResult"    Grid.Row="0" Grid.Column="3" Text="Max"     TextAlignment="Center" VerticalAlignment="Bottom" Foreground="Black" FontSize="8" Visibility="Collapsed"></TextBlock>
+
         <Border BorderBrush="Gray" Grid.Row="1" Grid.Column="0">
-            <TextBlock x:Name="XML_AttributName" Foreground="Black" Margin="0,0,0,0" Text="{x:Bind ViewModel.Name}" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="24"/>
+            <TextBlock x:Name="XAML_AttributName" Foreground="Black" Margin="0,0,0,0" Text="{x:Bind ViewModel.Name}" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="24"/>
         </Border>
         <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="1" Grid.Column="1">
             <TextBlock x:Name="XML_CurrentValue" Text="{x:Bind ViewModel.AKTValue, Mode=OneWay}" Foreground="Black" Margin="0,0,0,0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center"/>

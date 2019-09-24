@@ -7,5 +7,6 @@ namespace DSAProject.Classes.Interfaces
         event EventHandler ValueChanged;
         int Value { get; }
         string Name { get; }
+        string InfoText { get; }
     }
 }

@@ -8,6 +8,8 @@ namespace DSAProject.Classes.Charakter.Values
         public int Value { get; }
         public string Name => "Geschwindigkeit";
 
+        public string InfoText => "";
+
         public event EventHandler ValueChanged;
     }
 }

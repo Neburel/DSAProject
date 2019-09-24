@@ -1,7 +1,6 @@
 ﻿using DSALib.Utils;
 using DSAProject.Classes.Game;
 using DSAProject.Layout.Views;
-using DSAProject.util.ErrrorManagment;
 using Windows.UI.Xaml.Controls;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
@@ -30,7 +29,7 @@ namespace DSAProject.Layout.Pages
             newSumView.ViewModel.MODValue = attribute.GetSumValueAttributMod;
             #endregion
 
-            var i           = 1;
+            var i           = 0;
             foreach(var item in attribute.UsedAttributs)
             {
                 XAML_Grid.RowDefinitions.Add(new RowDefinition());
@@ -38,6 +37,7 @@ namespace DSAProject.Layout.Pages
                 var newView = new AKT_MOD_MAX_ItemPage(110);
                 newView.ViewModel.AKTValue  = attribute.GetAttributAKTValue(item, out Error error);
                 newView.ViewModel.Name      = item.ToString();
+                if (i == 0) { newView.IsTitleVisible = true; }
                 #endregion
                 attribute.ChangedAttributAKTEvent += (sender, args) =>
                 {
@@ -60,7 +60,7 @@ namespace DSAProject.Layout.Pages
                     var currentValue = attribute.GetAttributAKTValue(item, out error);
                     attribute.SetAttributAKTValue(item, currentValue - 1, out error);
                 };
-                
+             
 
                 XAML_Grid.Children.Add(newView);
                 Grid.SetRow(newView, i);
