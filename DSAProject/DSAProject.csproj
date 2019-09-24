@@ -96,7 +96,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Game\Game.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="Layout\MessageDialoge\SaveDialog.cs" />
     <Compile Include="Layout\Pages\CharakterCreation.xaml.cs">
       <DependentUpon>CharakterCreation.xaml</DependentUpon>
@@ -140,7 +140,7 @@
     <Compile Include="Layout\ViewModels\Talent_ItemPageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="util\Logger.cs" />
-    <Compile Include="util\FileManagment\FileManagment.cs" />
+    <Compile Include="util\FileManagment.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -225,6 +225,7 @@
       <Name>DSALib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
