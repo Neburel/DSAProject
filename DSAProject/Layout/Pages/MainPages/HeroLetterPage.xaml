@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:views="using:DSAProject.Layout.Pages"
+    xmlns:views2="using:DSAProject.Layout.Pages.BasePages"    
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -26,8 +27,9 @@
 
         <StackPanel Grid.Row="1">
             <StackPanel Orientation="Horizontal" Spacing="10">
-                <views:AttributPage/>
+                <views:AttributPage />
                 <views:ValuePage VerticalAlignment="Top"/>
+                <views2:ResourcePage VerticalAlignment="Top"/>
             </StackPanel>
         </StackPanel>
     </Grid>

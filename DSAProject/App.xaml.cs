@@ -1,5 +1,5 @@
 ﻿using DSALib;
-
+using DSAProject.Classes;
 using DSAProject.Classes.Game;
 using DSAProject.util.ErrrorManagment;
 
@@ -27,7 +27,7 @@ namespace DSAProject
             ///Welches Spiel wird Gestartet
             Logger.Log(LogLevel.ActionLog, "GameStart", nameof(App), nameof(App));
             Logger.Log(LogLevel.DebugInfo, "CurrentFolder: " + ApplicationData.Current.LocalFolder.Path, nameof(App), nameof(App));
-
+            
             Game.LoadTalente();
 
             this.InitializeComponent();

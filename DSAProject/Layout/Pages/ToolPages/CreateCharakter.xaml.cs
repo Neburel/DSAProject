@@ -152,7 +152,7 @@ namespace DSAProject.Layout.Pages
         /// <param name="charakter"></param>
         private void CharakterChange()
         {
-            var existingDescriptorList = Game.Charakter.CharakterDescriptions.Descriptions;
+            var existingDescriptorList = Game.Charakter.Descriptions.Descriptions;
                        
             ViewModel.Age               = CheckDescriptor(existingDescriptorList, ViewModel.Age);
             ViewModel.Race              = CheckDescriptor(existingDescriptorList, ViewModel.Race);
@@ -183,7 +183,7 @@ namespace DSAProject.Layout.Pages
                 var charakter = Game.Charakter;
                 System.Console.WriteLine(Game.Charakter);
 
-                charakter.CharakterDescriptions.AddDescripton(siteDescriptor);
+                charakter.Descriptions.AddDescripton(siteDescriptor);
                 ret = siteDescriptor;
             }
             return ret;

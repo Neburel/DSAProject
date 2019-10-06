@@ -1,14 +1,15 @@
 ﻿using DSAProject.Classes.Interfaces;
+using System.Collections.Generic;
 
 namespace DSALib.Charakter.Resources
 {
     class KarmaEnergy : AbstractAttributeResources
     {
-        public override string Name => "Ausdauer";
-        private KarmaEnergy(ICharakterAttribut attribute) : base(attribute) { }
-        protected override double Calculate()
+        public override string Name => "KarmaEnergie";
+        public KarmaEnergy(ICharakterAttribut attribute) : base(attribute) { }
+        internal override List<CharakterAttribut> attributeList => new List<CharakterAttribut>()
         {
-            return 0;
-        }
+        };
+        internal override int CalculateValue => 0;
     }
 }

@@ -18,8 +18,8 @@ namespace DSAProject.Classes.Charakter
         private ICharakter charakter;
 
         internal Dictionary<ITalent, int> TAWDictionary = new Dictionary<ITalent, int>();
-        internal Dictionary<ITalent, int> ATDictionary  = new Dictionary<ITalent, int>();
-        internal Dictionary<ITalent, int> PADictionary  = new Dictionary<ITalent, int>();
+        internal Dictionary<AbstractTalentFighting, int> ATDictionary  = new Dictionary<AbstractTalentFighting, int>();
+        internal Dictionary<AbstractTalentFighting, int> PADictionary  = new Dictionary<AbstractTalentFighting, int>();
 
         public CharakterTalente(ICharakter charakter)
         {

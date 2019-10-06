@@ -157,7 +157,7 @@ namespace DSAWebseiteTest
         }
         public string ProbeValueString
         {
-            get => Charakter.CharakterTalente.GetProbeString(OrginalTalent);
+            get => Charakter.Talente.GetProbeString(OrginalTalent);
         }
 
         public void ChangeValue()

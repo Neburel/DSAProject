@@ -1,12 +1,12 @@
 ﻿using DSALib;
 using DSALib.Classes.JSON;
+using DSALib.Interfaces;
 using DSALib.Utils;
 using DSAProject.Classes.Charakter.Description;
 using DSAProject.Classes.Interfaces;
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace DSAProject.Classes.Charakter
 {
@@ -14,19 +14,22 @@ namespace DSAProject.Classes.Charakter
     {
         #region Properties
         public Guid ID { get; set; } 
-        public String Name { get; set; }
+        public string Name { get; set; }
         public ICharakterValues Values { get; private set; }
         public ICharakterAttribut Attribute { get; private set; }
-        public CharakterTalente  CharakterTalente { get; private set; }
-        public CharakterDescription CharakterDescriptions { get; private set; } 
+        public ICharakterResources Resources { get; private set; }
+        public CharakterTalente  Talente { get; private set; }
+        public CharakterDescription Descriptions { get; private set; }
         #endregion
         public AbstractCharakter(Guid id)
         {
-            ID                      = id;
-            Attribute               = CreateAttribute();
-            Values                  = CreateValues();
-            CharakterTalente        = new CharakterTalente(this);
-            CharakterDescriptions   = new CharakterDescription();
+            ID             = id;
+            Attribute      = CreateAttribute();
+            Values         = CreateValues();
+            Resources      = CreateResources();
+            Talente        = new CharakterTalente(this);
+            Descriptions   = new CharakterDescription();
+            
 
             if (Attribute == null )
             {
@@ -40,6 +43,7 @@ namespace DSAProject.Classes.Charakter
         #region AbstractMethods
         protected abstract ICharakterValues CreateValues();
         protected abstract ICharakterAttribut CreateAttribute();
+        protected abstract ICharakterResources CreateResources();
         #endregion
         #region Methods
         public JSON_Charakter CreateSave()
@@ -54,7 +58,7 @@ namespace DSAProject.Classes.Charakter
             {
                 #region Descriptor Speichern
                 charakter.Descriptors = new List<JSON_Descriptor>();
-                foreach(var item in this.CharakterDescriptions.Descriptions)
+                foreach(var item in this.Descriptions.Descriptions)
                 {
                     charakter.Descriptors.Add(new JSON_Descriptor
                     {
@@ -91,7 +95,7 @@ namespace DSAProject.Classes.Charakter
             #region Descriptoren Laden
             foreach (var item in json_charakter.Descriptors)
             {
-                this.CharakterDescriptions.AddDescripton(new Descriptor
+                this.Descriptions.AddDescripton(new Descriptor
                 {
                     Priority = item.Priority,
                     DescriptionText = item.DescriptionText,

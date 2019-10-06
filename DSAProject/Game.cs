@@ -152,30 +152,33 @@ namespace DSAProject.Classes.Game
         {
             var jString = string.Empty;
             //Locale Talente
-            jString = FileManagment.LoadTextFile(talentSaveFile, out Error error);
-            if(error == null)
-            {
-                jSON_talentLocal = JSON_TalentSaveFile.DeSerializeJson(jString, out string serror);
+            //jString = FileManagment.LoadTextFile(talentSaveFile, out Error error);
+            //if(error == null)
+            //{
+            //    jSON_talentLocal = JSON_TalentSaveFile.DeSerializeJson(jString, out string serror);
                 
-                if(serror == null)
-                {
-                    TalentHelper.LoadTalent(jSON_talentLocal.Talente_DSA, TalenteDSA);
-                    TalentHelper.LoadTalent(jSON_talentLocal.Talente_PNP, TalentePNP);
-                }
+            //    if(serror == null)
+            //    {
+            //        TalentHelper.LoadTalent(jSON_talentLocal.Talente_DSA, TalenteDSA);
+            //        TalentHelper.LoadTalent(jSON_talentLocal.Talente_PNP, TalentePNP);
+            //    }
 
-            }
+            //}
 
-            jString = FileManagment.LoadTextAssestFile(talentSaveFile, out error);
-            if (error == null)
-            {
-                var jSON_talentAssests = JSON_TalentSaveFile.DeSerializeJson(jString, out string serror);
+            //jString = FileManagment.LoadTextAssestFile(talentSaveFile, out error);
+            //if (error == null)
+            //{
+            //    var jSON_talentAssests = JSON_TalentSaveFile.DeSerializeJson(jString, out string serror);
 
-                if (serror == null)
-                {
-                    TalentHelper.LoadTalent(jSON_talentAssests.Talente_DSA, TalenteDSA);
-                    TalentHelper.LoadTalent(jSON_talentAssests.Talente_PNP, TalentePNP);
-                }
-            }
+            //    if (serror == null)
+            //    {
+            //        TalentHelper.LoadTalent(jSON_talentAssests.Talente_DSA, TalenteDSA);
+            //        TalentHelper.LoadTalent(jSON_talentAssests.Talente_PNP, TalentePNP);
+            //    }
+            //}
+
+            TalenteDSA = new ObservableCollection<ITalent>(TalentHelper.ExcelImport("TalentImport.xlsx"));
+
 
         }
         public static Guid GenerateNextCharakterGUID()

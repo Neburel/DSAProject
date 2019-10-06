@@ -120,7 +120,10 @@ namespace DSAProject.Layout.ViewModels
         }
         public string DeductionStringFreeText
         {
-            get => deductionStringFreeText;
+            get
+            {
+                return deductionStringFreeText;
+            }
             set
             {
                 deductionStringFreeText = value;

@@ -1,33 +1,32 @@
-﻿using DSALib;
+﻿using DSALib.Interfaces;
 using DSALib.Utils;
-using DSAProject.Classes.Interfaces;
 using System;
-
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DSAProject.Classes.Charakter
+namespace DSALib.Charakter
 {
-    public class CharakterValues : ICharakterValues
+    public class CharakterResources : ICharakterResources
     {
         #region Events
-        public event EventHandler<IValue> ChangedAKTEvent;
-        public event EventHandler<IValue> ChangedMODEvent;
-        public event EventHandler<IValue> ChangedMAXEvent;
+        public event EventHandler<IResource> ChangedAKTEvent;
+        public event EventHandler<IResource> ChangedMODEvent;
+        public event EventHandler<IResource> ChangedMAXEvent;
         #endregion
         #region Properties
-        public List<IValue> UsedValues { get => AktValues.Keys.ToList(); }
+        public List<IResource> UsedValues { get => AktValues.Keys.ToList(); }
         #endregion
         #region Variables
-        private Dictionary<IValue, int> AktValues;
-        private Dictionary<IValue, int> ModValue;
+        private Dictionary<IResource, int> AktValues;
+        private Dictionary<IResource, int> ModValue;
         #endregion
-        public CharakterValues(List<IValue> values)
-        {
-            AktValues   = new Dictionary<IValue, int>();
-            ModValue    = new Dictionary<IValue, int>();
 
-            foreach(var item in values)
+        public CharakterResources(List<IResource> values)
+        {
+            AktValues   = new Dictionary<IResource, int>();
+            ModValue    = new Dictionary<IResource, int>();
+
+            foreach (var item in values)
             {
                 AktValues.Add(item, item.Value);
                 ModValue.Add(item, 0);
@@ -38,10 +37,11 @@ namespace DSAProject.Classes.Charakter
                 };
             }
         }
+
         #region Getter
-        public int GetAKTValue(IValue value, out Error error)
+        public int GetAKTValue(IResource value, out Error error)
         {
-            error   = null;
+            error = null;
             var ret = -1;
 
             if (AktValues.TryGetValue(value, out int currentValue) == false)
@@ -55,7 +55,7 @@ namespace DSAProject.Classes.Charakter
 
             return ret;
         }
-        public int GetMODValue(IValue value, out Error error)
+        public int GetMODValue(IResource value, out Error error)
         {
             error = null;
             var ret = -1;
@@ -67,7 +67,7 @@ namespace DSAProject.Classes.Charakter
                 if (regularValue == false)
                 {
                     error = new Error { ErrorCode = ErrorCode.InvalidValue, Message = "Das Gewählte Attribut exestiert bei diesem Charakter nicht" };
-                } 
+                }
                 else
                 {
                     ret = ModValue[value];
@@ -81,7 +81,7 @@ namespace DSAProject.Classes.Charakter
             }
             return ret;
         }
-        public int GetMAXValue(IValue value, out Error error)
+        public int GetMAXValue(IResource value, out Error error)
         {
             error = null;
             var ret = -1;
@@ -89,10 +89,10 @@ namespace DSAProject.Classes.Charakter
             try
             {
                 var akt = GetAKTValue(value, out error);
-                if(error == null)
+                if (error == null)
                 {
                     var mod = GetMODValue(value, out error);
-                    if(error == null)
+                    if (error == null)
                     {
                         ret = akt + mod;
                     }

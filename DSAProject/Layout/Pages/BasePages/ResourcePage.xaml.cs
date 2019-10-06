@@ -25,6 +25,9 @@ namespace DSAProject.Layout.Pages.BasePages
         public ResourcePage()
         {
             this.InitializeComponent();
+            Utils.PageHelpBuilder.BuildResourcePage(XAML_Grid);
+
+            return;
         }
     }
 }

@@ -137,6 +137,7 @@
     <Compile Include="Layout\Pages\BasePages\ValuePage.xaml.cs">
       <DependentUpon>ValuePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Layout\Utils\PageHelpBuilder.cs" />
     <Compile Include="Layout\ViewModels\AKT_MOD_MAX_ViewModel.cs" />
     <Compile Include="Layout\ViewModels\CharakterCreationViewModel.cs" />
     <Compile Include="Layout\ViewModels\CreateTalentViewModel.cs" />

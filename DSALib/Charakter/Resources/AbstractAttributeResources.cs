@@ -1,10 +1,12 @@
 ﻿using DSALib.Interfaces;
+using DSALib.Utils;
 using DSAProject.Classes.Interfaces;
 using System;
+using System.Collections.Generic;
 
 namespace DSALib.Charakter.Resources
 {
-    public abstract class AbstractAttributeResources : IResources
+    public abstract class AbstractAttributeResources : IResource
     {
         #region Event
         public event EventHandler ValueChanged;
@@ -12,6 +14,31 @@ namespace DSALib.Charakter.Resources
         public int Value { get; private set; }
         public abstract string Name { get; }
         protected ICharakterAttribut Attribute { get; private set; }
+        internal abstract int CalculateValue { get; }
+        internal abstract List<CharakterAttribut> attributeList { get; }
+        public string InfoText
+        {
+            get
+            {
+                string result = string.Empty;
+                foreach (var item in attributeList)
+                {
+                    if (string.IsNullOrEmpty(result))
+                    {
+                        result = "(" + item.ToString();
+                    }
+                    else
+                    {
+                        result = result + "+" + item.ToString();
+                    }
+                }
+                if(CalculateValue != 0)
+                {
+                    result = result + ")" + "/" + CalculateValue;
+                }
+                return result;
+            }
+        }
         public AbstractAttributeResources(ICharakterAttribut attribute)
         {
             Attribute = attribute;
@@ -28,7 +55,20 @@ namespace DSALib.Charakter.Resources
             };
         }
         #region Methoden
-        protected abstract double Calculate();
+        protected double Calculate()
+        {
+            double value = 0;
+            foreach (var item in attributeList)
+            {
+                value = value + Attribute.GetAttributMAXValue(item, out Error error);
+            }
+            if(CalculateValue != 0)
+            {
+                value = (value) / CalculateValue;
+            }
+
+            return value;
+        }
         #endregion
     }
 }

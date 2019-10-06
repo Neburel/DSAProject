@@ -1,23 +1,11 @@
 ﻿using DSALib.Utils;
-using DSAProject.Classes.Charakter;
 using DSAProject.Classes.Game;
 using DSAProject.Classes.Interfaces;
 using DSAProject.Layout.Views;
 using DSAProject.util.ErrrorManagment;
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -33,6 +21,9 @@ namespace DSAProject.Layout.Pages
         public ValuePage()
         {
             this.InitializeComponent();
+            Utils.PageHelpBuilder.BuildValuePage(XAML_Grid);
+
+            return;
             XAML_Grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0, GridUnitType.Star), MaxHeight = 200 });
 
             var values  = Game.Charakter.Values;

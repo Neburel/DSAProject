@@ -8,4 +8,8 @@
     <Folder Include="Exceptions\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Open-XML-SDK" Version="2.9.0" />
+  </ItemGroup>
+
 </Project>

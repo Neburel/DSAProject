@@ -1,5 +1,7 @@
 ﻿using DSALib;
-
+using DSALib.Charakter;
+using DSALib.Charakter.Resources;
+using DSALib.Interfaces;
 using DSAProject.Classes.Charakter.Values;
 using DSAProject.Classes.Charakter.Values.Attribute;
 using DSAProject.Classes.Interfaces;
@@ -42,6 +44,20 @@ namespace DSAProject.Classes.Charakter
             };
             return new CharakterValues(list);
         }
+        protected override ICharakterResources CreateResources()
+        {
+            var list = new List<IResource>()
+            {
+                new AstralEnergy(Attribute),
+                new Endurance(Attribute),
+                new KarmaEnergy(Attribute),
+                new MagicResistance(Attribute),
+                new Vitality(Attribute),
+            };
+
+            return new CharakterResources(list);
+        }
+
         public CharakterDSA(Guid id) : base(id) { }
     }
 }

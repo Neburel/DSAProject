@@ -33,7 +33,7 @@ namespace DSAProject.Layout.Pages
         }
         public void DemoDate()
         {
-            var descriptors = Game.Charakter.CharakterDescriptions.Descriptions;
+            var descriptors = Game.Charakter.Descriptions.Descriptions;
 
 
             FillDescriptor(XAML_Descriptor0, descriptors, (int)CreationOrder.playerName);
