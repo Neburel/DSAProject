@@ -4,6 +4,7 @@ using DSAProject.Classes.Charakter.Talente.TalentGeneral;
 using DSAProject.Classes.Game;
 using DSAProject.Layout.MessageDialoge;
 using DSAProject.Layout.Pages;
+using DSAProject.Layout.Pages.BasePages;
 using DSAProject.Layout.Pages.ToolPages;
 using System.Linq;
 using Windows.UI.Xaml;
@@ -130,6 +131,10 @@ namespace DSAProject
                     case "load":
                         ContentFrame.Navigate(typeof(LoadPage));
                         currentPage = "load";
+                        break;
+                    case "Trait":
+                        ContentFrame.Navigate(typeof(CreateTrait));
+                        currentPage = "Trait";
                         break;
                 }
             }

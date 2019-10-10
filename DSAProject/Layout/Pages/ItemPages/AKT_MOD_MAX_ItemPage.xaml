@@ -14,40 +14,42 @@
         Padding="0, 0, 0, 0"
         Margin="0, 0, 0, 0">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="{x:Bind GetWidthName}"/>
-            <ColumnDefinition Width="{x:Bind GetBoxLength}"/>
-            <ColumnDefinition Width="{x:Bind GetBoxLength}"/>
-            <ColumnDefinition Width="{x:Bind GetBoxLength}"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition x:Name="XAML_Row1" Height="Auto"/>
-            <RowDefinition x:Name="XAML_Row2" Height="{x:Bind GetBoxLength}"/>
+            <RowDefinition x:Name="XAML_Row2" Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="XAML_TitleAKT"       Grid.Row="0" Grid.Column="1" Text="Akt"     TextAlignment="Center" VerticalAlignment="Bottom" Foreground="Black" FontSize="8" Visibility="Collapsed"></TextBlock>
-        <TextBlock x:Name="XAML_TitleMod"       Grid.Row="0" Grid.Column="2" Text="Mod"     TextAlignment="Center" VerticalAlignment="Bottom" Foreground="Black" FontSize="8" Visibility="Collapsed"></TextBlock>
-        <TextBlock x:Name="XAML_TitleResult"    Grid.Row="0" Grid.Column="3" Text="Max"     TextAlignment="Center" VerticalAlignment="Bottom" Foreground="Black" FontSize="8" Visibility="Collapsed"></TextBlock>
+        <TextBlock x:Name="XAML_TitleAKT"       Grid.Row="0" Grid.Column="1" Text="Akt"     TextAlignment="Center" VerticalAlignment="Bottom" Foreground="Black" FontSize="8" Visibility="{x:Bind ViewModel.IsTitle1Visible}"></TextBlock>
+        <TextBlock x:Name="XAML_TitleMod"       Grid.Row="0" Grid.Column="2" Text="Mod"     TextAlignment="Center" VerticalAlignment="Bottom" Foreground="Black" FontSize="8" Visibility="{x:Bind ViewModel.IsTitle2Visible}"></TextBlock>
+        <TextBlock x:Name="XAML_TitleResult"    Grid.Row="0" Grid.Column="3" Text="Max"     TextAlignment="Center" VerticalAlignment="Bottom" Foreground="Black" FontSize="8" Visibility="{x:Bind ViewModel.IsTitle3Visible}"></TextBlock>
 
-        <Border BorderBrush="Gray" Grid.Row="1" Grid.Column="0">
-            <TextBlock x:Name="XAML_AttributName" Foreground="Black" Margin="0,0,0,0" Text="{x:Bind ViewModel.Name}" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="24"/>
+        <Border BorderBrush="Gray" Grid.Row="1" Grid.Column="0" Width="{x:Bind ViewModel.GetWidthName, Mode=OneWay}">
+            <TextBlock  x:Name="XAML_AttributName" Foreground="Black" Margin="0,0,0,0" Text="{x:Bind ViewModel.Name}" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="24"/>
         </Border>
-        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="1" Grid.Column="1">
+        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="1" Grid.Column="1" Width="{x:Bind ViewModel.GetBoxLength, Mode=OneWay}">
             <TextBlock x:Name="XML_CurrentValue" Text="{x:Bind ViewModel.AKTValue, Mode=OneWay}" Foreground="Black" Margin="0,0,0,0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center"/>
         </Border>
-        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="1" Grid.Column="2" Visibility="{x:Bind ViewModel.IsModVisible }">
+        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="1" Grid.Column="2" Visibility="{x:Bind ViewModel.IsModVisible }" Width="{x:Bind ViewModel.GetBoxLength, Mode=OneWay}">
             <TextBlock x:Name="XML_ExtraValue" Text="{x:Bind ViewModel.MODValue, Mode=OneWay}" Foreground="Black" Margin="0,0,0,0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center"/>
         </Border>
-        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="1" Grid.Column="3">
+        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="1" Grid.Column="3" Width="{x:Bind ViewModel.GetBoxLength, Mode=OneWay}">
             <TextBlock x:Name="XML_MaxValue" Text="{x:Bind ViewModel.MaxValue, Mode=OneWay}" Foreground="Black" Margin="0,0,0,0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center" FontFamily="Segoe UI"/>
         </Border>
-        <Border x:Name="XML_ButtonHigherValueBorder" BorderBrush="Green" BorderThickness="1" Grid.Row="1" Grid.Column="4" Width="26" Height="26" Visibility="{x:Bind IsValueEditable}">
+        <Border BorderBrush="Transparent" BorderThickness="1" Grid.Row="1" Grid.Column="2" Width="{x:Bind ViewModel.GetBoxLength, Mode=OneWay}"/>
+
+        <Border x:Name="XML_ButtonHigherValueBorder" BorderBrush="Green" BorderThickness="1" Grid.Row="1" Grid.Column="4" Width="26" Height="26" Visibility="{x:Bind ViewModel.IsValueEditable}">
             <Button x:Name="XML_ButtonHigherValue" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Click="XML_ButtonHigherValue_Click">
                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="+" FontSize="8" FontStretch="UltraExpanded" FontWeight="ExtraBold"></TextBlock>
             </Button>
         </Border>
-        <Border x:Name="XML_ButtonReduceValueBorder" BorderBrush="Red" BorderThickness="1"  Grid.Row="1" Grid.Column="5" Width="26" Height="26" Visibility="{x:Bind IsValueEditable}">
+        <Border x:Name="XML_ButtonReduceValueBorder" BorderBrush="Red" BorderThickness="1"  Grid.Row="1" Grid.Column="5" Width="26" Height="26" Visibility="{x:Bind ViewModel.IsValueEditable}">
             <Button x:Name="XML_ButtonReduceValue" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" Click="XML_ButtonReduceValue_Click">
                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="-" FontSize="10"></TextBlock>
             </Button>

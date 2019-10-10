@@ -31,6 +31,8 @@
             <NavigationViewItem Icon="Home" IsEnabled="True" Content="Charakter Laden" Tag="load"></NavigationViewItem>
             <NavigationViewItem Icon="Home" IsEnabled="True" Content="Charakter erstellen/editieren" Tag="create"></NavigationViewItem>
             <NavigationViewItem Icon="Home" IsEnabled="True" Content="Talent erstellen" Tag="createTalent"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Content="Trait" Tag="Trait">
+            </NavigationViewItem>
         </NavigationView.MenuItems>
         <Frame 
             x:Name="ContentFrame" 
