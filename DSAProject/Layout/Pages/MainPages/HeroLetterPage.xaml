@@ -28,8 +28,8 @@
         <StackPanel Grid.Row="1">
             <StackPanel Orientation="Horizontal" Spacing="10">
                 <views:AttributPage />
-                <views:ValuePage VerticalAlignment="Top"/>
-                <views2:ResourcePage VerticalAlignment="Top"/>
+                <views:AttributPage Mode="ValueStandart" VerticalAlignment="Top"/>
+                <views:AttributPage Mode="ResourceStandart" VerticalAlignment="Top"/>
             </StackPanel>
         </StackPanel>
     </Grid>

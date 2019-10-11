@@ -11,8 +11,7 @@
 
     <StackPanel Grid.Row="1">
         <StackPanel Orientation="Horizontal" Spacing="10">
-            <views:AttributPage />
-            <views:ValuePage VerticalAlignment="Top"/>
+            <views:AttributPage Mode="AttributeTrait"/>
         </StackPanel>
     </StackPanel>
 </Page>

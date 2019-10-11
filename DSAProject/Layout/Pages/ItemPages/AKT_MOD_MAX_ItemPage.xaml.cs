@@ -18,9 +18,10 @@ namespace DSAProject.Layout.Views
             AKTModMax,
             AKTModMaxTitle,
             AKTMODMAXEdit,
-            AKtModMaxEditTitle        
+            AKtModMaxEditTitle,
+            AKTModMaxTrait,
+            AKTModMaxTraitTitle
         }
-
         #region Event
         public event EventHandler Event_ValueHigher;
         public event EventHandler Event_ValueLower;
@@ -49,27 +50,44 @@ namespace DSAProject.Layout.Views
                     case AKTMODMAXMode.AKTModMax:
                         ViewModel.IsValueEditable = false;
                         ViewModel.IsModVisible = Visibility.Visible;
+                        ViewModel.IsMaxVisible = Visibility.Visible;
                         break;
                     case AKTMODMAXMode.AKTModMaxTitle:
-                        ViewModel.IsValueEditable = false;
-                        ViewModel.IsModVisible = Visibility.Visible;
-                        ViewModel.IsTitle1Visible = Visibility.Visible;
-                        ViewModel.IsTitle2Visible = Visibility.Visible;
-                        ViewModel.IsTitle3Visible = Visibility.Visible;
-                        break;
-                    case AKTMODMAXMode.AKTMODMAXEdit:
-                        ViewModel.IsValueEditable   = true;
+                        ViewModel.IsValueEditable   = false;
                         ViewModel.IsModVisible      = Visibility.Visible;
-                        break;
-                    case AKTMODMAXMode.AKtModMaxEditTitle:
-                        ViewModel.IsValueEditable   = true;
-                        ViewModel.IsModVisible      = Visibility.Visible;
+                        ViewModel.IsMaxVisible      = Visibility.Visible;
                         ViewModel.IsTitle1Visible   = Visibility.Visible;
                         ViewModel.IsTitle2Visible   = Visibility.Visible;
                         ViewModel.IsTitle3Visible   = Visibility.Visible;
                         break;
-                    default:
+                    case AKTMODMAXMode.AKTMODMAXEdit:
+                        ViewModel.IsValueEditable   = true;
+                        ViewModel.IsModVisible      = Visibility.Visible;
+                        ViewModel.IsMaxVisible = Visibility.Visible;
                         break;
+                    case AKTMODMAXMode.AKtModMaxEditTitle:
+                        ViewModel.IsValueEditable   = true;
+                        ViewModel.IsModVisible      = Visibility.Visible;
+                        ViewModel.IsMaxVisible      = Visibility.Visible;
+                        ViewModel.IsTitle1Visible   = Visibility.Visible;
+                        ViewModel.IsTitle2Visible   = Visibility.Visible;
+                        ViewModel.IsTitle3Visible   = Visibility.Visible;
+                        break;
+                    case AKTMODMAXMode.AKTModMaxTrait:
+                        ViewModel.IsValueEditable = true;
+                        ViewModel.IsModVisible = Visibility.Collapsed;
+                        ViewModel.IsMaxVisible = Visibility.Collapsed;
+                        break;
+                    case AKTMODMAXMode.AKTModMaxTraitTitle:
+                        ViewModel.IsValueEditable = true;
+                        ViewModel.IsModVisible = Visibility.Collapsed;
+                        ViewModel.IsMaxVisible = Visibility.Collapsed;
+                        ViewModel.IsTitle1Visible = Visibility.Visible;
+                        ViewModel.IsTitle2Visible = Visibility.Collapsed;
+                        ViewModel.IsTitle3Visible = Visibility.Collapsed;
+                        break;
+                    default:
+                        throw new NotImplementedException();
                 }
             }
         }
@@ -99,7 +117,6 @@ namespace DSAProject.Layout.Views
         public class AKT_MOD_MAX_ViewModel : AbstractPropertyChanged
         {
             #region Variables
-            private bool isModVisible = true;
             private bool isValueEditable = true;
             private int aktValue;
             private int modValue;
@@ -110,6 +127,7 @@ namespace DSAProject.Layout.Views
             private Visibility isTitle1Visible = Visibility.Collapsed;
             private Visibility isTitle2Visible = Visibility.Collapsed;
             private Visibility isTitle3Visible = Visibility.Collapsed;
+            private Visibility isMaxVible = Visibility.Collapsed;
             #endregion
             #region Properties
             public int AKTValue
@@ -151,7 +169,16 @@ namespace DSAProject.Layout.Views
                 set
                 {
                     isValue2Visible = value;
-                    OnPropertyChanged(nameof(IsTitle1Visible));
+                    OnPropertyChanged(nameof(IsModVisible));
+                }
+            }
+            public Visibility IsMaxVisible
+            {
+                get => isMaxVible;
+                set
+                {
+                    isMaxVible = value;
+                    OnPropertyChanged(nameof(IsMaxVisible));
                 }
             }
             public Visibility IsTitle1Visible

@@ -39,10 +39,9 @@
         <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="1" Grid.Column="2" Visibility="{x:Bind ViewModel.IsModVisible }" Width="{x:Bind ViewModel.GetBoxLength, Mode=OneWay}">
             <TextBlock x:Name="XML_ExtraValue" Text="{x:Bind ViewModel.MODValue, Mode=OneWay}" Foreground="Black" Margin="0,0,0,0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center"/>
         </Border>
-        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="1" Grid.Column="3" Width="{x:Bind ViewModel.GetBoxLength, Mode=OneWay}">
+        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="1" Grid.Column="3" Visibility="{x:Bind ViewModel.IsMaxVisible}" Width="{x:Bind ViewModel.GetBoxLength, Mode=OneWay}">
             <TextBlock x:Name="XML_MaxValue" Text="{x:Bind ViewModel.MaxValue, Mode=OneWay}" Foreground="Black" Margin="0,0,0,0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center" FontFamily="Segoe UI"/>
         </Border>
-        <Border BorderBrush="Transparent" BorderThickness="1" Grid.Row="1" Grid.Column="2" Width="{x:Bind ViewModel.GetBoxLength, Mode=OneWay}"/>
 
         <Border x:Name="XML_ButtonHigherValueBorder" BorderBrush="Green" BorderThickness="1" Grid.Row="1" Grid.Column="4" Width="26" Height="26" Visibility="{x:Bind ViewModel.IsValueEditable}">
             <Button x:Name="XML_ButtonHigherValue" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Click="XML_ButtonHigherValue_Click">
