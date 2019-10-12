@@ -11,7 +11,7 @@ namespace DSAProject.Classes.Interfaces
         Guid ID { get; }
         string Name { get; set; }
         ICharakterValues Values { get; }
-        ICharakterAttribut Attribute { get; }
+        CharakterAttribute Attribute { get; }
         ICharakterResources Resources { get;}
         CharakterTalente Talente { get; }
         CharakterDescription Descriptions { get; }

@@ -5,7 +5,7 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
 {
     public class WoundSwell : AbstractAttributeValues
     {
-        public WoundSwell(Interfaces.ICharakterAttribut attribute) : base(attribute) { }
+        public WoundSwell(CharakterAttribute attribute) : base(attribute) { }
         public override string Name => "Wundschwelle";
         internal override List<CharakterAttribut> attributeList => new List<CharakterAttribut>()
         {

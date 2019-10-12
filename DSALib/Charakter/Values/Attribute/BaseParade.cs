@@ -6,7 +6,7 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
 {
     public class BaseParade : AbstractAttributeValues
     {
-        public BaseParade(ICharakterAttribut attribute) : base(attribute) { }
+        public BaseParade(CharakterAttribute attribute) : base(attribute) { }
         public override string Name => "Padrade-Basis";
         internal override List<CharakterAttribut> attributeList => new List<CharakterAttribut>()
         {

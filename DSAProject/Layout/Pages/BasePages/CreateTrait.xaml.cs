@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DSALib.Charakter.Trait;
+using DSAProject.util;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +24,30 @@ namespace DSAProject.Layout.Pages.BasePages
     /// </summary>
     public sealed partial class CreateTrait : Page
     {
+        private CreateTrait_ViewModel viewModel = new CreateTrait_ViewModel();
+
         public CreateTrait()
         {
             this.InitializeComponent();
+        }
+
+        private class CreateTrait_ViewModel : AbstractPropertyChanged
+        {
+            private Trait trait = new Trait();
+            public Trait Trait
+            {
+                get => trait;
+                set
+                {
+                    trait = value;
+                    OnPropertyChanged(nameof(Trait));
+                }
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var trait = viewModel.Trait;
         }
     }
 }

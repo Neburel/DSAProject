@@ -6,7 +6,7 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
 {
     public class BaseAttack : AbstractAttributeValues
     {
-        public BaseAttack(ICharakterAttribut attribute) : base(attribute) { }
+        public BaseAttack(CharakterAttribute attribute) : base(attribute) { }
         public override string Name => "Attacke-Basis";
 
         internal override List<CharakterAttribut> attributeList => new List<CharakterAttribut>()

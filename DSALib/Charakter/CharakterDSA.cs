@@ -12,7 +12,7 @@ namespace DSAProject.Classes.Charakter
 {
     public class CharakterDSA : AbstractCharakter
     {
-        protected override ICharakterAttribut CreateAttribute()
+        protected override CharakterAttribute CreateAttribute()
         {
             var list = new List<CharakterAttribut>
             {

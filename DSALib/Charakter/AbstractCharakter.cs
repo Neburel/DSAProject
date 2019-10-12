@@ -16,7 +16,7 @@ namespace DSAProject.Classes.Charakter
         public Guid ID { get; set; } 
         public string Name { get; set; }
         public ICharakterValues Values { get; private set; }
-        public ICharakterAttribut Attribute { get; private set; }
+        public CharakterAttribute Attribute { get; private set; }
         public ICharakterResources Resources { get; private set; }
         public CharakterTalente  Talente { get; private set; }
         public CharakterDescription Descriptions { get; private set; }
@@ -42,7 +42,7 @@ namespace DSAProject.Classes.Charakter
         }
         #region AbstractMethods
         protected abstract ICharakterValues CreateValues();
-        protected abstract ICharakterAttribut CreateAttribute();
+        protected abstract CharakterAttribute CreateAttribute();
         protected abstract ICharakterResources CreateResources();
         #endregion
         #region Methods

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace DSAProject.Classes.Charakter
 {
-    public class CharakterAttribute : ICharakterAttribut
+    public class CharakterAttribute
     {
         #region Events
         public event EventHandler<CharakterAttribut> ChangedAttributAKTEvent;

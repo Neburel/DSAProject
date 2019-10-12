@@ -18,7 +18,7 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
         #region Properties
         public int Value { get; private set; }
         internal abstract int CalculateValue { get; }
-        protected ICharakterAttribut Attribute { get; private set; }
+        protected CharakterAttribute Attribute { get; private set; }
         public abstract string Name { get; }
         public string InfoText
         {
@@ -42,7 +42,7 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
         }
         internal abstract List<CharakterAttribut> attributeList { get; }
         #endregion
-        public AbstractAttributeValues(ICharakterAttribut attribute)
+        public AbstractAttributeValues(CharakterAttribute attribute)
         {
             Attribute   = attribute;
             Value       = (int) Math.Ceiling(Calculate());

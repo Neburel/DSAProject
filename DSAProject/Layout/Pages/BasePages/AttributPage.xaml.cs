@@ -1,17 +1,18 @@
-﻿using DSALib.Utils;
+﻿using DSALib;
+using DSALib.Charakter.Trait;
+using DSALib.Interfaces;
+using DSALib.Utils;
+using DSAProject.Classes.Charakter;
 using DSAProject.Classes.Game;
+using DSAProject.Classes.Interfaces;
 using DSAProject.Layout.Views;
 using DSAProject.util.ErrrorManagment;
+using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 using static DSAProject.Layout.Views.AKT_MOD_MAX_ItemPage;
 
-// Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
-
 namespace DSAProject.Layout.Pages
 {
-    /// <summary>
-    /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
-    /// </summary>
     public sealed partial class AttributPage : Page
     {
         public enum AttributePageMode
@@ -20,30 +21,35 @@ namespace DSAProject.Layout.Pages
             AttributeNormalEdit = 2,
             AttributeTrait = 3,
             ValueStandart = 4,
-            ResourceStandart = 5
+            ValueTrait = 5,
+            ResourceStandart = 6,
+            ResourceTrait = 7
         }
-
         private AttributePageMode mode = AttributePageMode.AttributeNormalEdit;
-        public AttributePageMode Mode 
+        private Trait trait = new Trait();
+        public AttributePageMode Mode
         {
             get => mode;
             set
             {
                 mode = value;
-                CreateNew();
+                BuildPage();
+            }
+        }
+        public Trait Trait
+        {
+            get => trait;
+            set
+            {
+                trait = value;
+                BuildPage();
             }
         }
 
         public AttributPage()
         {
             this.InitializeComponent();
-            CreateNew();
-        }
-        private void CreateNew()
-        {
-            XAML_Grid.Children.Clear();
-
-            BuildPage(XAML_Grid, mode);
+            BuildPage();
         }
 
         #region Helper
@@ -77,29 +83,37 @@ namespace DSAProject.Layout.Pages
             return newView;
         }
 
-        internal static void BuildPage(Grid mainGrid, AttributePageMode mode = AttributePageMode.AttributeNormal)
+        private void BuildPage()
         {
-            switch (mode)
+            var mainGrid = XAML_Grid;
+            mainGrid.Children.Clear();
+            switch (Mode)
             {
                 case AttributePageMode.AttributeNormal:
                 case AttributePageMode.AttributeNormalEdit:
-                case AttributePageMode.AttributeTrait:
                     BuildAttributPage(mainGrid, mode);
+                    break;
+                case AttributePageMode.AttributeTrait:
+                    BuildAttributTraitPage(mainGrid, Game.Charakter.Attribute.UsedAttributs, trait);
                     break;
                 case AttributePageMode.ValueStandart:
                     BuildValuePage(mainGrid);
                     break;
+                case AttributePageMode.ValueTrait:
+                    BuildValueTraitPage(mainGrid, Game.Charakter.Values.UsedValues, trait);
+                    break;
                 case AttributePageMode.ResourceStandart:
                     BuildResourcePage(mainGrid);
+                    break;
+                case AttributePageMode.ResourceTrait:
+                    BuildResourceTraitPage(mainGrid, Game.Charakter.Resources.UsedValues, trait);
                     break;
                 default:
                     throw new System.NotImplementedException();
             }
         }
-
-        internal static void BuildAttributPage(Grid mainGrid, AttributePageMode mode = AttributePageMode.AttributeNormal)
+        private static void BuildAttributPage(Grid mainGrid, AttributePageMode mode, int width = 110)
         {
-            int width = 110;
             var attribute = Game.Charakter.Attribute;
             mainGrid.RowDefinitions.Add(new RowDefinition());
 
@@ -178,7 +192,38 @@ namespace DSAProject.Layout.Pages
             }
             #endregion
         }
-        internal static void BuildValuePage(Grid mainGrid)
+        private static void BuildAttributTraitPage(Grid mainGrid, List<CharakterAttribut> attribute, Trait trait, int width = 110)
+        {
+            int i = 0;
+            foreach (var item in attribute)
+            {
+                mainGrid.RowDefinitions.Add(new RowDefinition());
+                var newView = CreateNewView(
+                    mainGrid: mainGrid,
+                    pos: i,
+                    width: width,
+                    mode: AKTMODMAXMode.AKTModMaxTrait,
+                    IsValueEditable: true,
+                    aktValue: trait.GetValue(item),
+                    modValue: 0,
+                    name: item.ToString());
+
+                newView.Event_ValueHigher += (sender, args) =>
+                {
+                    var currentValue = trait.GetValue(item) + 1;
+                    trait.SetValue(item, currentValue);
+                    newView.ValueOne = currentValue;
+                };
+                newView.Event_ValueLower += (sender, agrs) =>
+                {
+                    var currentValue = trait.GetValue(item) - 1;
+                    trait.SetValue(item, currentValue);
+                    newView.ValueOne = currentValue;
+                };
+                i++;
+            }
+        }
+        private static void BuildValuePage(Grid mainGrid)
         {
             var values = Game.Charakter.Values;
             mainGrid.RowDefinitions.Add(new RowDefinition());
@@ -218,7 +263,40 @@ namespace DSAProject.Layout.Pages
                 };
             }
         }
-        internal static void BuildResourcePage(Grid mainGrid)
+        private static void BuildValueTraitPage(Grid mainGrid, List<IValue> values, Trait trait)
+        {
+            var i = 0;
+            foreach (var item in values)
+            {
+                mainGrid.RowDefinitions.Add(new RowDefinition());
+                var newView = CreateNewView(
+                    width: 130,
+                    mode: AKTMODMAXMode.AKTModMaxTrait,
+                    IsValueEditable: false,
+                    aktValue: trait.GetValue(item),
+                    modValue: 0,
+                    name: item.Name,
+                    toolTip: item.InfoText);
+
+                mainGrid.Children.Add(newView);
+                Grid.SetRow(newView, i);
+
+                newView.Event_ValueHigher += (sender, args) =>
+                {
+                    var currentValue = trait.GetValue(item) + 1;
+                    trait.SetValue(item, currentValue);
+                    newView.ValueOne = currentValue;
+                };
+                newView.Event_ValueLower += (sender, agrs) =>
+                {
+                    var currentValue = trait.GetValue(item) - 1;
+                    trait.SetValue(item, currentValue);
+                    newView.ValueOne = currentValue;
+                };
+                i++;
+            }
+        }
+        private static void BuildResourcePage(Grid mainGrid)
         {
             var values = Game.Charakter.Resources;
             mainGrid.RowDefinitions.Add(new RowDefinition());
@@ -252,6 +330,39 @@ namespace DSAProject.Layout.Pages
                         newView.ValueOne = values.GetAKTValue(args, out error);
                     }
                 };
+            }
+        }
+        private static void BuildResourceTraitPage(Grid mainGrid, List<IResource> values, Trait trait)
+        {
+            var i = 0;
+            foreach (var item in values)
+            {
+                mainGrid.RowDefinitions.Add(new RowDefinition());
+                var newView = CreateNewView(
+                    width: 130,
+                    mode: AKTMODMAXMode.AKTModMaxTrait,
+                    IsValueEditable: false,
+                    aktValue: trait.GetValue(item),
+                    modValue: 0,
+                    name: item.Name,
+                    toolTip: item.InfoText);
+
+                mainGrid.Children.Add(newView);
+                Grid.SetRow(newView, i);
+
+                newView.Event_ValueHigher += (sender, args) =>
+                {
+                    var currentValue = trait.GetValue(item) + 1;
+                    trait.SetValue(item, currentValue);
+                    newView.ValueOne = currentValue;
+                };
+                newView.Event_ValueLower += (sender, agrs) =>
+                {
+                    var currentValue = trait.GetValue(item) - 1;
+                    trait.SetValue(item, currentValue);
+                    newView.ValueOne = currentValue;
+                };
+                i++;
             }
         }
         #endregion

@@ -1,4 +1,5 @@
-﻿using DSAProject.Classes.Interfaces;
+﻿using DSAProject.Classes.Charakter;
+using DSAProject.Classes.Interfaces;
 using System.Collections.Generic;
 
 namespace DSALib.Charakter.Resources
@@ -6,7 +7,7 @@ namespace DSALib.Charakter.Resources
     public class MagicResistance : AbstractAttributeResources
     {
         public override string Name => "Magieresistenz";
-        public MagicResistance(ICharakterAttribut attribute) : base(attribute) { }
+        public MagicResistance(CharakterAttribute attribute) : base(attribute) { }
         internal override List<CharakterAttribut> attributeList => new List<CharakterAttribut>()
         {
             CharakterAttribut.Mut,

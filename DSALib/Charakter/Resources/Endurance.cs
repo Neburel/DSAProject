@@ -1,4 +1,4 @@
-﻿using DSAProject.Classes.Interfaces;
+﻿using DSAProject.Classes.Charakter;
 using System.Collections.Generic;
 
 namespace DSALib.Charakter.Resources
@@ -6,7 +6,7 @@ namespace DSALib.Charakter.Resources
     public class Endurance : AbstractAttributeResources
     {
         public override string Name => "Ausdauer";
-        public Endurance(ICharakterAttribut attribute) : base(attribute) { }
+        public Endurance(CharakterAttribute attribute) : base(attribute) { }
         internal override List<CharakterAttribut> attributeList => new List<CharakterAttribut>()
         {
             CharakterAttribut.Mut,

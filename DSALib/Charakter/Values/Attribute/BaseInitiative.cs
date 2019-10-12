@@ -5,7 +5,7 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
 {
     public class BaseInitiative : AbstractAttributeValues
     {
-        public BaseInitiative(Interfaces.ICharakterAttribut attribute) : base(attribute) { }
+        public BaseInitiative(CharakterAttribute attribute) : base(attribute) { }
         public override string Name => "Initiative-Basis";
         internal override List<CharakterAttribut> attributeList => new List<CharakterAttribut>()
         {

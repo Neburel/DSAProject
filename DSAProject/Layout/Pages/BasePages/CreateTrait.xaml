@@ -11,7 +11,12 @@
 
     <StackPanel Grid.Row="1">
         <StackPanel Orientation="Horizontal" Spacing="10">
-            <views:AttributPage Mode="AttributeTrait"/>
+            <views:AttributPage Mode="AttributeTrait" Trait="{x:Bind viewModel.Trait}"/>
+            <views:AttributPage Mode="ValueTrait" Trait="{x:Bind viewModel.Trait}"/>
+            <views:AttributPage Mode="ResourceTrait" Trait="{x:Bind viewModel.Trait}"/>
+            <Button x:Name="XAML_ProbeKlugheit" Background="LightGray" BorderBrush="Green" BorderThickness="1" Click="Button_Click">
+                <TextBlock Foreground="Black" FontFamily="French Script MT" FontSize="18">KL</TextBlock>
+            </Button>
         </StackPanel>
     </StackPanel>
 </Page>
