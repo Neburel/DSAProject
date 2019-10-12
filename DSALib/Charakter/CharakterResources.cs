@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace DSALib.Charakter
 {
-    public class CharakterResources : ICharakterResources
+    public class CharakterResources
     {
         #region Events
         public event EventHandler<IResource> ChangedAKTEvent;

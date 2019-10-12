@@ -1,4 +1,5 @@
-﻿using DSALib.Classes.JSON;
+﻿using DSALib.Charakter;
+using DSALib.Classes.JSON;
 using DSALib.Interfaces;
 using DSAProject.Classes.Charakter;
 using DSAProject.Classes.Charakter.Description;
@@ -10,9 +11,9 @@ namespace DSAProject.Classes.Interfaces
     {
         Guid ID { get; }
         string Name { get; set; }
-        ICharakterValues Values { get; }
+        CharakterValues Values { get; }
         CharakterAttribute Attribute { get; }
-        ICharakterResources Resources { get;}
+        CharakterResources Resources { get;}
         CharakterTalente Talente { get; }
         CharakterDescription Descriptions { get; }
         

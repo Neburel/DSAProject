@@ -1,6 +1,6 @@
 ﻿using DSALib;
+using DSALib.Charakter;
 using DSALib.Classes.JSON;
-using DSALib.Interfaces;
 using DSALib.Utils;
 using DSAProject.Classes.Charakter.Description;
 using DSAProject.Classes.Interfaces;
@@ -15,9 +15,9 @@ namespace DSAProject.Classes.Charakter
         #region Properties
         public Guid ID { get; set; } 
         public string Name { get; set; }
-        public ICharakterValues Values { get; private set; }
+        public CharakterValues Values { get; private set; }
         public CharakterAttribute Attribute { get; private set; }
-        public ICharakterResources Resources { get; private set; }
+        public CharakterResources Resources { get; private set; }
         public CharakterTalente  Talente { get; private set; }
         public CharakterDescription Descriptions { get; private set; }
         #endregion
@@ -41,9 +41,9 @@ namespace DSAProject.Classes.Charakter
             }
         }
         #region AbstractMethods
-        protected abstract ICharakterValues CreateValues();
+        protected abstract CharakterValues CreateValues();
         protected abstract CharakterAttribute CreateAttribute();
-        protected abstract ICharakterResources CreateResources();
+        protected abstract CharakterResources CreateResources();
         #endregion
         #region Methods
         public JSON_Charakter CreateSave()

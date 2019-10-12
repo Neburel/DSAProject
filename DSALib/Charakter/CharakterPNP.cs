@@ -6,7 +6,7 @@ using DSAProject.Classes.Charakter.Values;
 using DSAProject.Classes.Charakter.Values.Attribute;
 using DSAProject.Classes.Interfaces;
 using System;
-using DSALib.Interfaces;
+using DSALib.Charakter;
 
 namespace DSAProject.Classes.Charakter
 {
@@ -27,7 +27,7 @@ namespace DSAProject.Classes.Charakter
             };
             return new CharakterAttribute(list);
         }
-        protected override ICharakterValues CreateValues()
+        protected override CharakterValues CreateValues()
         {
             var list = new List<IValue>()
             {
@@ -42,7 +42,7 @@ namespace DSAProject.Classes.Charakter
             return new CharakterValues(list);
         }
 
-        protected override ICharakterResources CreateResources()
+        protected override CharakterResources CreateResources()
         {
             throw new NotImplementedException();
         }
