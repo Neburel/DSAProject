@@ -16,24 +16,24 @@ namespace DSAProject.Classes.Charakter
         public event EventHandler<IValue> ChangedMAXEvent;
         #endregion
         #region Properties
-        public List<IValue> UsedValues { get => AktValues.Keys.ToList(); }
+        public List<IValue> UsedValues { get => aktValues.Keys.ToList(); }
         #endregion
         #region Variables
-        private Dictionary<IValue, int> AktValues;
-        private Dictionary<IValue, int> ModValue;
+        private Dictionary<IValue, int> aktValues;
+        private Dictionary<IValue, int> modValue;
         #endregion
         public CharakterValues(List<IValue> values)
         {
-            AktValues   = new Dictionary<IValue, int>();
-            ModValue    = new Dictionary<IValue, int>();
+            aktValues   = new Dictionary<IValue, int>();
+            modValue    = new Dictionary<IValue, int>();
 
             foreach(var item in values)
             {
-                AktValues.Add(item, item.Value);
-                ModValue.Add(item, 0);
+                aktValues.Add(item, item.Value);
+                modValue.Add(item, 0);
                 item.ValueChanged += (sender, args) =>
                 {
-                    AktValues[item] = item.Value;
+                    aktValues[item] = item.Value;
                     ChangedAKTEvent?.Invoke(this, item);
                 };
             }
@@ -44,13 +44,13 @@ namespace DSAProject.Classes.Charakter
             error   = null;
             var ret = -1;
 
-            if (AktValues.TryGetValue(value, out int currentValue) == false)
+            if (aktValues.TryGetValue(value, out int currentValue) == false)
             {
                 error = new Error { ErrorCode = ErrorCode.InvalidValue, Message = "Das Gewählte Attribut exestiert bei diesem Charakter nicht" };
             }
             else
             {
-                ret = AktValues[value];
+                ret = aktValues[value];
             }
 
             return ret;
@@ -62,7 +62,7 @@ namespace DSAProject.Classes.Charakter
 
             try
             {
-                var regularValue = ModValue.TryGetValue(value, out int currentValue);
+                var regularValue = modValue.TryGetValue(value, out int currentValue);
 
                 if (regularValue == false)
                 {
@@ -70,7 +70,7 @@ namespace DSAProject.Classes.Charakter
                 } 
                 else
                 {
-                    ret = ModValue[value];
+                    ret = modValue[value];
                 }
             }
             catch (Exception ex)
@@ -105,6 +105,30 @@ namespace DSAProject.Classes.Charakter
                 error = new Error { ErrorCode = ErrorCode.Error, Message = ex.Message };
             }
             return ret;
+        }
+        #endregion
+        #region Setter
+        /// <summary>
+        /// Internal da es Von dem Charakter gesteuert wird
+        /// Die Steuerung erfolgt durch den Charakter damit der Trait nicht als Klasse übergeben werden muss und keine 
+        /// weitere Abhängigkeit entsteht
+        /// </summary>
+        /// <param name="attribut"></param>
+        /// <param name="value"></param>
+        internal void SetModValue(IValue item, int value)
+        {
+            if (!UsedValues.Contains(item))
+            {
+                throw new ArgumentException("Der Parameter wird nicht verwendet", nameof(item));
+            }
+            else
+            {
+                modValue.Remove(item);
+                modValue.Add(item, value);
+
+                ChangedMODEvent?.Invoke(this, item);
+                ChangedMAXEvent?.Invoke(this, item);
+            }
         }
         #endregion
     }

@@ -14,25 +14,22 @@
         BackRequested="NavigationView_BackRequested">       
         <NavigationView.MenuItems>
             <NavigationViewItemHeader Content="Briefe" ></NavigationViewItemHeader>
-            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="HeroLetter" Content="Heldenbrief"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.HeroLetter}" Content="{x:Bind viewModel.HeroLetter.Content}"></NavigationViewItem>
             <NavigationViewItemHeader Content="Talente" ></NavigationViewItemHeader>
-            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="TalentWeaponless" Content="Waffenlose Kampftechniken"></NavigationViewItem>
-            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="TalentClose" Content="Bewaffnete Kampftechniken"></NavigationViewItem>
-            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="TalentRange" Content="Fehrnkampf Kampftechniken"></NavigationViewItem>
-            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="PhysicalTalent" Content="Körperliche Talente"></NavigationViewItem>
-            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="SocialTalent" Content="Gesellschaftliche Talente"></NavigationViewItem>
-            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="NatureTalent" Content="Natur Talente"></NavigationViewItem>
-            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="KnowldageTalent" Content="Wissenstalente"></NavigationViewItem>
-            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="CraftingTalent" Content="Handwerkstalente"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.Weaponless}" Content="{x:Bind viewModel.Weaponless.Content}"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.Close}"      Content="{x:Bind viewModel.Close.Content}"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.Range}"      Content="{x:Bind viewModel.Range.Content}"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.Pyhsical}"   Content="{x:Bind viewModel.Pyhsical.Content}"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.Social}"     Content="{x:Bind viewModel.Social.Content}"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.Nature}"     Content="{x:Bind viewModel.Nature.Content}"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.Knowldage}"  Content="{x:Bind viewModel.Knowldage.Content}"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.Crafting}"   Content="{x:Bind viewModel.Crafting.Content}"></NavigationViewItem>
             <NavigationViewItemHeader Content="Erfolge" ></NavigationViewItemHeader>
-            <NavigationViewItem Icon="Home" IsEnabled="True" Content="Belohnungen"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.Trait}"     Content="{x:Bind viewModel.Trait.Content}"></NavigationViewItem>
             <NavigationViewItemHeader Content="Tools" ></NavigationViewItemHeader>
-            <NavigationViewItem Icon="Home" IsEnabled="True" Content="Charakter Speichern" Tag="save"></NavigationViewItem>
-            <NavigationViewItem Icon="Home" IsEnabled="True" Content="Charakter Laden" Tag="load"></NavigationViewItem>
-            <NavigationViewItem Icon="Home" IsEnabled="True" Content="Charakter erstellen/editieren" Tag="create"></NavigationViewItem>
-            <NavigationViewItem Icon="Home" IsEnabled="True" Content="Talent erstellen" Tag="createTalent"></NavigationViewItem>
-            <NavigationViewItem Icon="Home" IsEnabled="True" Content="Trait" Tag="Trait">
-            </NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.Save}"              Content="{x:Bind viewModel.Save.Content}"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.Load}"              Content="{x:Bind viewModel.Load.Content}"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.CreateCharkter}"    Content="{x:Bind viewModel.CreateCharkter.Content}"></NavigationViewItem>
         </NavigationView.MenuItems>
         <Frame 
             x:Name="ContentFrame" 

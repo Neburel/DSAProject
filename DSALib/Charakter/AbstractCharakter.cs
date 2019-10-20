@@ -20,15 +20,17 @@ namespace DSAProject.Classes.Charakter
         public CharakterResources Resources { get; private set; }
         public CharakterTalente  Talente { get; private set; }
         public CharakterDescription Descriptions { get; private set; }
+        public CharakterTraits Traits { get; private set; }
         #endregion
         public AbstractCharakter(Guid id)
         {
-            ID             = id;
-            Attribute      = CreateAttribute();
-            Values         = CreateValues();
-            Resources      = CreateResources();
-            Talente        = new CharakterTalente(this);
-            Descriptions   = new CharakterDescription();
+            ID              = id;
+            Traits          = new CharakterTraits();
+            Talente         = new CharakterTalente(this);
+            Descriptions    = new CharakterDescription();
+            Attribute       = CreateAttribute();
+            Values          = CreateValues();
+            Resources       = CreateResources();
             
 
             if (Attribute == null )
@@ -39,6 +41,26 @@ namespace DSAProject.Classes.Charakter
             {
                 throw new ArgumentNullException(nameof(Values) + " Die Values wurde nicht gesetzt. Bitte Implementieren sie die dazu Notwendige Methode");
             }
+            else if(Resources == null)
+            {
+                throw new ArgumentNullException(nameof(Traits));
+            }
+
+            Traits.AttributeChanged += (sender, args) =>
+            {
+                var value = Traits.GetValue(args);
+                Attribute.SetModValue(args, value);
+            };
+            Traits.ResourceChanged += (sender, args) =>
+            {
+                var value = Traits.GetValue(args);
+                Resources.SetModValue(args, value);
+            };
+            Traits.ValueChanged += (sender, args) =>
+            {
+                var value = Traits.GetValue(args);
+                Values.SetModValue(args, value);
+            };
         }
         #region AbstractMethods
         protected abstract CharakterValues CreateValues();
@@ -106,7 +128,7 @@ namespace DSAProject.Classes.Charakter
             #region Attribute Laden
             foreach (var item in json_charakter.AttributeBaseValue.Keys)
             {
-                Attribute.SetAttributAKTValue(item, json_charakter.AttributeBaseValue[item], out Error error);
+                Attribute.SetAKTValue(item, json_charakter.AttributeBaseValue[item], out Error error);
                 if (error != null)
                 {
                     throw new Exception(error.Message);

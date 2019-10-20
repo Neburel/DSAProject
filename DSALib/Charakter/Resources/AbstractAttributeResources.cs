@@ -44,7 +44,7 @@ namespace DSALib.Charakter.Resources
         {
             Attribute = attribute;
             Value = (int)Math.Ceiling(Calculate());
-            Attribute.ChangedAttributMAXEvent += (object sender, CharakterAttribut args) =>
+            Attribute.ChangedMAX += (object sender, CharakterAttribut args) =>
             {
                 var oldValue = Value;
                 var calculateV = Calculate();

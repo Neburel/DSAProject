@@ -7,7 +7,7 @@
     mc:Ignorable="d"
     Background="Transparent" FontFamily="Segoe UI">
 
-    <Grid RowSpacing="0">
+        <Grid RowSpacing="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -66,6 +66,8 @@
         <ScrollViewer 
             Grid.Row="2"
             HorizontalScrollBarVisibility="Disabled"
+            VerticalScrollMode="Enabled"
+            HorizontalScrollMode="Enabled"
             VerticalScrollBarVisibility="Auto">
             <Grid
                 x:Name="XAML_Grid" 
@@ -78,4 +80,5 @@
 
         <AutoSuggestBox Grid.Row="0" SuggestionChosen="AutoSuggestBox_SuggestionChosen" QueryIcon="Find" TextChanged="AutoSuggestBox_TextChanged"></AutoSuggestBox>
     </Grid>
+
 </Page>

@@ -10,9 +10,9 @@ namespace DSAProject.Classes.Charakter
     public class CharakterAttribute
     {
         #region Events
-        public event EventHandler<CharakterAttribut> ChangedAttributAKTEvent;
-        public event EventHandler<CharakterAttribut> ChangedAttributMODEvent;
-        public event EventHandler<CharakterAttribut> ChangedAttributMAXEvent;
+        public event EventHandler<CharakterAttribut> ChangedAKT;
+        public event EventHandler<CharakterAttribut> ChangedMOD;
+        public event EventHandler<CharakterAttribut> ChangedMAX;
         #endregion
         #region Properties
         public List<CharakterAttribut> UsedAttributs { get => aktValues.Keys.ToList(); }
@@ -23,12 +23,14 @@ namespace DSAProject.Classes.Charakter
         public int GetSumValueAttributMod { get => modValue.Sum(x => x.Value); }
         #endregion
         #region Variables
+        private List<CharakterAttribut> usedAttributs;
         private Dictionary<CharakterAttribut, int> aktValues;
         private Dictionary<CharakterAttribut, int> modValue;
         private Dictionary<CharakterAttribut, int> limitValues;               //Dicionary für Maximale Werte, also das Maximum welches der Charakter erreichen kann
         #endregion
         public CharakterAttribute(List<CharakterAttribut> attributs)
         {
+            usedAttributs = new List<CharakterAttribut>(attributs);
             aktValues   = new Dictionary<CharakterAttribut, int>();
             modValue    = new Dictionary<CharakterAttribut, int>();
             limitValues = new Dictionary<CharakterAttribut, int>();
@@ -40,7 +42,7 @@ namespace DSAProject.Classes.Charakter
             }
         }
         #region Setter
-        public void SetAttributAKTValue(CharakterAttribut attribut, int value, out Error error)
+        public void SetAKTValue(CharakterAttribut attribut, int value, out Error error)
         {
             error = null; 
             try
@@ -64,8 +66,8 @@ namespace DSAProject.Classes.Charakter
                         }
                     }
                     aktValues[attribut] = value;
-                    ChangedAttributAKTEvent?.Invoke(this, attribut);
-                    ChangedAttributMAXEvent?.Invoke(this, attribut);
+                    ChangedAKT?.Invoke(this, attribut);
+                    ChangedMAX?.Invoke(this, attribut);
                 }
             }
             catch(Exception ex)
@@ -73,6 +75,28 @@ namespace DSAProject.Classes.Charakter
                 throw ex;
                 //Logger.Log(LogLevel.ErrorLog, ex.Message, nameof(CharakterAttribute), nameof(SetAttributAKTValue));
                 error = new Error { ErrorCode = ErrorCode.Error, Message = ex.Message };
+            }
+        }
+        /// <summary>
+        /// Internal da es Von dem Charakter gesteuert wird
+        /// Die Steuerung erfolgt durch den Charakter damit der Trait nicht als Klasse übergeben werden muss und keine 
+        /// weitere Abhängigkeit entsteht
+        /// </summary>
+        /// <param name="attribut"></param>
+        /// <param name="value"></param>
+        internal void SetModValue(CharakterAttribut attribut, int value)
+        {
+            if (!usedAttributs.Contains(attribut))
+            {
+                throw new ArgumentException("Der Parameter wird nicht verwendet", nameof(attribut));
+            }
+            else
+            {
+                modValue.Remove(attribut);
+                modValue.Add(attribut, value);
+
+                ChangedMOD?.Invoke(this, attribut);
+                ChangedMAX?.Invoke(this, attribut);
             }
         }
         #endregion

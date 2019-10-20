@@ -5,18 +5,78 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="using:DSAProject.Layout.Pages"
+    xmlns:views1="using:DSAProject.Layout.Views"
     mc:Ignorable="d"
     Background="White">
 
+    <Grid RowSpacing="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
 
-    <StackPanel Grid.Row="1">
-        <StackPanel Orientation="Horizontal" Spacing="10">
-            <views:AttributPage Mode="AttributeTrait" Trait="{x:Bind viewModel.Trait}"/>
-            <views:AttributPage Mode="ValueTrait" Trait="{x:Bind viewModel.Trait}"/>
-            <views:AttributPage Mode="ResourceTrait" Trait="{x:Bind viewModel.Trait}"/>
-            <Button x:Name="XAML_ProbeKlugheit" Background="LightGray" BorderBrush="Green" BorderThickness="1" Click="Button_Click">
-                <TextBlock Foreground="Black" FontFamily="French Script MT" FontSize="18">KL</TextBlock>
+            <Button x:Name="XAML_ButtonCreate" Margin="100, 0, 0 , 0" Grid.Column="3" Grid.RowSpan="4" Grid.ColumnSpan="4" Width="200" Click="XAML_ButtonCreate_Click">
+                <Border BorderBrush="Gray" BorderThickness="1">
+                    <TextBlock Text="Erstellen" Foreground="Black" FontSize="20" TextAlignment="Center" Width="100"></TextBlock>
+                </Border>
             </Button>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Name"         Foreground="Black" VerticalAlignment="Center"></TextBlock>
+            <TextBox Grid.Row="0" Grid.Column="1" Width="200" Text="{x:Bind viewModel.Title, Mode=TwoWay}"></TextBox>
+
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Beschreibung" Foreground="Black" VerticalAlignment="Center"></TextBlock>
+            <TextBox Grid.Row="1" Grid.Column="1" Width="200" Text="{x:Bind viewModel.Description, Mode=TwoWay}"></TextBox>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Wert"         Foreground="Black"></TextBlock>
+            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="5" Spacing="2">
+                <views1:AKT_MOD_MAX_ItemPage x:Name="XAML_TraitValue" AKTValue="{x:Bind viewModel.Value, Mode=TwoWay}" Grid.Row="2" Grid.Column="1" Event_ValueHigher="XAML_TraitValue_Event_ValueHigher" Event_ValueLower="XAML_TraitValue_Event_ValueLower"></views1:AKT_MOD_MAX_ItemPage>
+                <Border BorderBrush="Gray" BorderThickness="1"  Grid.Row="1" Grid.Column="5" Width="Auto" Height="26" HorizontalAlignment="Center">
+                    <Button  x:Name="XAML_ValueXButton" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" Click="XAML_ValueXButton_Click">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="X" FontSize="10"></TextBlock>
+                    </Button>
+                </Border>
+                <Border BorderBrush="Gray" BorderThickness="1"  Grid.Row="1" Grid.Column="5" Width="Auto" Height="26" HorizontalAlignment="Center">
+                    <Button x:Name="XAML_ValueClearButton" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" Click="XAML_ValueClearButton_Click">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="Clear" FontSize="10"></TextBlock>
+                    </Button>
+                </Border>
+            </StackPanel>
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="GP"         Foreground="Black"></TextBlock>
+            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" Spacing="2">
+                <views1:AKT_MOD_MAX_ItemPage x:Name="XAML_TraitGP" AKTValue="{x:Bind viewModel.GP, Mode=TwoWay}" Grid.Row="3" Grid.Column="1" Event_ValueHigher="XAML_TraitGP_Event_ValueHigher" Event_ValueLower="XAML_TraitGP_Event_ValueLower"></views1:AKT_MOD_MAX_ItemPage>
+                <Border BorderBrush="Gray" BorderThickness="1"  Grid.Row="1" Grid.Column="5" Width="Auto" Height="26" HorizontalAlignment="Center">
+                    <Button   x:Name="XAML_GPXButton" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" Click="XAML_GPXButton_Click">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="X" FontSize="10"></TextBlock>
+                    </Button>
+                </Border>
+                <Border BorderBrush="Gray" BorderThickness="1"  Grid.Row="1" Grid.Column="5" Width="Auto" Height="26" HorizontalAlignment="Center">
+                    <Button  x:Name="XAML_GPClearButton"  HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" Click="XAML_GPClearButton_Click">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="Clear" FontSize="10"></TextBlock>
+                    </Button>
+                </Border>
+            </StackPanel>
+
+
+        </Grid>
+        <StackPanel Grid.Row="2">
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <views:AttributPage Mode="AttributeTrait" Trait="{x:Bind viewModel.Trait}"/>
+                <views:AttributPage Mode="ValueTrait" Trait="{x:Bind viewModel.Trait}"/>
+                <views:AttributPage Mode="ResourceTrait" Trait="{x:Bind viewModel.Trait}"/>
+            </StackPanel>
         </StackPanel>
-    </StackPanel>
+    </Grid>
 </Page>

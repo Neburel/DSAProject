@@ -10,29 +10,29 @@ namespace DSALib.Charakter
     {
         #region Events
         public event EventHandler<IResource> ChangedAKTEvent;
-        public event EventHandler<IResource> ChangedMODEvent;
-        public event EventHandler<IResource> ChangedMAXEvent;
+        public event EventHandler<IResource> ChangedMOD;
+        public event EventHandler<IResource> ChangedMAX;
         #endregion
         #region Properties
-        public List<IResource> UsedValues { get => AktValues.Keys.ToList(); }
+        public List<IResource> UsedValues { get => aktValues.Keys.ToList(); }
         #endregion
         #region Variables
-        private Dictionary<IResource, int> AktValues;
-        private Dictionary<IResource, int> ModValue;
+        private Dictionary<IResource, int> aktValues;
+        private Dictionary<IResource, int> modValue;
         #endregion
 
         public CharakterResources(List<IResource> values)
         {
-            AktValues   = new Dictionary<IResource, int>();
-            ModValue    = new Dictionary<IResource, int>();
+            aktValues   = new Dictionary<IResource, int>();
+            modValue    = new Dictionary<IResource, int>();
 
             foreach (var item in values)
             {
-                AktValues.Add(item, item.Value);
-                ModValue.Add(item, 0);
+                aktValues.Add(item, item.Value);
+                modValue.Add(item, 0);
                 item.ValueChanged += (sender, args) =>
                 {
-                    AktValues[item] = item.Value;
+                    aktValues[item] = item.Value;
                     ChangedAKTEvent?.Invoke(this, item);
                 };
             }
@@ -44,13 +44,13 @@ namespace DSALib.Charakter
             error = null;
             var ret = -1;
 
-            if (AktValues.TryGetValue(value, out int currentValue) == false)
+            if (aktValues.TryGetValue(value, out int currentValue) == false)
             {
                 error = new Error { ErrorCode = ErrorCode.InvalidValue, Message = "Das Gewählte Attribut exestiert bei diesem Charakter nicht" };
             }
             else
             {
-                ret = AktValues[value];
+                ret = aktValues[value];
             }
 
             return ret;
@@ -62,7 +62,7 @@ namespace DSALib.Charakter
 
             try
             {
-                var regularValue = ModValue.TryGetValue(value, out int currentValue);
+                var regularValue = modValue.TryGetValue(value, out int currentValue);
 
                 if (regularValue == false)
                 {
@@ -70,7 +70,7 @@ namespace DSALib.Charakter
                 }
                 else
                 {
-                    ret = ModValue[value];
+                    ret = modValue[value];
                 }
             }
             catch (Exception ex)
@@ -105,6 +105,30 @@ namespace DSALib.Charakter
                 error = new Error { ErrorCode = ErrorCode.Error, Message = ex.Message };
             }
             return ret;
+        }
+        #endregion
+        #region Setter
+        /// <summary>
+        /// Internal da es Von dem Charakter gesteuert wird
+        /// Die Steuerung erfolgt durch den Charakter damit der Trait nicht als Klasse übergeben werden muss und keine 
+        /// weitere Abhängigkeit entsteht
+        /// </summary>
+        /// <param name="attribut"></param>
+        /// <param name="value"></param>
+        internal void SetModValue(IResource item, int value)
+        {
+            if (!UsedValues.Contains(item))
+            {
+                throw new ArgumentException("Der Parameter wird nicht verwendet", nameof(item));
+            }
+            else
+            {
+                modValue.Remove(item);
+                modValue.Add(item, value);
+
+                ChangedMOD?.Invoke(this, item);
+                ChangedMAX?.Invoke(this, item);
+            }
         }
         #endregion
     }

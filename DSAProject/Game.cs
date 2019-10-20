@@ -27,9 +27,16 @@ namespace DSAProject.Classes.Game
         Wissstalente(Buch)
         */
 
+    public enum NavEnum
+    {
+        StartPage = 1,         
+        CreateTraitPage = 2
+    };
+
     public static class Game 
     {
-        public static event EventHandler StartPage;
+
+        public static event EventHandler<NavEnum> NavRequested;
         public static event EventHandler CharakterChanged;
         #region TalentContent
         public static string Talente_BaseFolder { get => "Talente"; }
@@ -78,9 +85,9 @@ namespace DSAProject.Classes.Game
         public static ObservableCollection<ITalent> TalenteDSA { get; private set; }     = new ObservableCollection<ITalent>();
         #endregion
         #region Funktion
-        public static void GoStartPage()
+        public static void RequestNav(NavEnum nav)
         {
-            StartPage?.Invoke(null, null);
+            NavRequested?.Invoke(null, nav);
         }
         public static void SaveTalent(ITalent talent, GameType gameType, out Error error)
         {   
@@ -301,51 +308,5 @@ namespace DSAProject.Classes.Game
         }
 
         #endregion
-        public static string GetProbeShort(CharakterAttribut attribut)
-        {
-            var ret = string.Empty;
-
-            if(attribut == CharakterAttribut.Charisma)
-            {
-                ret = "CH";
-            }
-            else if(attribut == CharakterAttribut.Fingerfertigkeit)
-            {
-                ret = "FF";
-            }
-            else if(attribut == CharakterAttribut.Gewandheit)
-            {
-                ret = "GE";
-            }
-            else if(attribut == CharakterAttribut.Intuition)
-            {
-                ret = "IN";
-            }
-            else if(attribut == CharakterAttribut.Klugheit)
-            {
-                ret = "KL";
-            }
-            else if(attribut == CharakterAttribut.Konstitution)
-            {
-                ret = "KO";
-            }
-            else if(attribut == CharakterAttribut.Körperkraft)
-            {
-                ret = "KK";
-            }
-            else if(attribut == CharakterAttribut.Mut)
-            {
-                ret = "MU";
-            }
-            else if(attribut == CharakterAttribut.Sozialstatus)
-            {
-                ret = "SO";
-            } 
-            else
-            {
-                ret = attribut.ToString();
-            }
-            return ret;
-        }
     }
 }

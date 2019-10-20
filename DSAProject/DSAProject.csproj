@@ -134,6 +134,9 @@
     <Compile Include="Layout\Pages\ToolPages\CreateTalent.xaml.cs">
       <DependentUpon>CreateTalent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Layout\Pages\MainPages\TraitPage.xaml.cs">
+      <DependentUpon>TraitPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Layout\ViewModels\CharakterCreationViewModel.cs" />
     <Compile Include="Layout\ViewModels\CreateTalentViewModel.cs" />
     <Compile Include="Layout\ViewModels\Talent_ItemPageViewModel.cs" />
@@ -212,6 +215,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Layout\Pages\MainPages\TraitPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
@@ -224,9 +231,7 @@
       <Name>DSALib</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Layout\Utils\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

@@ -1,6 +1,7 @@
 ﻿using DSAProject.Layout.ViewModels;
 using DSAProject.util;
 using System;
+using System.ComponentModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -30,8 +31,24 @@ namespace DSAProject.Layout.Views
         private AKT_MOD_MAX_ViewModel ViewModel = new AKT_MOD_MAX_ViewModel();
         private AKTMODMAXMode mode;
         #endregion
+        #region Dependency
+        public static readonly DependencyProperty AKTValueProperty = DependencyProperty.Register(nameof(AKTValue), typeof(string), typeof(AKT_MOD_MAX_ItemPage), new PropertyMetadata(null, new PropertyChangedCallback(OnAKTValueChanged)));
+        #endregion
         #region Properties
-        public int ValueOne { get => ViewModel.AKTValue; set => ViewModel.AKTValue = value; }
+        public int MinValueAsInt
+        {
+            get
+            {
+                int.TryParse(ViewModel.AKTValue, out int innerValue);
+                return innerValue;
+            }
+            set => ViewModel.AKTValue = value.ToString();
+        }
+        public string AKTValue
+        {
+            get => (string)GetValue(AKTValueProperty); 
+            set  => SetValue(AKTValueProperty, value);
+        }
         public int ValueTwo { get => ViewModel.MODValue; set => ViewModel.MODValue = value; }
         public int ValueThree { get => ViewModel.MaxValue; }
         public string MaxString
@@ -92,6 +109,23 @@ namespace DSAProject.Layout.Views
             }
         }
         #endregion
+
+
+        private static void OnAKTValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue != e.OldValue)
+            {
+                ((AKT_MOD_MAX_ItemPage)d).ViewModel.AKTValue = (string)e.NewValue;
+            }
+        }
+
+
+
+        public AKT_MOD_MAX_ItemPage()
+        {
+            ViewModel.GetWidthName = 0;
+            InitializeComponent();
+        }
         public AKT_MOD_MAX_ItemPage(double widthName, string name)
         {
             ViewModel.GetWidthName = widthName;
@@ -99,6 +133,20 @@ namespace DSAProject.Layout.Views
 
             InitializeComponent();
         }
+
+        public event PropertyChangedEventHandler PropertyChanged
+        {
+            add
+            {
+                ((INotifyPropertyChanged)ViewModel).PropertyChanged += value;
+            }
+
+            remove
+            {
+                ((INotifyPropertyChanged)ViewModel).PropertyChanged -= value;
+            }
+        }
+
         private void XML_ButtonReduceValue_Click(object sender, RoutedEventArgs e)
         {
             Event_ValueLower?.Invoke(this, null);
@@ -118,7 +166,7 @@ namespace DSAProject.Layout.Views
         {
             #region Variables
             private bool isValueEditable = true;
-            private int aktValue;
+            private string aktValue;
             private int modValue;
             private string name;
             private double getWidthName = 130;
@@ -130,7 +178,7 @@ namespace DSAProject.Layout.Views
             private Visibility isMaxVible = Visibility.Collapsed;
             #endregion
             #region Properties
-            public int AKTValue
+            public string AKTValue
             {
                 get => aktValue;
                 set
@@ -152,7 +200,11 @@ namespace DSAProject.Layout.Views
             }
             public int MaxValue
             {
-                get => AKTValue + MODValue;
+                get
+                {
+                    int.TryParse(AKTValue, out int innerValue);
+                    return innerValue + MODValue;
+                }
             }
             public bool IsValueEditable
             {

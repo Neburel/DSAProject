@@ -433,11 +433,11 @@ namespace DSAProject.Layout.Pages.ToolPages
             ViewModel.Probes.Add(attribut);
             if(ViewModel.ProbeString == string.Empty)
             {
-                ViewModel.ProbeString = Game.GetProbeShort(attribut);
+                ViewModel.ProbeString = Helper.GetShort(attribut);
             } 
             else
             {
-                ViewModel.ProbeString = ViewModel.ProbeString + "/" + Game.GetProbeShort(attribut);
+                ViewModel.ProbeString = ViewModel.ProbeString + "/" + Helper.GetShort(attribut);
             }
         }
         #endregion

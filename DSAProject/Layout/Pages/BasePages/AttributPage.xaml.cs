@@ -1,5 +1,5 @@
 ﻿using DSALib;
-using DSALib.Charakter.Trait;
+using DSALib.Charakter.Other;
 using DSALib.Interfaces;
 using DSALib.Utils;
 using DSAProject.Classes.Charakter;
@@ -72,7 +72,7 @@ namespace DSAProject.Layout.Pages
         {
             var newView = new AKT_MOD_MAX_ItemPage(width, name);
             newView.Mode = mode;
-            newView.ValueOne = aktValue;
+            newView.MinValueAsInt = aktValue;
             newView.ValueTwo = modValue;
 
             if (!string.IsNullOrEmpty(toolTip))
@@ -162,24 +162,24 @@ namespace DSAProject.Layout.Pages
                 {
                     newView.Mode = titleMode;
                 }
-                attribute.ChangedAttributAKTEvent += (sender, args) =>
+                attribute.ChangedAKT += (sender, args) =>
                 {
                     if (args == item)
                     {
                         var value = attribute.GetAttributAKTValue(item, out error);
-                        newView.ValueOne = value;
-                        sumVieW.ValueOne = attribute.GetSumValueAttributeAKT;
+                        newView.MinValueAsInt = value;
+                        sumVieW.MinValueAsInt = attribute.GetSumValueAttributeAKT;
                     }
                 };
                 newView.Event_ValueHigher += (sender, args) =>
                 {
                     var currentValue = attribute.GetAttributAKTValue(item, out error);
-                    attribute.SetAttributAKTValue(item, currentValue + 1, out error);
+                    attribute.SetAKTValue(item, currentValue + 1, out error);
                 };
                 newView.Event_ValueLower += (sender, agrs) =>
                 {
                     var currentValue = attribute.GetAttributAKTValue(item, out error);
-                    attribute.SetAttributAKTValue(item, currentValue - 1, out error);
+                    attribute.SetAKTValue(item, currentValue - 1, out error);
                 };
                 i++;
             }
@@ -212,13 +212,13 @@ namespace DSAProject.Layout.Pages
                 {
                     var currentValue = trait.GetValue(item) + 1;
                     trait.SetValue(item, currentValue);
-                    newView.ValueOne = currentValue;
+                    newView.MinValueAsInt = currentValue;
                 };
                 newView.Event_ValueLower += (sender, agrs) =>
                 {
                     var currentValue = trait.GetValue(item) - 1;
                     trait.SetValue(item, currentValue);
-                    newView.ValueOne = currentValue;
+                    newView.MinValueAsInt = currentValue;
                 };
                 i++;
             }
@@ -254,7 +254,7 @@ namespace DSAProject.Layout.Pages
                 {
                     if (args == item)
                     {
-                        newView.ValueOne = values.GetAKTValue(args, out error);
+                        newView.MinValueAsInt = values.GetAKTValue(args, out error);
                         if (error != null)
                         {
                             Logger.Log(error);
@@ -285,13 +285,13 @@ namespace DSAProject.Layout.Pages
                 {
                     var currentValue = trait.GetValue(item) + 1;
                     trait.SetValue(item, currentValue);
-                    newView.ValueOne = currentValue;
+                    newView.MinValueAsInt = currentValue;
                 };
                 newView.Event_ValueLower += (sender, agrs) =>
                 {
                     var currentValue = trait.GetValue(item) - 1;
                     trait.SetValue(item, currentValue);
-                    newView.ValueOne = currentValue;
+                    newView.MinValueAsInt = currentValue;
                 };
                 i++;
             }
@@ -327,7 +327,7 @@ namespace DSAProject.Layout.Pages
                 {
                     if (args == item)
                     {
-                        newView.ValueOne = values.GetAKTValue(args, out error);
+                        newView.MinValueAsInt = values.GetAKTValue(args, out error);
                     }
                 };
             }
@@ -354,13 +354,13 @@ namespace DSAProject.Layout.Pages
                 {
                     var currentValue = trait.GetValue(item) + 1;
                     trait.SetValue(item, currentValue);
-                    newView.ValueOne = currentValue;
+                    newView.MinValueAsInt = currentValue;
                 };
                 newView.Event_ValueLower += (sender, agrs) =>
                 {
                     var currentValue = trait.GetValue(item) - 1;
                     trait.SetValue(item, currentValue);
-                    newView.ValueOne = currentValue;
+                    newView.MinValueAsInt = currentValue;
                 };
                 i++;
             }

@@ -137,7 +137,7 @@ namespace DSAWebseiteTest
         {
             var currentValue = Charakter.Attribute.GetAttributAKTValue(attribut, out DSALib.Utils.Error error);
             currentValue = currentValue + value;
-            Charakter.Attribute.SetAttributAKTValue(attribut, currentValue, out error);
+            Charakter.Attribute.SetAKTValue(attribut, currentValue, out error);
             DSATalente.DataBind();
 
             return currentValue;
