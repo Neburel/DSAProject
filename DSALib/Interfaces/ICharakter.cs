@@ -3,6 +3,7 @@ using DSALib.Classes.JSON;
 using DSAProject.Classes.Charakter;
 using DSAProject.Classes.Charakter.Description;
 using System;
+using System.Collections.Generic;
 
 namespace DSAProject.Classes.Interfaces
 {
@@ -18,6 +19,6 @@ namespace DSAProject.Classes.Interfaces
         CharakterTraits Traits { get; }
 
         JSON_Charakter CreateSave();
-        void Load(JSON_Charakter json_charakter);
+        void Load(JSON_Charakter json_charakter, List<ITalent> talents);
     }
 }

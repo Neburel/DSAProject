@@ -1,47 +1,50 @@
 ﻿using DSALib;
 using DSALib.Charakter;
 using DSALib.Classes.JSON;
+using DSALib.JSON;
 using DSALib.Utils;
 using DSAProject.Classes.Charakter.Description;
+using DSAProject.Classes.Charakter.Talente;
 using DSAProject.Classes.Interfaces;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DSAProject.Classes.Charakter
 {
     public abstract class AbstractCharakter : ICharakter
     {
         #region Properties
-        public Guid ID { get; set; } 
+        public Guid ID { get; set; }
         public string Name { get; set; }
         public CharakterValues Values { get; private set; }
         public CharakterAttribute Attribute { get; private set; }
         public CharakterResources Resources { get; private set; }
-        public CharakterTalente  Talente { get; private set; }
+        public CharakterTalente Talente { get; private set; }
         public CharakterDescription Descriptions { get; private set; }
         public CharakterTraits Traits { get; private set; }
         #endregion
         public AbstractCharakter(Guid id)
         {
-            ID              = id;
-            Traits          = new CharakterTraits();
-            Talente         = new CharakterTalente(this);
-            Descriptions    = new CharakterDescription();
-            Attribute       = CreateAttribute();
-            Values          = CreateValues();
-            Resources       = CreateResources();
-            
+            ID = id;
+            Traits = new CharakterTraits();
+            Talente = new CharakterTalente(this);
+            Descriptions = new CharakterDescription();
+            Attribute = CreateAttribute();
+            Values = CreateValues();
+            Resources = CreateResources();
 
-            if (Attribute == null )
+
+            if (Attribute == null)
             {
                 throw new ArgumentNullException(nameof(Attribute) + " Die Attribute wurde nicht gesetzt. Bitte Implementieren sie die dazu Notwendige Methode");
             }
-            else if(Values == null)
+            else if (Values == null)
             {
                 throw new ArgumentNullException(nameof(Values) + " Die Values wurde nicht gesetzt. Bitte Implementieren sie die dazu Notwendige Methode");
             }
-            else if(Resources == null)
+            else if (Resources == null)
             {
                 throw new ArgumentNullException(nameof(Traits));
             }
@@ -70,50 +73,159 @@ namespace DSAProject.Classes.Charakter
         #region Methods
         public JSON_Charakter CreateSave()
         {
-            var charakter   = new JSON_Charakter();
-
-            if(Name == null || Name == string.Empty)
+            #region Speichern Möglich?
+            if (Name == null || Name == string.Empty)
             {
                 throw new Exception("Der Charakter benötigt einen Namen");
             }
-            else
+            #endregion
+            var charakter = new JSON_Charakter
             {
-                #region Descriptor Speichern
-                charakter.Descriptors = new List<JSON_Descriptor>();
-                foreach(var item in this.Descriptions.Descriptions)
-                {
-                    charakter.Descriptors.Add(new JSON_Descriptor
-                    {
-                        Priority            = item.Priority,
-                        DescriptionTitle    = item.DescriptionTitle,
-                        DescriptionText     = item.DescriptionText
-                    });
-                }
-                #endregion
-                #region Attribute Speichern
-                var attributeDictionary = new Dictionary<CharakterAttribut, int>();
-                var attribute           = Attribute.UsedAttributs;
+                ID          = ID,
+                Name        = Name,
+                SaveTime    = DateTime.Now
+            };
 
-                foreach(var attribut in attribute)
+            var x = charakter.SaveTimeAsString;
+           
+            #region Values Speichern
+            //Kein Sepeichern notwendig, da es errechnet wird....
+            #endregion
+            #region Attribute Speichern
+            var attributeDictionary = new Dictionary<CharakterAttribut, int>();
+            var attribute = Attribute.UsedAttributs;
+
+            foreach (var attribut in attribute)
+            {
+                Error error = null;
+                var value = Attribute.GetAttributAKTValue(attribut, out error);
+                if (error != null)
                 {
-                    Error error = null;
-                    var value = Attribute.GetAttributAKTValue(attribut, out error);
-                    if(error != null)
-                    {
-                        throw new Exception("Beim Speichern des Attributes " + attribut.ToString() + " ist ein Fehler aufgetreten: " + error.Message);
-                    }
-                    else
-                    {
-                        attributeDictionary.Add(attribut, value);
-                    }
+                    throw new Exception("Beim Speichern des Attributes " + attribut.ToString() + " ist ein Fehler aufgetreten: " + error.Message);
                 }
-                charakter.AttributeBaseValue = attributeDictionary;
-                #endregion
+                else
+                {
+                    attributeDictionary.Add(attribut, value);
+                }
             }
+            charakter.AttributeBaseValue = attributeDictionary;
+            #endregion
+            #region Resources Speichern
+            //kein Speichern notwendig
+            #endregion
+            #region Talente Speichern
+            charakter.TalentTAW = new Dictionary<Guid, int>();
+            charakter.TalentAT = new Dictionary<Guid, int>();
+            charakter.TalentPA = new Dictionary<Guid, int>();
+
+            foreach (var item in Talente.TAWDictionary)
+            {
+                if (item.Value > 0)
+                {
+                    charakter.TalentTAW.Add(item.Key.ID, item.Value);
+                }
+            }
+
+            foreach (var item in Talente.ATDictionary)
+            {
+                if (item.Value > 0)
+                {
+                    charakter.TalentAT.Add(item.Key.ID, item.Value);
+                }
+            }
+            foreach (var item in Talente.PADictionary)
+            {
+                if (item.Value > 0)
+                {
+                    charakter.TalentPA.Add(item.Key.ID, item.Value);
+                }
+            }
+            #endregion
+            #region Descriptor Speichern
+            charakter.Descriptors = new List<JSON_Descriptor>();
+            foreach (var item in this.Descriptions.Descriptions)
+            {
+                charakter.Descriptors.Add(new JSON_Descriptor
+                {
+                    Priority = item.Priority,
+                    DescriptionTitle = item.DescriptionTitle,
+                    DescriptionText = item.DescriptionText
+                });
+            }
+            #endregion
+            #region Traits Speichern
+            foreach(var item in Traits.traits)
+            {
+                var jTrait = new JSON_Trait
+                {
+                    Description     = item.Description,
+                    GP              = item.GP,
+                    Title           = item.Title,
+                    Value           = item.Value,
+                    AttributeValues = new Dictionary<CharakterAttribut, int>(),
+                    ResourceValues  = new Dictionary<string, int>(),
+                    ValueValues     = new Dictionary<string, int>()
+                };
+                foreach(var innerItems in jTrait.AttributeValues)
+                {
+                    jTrait.AttributeValues.Add(innerItems.Key, innerItems.Value);
+                }
+                foreach (var innerItems in jTrait.ResourceValues)
+                {
+                    jTrait.ResourceValues.Add(innerItems.Key, innerItems.Value);
+                }
+                foreach (var innerItems in jTrait.ValueValues)
+                {
+                    jTrait.ValueValues.Add(innerItems.Key, innerItems.Value);
+                }
+            }
+            #endregion
             return charakter;
         }
-        public void Load(JSON_Charakter json_charakter)
-        {   
+        public void Load(JSON_Charakter json_charakter, List<ITalent> talents) 
+        {
+            #region Attribute Laden
+            foreach (var item in json_charakter.AttributeBaseValue.Keys)
+            {
+                Attribute.SetAKTValue(item, json_charakter.AttributeBaseValue[item], out Error error);
+                if (error != null)
+                {
+                    throw new Exception(error.Message);
+                }
+            }
+            #endregion
+            #region Values Laden
+            //kein Laden notwending
+            #endregion
+            #region Resources Laden
+            //kein Laden notwendig
+            #endregion
+            #region Talente Laden
+            foreach(var item in json_charakter.TalentTAW)
+            {
+                var talent = talents.Where(x => x.ID == item.Key).FirstOrDefault(null);
+                if(talent != null)
+                {
+                    Talente.SetTAW(talent, item.Value);
+                }
+            }
+            foreach (var item in json_charakter.TalentAT)
+            {
+                var talent = talents.Where(x => x.ID == item.Key).FirstOrDefault(null);
+                if (talent != null && talent.GetType() == typeof(AbstractTalentFighting))
+                {
+                    Talente.SetAT((AbstractTalentFighting)talent, item.Value);
+                }
+            }
+            foreach (var item in json_charakter.TalentPA)
+            {
+                var talent = talents.Where(x => x.ID == item.Key).FirstOrDefault(null);
+                if (talent != null && talent.GetType() == typeof(AbstractTalentFighting)) 
+                {
+                    Talente.SetPA((AbstractTalentFighting)talent, item.Value);
+                }
+            }
+            #endregion
             #region Descriptoren Laden
             foreach (var item in json_charakter.Descriptors)
             {
@@ -125,15 +237,8 @@ namespace DSAProject.Classes.Charakter
                 });
             }
             #endregion
-            #region Attribute Laden
-            foreach (var item in json_charakter.AttributeBaseValue.Keys)
-            {
-                Attribute.SetAKTValue(item, json_charakter.AttributeBaseValue[item], out Error error);
-                if (error != null)
-                {
-                    throw new Exception(error.Message);
-                }
-            }
+            #region Traits Laden
+            throw new NotImplementedException();
             #endregion
         }
         #endregion

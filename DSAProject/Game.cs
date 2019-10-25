@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace DSAProject.Classes.Game
 {
@@ -157,36 +159,34 @@ namespace DSAProject.Classes.Game
         }
         public static void LoadTalente()
         {
+            //TalenteDSA = new ObservableCollection<ITalent>(TalentHelper.ExcelImport("TalentImport.xlsx"));
+
             var jString = string.Empty;
             //Locale Talente
-            //jString = FileManagment.LoadTextFile(talentSaveFile, out Error error);
-            //if(error == null)
-            //{
-            //    jSON_talentLocal = JSON_TalentSaveFile.DeSerializeJson(jString, out string serror);
-                
-            //    if(serror == null)
-            //    {
-            //        TalentHelper.LoadTalent(jSON_talentLocal.Talente_DSA, TalenteDSA);
-            //        TalentHelper.LoadTalent(jSON_talentLocal.Talente_PNP, TalentePNP);
-            //    }
+            jString = FileManagment.LoadTextFile(talentSaveFile, out Error error);
+            if (error == null)
+            {
+                jSON_talentLocal = JSON_TalentSaveFile.DeSerializeJson(jString, out string serror);
 
-            //}
+                if (serror == null)
+                {
+                    TalentHelper.LoadTalent(jSON_talentLocal.Talente_DSA, TalenteDSA);
+                    TalentHelper.LoadTalent(jSON_talentLocal.Talente_PNP, TalentePNP);
+                }
 
-            //jString = FileManagment.LoadTextAssestFile(talentSaveFile, out error);
-            //if (error == null)
-            //{
-            //    var jSON_talentAssests = JSON_TalentSaveFile.DeSerializeJson(jString, out string serror);
+            }
 
-            //    if (serror == null)
-            //    {
-            //        TalentHelper.LoadTalent(jSON_talentAssests.Talente_DSA, TalenteDSA);
-            //        TalentHelper.LoadTalent(jSON_talentAssests.Talente_PNP, TalentePNP);
-            //    }
-            //}
+            jString = FileManagment.LoadTextAssestFile(talentSaveFile, out error);
+            if (error == null)
+            {
+                var jSON_talentAssests = JSON_TalentSaveFile.DeSerializeJson(jString, out string serror);
 
-            TalenteDSA = new ObservableCollection<ITalent>(TalentHelper.ExcelImport("TalentImport.xlsx"));
-
-
+                if (serror == null)
+                {
+                    TalentHelper.LoadTalent(jSON_talentAssests.Talente_DSA, TalenteDSA);
+                    TalentHelper.LoadTalent(jSON_talentAssests.Talente_PNP, TalentePNP);
+                }
+            }
         }
         public static Guid GenerateNextCharakterGUID()
         {
@@ -239,7 +239,27 @@ namespace DSAProject.Classes.Game
                 var saveFile = Charakter.CreateSave();
                 var filePath = Path.Combine(CharakterSaveFolder, Charakter.ID.ToString() + ".save");
                 FileManagment.WriteToFile(saveFile.JSONContent, filePath, Windows.Storage.CreationCollisionOption.ReplaceExisting, out error);
-                if(error == null)
+
+                #region Sicherungskopie
+                var task = new Task(async () =>
+                {
+                    try
+                    {
+                        var folder = await StorageFolder.GetFolderFromPathAsync("D:\\Dropbox\\07_DSA_PNP_D&D\\DSA_Save");
+                        var sfile = await folder.CreateFileAsync(Charakter.ID.ToString() + ".save", CreationCollisionOption.ReplaceExisting);
+                        await FileIO.AppendTextAsync(sfile, saveFile.JSONContent);
+                    }
+                    catch(Exception ex)
+                    {
+                        Logger.Log(LogLevel.ErrorLog, "Sicherung konnte nicht erstellt werden");
+                        //"https://support.microsoft.com/de-de/help/4468237/windows-10-file-system-access-and-privacy-microsoft-privacy"
+                    }
+                });
+                task.Start();
+                #endregion
+
+
+                if (error == null)
                 {
                     #region Meta File
                     var metaFile = new JSON_CharakterMetaData
@@ -274,28 +294,16 @@ namespace DSAProject.Classes.Game
             var file = Path.Combine(CharakterSaveFolder, metaDataFile.SaveFile);
             var jsonFile = FileManagment.LoadTextFile(file, out error);
             var json_charakter = JSON_Charakter.DeSerializeJson(jsonFile, out string errorstring);
-            if (string.IsNullOrEmpty(errorstring))
-            {
-                error = new Error
-                {
-                    ErrorCode = ErrorCode.Error,
-                    Message = "errorString"
-                };
-            }
-            else
-            {
-                charakter.Load(json_charakter);
-            }
-
+                       
             if (gamingType == typeof(CharakterDSA))
             {
                 charakter = new CharakterDSA(metaDataFile.ID);
-                charakter.Load(json_charakter);
+                charakter.Load(json_charakter, TalenteDSA.ToList());
             }
             else if (gamingType == typeof(CharakterPNP))
             {
                 charakter = new CharakterPNP(metaDataFile.ID);
-                charakter.Load(json_charakter);
+                charakter.Load(json_charakter, TalentePNP.ToList());
             }
             else
             {

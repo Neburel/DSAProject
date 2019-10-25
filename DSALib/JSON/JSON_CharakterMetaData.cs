@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DSALib.Classes.JSON
 {
@@ -31,7 +27,7 @@ namespace DSALib.Classes.JSON
             get => Convert.ToDateTime(SaveTimeAsString);
             set
             {
-                SaveTimeAsString = value.ToLongTimeString();
+                SaveTimeAsString = value.ToString("MM/dd/yyyy H:mm");
             }
         }
         [IgnoreDataMember]

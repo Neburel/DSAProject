@@ -14,7 +14,7 @@ namespace DSALib.Charakter
         public event EventHandler<CharakterAttribut> AttributeChanged;
         #endregion
         #region Variables
-        private List<Trait> traits;
+        internal List<Trait> traits;
         #endregion
         public CharakterTraits()
         {
