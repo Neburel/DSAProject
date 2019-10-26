@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DSALib.JSON;
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
@@ -21,7 +22,7 @@ namespace DSALib.Classes.JSON
             get => Convert.ToDateTime(SaveTimeAsString);
             set
             {
-                SaveTimeAsString = value.ToString("MM/dd/yyyy H:mm");
+                SaveTimeAsString = value.ToString("dd/MM/yyyy H:mm");
             }
         }
         #endregion
@@ -36,5 +37,7 @@ namespace DSALib.Classes.JSON
         public Dictionary<Guid, int> TalentAT { get; set; }
         [DataMember]
         public Dictionary<Guid, int> TalentPA { get; set; }
+        [DataMember]
+        public List<JSON_Trait> Traits { get; set; }
     }
 }

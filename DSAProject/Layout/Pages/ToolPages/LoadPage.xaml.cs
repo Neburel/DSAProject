@@ -22,30 +22,19 @@ namespace DSAProject.Layout.Pages
     /// </summary>
     public sealed partial class LoadPage : Page
     {
-        public ObservableCollection<JSON_CharakterMetaData> Items { get; } = new ObservableCollection<JSON_CharakterMetaData>();
+        public ObservableCollection<JSON_Charakter> Items { get; } = new ObservableCollection<JSON_Charakter>();
         public LoadPage()
         {
             this.InitializeComponent();
 
-            var fileList = FileManagment.GetFilesDictionary(Game.CharakterMetaFolder, out Error error);
-            var items = new ObservableCollection<JSON_CharakterMetaData>();
-
-            foreach(var item in fileList)
+            var items = new ObservableCollection<JSON_Charakter>();
+            var cFileList = FileManagment.GetFilesDictionary(Game.CharakterSaveFolder, out Error error);
+            foreach(var item in cFileList)
             {
-                var fileString  = Path.Combine(Game.CharakterMetaFolder, item);
-
-                if (error == null)
-                {
-                    var fileContent = FileManagment.LoadTextFile(fileString, out error);
-                    if(error == null)
-                    {
-                        var metaInformationen = JSON_CharakterMetaData.DeSerializeJson(fileContent, out string serror);
-                        if (serror == null)
-                        {
-                            items.Add(metaInformationen);
-                        }
-                    }
-                }
+                var file    = Path.Combine(Game.CharakterSaveFolder, item);
+                var fileContent     = FileManagment.LoadTextFile(file, out error);
+                var json_charakter = JSON_Charakter.DeSerializeJson(fileContent, out string errorstring);
+                items.Add(json_charakter);
             }
             items.OrderBy(x => x.Name).ThenBy(x => x.SaveTime);
             Items = items;
@@ -53,23 +42,10 @@ namespace DSAProject.Layout.Pages
         private void XAML_LoadListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             Error error             = null;
-            var metaData            = (JSON_CharakterMetaData)e.ClickedItem;
-            
-            Game.LoadCharakter(metaData, out error);
+            var charakter            = (JSON_Charakter)e.ClickedItem;
+            Game.LoadCharakter(charakter, out error);
 
-            
-
-
-            //if (error != null)
-            //{
-            //    Logger.Log(LogLevel.ErrorLog, error.Message, nameof(LoadPage), nameof(XAML_LoadListView));
-            //} 
-            //else
-            //{
-            //    Game.Charakter = charakter;
-            //    Game.GoStartPage();
-            //}
-
+            Game.RequestNav(new util.EventNavRequest { Side = NavEnum.StartPage });
         }
     }
 }

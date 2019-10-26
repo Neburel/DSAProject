@@ -14,17 +14,15 @@ namespace DSAProject.Layout.Pages
     public sealed partial class TraitPage : Page
     {
         private TraitPageViewModel viewModel = new TraitPageViewModel();
+        private Trait createNewTrait = new Trait { Description = "CreateNew" };
 
         public TraitPage()
         {
             this.InitializeComponent();
             viewModel.Traits = new ObservableCollection<Trait>(Game.Charakter.Traits.GetTraits());
+            viewModel.Traits.Add(createNewTrait);
+            
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Game.RequestNav(NavEnum.CreateTraitPage);
-        }
-
         private class TraitPageViewModel : AbstractPropertyChanged
         {
             private ObservableCollection<Trait> traits;
@@ -36,6 +34,18 @@ namespace DSAProject.Layout.Pages
                     traits = value;
                     OnPropertyChanged(nameof(Traits));
                 }
+            }
+        }
+
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if(e.ClickedItem == createNewTrait)
+            {
+                Game.RequestNav(new EventNavRequest { Side = NavEnum.CreateTraitPage});
+            }
+            else
+            {
+                Game.RequestNav(new EventNavRequest { Side = NavEnum.CreateTraitPage, Parameter = e.ClickedItem });
             }
         }
     }

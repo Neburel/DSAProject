@@ -15,10 +15,9 @@
             ItemClick="XAML_LoadListView_ItemClick"
             IsItemClickEnabled="True">
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="json:JSON_CharakterMetaData">
+                <DataTemplate x:DataType="json:JSON_Charakter">
                     <StackPanel Orientation="Horizontal" Spacing="10">
                         <TextBlock Text="{x:Bind Name}" FontFamily="French Script MT" FontSize="24" FontStyle="Oblique"/>
-                        <TextBlock Text="{x:Bind ShortGame}" FontFamily="French Script MT" FontSize="24" FontStyle="Oblique"/>
                         <TextBlock Text="{x:Bind SaveTimeAsString}" FontFamily="French Script MT" FontSize="24" FontStyle="Oblique"/>
                     </StackPanel>
                 </DataTemplate>

@@ -4,6 +4,7 @@ using DSALib.Utils;
 
 using DSAProject.Classes.Charakter;
 using DSAProject.Classes.Interfaces;
+using DSAProject.util;
 using DSAProject.util.ErrrorManagment;
 using DSAProject.util.FileManagment;
 
@@ -38,7 +39,7 @@ namespace DSAProject.Classes.Game
     public static class Game 
     {
 
-        public static event EventHandler<NavEnum> NavRequested;
+        public static event EventHandler<EventNavRequest> NavRequested;
         public static event EventHandler CharakterChanged;
         #region TalentContent
         public static string Talente_BaseFolder { get => "Talente"; }
@@ -87,7 +88,7 @@ namespace DSAProject.Classes.Game
         public static ObservableCollection<ITalent> TalenteDSA { get; private set; }     = new ObservableCollection<ITalent>();
         #endregion
         #region Funktion
-        public static void RequestNav(NavEnum nav)
+        public static void RequestNav(EventNavRequest nav)
         {
             NavRequested?.Invoke(null, nav);
         }
@@ -286,33 +287,10 @@ namespace DSAProject.Classes.Game
                 };
             }
         }
-        public static void LoadCharakter(JSON_CharakterMetaData metaDataFile, out Error error)
+        public static void LoadCharakter(JSON_Charakter json_charakter, out Error error)
         {
             error = null;
-            var gamingType = Type.GetType(metaDataFile.Game);
-
-            var file = Path.Combine(CharakterSaveFolder, metaDataFile.SaveFile);
-            var jsonFile = FileManagment.LoadTextFile(file, out error);
-            var json_charakter = JSON_Charakter.DeSerializeJson(jsonFile, out string errorstring);
-                       
-            if (gamingType == typeof(CharakterDSA))
-            {
-                charakter = new CharakterDSA(metaDataFile.ID);
-                charakter.Load(json_charakter, TalenteDSA.ToList());
-            }
-            else if (gamingType == typeof(CharakterPNP))
-            {
-                charakter = new CharakterPNP(metaDataFile.ID);
-                charakter.Load(json_charakter, TalentePNP.ToList());
-            }
-            else
-            {
-                error = new Error
-                {
-                    ErrorCode = ErrorCode.Error,
-                    Message = "Der Geladene Charakter Typ ist unbekannt"
-                };
-            }
+            charakter.Load(json_charakter, TalenteDSA.ToList());
         }
 
         #endregion

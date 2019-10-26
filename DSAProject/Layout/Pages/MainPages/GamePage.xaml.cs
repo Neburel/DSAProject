@@ -1,4 +1,5 @@
-﻿using DSALib.Utils;
+﻿using DSALib.Charakter.Other;
+using DSALib.Utils;
 using DSAProject.Classes.Charakter.Talente.TalentFighting;
 using DSAProject.Classes.Charakter.Talente.TalentGeneral;
 using DSAProject.Classes.Game;
@@ -33,13 +34,13 @@ namespace DSAProject
 
             Game.NavRequested += (sender, args) =>
             {
-                switch (args)
+                switch (args.Side)
                 {
                     case NavEnum.StartPage:
-                        Navigate(viewModel.HeroLetter);
+                        Navigate(viewModel.HeroLetter, args.Parameter);
                         break;
                     case NavEnum.CreateTraitPage:
-                        Navigate(viewModel.CreateTrait);
+                        Navigate(viewModel.CreateTrait, args.Parameter);
                         break;
                     default:
                         throw new System.NotImplementedException();
@@ -71,9 +72,9 @@ namespace DSAProject
         private void NavView_Navigate(NavigationViewItem item)
         {
             var tag = (GameContentItem)item.Tag;
-            Navigate(tag);
+            Navigate(tag, null);
         }
-        private void Navigate(GameContentItem navItem)
+        private void Navigate(GameContentItem navItem, object parameter)
         {
             if (currentItem != navItem)
             {
@@ -88,6 +89,12 @@ namespace DSAProject
                     TalentPage page = (TalentPage)ContentFrame.Content;
                     page.SetTalents(Game.GetTalentForCurrentCharakter().Where(x => x.GetType() == navItem.SelectionType).ToList());
                 }
+                else if(navItem.Type == typeof(CreateTrait) && parameter != null)
+                {
+                    CreateTrait page = (CreateTrait)ContentFrame.Content;
+                    page.SetTrait((Trait)parameter);
+                }
+
                 if (navItem == viewModel.Save)
                 {
                     Game.CharakterSave(out Error error);

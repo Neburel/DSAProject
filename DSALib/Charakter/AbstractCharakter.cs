@@ -1,6 +1,8 @@
 ﻿using DSALib;
 using DSALib.Charakter;
+using DSALib.Charakter.Other;
 using DSALib.Classes.JSON;
+using DSALib.Interfaces;
 using DSALib.JSON;
 using DSALib.Utils;
 using DSAProject.Classes.Charakter.Description;
@@ -86,8 +88,6 @@ namespace DSAProject.Classes.Charakter
                 SaveTime    = DateTime.Now
             };
 
-            var x = charakter.SaveTimeAsString;
-           
             #region Values Speichern
             //Kein Sepeichern notwendig, da es errechnet wird....
             #endregion
@@ -154,6 +154,7 @@ namespace DSAProject.Classes.Charakter
             }
             #endregion
             #region Traits Speichern
+            charakter.Traits = new List<JSON_Trait>();
             foreach(var item in Traits.traits)
             {
                 var jTrait = new JSON_Trait
@@ -166,24 +167,27 @@ namespace DSAProject.Classes.Charakter
                     ResourceValues  = new Dictionary<string, int>(),
                     ValueValues     = new Dictionary<string, int>()
                 };
-                foreach(var innerItems in jTrait.AttributeValues)
+                foreach(var innerItem in item.UsedAttributs())
                 {
-                    jTrait.AttributeValues.Add(innerItems.Key, innerItems.Value);
+                    jTrait.AttributeValues.Add(innerItem, item.GetValue(innerItem));
                 }
-                foreach (var innerItems in jTrait.ResourceValues)
+                foreach (var innerItem in item.UsedResources())
                 {
-                    jTrait.ResourceValues.Add(innerItems.Key, innerItems.Value);
+                    jTrait.ResourceValues.Add(innerItem.Name, item.GetValue(innerItem));
                 }
-                foreach (var innerItems in jTrait.ValueValues)
+                foreach (var innerItem in item.UsedValues())
                 {
-                    jTrait.ValueValues.Add(innerItems.Key, innerItems.Value);
+                    jTrait.ValueValues.Add(innerItem.Name, item.GetValue(innerItem));
                 }
+                charakter.Traits.Add(jTrait);
             }
             #endregion
             return charakter;
         }
         public void Load(JSON_Charakter json_charakter, List<ITalent> talents) 
         {
+            ID = json_charakter.ID;
+            Name = json_charakter.Name;
             #region Attribute Laden
             foreach (var item in json_charakter.AttributeBaseValue.Keys)
             {
@@ -238,9 +242,52 @@ namespace DSAProject.Classes.Charakter
             }
             #endregion
             #region Traits Laden
-            throw new NotImplementedException();
+            if (json_charakter.Traits != null)
+            {
+                foreach (var item in json_charakter.Traits)
+                {
+                    var trait = new Trait
+                    {
+                        Description = item.Description,
+                        GP = item.GP,
+                        Title = item.Title,
+                        Value = item.Value,
+                    };
+                    foreach(var innerItems in item.AttributeValues)
+                    {
+                        trait.SetValue(innerItems.Key, innerItems.Value);
+                    }
+                    foreach (var innerItems in item.ValueValues)
+                    {
+                        var value = GetValue(innerItems.Key);
+                        if (value != null)
+                        {
+                            trait.SetValue(value, innerItems.Value);
+                        }
+                    }
+                    foreach (var innerItems in item.ResourceValues)
+                    {
+                        var res = GetResource(innerItems.Key);
+                        if (res != null)
+                        {
+                            trait.SetValue(res, innerItems.Value);
+                        }
+                    }
+
+                    Traits.AddTrait(trait);
+                }
+            }
             #endregion
         }
+        internal IValue GetValue(string name)
+        {
+            return Values.UsedValues.Where(x => x.Name == name).FirstOrDefault();
+        }
+        internal IResource GetResource(string name)
+        {
+            return Resources.UsedValues.Where(x => x.Name == name).FirstOrDefault();
+        }
+
         #endregion
     }
 }
