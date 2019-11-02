@@ -96,10 +96,11 @@ namespace DSAProject.Layout.Pages.ItemPages
                 ViewModel.IsProbeTextVisibility = Visibility.Visible;
             }
 
-            Game.Charakter.Talente.TaWChanged += (sender, args) =>
-            {
-                ViewModel.TAW = Game.Charakter.Talente.GetTAW(Talent).ToString();
-            };
+            //Sollte nicht benötigt werden, da kein Wechsel des Talent Wertes hier stattfindet
+            //Game.Charakter.Talente.TaWChanged += (sender, args) =>
+            //{
+            //    ViewModel.TAW = Game.Charakter.Talente.GetTAW(Talent).ToString();
+            //};
         }
         private void XAML_PlusTAWButton_Click(object sender, RoutedEventArgs e)
         {
@@ -138,6 +139,11 @@ namespace DSAProject.Layout.Pages.ItemPages
                 bonusValue = bonusTAW;
 
                 Game.Charakter.Talente.SetTAW(Talent, value + addValue);
+
+                if(Talent.Name == "Sinnenschärfe")
+                {
+
+                }
 
                 ViewModel.TAW = (Game.Charakter.Talente.GetTAW(Talent) + bonusTAW).ToString();
                 ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent, bonusTAW);

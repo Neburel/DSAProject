@@ -80,6 +80,11 @@ namespace DSAProject.Layout.ViewModels
             {
                 taw = value;
                 OnPropertyChanged(nameof(TAW));
+
+                if (TalentName == "Sinnenschärfe")
+                {
+
+                }
             }
         }
         public string Probe
