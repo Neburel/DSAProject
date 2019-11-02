@@ -10,8 +10,6 @@
     <Grid
         x:Name="XAML_Grid"
         RowSpacing="1">
-        <Grid.RowDefinitions></Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="1">
-        </StackPanel>
+            <Grid.RowDefinitions></Grid.RowDefinitions>
     </Grid>
 </Page>

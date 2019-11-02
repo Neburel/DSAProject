@@ -1,5 +1,6 @@
 ﻿using DSALib.Charakter.Other;
 using DSALib.Interfaces;
+using DSAProject.Classes.Charakter.Talente;
 using DSAProject.Classes.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,9 @@ namespace DSALib.Charakter
         public event EventHandler<IValue> ValueChanged;
         public event EventHandler<IResource> ResourceChanged;
         public event EventHandler<CharakterAttribut> AttributeChanged;
+        public event EventHandler<ITalent> TaWChanged;
+        public event EventHandler<AbstractTalentFighting> ATChanged;
+        public event EventHandler<AbstractTalentFighting> PAChanged;
         #endregion
         #region Variables
         internal List<Trait> traits;
@@ -37,6 +41,18 @@ namespace DSALib.Charakter
             item.ValueChanged += (sender, args) =>
             {
                 ValueChanged(this, args);
+            };
+            item.TaWChanged += (sender, args) =>
+            {
+                TaWChanged(this, args);
+            };
+            item.ATChanged += (sender, args) =>
+            {
+                ATChanged(this, args);
+            };
+            item.PAChanged += (sender, args) =>
+            {
+                PAChanged(this, args);
             };
 
             CallChangedAll(item);
@@ -82,6 +98,35 @@ namespace DSALib.Charakter
             return ret;
         }
 
+        public int GetTawBonus(ITalent item)
+        {
+            var ret = 0;
+            foreach (var trait in traits)
+            {
+                ret = ret + trait.GetTawBonus(item);
+            }
+            return ret;
+        }
+        public int GetATBonus(AbstractTalentFighting item)
+        {
+            var ret = 0;
+            foreach (var trait in traits)
+            {
+                ret = ret + trait.GetATBonus(item);
+            }
+            return ret;
+        }
+        public int GetPABonus(AbstractTalentFighting item)
+        {
+            var ret = 0;
+            foreach (var trait in traits)
+            {
+                ret = ret + trait.GetPABonus(item);
+            }
+            return ret;
+        }
+
+
         private void CallChangedAll(Trait trait)
         {
             foreach(var item in trait.UsedAttributs())
@@ -95,6 +140,18 @@ namespace DSALib.Charakter
             foreach (var item in trait.UsedResources())
             {
                 ResourceChanged(this, item);
+            }
+            foreach (var item in trait.GetTawBonus())
+            {
+                TaWChanged?.Invoke(this, item.Key);
+            }
+            foreach (var item in trait.GetATBonus())
+            {
+                ATChanged?.Invoke(this, item.Key);
+            }
+            foreach (var item in trait.GetPABonus())
+            {
+                PAChanged?.Invoke(this, item.Key);
             }
 
         }

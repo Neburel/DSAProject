@@ -159,25 +159,42 @@ namespace DSAProject.Classes.Charakter
             {
                 var jTrait = new JSON_Trait
                 {
+                    TraitType       = item.TraitType,
                     Description     = item.Description,
                     GP              = item.GP,
                     Title           = item.Title,
                     Value           = item.Value,
                     AttributeValues = new Dictionary<CharakterAttribut, int>(),
                     ResourceValues  = new Dictionary<string, int>(),
-                    ValueValues     = new Dictionary<string, int>()
+                    ValueValues     = new Dictionary<string, int>(),
+                    TawBonus        = new Dictionary<Guid, int>(),
+                    AtBonus         = new Dictionary<Guid, int>(),
+                    PaBonus         = new Dictionary<Guid, int>()
+                    
                 };
                 foreach(var innerItem in item.UsedAttributs())
                 {
                     jTrait.AttributeValues.Add(innerItem, item.GetValue(innerItem));
                 }
-                foreach (var innerItem in item.UsedResources())
+                foreach(var innerItem in item.UsedResources())
                 {
                     jTrait.ResourceValues.Add(innerItem.Name, item.GetValue(innerItem));
                 }
-                foreach (var innerItem in item.UsedValues())
+                foreach(var innerItem in item.UsedValues())
                 {
                     jTrait.ValueValues.Add(innerItem.Name, item.GetValue(innerItem));
+                }
+                foreach(var innerItem in item.GetTawBonus())
+                {
+                    jTrait.TawBonus.Add(innerItem.Key.ID, innerItem.Value);
+                }
+                foreach(var innerItem in item.GetATBonus())
+                {
+                    jTrait.AtBonus.Add(innerItem.Key.ID, innerItem.Value);
+                }
+                foreach(var innerItem in item.GetPABonus())
+                {
+                    jTrait.PaBonus.Add(innerItem.Key.ID, innerItem.Value);
                 }
                 charakter.Traits.Add(jTrait);
             }
@@ -248,6 +265,7 @@ namespace DSAProject.Classes.Charakter
                 {
                     var trait = new Trait
                     {
+                        TraitType = item.TraitType,
                         Description = item.Description,
                         GP = item.GP,
                         Title = item.Title,
@@ -257,7 +275,7 @@ namespace DSAProject.Classes.Charakter
                     {
                         trait.SetValue(innerItems.Key, innerItems.Value);
                     }
-                    foreach (var innerItems in item.ValueValues)
+                    foreach(var innerItems in item.ValueValues)
                     {
                         var value = GetValue(innerItems.Key);
                         if (value != null)
@@ -265,12 +283,37 @@ namespace DSAProject.Classes.Charakter
                             trait.SetValue(value, innerItems.Value);
                         }
                     }
-                    foreach (var innerItems in item.ResourceValues)
+                    foreach(var innerItems in item.ResourceValues)
                     {
                         var res = GetResource(innerItems.Key);
                         if (res != null)
                         {
                             trait.SetValue(res, innerItems.Value);
+                        }
+                    }
+
+                    foreach(var innerItems in item.TawBonus)
+                    {
+                        var talent = talents.Where(x => x.ID == innerItems.Key).FirstOrDefault();
+                        if(talent != null)
+                        {
+                            trait.SetTaWBonus(talent, innerItems.Value);
+                        }
+                    }
+                    foreach (var innerItems in item.AtBonus)
+                    {
+                        var talent = talents.Where(x => x.ID == innerItems.Key).FirstOrDefault();
+                        if (talent != null && typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
+                        {
+                            trait.SetATBonus((AbstractTalentFighting)talent, innerItems.Value);
+                        }
+                    }
+                    foreach (var innerItems in item.PaBonus)
+                    {
+                        var talent = talents.Where(x => x.ID == innerItems.Key).FirstOrDefault();
+                        if (talent != null && typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
+                        {
+                            trait.SetPABonus((AbstractTalentFighting)talent, innerItems.Value);
                         }
                     }
 

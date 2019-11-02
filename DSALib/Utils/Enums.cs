@@ -33,5 +33,15 @@
         ActionLog,
         DebugInfo
     }
+    public enum TraitType
+    {
+        Keiner = 1,
+        Vorteil = 2,
+        Nachteil = 3,  
+        Event = 4,
+        Belohnung = 5,
+        Quest = 6,
+        Geburstag = 7
+    }
     
 }

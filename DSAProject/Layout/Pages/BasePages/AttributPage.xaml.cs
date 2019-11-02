@@ -2,7 +2,6 @@
 using DSALib.Charakter.Other;
 using DSALib.Interfaces;
 using DSALib.Utils;
-using DSAProject.Classes.Charakter;
 using DSAProject.Classes.Game;
 using DSAProject.Classes.Interfaces;
 using DSAProject.Layout.Views;

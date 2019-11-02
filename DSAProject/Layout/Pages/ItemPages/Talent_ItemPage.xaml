@@ -44,7 +44,7 @@
                     <ColumnDefinition Width="Auto" MaxWidth="26"/>
                 </Grid.ColumnDefinitions>
                 
-                <TextBlock          TextWrapping="Wrap" Text="{x:Bind ViewModel.TAW, Mode=TwoWay}" Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="XAML_TaW"         TextWrapping="Wrap" Text="{x:Bind ViewModel.TAW, Mode=TwoWay}" Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                 <Border             BorderBrush="Green" BorderThickness="1" Grid.Column="1" Width="26" Height="26">
                     <Button         x:Name="XAML_PlusTAWButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Click="XAML_PlusTAWButton_Click">
                         <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="+" FontSize="10" FontStretch="UltraExpanded" FontWeight="ExtraBold"></TextBlock>
@@ -69,7 +69,7 @@
                     <ColumnDefinition Width="*" MaxWidth="26"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock          TextWrapping="Wrap" Text="{x:Bind ViewModel.AT, Mode=TwoWay}" Grid.Column="0"  TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="XAML_AT"          TextWrapping="Wrap" Text="{x:Bind ViewModel.AT, Mode=TwoWay}" Grid.Column="0"  TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                 <Border             BorderBrush="Green" BorderThickness="1" Grid.Column="1" Width="26" Height="26">
                     <Button         x:Name="XAML_PlusATButton" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Click="XAML_PlusATButton_Click">
                         <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="+" FontSize="8" FontStretch="UltraExpanded" FontWeight="ExtraBold"></TextBlock>
@@ -81,7 +81,7 @@
                     </Button>
                 </Border>
 
-                <TextBlock          TextWrapping="Wrap" Text="{x:Bind ViewModel.PA, Mode=TwoWay}" Grid.Column="3"  TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="XAML_PA"          TextWrapping="Wrap" Text="{x:Bind ViewModel.PA, Mode=TwoWay}" Grid.Column="3"  TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                 <Border             BorderBrush="Green" BorderThickness="1" Grid.Column="4" Width="26" Height="26">
                     <Button         x:Name="XAML_PlusPAButton"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Click="XAML_PlusPAButton_Click">
                         <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="+" FontSize="8" FontStretch="UltraExpanded" FontWeight="ExtraBold"></TextBlock>

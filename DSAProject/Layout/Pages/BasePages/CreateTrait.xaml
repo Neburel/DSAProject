@@ -6,16 +6,20 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="using:DSAProject.Layout.Pages"
     xmlns:views1="using:DSAProject.Layout.Views"
+    xmlns:itempages="using:DSAProject.Layout.Pages.ItemPages"
     mc:Ignorable="d"
     Background="White">
 
-    <Grid RowSpacing="10">
+    <Grid RowSpacing="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="5"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -39,8 +43,11 @@
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Beschreibung" Foreground="Black" VerticalAlignment="Center"></TextBlock>
             <TextBox Grid.Row="1" Grid.Column="1" Width="200" Text="{x:Bind viewModel.Description, Mode=TwoWay}"></TextBox>
 
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="Wert"         Foreground="Black"></TextBlock>
-            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="5" Spacing="2">
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Type" Foreground="Black" VerticalAlignment="Center"/>
+            <ComboBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" ItemsSource="{x:Bind viewModel.TraitTypes}" SelectedItem="{x:Bind viewModel.SelectedItem, Mode=TwoWay}"></ComboBox>
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Wert"         Foreground="Black"></TextBlock>
+            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" Spacing="2">
                 <views1:AKT_MOD_MAX_ItemPage x:Name="XAML_TraitValue" AKTValue="{x:Bind viewModel.Value, Mode=TwoWay}" Grid.Row="2" Grid.Column="1" Event_ValueHigher="XAML_TraitValue_Event_ValueHigher" Event_ValueLower="XAML_TraitValue_Event_ValueLower"></views1:AKT_MOD_MAX_ItemPage>
                 <Border BorderBrush="Gray" BorderThickness="1"  Grid.Row="1" Grid.Column="5" Width="Auto" Height="26" HorizontalAlignment="Center">
                     <Button  x:Name="XAML_ValueXButton" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" Click="XAML_ValueXButton_Click">
@@ -54,8 +61,8 @@
                 </Border>
             </StackPanel>
 
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="GP"         Foreground="Black"></TextBlock>
-            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" Spacing="2">
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="GP"         Foreground="Black"></TextBlock>
+            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="5" Spacing="2">
                 <views1:AKT_MOD_MAX_ItemPage x:Name="XAML_TraitGP" AKTValue="{x:Bind viewModel.GP, Mode=TwoWay}" Grid.Row="3" Grid.Column="1" Event_ValueHigher="XAML_TraitGP_Event_ValueHigher" Event_ValueLower="XAML_TraitGP_Event_ValueLower"></views1:AKT_MOD_MAX_ItemPage>
                 <Border BorderBrush="Gray" BorderThickness="1"  Grid.Row="1" Grid.Column="5" Width="Auto" Height="26" HorizontalAlignment="Center">
                     <Button   x:Name="XAML_GPXButton" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" Click="XAML_GPXButton_Click">
@@ -68,8 +75,6 @@
                     </Button>
                 </Border>
             </StackPanel>
-
-
         </Grid>
         <StackPanel Grid.Row="2">
             <StackPanel Orientation="Horizontal" Spacing="10">
@@ -78,5 +83,37 @@
                 <views:AttributPage Mode="ResourceTrait" Trait="{x:Bind viewModel.Trait}"/>
             </StackPanel>
         </StackPanel>
+        <Grid Grid.Row="3" ColumnSpacing="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <itempages:TraitTalentBonusSelectionPage 
+                x:Name="XAML_TaWBonus"
+                Grid.Column="0" 
+                Mode="All" 
+                HorizontalAlignment="Stretch" 
+                VerticalAlignment="Stretch"
+                AddTrait="XAML_TaWBonus_AddTrait"
+                RemoveTrait="XAML_TaWBonus_RemoveTrait"/>
+            <itempages:TraitTalentBonusSelectionPage 
+                x:Name="XAML_ATBonus"
+                Grid.Column="1" 
+                Mode="AT" 
+                HorizontalAlignment="Stretch" 
+                VerticalAlignment="Stretch"
+                AddTrait="XAML_ATBonus_AddTrait"
+                RemoveTrait="XAML_ATBonus_RemoveTrait"/>
+            <itempages:TraitTalentBonusSelectionPage 
+                x:Name="XAML_PABonus"
+                Grid.Column="2"
+                Mode="PA" 
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                AddTrait="XAML_PABonus_AddTrait"
+                RemoveTrait="XAML_PABonus_RemoveTrait"/>
+        </Grid>
     </Grid>
 </Page>

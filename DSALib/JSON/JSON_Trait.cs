@@ -1,4 +1,5 @@
 ﻿using DSALib.Classes.JSON;
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
@@ -7,6 +8,9 @@ namespace DSALib.JSON
     [DataContract]
     public class JSON_Trait : AbstractJSONSerializable<JSON_Trait>
     {
+        [DataMember(Name = nameof(TraitType))]
+        public int TraitTypeAsInt { get; set; }
+
         [DataMember]
         public string GP { get; set; }
         [DataMember]
@@ -17,10 +21,24 @@ namespace DSALib.JSON
         public string Description { get; set; }
 
         [DataMember]
-        public Dictionary<string, int> ValueValues;
+        public Dictionary<string, int> ValueValues { get; set; }
         [DataMember]
-        public Dictionary<string, int> ResourceValues;
+        public Dictionary<string, int> ResourceValues { get; set; }
         [DataMember]
-        public Dictionary<CharakterAttribut, int> AttributeValues;
+        public Dictionary<CharakterAttribut, int> AttributeValues { get; set; }
+
+        [DataMember]
+        public Dictionary<Guid, int> TawBonus { get; set; }
+        [DataMember]
+        public Dictionary<Guid, int> AtBonus { get; set; }
+        [DataMember]
+        public Dictionary<Guid, int> PaBonus { get; set; }
+
+        [IgnoreDataMember]
+        public TraitType TraitType
+        {
+            get => (TraitType)TraitTypeAsInt;
+            set => TraitTypeAsInt = (int)value;
+        }
     }
 }

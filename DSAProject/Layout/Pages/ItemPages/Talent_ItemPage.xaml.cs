@@ -4,22 +4,10 @@ using DSAProject.Classes.Charakter.Talente.TalentRequirement;
 using DSAProject.Classes.Game;
 using DSAProject.Classes.Interfaces;
 using DSAProject.Layout.ViewModels;
-using DSAProject.util.ErrrorManagment;
-using System;
-using System.Collections.Generic;
-using System.IO;
+using DSAProject.util;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Documents;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -30,6 +18,10 @@ namespace DSAProject.Layout.Pages.ItemPages
     /// </summary>
     public sealed partial class Talent_ItemPage : Page
     {
+        private int bonusTAW;
+        private int bonusAT;
+        private int bonusPA;
+
         private Talent_ItemPageViewModel ViewModel { get; set; } = new Talent_ItemPageViewModel();
         public ITalent Talent { get; private set; }
 
@@ -40,8 +32,9 @@ namespace DSAProject.Layout.Pages.ItemPages
             Talent                      = talent;
             ViewModel.TalentName        = talent.ToString();
             ViewModel.BE                = talent.BE;
-            ViewModel.TAW               = Game.Charakter.Talente.GetTAW(talent).ToString();
-            ViewModel.Probe             = Game.Charakter.Talente.GetProbeString(Talent);
+            
+            bonusTAW    = Game.Charakter.Traits.GetTawBonus(talent);
+            SetValue(TraitTalentBonusSelectionPage_Mode.All, 0);
 
             ViewModel.DeductionStringTalent = string.Empty;
 
@@ -72,8 +65,12 @@ namespace DSAProject.Layout.Pages.ItemPages
 
             if (typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
             {
-                ViewModel.PA = Game.Charakter.Talente.GetPA((AbstractTalentFighting)talent).ToString();
-                ViewModel.AT = Game.Charakter.Talente.GetAT((AbstractTalentFighting)talent).ToString();
+                bonusAT = Game.Charakter.Traits.GetATBonus((AbstractTalentFighting)talent);
+                bonusPA = Game.Charakter.Traits.GetPABonus((AbstractTalentFighting)talent);
+
+                SetValue(TraitTalentBonusSelectionPage_Mode.PA, 0);
+                SetValue(TraitTalentBonusSelectionPage_Mode.AT, 0);
+
                 ViewModel.IsATPAVisibility = Visibility.Visible;
             }
             if (typeof(AbstractTalentGeneral).IsAssignableFrom(talent.GetType()))
@@ -106,48 +103,89 @@ namespace DSAProject.Layout.Pages.ItemPages
         }
         private void XAML_PlusTAWButton_Click(object sender, RoutedEventArgs e)
         {
-            var currentTAW = Game.Charakter.Talente.GetTAW(Talent);
-            Game.Charakter.Talente.SetTAW(Talent, currentTAW + 1);
-            ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent);
+            SetValue(TraitTalentBonusSelectionPage_Mode.All, 1);
         }
         private void XAML_MinusTAWButton_Click(object sender, RoutedEventArgs e)
         {
-            var currentTAW = Game.Charakter.Talente.GetTAW(Talent);
-            Game.Charakter.Talente.SetTAW(Talent, currentTAW - 1);
-            ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent);
+            SetValue(TraitTalentBonusSelectionPage_Mode.All, -1);
         }
         private void XAML_MinusPAButton_Click(object sender, RoutedEventArgs e)
         {
-            var talent = (AbstractTalentFighting)Talent;
-            var currentPA = Game.Charakter.Talente.GetPA(talent);
-            Game.Charakter.Talente.SetPA(talent, currentPA - 1);
-            ViewModel.PA = Game.Charakter.Talente.GetPA(talent).ToString();
-            ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent);
+            SetValue(TraitTalentBonusSelectionPage_Mode.PA, -1);
         }
         private void XAML_PlusPAButton_Click(object sender, RoutedEventArgs e)
         {
-            var talent = (AbstractTalentFighting)Talent;
-            var currentPA = Game.Charakter.Talente.GetPA(talent);
-            Game.Charakter.Talente.SetPA(talent, currentPA + 1);
-            ViewModel.PA = Game.Charakter.Talente.GetPA(talent).ToString();
-            ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent);
+            SetValue(TraitTalentBonusSelectionPage_Mode.PA, 1);
         }
         private void XAML_MinusATButton_Click(object sender, RoutedEventArgs e)
         {
-            var talent = (AbstractTalentFighting)Talent;
-            var currentAT = Game.Charakter.Talente.GetAT(talent);
-            Game.Charakter.Talente.SetAT(talent, currentAT - 1);
-            ViewModel.AT = Game.Charakter.Talente.GetAT(talent).ToString();
-            ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent);
+            SetValue(TraitTalentBonusSelectionPage_Mode.AT, -1);
         }
         private void XAML_PlusATButton_Click(object sender, RoutedEventArgs e)
         {
-            var talent = (AbstractTalentFighting)Talent;
-            var currentAT = Game.Charakter.Talente.GetAT(talent);
-            Game.Charakter.Talente.SetAT(talent, currentAT + 1);
-            ViewModel.AT = Game.Charakter.Talente.GetAT(talent).ToString();
-            ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent);
+            SetValue(TraitTalentBonusSelectionPage_Mode.AT, 1);
         }
+
+        public void SetValue(TraitTalentBonusSelectionPage_Mode mode, int addValue)
+        {
+            var value = 0;
+            var bonusValue = 0;
+            TextBlock view = null ;
+
+            if (mode == TraitTalentBonusSelectionPage_Mode.All)
+            {
+                value = Game.Charakter.Talente.GetTAW(Talent);
+                bonusValue = bonusTAW;
+
+                Game.Charakter.Talente.SetTAW(Talent, value + addValue);
+
+                ViewModel.TAW = (Game.Charakter.Talente.GetTAW(Talent) + bonusTAW).ToString();
+                ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent, bonusTAW);
+
+                view = XAML_TaW;
+            }
+            else if(mode == TraitTalentBonusSelectionPage_Mode.AT)
+            {
+                var talent = (AbstractTalentFighting)Talent;
+
+                value = Game.Charakter.Talente.GetAT(talent);
+                bonusValue = bonusAT;
+
+                Game.Charakter.Talente.SetAT(talent, value + addValue);
+                ViewModel.AT = (Game.Charakter.Talente.GetAT(talent) + bonusAT).ToString();
+                ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent, bonusTAW, bonusAT, bonusPA);
+
+                view = XAML_AT;
+            }
+            else if(mode == TraitTalentBonusSelectionPage_Mode.PA)
+            {
+                var talent = (AbstractTalentFighting)Talent;
+
+                value = Game.Charakter.Talente.GetPA(talent);
+                bonusValue = bonusPA;
+
+                Game.Charakter.Talente.SetPA(talent, value + addValue);
+                ViewModel.PA = (Game.Charakter.Talente.GetPA(talent) + bonusPA).ToString();
+                ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent, bonusTAW, bonusAT, bonusPA);
+
+                view = XAML_PA;
+            }
+
+            SetTooltip(view, value, bonusValue);
+        }
+        public void SetTooltip(TextBlock view, int value, int bonusValue)
+        {
+            string toolTipText = value.ToString();
+            if(bonusValue != 0)
+            {
+                toolTipText = toolTipText + "(" + bonusValue.ToString() + ")";
+            }
+
+            ToolTip toolTip = new ToolTip();
+            toolTip.Content = toolTipText;
+            ToolTipService.SetToolTip(view, toolTip);
+        }
+
 
         private string GetString(string newValue, string currentText, string secondControll = null)
         {

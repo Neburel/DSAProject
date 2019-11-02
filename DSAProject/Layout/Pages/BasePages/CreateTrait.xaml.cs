@@ -1,7 +1,10 @@
-﻿using DSALib.Charakter.Other;
+﻿using DSALib;
+using DSALib.Charakter.Other;
+using DSAProject.Classes.Charakter.Talente;
 using DSAProject.Classes.Game;
 using DSAProject.util;
 using System;
+using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -15,7 +18,6 @@ namespace DSAProject.Layout.Pages.BasePages
     public sealed partial class CreateTrait : Page
     {
         private CreateTrait_ViewModel viewModel = new CreateTrait_ViewModel();
-
         public CreateTrait()
         {
             this.InitializeComponent();
@@ -25,11 +27,11 @@ namespace DSAProject.Layout.Pages.BasePages
         #region Value
         private void XAML_TraitValue_Event_ValueHigher(object sender, EventArgs e)
         {
-            viewModel.Value = nextValue(XAML_TraitValue.AKTValue, true);
+            viewModel.Value = NextValue(XAML_TraitValue.AKTValue, true);
         }
         private void XAML_TraitValue_Event_ValueLower(object sender, EventArgs e)
         {
-            viewModel.Value = nextValue(XAML_TraitValue.AKTValue, false);
+            viewModel.Value = NextValue(XAML_TraitValue.AKTValue, false);
         }
         private void XAML_ValueXButton_Click(object sender, RoutedEventArgs e)
         {
@@ -43,11 +45,11 @@ namespace DSAProject.Layout.Pages.BasePages
         #region GP
         private void XAML_TraitGP_Event_ValueHigher(object sender, EventArgs e)
         {
-            viewModel.GP = nextValue(XAML_TraitGP.AKTValue, true);
+            viewModel.GP = NextValue(XAML_TraitGP.AKTValue, true);
         }
         private void XAML_TraitGP_Event_ValueLower(object sender, EventArgs e)
         {
-            viewModel.GP = nextValue(XAML_TraitGP.AKTValue, false);
+            viewModel.GP = NextValue(XAML_TraitGP.AKTValue, false);
         }
         private void XAML_GPXButton_Click(object sender, RoutedEventArgs e)
         {
@@ -58,15 +60,42 @@ namespace DSAProject.Layout.Pages.BasePages
             viewModel.GP = string.Empty;
         }
         #endregion
+        #region Handler
         private void XAML_ButtonCreate_Click(object sender, RoutedEventArgs e)
         {
             var trait = viewModel.Trait;
             Game.Charakter.Traits.AddTrait(trait);
             Game.RequestNav(new EventNavRequest { Side = NavEnum.StartPage });
         }
-        private string nextValue(string current, bool plus)
+        private void XAML_TaWBonus_AddTrait(object sender, Hilfsklassen.TraitTalentBonus e)
         {
-            if(int.TryParse(current, out int value))
+            viewModel.Trait.SetTaWBonus(e.Talent, e.Value);
+        }
+        private void XAML_TaWBonus_RemoveTrait(object sender, Hilfsklassen.TraitTalentBonus e)
+        {
+            viewModel.Trait.RemoveTaWBonus(e.Talent);
+        }
+        private void XAML_ATBonus_AddTrait(object sender, Hilfsklassen.TraitTalentBonus e)
+        {
+            viewModel.Trait.SetATBonus((AbstractTalentFighting)e.Talent, e.Value);
+        }
+        private void XAML_ATBonus_RemoveTrait(object sender, Hilfsklassen.TraitTalentBonus e)
+        {
+            viewModel.Trait.RemoveATBonus((AbstractTalentFighting)e.Talent);
+        }
+        private void XAML_PABonus_AddTrait(object sender, Hilfsklassen.TraitTalentBonus e)
+        {
+            viewModel.Trait.SetPABonus((AbstractTalentFighting)e.Talent, e.Value);
+        }
+        private void XAML_PABonus_RemoveTrait(object sender, Hilfsklassen.TraitTalentBonus e)
+        {
+            viewModel.Trait.RemovePABonus((AbstractTalentFighting)e.Talent);
+        }
+        #endregion
+        #region Hilfsmethoden
+        private string NextValue(string current, bool plus)
+        {
+            if (int.TryParse(current, out int value))
             {
                 if (plus) return (value + 1).ToString();
                 return (value - 1).ToString();
@@ -80,9 +109,16 @@ namespace DSAProject.Layout.Pages.BasePages
         {
             viewModel.Trait = trait;
         }
+        public void SetTraitType(TraitType trait)
+        {
+            viewModel.SelectedItem = Enum.GetName(typeof(TraitType), trait);
+        }
+        #endregion
         private class CreateTrait_ViewModel : AbstractPropertyChanged
         {
             private Trait trait = new Trait();
+            private List<string> traitTypes = new List<string>(Enum.GetNames(typeof(TraitType)));
+            private string selectedItem;
             public Trait Trait
             {
                 get => trait;
@@ -94,8 +130,40 @@ namespace DSAProject.Layout.Pages.BasePages
                     OnPropertyChanged(nameof(Description));
                     OnPropertyChanged(nameof(Value));
                     OnPropertyChanged(nameof(GP));
+                    OnPropertyChanged(nameof(SelectedItem));
                 }
             }
+
+            public List<string> TraitTypes
+            {
+                get => traitTypes;
+                set
+                {
+                    traitTypes = value;
+                    OnPropertyChanged(nameof(TraitTypes));
+                }
+            }
+            public string SelectedItem
+            {
+                get
+                {
+                    return Enum.GetName(typeof(TraitType), trait.TraitType);
+                }
+                set
+                {
+                    selectedItem = value;
+
+                    if(Enum.TryParse(typeof(TraitType), value, out object type))
+                    {
+                        if(trait.TraitType != (TraitType)type)
+                        {
+                            trait.TraitType = (TraitType)type;
+                            OnPropertyChanged(nameof(SelectedItem));
+                        }
+                    }
+                }
+            }
+
             public string GP
             {
                 get => trait.GP;
@@ -132,7 +200,6 @@ namespace DSAProject.Layout.Pages.BasePages
                     OnPropertyChanged(nameof(Description));
                 }
             }
-       
         }        
     }
 }

@@ -109,8 +109,6 @@ namespace DSAProject.Layout.Views
             }
         }
         #endregion
-
-
         private static void OnAKTValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (e.NewValue != e.OldValue)

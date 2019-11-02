@@ -9,6 +9,7 @@ using DSAProject.Layout.Pages.BasePages;
 using DSAProject.Layout.Pages.ToolPages;
 using System;
 using System.Linq;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -92,9 +93,21 @@ namespace DSAProject
                 else if(navItem.Type == typeof(CreateTrait) && parameter != null)
                 {
                     CreateTrait page = (CreateTrait)ContentFrame.Content;
-                    page.SetTrait((Trait)parameter);
-                }
 
+                    if (parameter.GetType() == typeof(Trait))
+                    {
+                        page.SetTrait((Trait)parameter);
+                    }
+                    else
+                    {
+                        page.SetTraitType((DSALib.TraitType)parameter);
+                    }
+                }
+                else if(navItem.Type == typeof(TraitPage))
+                {
+                    var currentItem = (TraitPage)ContentFrame.Content;
+                    currentItem.BackgroundColor = new Windows.UI.Xaml.Media.SolidColorBrush(Colors.White);
+                }
                 if (navItem == viewModel.Save)
                 {
                     Game.CharakterSave(out Error error);

@@ -112,7 +112,7 @@ namespace DSAProject.Classes.Charakter
             return 0;
         }
 
-        public string GetProbeString(ITalent talent)
+        public string GetProbeString(ITalent talent, int bonusTaW = 0, int bonusAT = 0, int bonusPA = 0)
         {
             var talentType  = talent.GetType();
             Error error     = null;
@@ -125,18 +125,18 @@ namespace DSAProject.Classes.Charakter
                 var baseAttack  = charakter.Values.UsedValues.Where(x => x.GetType() == typeof(BaseAttack)).ToList()[0];
                 var baseParade  = charakter.Values.UsedValues.Where(x => x.GetType() == typeof(BaseParade)).ToList()[0];
 
-                var at = charakter.Values.GetMAXValue(baseAttack, out error) + GetAT(innertalent);
-                var pa = charakter.Values.GetMAXValue(baseParade, out error) + GetPA(innertalent);
+                var at = charakter.Values.GetMAXValue(baseAttack, out error) + GetAT(innertalent) + bonusAT;
+                var pa = charakter.Values.GetMAXValue(baseParade, out error) + GetPA(innertalent) + bonusPA;
 
-                probe = at.ToString() + "/" + pa.ToString();
+                probe = (at + bonusAT).ToString() + "/" + (pa + bonusPA).ToString();
             } 
             else if (typeof(TalentRange).IsAssignableFrom(talentType))
             {
                 var innertalent = (AbstractTalentFighting)talent;
                 var baseAttack  = charakter.Values.UsedValues.Where(x => x.GetType() == typeof(BaseRange)).ToList()[0];
-                var at          = charakter.Values.GetMAXValue(baseAttack, out error) + GetAT(innertalent);
+                var at          = charakter.Values.GetMAXValue(baseAttack, out error) + GetAT(innertalent) + bonusAT;
 
-                probe           = at.ToString();
+                probe           = (at + bonusAT).ToString();
             }
             else if (typeof(AbstractTalentGeneral).IsAssignableFrom(talentType))
             {
@@ -147,13 +147,11 @@ namespace DSAProject.Classes.Charakter
                     value = value +charakter.Attribute.GetAttributMAXValue(item, out error);
                 }
 
-                probe = value.ToString();
+                probe = (value + bonusTaW).ToString();
             }
-
             else
             {
                 throw new Exception();
-                //Logger.Log(LogLevel.ErrorLog, talentType + " Das System weiß nicht wie es das Talent zu handhaben hat", nameof(CharakterTalente), nameof(GetProbeString));
             }
 
             return probe;

@@ -7,12 +7,14 @@
     mc:Ignorable="d"
     Background="Transparent">
 
-    <Grid
+    <Grid 
         x:Name="XML_AttributSingleViewGrid"
         ColumnSpacing="1"
         RowSpacing="0"
         Padding="0, 0, 0, 0"
-        Margin="0, 0, 0, 0">
+        Margin="0, 0, 0, 0"
+        VerticalAlignment="Center"
+        HorizontalAlignment="Center">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
