@@ -1,4 +1,5 @@
 ﻿using DSALib;
+using DSALib.Utils;
 using DSAProject.Classes.Interfaces;
 
 using System;
@@ -39,11 +40,11 @@ namespace DSAProject.Classes.Charakter.Talente
             {
                 if (i == 0)
                 {
-                    ret = TalentHelper.GetProbeShort(item);
+                    ret = Helper.GetShort(item);
                 } 
                 else
                 {
-                    ret = ret + "/" + TalentHelper.GetProbeShort(item);
+                    ret = ret + "/" + Helper.GetShort(item);
                 }
                 i++;
             }

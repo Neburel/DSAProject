@@ -160,34 +160,18 @@ namespace DSAProject.Classes.Game
         }
         public static void LoadTalente()
         {
+            //Begrenzung erstmal auf Talente, da bearbeiten von Talenten zurückgestellt wurde
+
             //TalenteDSA = new ObservableCollection<ITalent>(TalentHelper.ExcelImport("TalentImport.xlsx"));
+           
+            //Vorgeschriebene Talente
+            var jstringAssests = FileManagment.LoadTextAssestFile(talentSaveFile, out Error errorAssest);
+            //var jStringLocal   = FileManagment.LoadTextFile(talentSaveFile, out Error errorLocal);
 
-            var jString = string.Empty;
-            //Locale Talente
-            jString = FileManagment.LoadTextFile(talentSaveFile, out Error error);
-            if (error == null)
-            {
-                jSON_talentLocal = JSON_TalentSaveFile.DeSerializeJson(jString, out string serror);
+            var jSON_talentAssests  = JSON_TalentSaveFile.DeSerializeJson(jstringAssests, out string serrorAssest);
+            //var jSON_talentLocal    = JSON_TalentSaveFile.DeSerializeJson(jStringLocal, out string serrorLocal);
 
-                if (serror == null)
-                {
-                    TalentHelper.LoadTalent(jSON_talentLocal.Talente_DSA, TalenteDSA);
-                    TalentHelper.LoadTalent(jSON_talentLocal.Talente_PNP, TalentePNP);
-                }
-
-            }
-
-            jString = FileManagment.LoadTextAssestFile(talentSaveFile, out error);
-            if (error == null)
-            {
-                var jSON_talentAssests = JSON_TalentSaveFile.DeSerializeJson(jString, out string serror);
-
-                if (serror == null)
-                {
-                    TalentHelper.LoadTalent(jSON_talentAssests.Talente_DSA, TalenteDSA);
-                    TalentHelper.LoadTalent(jSON_talentAssests.Talente_PNP, TalentePNP);
-                }
-            }
+            TalenteDSA = TalentHelper.LoadTalent(jSON_talentAssests.Talente_DSA);
         }
         public static Guid GenerateNextCharakterGUID()
         {

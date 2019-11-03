@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using DocumentFormat.OpenXml.Packaging;
@@ -15,12 +16,19 @@ using DSAProject.Classes.Charakter.Talente.TalentGeneral;
 using DSAProject.Classes.Charakter.Talente.TalentLanguage;
 using DSAProject.Classes.Charakter.Talente.TalentRequirement;
 using DSAProject.Classes.Interfaces;
-
+using Windows.Storage;
 
 namespace DSAProject.Classes
 {
+
     public static class TalentHelper
     {
+        private enum Signales
+        {
+            import,
+            imported,
+            fault
+        }
         #region Variables
         private static List<Guid> talentGuids = new List<Guid>();
         #endregion
@@ -137,11 +145,14 @@ namespace DSAProject.Classes
             }
             return talent;
         }
-        public static ObservableCollection<ITalent> LoadTalent(List<JSON_Talent> talents, ObservableCollection<ITalent> list)
+
+        public static ObservableCollection<ITalent> LoadTalent(List<JSON_Talent> talents)
         {
+            var list = new List<ITalent>();
             Dictionary<ITalent, JSON_Talent> talentwithDedcut = new Dictionary<ITalent, JSON_Talent>();
             Dictionary<AbstractTalentGeneral, JSON_Talent> talentWithRequirement = new Dictionary<AbstractTalentGeneral, JSON_Talent>();
             Dictionary<AbstractTalentGeneral, JSON_Talent> talentWithFather = new Dictionary<AbstractTalentGeneral, JSON_Talent>();
+
 
             if (talents != null)
             {
@@ -182,8 +193,6 @@ namespace DSAProject.Classes
                             list.Add(talent);
                             talentGuids.Add(talent.ID);
                         }
-
-
                     }
                     #endregion
                     #region Deductions
@@ -265,10 +274,9 @@ namespace DSAProject.Classes
                     {
                         var talent = item.Key;
                         var jobject = item.Value;
-                        var fatherTalent = list.Where(x => x.ID == jobject.FatherTalent).ToList().First();
+                        var fatherTalent = list.Where(x => x.ID == jobject.FatherTalent).FirstOrDefault();
                         if (fatherTalent == null || !(typeof(AbstractTalentGeneral).IsAssignableFrom(fatherTalent.GetType())))
                         {
-                            throw new Exception();
                             //Logger.Log(LogLevel.ErrorLog, "Das Vater Talent mit der folgenden Id ist fehlerhaft: " + jobject.FatherTalent.ToString(), nameof(Game), nameof(LoadTalent));
                         }
                         else
@@ -287,7 +295,7 @@ namespace DSAProject.Classes
 
             return new ObservableCollection<ITalent>(list.OrderBy(x => x.Name).ToList());
         }
-        public static JSON_Talent CreateJSON(ITalent talent, GameType gameType)
+        public static JSON_Talent CreateJSON(ITalent talent, GameType gameType = GameType.DSA)
         {
             JSON_Talent jsonTalent = null;
 
@@ -380,60 +388,16 @@ namespace DSAProject.Classes
             }
             return jsonTalent;
         }
-        public static string GetProbeShort(CharakterAttribut attribut)
-        {
-            var ret = string.Empty;
 
-            if (attribut == CharakterAttribut.Charisma)
-            {
-                ret = "CH";
-            }
-            else if (attribut == CharakterAttribut.Fingerfertigkeit)
-            {
-                ret = "FF";
-            }
-            else if (attribut == CharakterAttribut.Gewandheit)
-            {
-                ret = "GE";
-            }
-            else if (attribut == CharakterAttribut.Intuition)
-            {
-                ret = "IN";
-            }
-            else if (attribut == CharakterAttribut.Klugheit)
-            {
-                ret = "KL";
-            }
-            else if (attribut == CharakterAttribut.Konstitution)
-            {
-                ret = "KO";
-            }
-            else if (attribut == CharakterAttribut.Körperkraft)
-            {
-                ret = "KK";
-            }
-            else if (attribut == CharakterAttribut.Mut)
-            {
-                ret = "MU";
-            }
-            else if (attribut == CharakterAttribut.Sozialstatus)
-            {
-                ret = "SO";
-            }
-            else
-            {
-                ret = attribut.ToString();
-            }
-            return ret;
-        }
-        public static List<ITalent> ExcelImport(string file)
+        public static List<ITalent> ExcelImport(string importFile)
         {
             var ret = new List<ITalent>();
             var excelTalentDic = new Dictionary<string, List<ExcelTalent>>();
             var talentsWithDeduction = new Dictionary<ITalent, ExcelTalent>();
             var talentWithRequirements = new Dictionary<ITalent, ExcelTalent>();
+
             #region Import der Exel Datei
-            SpreadsheetDocument document = SpreadsheetDocument.Open("C:/Users/chris/AppData/Local/Packages/dsaProject_8ch981v1xacmj/LocalState/TalentImport.xlsx", false);
+            SpreadsheetDocument document = SpreadsheetDocument.Open(importFile, false);
             WorkbookPart wbPart = document.WorkbookPart;
             List<Sheet> sheets = wbPart.Workbook.Descendants<Sheet>().ToList();
             foreach (var sheet in sheets)
@@ -502,6 +466,7 @@ namespace DSAProject.Classes
                     ret.Add(newTalent);
                 }
             }
+            ret = new List<ITalent>(ret.OrderBy(x => x.Name));
             foreach (var talentwithDeduction in talentsWithDeduction)
             {
                 var deductionTalentStrings = talentwithDeduction.Value.GetSplitDeduction();
@@ -511,6 +476,7 @@ namespace DSAProject.Classes
                     var valueint = -1;
                     var mainReqg = new Regex("[(][+][0-9]?[0-9][)]");
                     var innerReqg = new Regex("[0-9]?[0-9]");
+                    var fatherReqg = new Regex("[(][A-Za-z]{1,}[)]");
 
                     if (mainReqg.IsMatch(deductionString))
                     {
@@ -519,7 +485,7 @@ namespace DSAProject.Classes
                     }
                     if (valueint == -1) { valueint = talentwithDeduction.Key.BaseDeduction; }
 
-                    ITalentDeduction deduction;
+                    ITalentDeduction deduction = null;
                     var deductionTalent = ret.Where(x => x.Name.StartsWith(value));
                     if (deductionTalent.Count() != 0)
                     {
@@ -527,7 +493,45 @@ namespace DSAProject.Classes
                     }
                     else
                     {
-                        deduction = new TalentDeductionFreeText(deductionString);
+                        var createdNew = false;
+
+                        value = mainReqg.Split(deductionString)[0].Trim();
+                        Int32.TryParse(innerReqg.Match(deductionString).ToString(), out valueint);
+
+                        var valueFather     = fatherReqg.Split(deductionString)[0].Trim();
+                        var fatherTalent    = ret.Where(x => x.Name == valueFather).FirstOrDefault();
+
+                        if (fatherTalent != null)
+                        {
+                            foreach (var item in excelTalentDic)
+                            {
+                                var fatherTalentExcel = item.Value.Where(x => x.Talent == valueFather).FirstOrDefault();
+                                if (fatherTalentExcel != null)
+                                {
+                                    var valueNewName = deductionString.Split('(', ')')[1];
+
+                                    var newTalent = CreateTalent(
+                                        contentType: item.Key,
+                                        probe: fatherTalentExcel.GetConvertAttribute(),
+                                        be: "",
+                                        name: valueNewName,
+                                        nameExtension: "");
+                                    if (typeof(AbstractTalentGeneral).IsAssignableFrom(newTalent.GetType()))
+                                    {
+                                        var t = (AbstractTalentGeneral)newTalent;
+                                        t.FatherTalent = fatherTalent;
+                                        ret.Add(t);
+
+                                        deduction = new TalentDeductionTalent(fatherTalent, valueint, talentwithDeduction.Key.BaseDeduction);
+                                        createdNew = true;
+                                    }
+                                }
+                            }
+                        }
+                        if (!createdNew)
+                        {
+                            deduction = new TalentDeductionFreeText(deductionString);
+                        }
                     }
                     talentwithDeduction.Key.Deductions.Add(deduction);
 
@@ -536,29 +540,29 @@ namespace DSAProject.Classes
             foreach (var talentWithRequirement in talentWithRequirements)
             {
                 var splitRequirement = talentWithRequirement.Value.GetSplitRequirement();
-                foreach(var requirementString in splitRequirement)
+                foreach (var requirementString in splitRequirement)
                 {
                     ITalentRequirement requirement;
-                    var talent      = (AbstractTalentGeneral)talentWithRequirement.Key;
-                    var value       = requirementString;
-                    var valueStart  = -1; 
-                    var valueEnd    = -1;
-                    var reqTalent   = ret.Where(x => x.Name.StartsWith(value));
+                    var talent = (AbstractTalentGeneral)talentWithRequirement.Key;
+                    var value = requirementString;
+                    var valueStart = -1;
+                    var valueEnd = -1;
+                    var reqTalent = ret.Where(x => x.Name.StartsWith(value));
 
                     var startReqg = new Regex("[0-9]?[0-9][+][:]");
                     var endReqg = new Regex("[ ][0-9]?[0-9]");
-                    
+
                     if (endReqg.IsMatch(value))
                     {
                         if (startReqg.IsMatch(value))
                         {
-                            var innerStartReq   = new Regex("[0-9]?[0-9]");
-                            var startvalue      = startReqg.Match(value).ToString();
-                            var truestartValue  = innerStartReq.Match(startvalue).ToString();
-                            valueStart          = Int32.Parse(truestartValue);
-                            value               = startReqg.Split(value)[1];
+                            var innerStartReq = new Regex("[0-9]?[0-9]");
+                            var startvalue = startReqg.Match(value).ToString();
+                            var truestartValue = innerStartReq.Match(startvalue).ToString();
+                            valueStart = Int32.Parse(truestartValue);
+                            value = startReqg.Split(value)[1];
                         }
-                        
+
                         var startSplit = startReqg.Split(value);
                         valueEnd = Int32.Parse(endReqg.Match(value).ToString());
                         value = endReqg.Split(value)[0].Trim();
@@ -566,7 +570,7 @@ namespace DSAProject.Classes
 
                     requirement = new TalentRequirementFreeText(requirementString);
 
-                    if(reqTalent.Count() != 0 && valueEnd != -1 && valueStart != -1)
+                    if (reqTalent.Count() != 0 && valueEnd != -1 && valueStart != -1)
                     {
                         requirement = new TalentRequirementTalent(reqTalent.First(), valueEnd, valueStart);
                     }
@@ -630,7 +634,7 @@ namespace DSAProject.Classes
                     {
                         foreach (var attribute in Enum.GetValues(typeof(CharakterAttribut)))
                         {
-                            if (item == GetProbeShort((CharakterAttribut)attribute))
+                            if (item == Helper.GetShort((CharakterAttribut)attribute))
                             {
                                 ret.Add((CharakterAttribut)attribute);
                             }
@@ -680,7 +684,7 @@ namespace DSAProject.Classes
 
             public bool IsValidVerwanteFertigkeit()
             {
-                if(IsValidString(VerwandteFertigkeiten) || IsValidString(Ableiten))
+                if (IsValidString(VerwandteFertigkeiten) || IsValidString(Ableiten))
                 {
                     return true;
                 }

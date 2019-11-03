@@ -8,7 +8,7 @@ namespace DSAProject.Classes.Interfaces
 {
     public interface ITalent
     {
-        Guid ID { get; }
+        Guid ID { get; set; }
 
         int BaseDeduction { get; }
         string BE { get; set; }

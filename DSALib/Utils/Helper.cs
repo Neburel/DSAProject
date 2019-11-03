@@ -4,8 +4,6 @@ using DSAProject.Classes.Charakter.Values;
 using DSAProject.Classes.Charakter.Values.Attribute;
 using DSAProject.Classes.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DSALib.Utils
 {

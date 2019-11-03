@@ -7,7 +7,7 @@ namespace DSAProject.Classes.Charakter.Talente
     public abstract class AbstractTalent : ITalent
     {
         #region Properties
-        public Guid ID { private set; get; }
+        public Guid ID { set; get; }
         public abstract int BaseDeduction { get; }
         public string BE { get; set; }
         public string Name { get; set; }

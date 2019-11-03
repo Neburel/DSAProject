@@ -41,8 +41,7 @@ namespace DSAProject.Layout.Pages.ItemPages
             var freeText = string.Empty;
             var talentText = string.Empty;
 
-
-            foreach(var deduction in talent.Deductions)
+            foreach (var deduction in talent.Deductions)
             {
                 if (typeof(TalentDeductionFreeText).IsAssignableFrom(deduction.GetType()))
                 {
@@ -55,9 +54,6 @@ namespace DSAProject.Layout.Pages.ItemPages
             }
             if (!string.IsNullOrEmpty(talentText))
             {
-
-
-
                 freeText = GetString(string.Empty, freeText, talentText);
             }
             ViewModel.DeductionStringFreeText = freeText;
@@ -139,11 +135,6 @@ namespace DSAProject.Layout.Pages.ItemPages
                 bonusValue = bonusTAW;
 
                 Game.Charakter.Talente.SetTAW(Talent, value + addValue);
-
-                if(Talent.Name == "Sinnenschärfe")
-                {
-
-                }
 
                 ViewModel.TAW = (Game.Charakter.Talente.GetTAW(Talent) + bonusTAW).ToString();
                 ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent, bonusTAW);
