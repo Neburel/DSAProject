@@ -73,7 +73,10 @@ namespace DSAProject.Layout.Pages.BasePages
         }
         private void XAML_TaWBonus_RemoveTrait(object sender, Hilfsklassen.TraitTalentBonus e)
         {
-            viewModel.Trait.RemoveTaWBonus(e.Talent);
+            if(e != null)
+            {
+                viewModel.Trait.RemoveTaWBonus(e.Talent);
+            }
         }
         private void XAML_ATBonus_AddTrait(object sender, Hilfsklassen.TraitTalentBonus e)
         {

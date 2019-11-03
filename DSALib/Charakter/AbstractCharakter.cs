@@ -224,7 +224,7 @@ namespace DSAProject.Classes.Charakter
             #region Talente Laden
             foreach(var item in json_charakter.TalentTAW)
             {
-                var talent = talents.Where(x => x.ID == item.Key).FirstOrDefault(null);
+                var talent = talents.Where(x => x.ID == item.Key).FirstOrDefault();
                 if(talent != null)
                 {
                     Talente.SetTAW(talent, item.Value);

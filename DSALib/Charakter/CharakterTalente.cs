@@ -14,6 +14,8 @@ namespace DSAProject.Classes.Charakter
     public class CharakterTalente
     {
         public event EventHandler<ITalent> TaWChanged;
+        public event EventHandler<ITalent> ATChanged;
+        public event EventHandler<ITalent> PAChanged;
 
         private ICharakter charakter;
 
@@ -32,9 +34,21 @@ namespace DSAProject.Classes.Charakter
             {
                 TAWDictionary.Remove(talent);
             }
+            if (typeof(AbstractTalentGeneral).IsAssignableFrom(talent.GetType()))
+            {
+                var x = (AbstractTalentGeneral)talent;
+                if (x.FatherTalent != null)
+                {
+                    var fatherTAW = GetTAW(x.FatherTalent);
+                    taw = taw - fatherTAW;
+                }
+            }
             TAWDictionary.Add(talent, taw);
 
-            TaWChanged?.Invoke(this, talent);
+            if(innerTAW != taw)
+            {
+                TaWChanged?.Invoke(this, talent);
+            }
         }
         public void SetAT(AbstractTalentFighting talent, int AT)
         {
@@ -57,6 +71,10 @@ namespace DSAProject.Classes.Charakter
             }
             ATDictionary.Add(talent, newAT);
 
+            if(innerAT != AT)
+            {
+                ATChanged?.Invoke(this, talent);
+            }
         }
         public void SetPA(AbstractTalentFighting talent, int PA)
         {
@@ -78,6 +96,11 @@ namespace DSAProject.Classes.Charakter
                 PADictionary.Remove(talent);
             }
             PADictionary.Add(talent, newPA);
+
+            if (innnerPA != PA)
+            {
+                PAChanged?.Invoke(this, talent);
+            }
         }
 
         public int GetTAW(ITalent talent)
@@ -89,7 +112,8 @@ namespace DSAProject.Classes.Charakter
                 var x = (AbstractTalentGeneral)talent;
                 if(x.FatherTalent != null)
                 {
-                    innerTAW = innerTAW + GetTAW(x.FatherTalent);
+                    var fatherTAW = GetTAW(x.FatherTalent);
+                    innerTAW = innerTAW + fatherTAW;
                 }
             }
 

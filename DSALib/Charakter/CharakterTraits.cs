@@ -44,7 +44,7 @@ namespace DSALib.Charakter
             };
             item.TaWChanged += (sender, args) =>
             {
-                TaWChanged(this, args);
+                TaWChanged?.Invoke(this, args);
             };
             item.ATChanged += (sender, args) =>
             {
