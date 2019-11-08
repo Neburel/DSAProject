@@ -68,6 +68,21 @@ namespace DSAProject.Layout.Pages.ItemPages
                 SetValue(TraitTalentBonusSelectionPage_Mode.AT, 0);
 
                 ViewModel.IsATPAVisibility = Visibility.Visible;
+
+                Game.Charakter.Talente.PAChanged += (sender, args) =>
+                {
+                    if (args == talent)
+                    {
+                        SetValue(TraitTalentBonusSelectionPage_Mode.PA, 0);
+                    }
+                };
+                Game.Charakter.Talente.ATChanged += (sender, args) =>
+                {
+                    if (args == talent)
+                    {
+                        SetValue(TraitTalentBonusSelectionPage_Mode.AT, 0);
+                    }
+                };
             }
             if (typeof(AbstractTalentGeneral).IsAssignableFrom(talent.GetType()))
             {
@@ -88,31 +103,29 @@ namespace DSAProject.Layout.Pages.ItemPages
                 ViewModel.RequirementStringFreeText = freeText;
                 ViewModel.RequirementStringRest = restString;
 
-
+                Game.Charakter.Talente.TaWChanged += (sender, args) =>
+                {
+                    if (args == talent)
+                    {
+                        SetValue(TraitTalentBonusSelectionPage_Mode.All, 0);
+                    }
+                    else if(args == atg.FatherTalent)
+                    {
+                        SetValue(TraitTalentBonusSelectionPage_Mode.All, 0);
+                    }
+                };
                 ViewModel.IsProbeTextVisibility = Visibility.Visible;
             }
-
-            Game.Charakter.Talente.TaWChanged += (sender, args) =>
+            else
             {
-                if(args == talent)
+                Game.Charakter.Talente.TaWChanged += (sender, args) =>
                 {
-                    SetValue(TraitTalentBonusSelectionPage_Mode.All, 0);
-                }
-            };
-            Game.Charakter.Talente.PAChanged += (sender, args) =>
-            {
-                if(args == talent)
-                {
-                    SetValue(TraitTalentBonusSelectionPage_Mode.PA, 0);
-                }
-            };
-            Game.Charakter.Talente.ATChanged += (sender, args) =>
-            {
-                if (args == talent)
-                {
-                    SetValue(TraitTalentBonusSelectionPage_Mode.AT, 0);
-                }
-            };
+                    if (args == talent)
+                    {
+                        SetValue(TraitTalentBonusSelectionPage_Mode.All, 0);
+                    }
+                };
+            }
         }
         private void XAML_PlusTAWButton_Click(object sender, RoutedEventArgs e)
         {
@@ -156,7 +169,7 @@ namespace DSAProject.Layout.Pages.ItemPages
                 }
 
                 ViewModel.TAW = (Game.Charakter.Talente.GetTAW(Talent) + bonusTAW).ToString();
-                ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent, bonusTAW);
+                ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent, bonusTAW, bonusAT, bonusPA);
 
                 view = XAML_TaW;
             }

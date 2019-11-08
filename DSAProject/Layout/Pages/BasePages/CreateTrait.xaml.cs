@@ -69,7 +69,10 @@ namespace DSAProject.Layout.Pages.BasePages
         }
         private void XAML_TaWBonus_AddTrait(object sender, Hilfsklassen.TraitTalentBonus e)
         {
-            viewModel.Trait.SetTaWBonus(e.Talent, e.Value);
+            if(e != null)
+            {
+                viewModel.Trait.SetTaWBonus(e.Talent, e.Value);
+            }
         }
         private void XAML_TaWBonus_RemoveTrait(object sender, Hilfsklassen.TraitTalentBonus e)
         {
@@ -80,7 +83,10 @@ namespace DSAProject.Layout.Pages.BasePages
         }
         private void XAML_ATBonus_AddTrait(object sender, Hilfsklassen.TraitTalentBonus e)
         {
-            viewModel.Trait.SetATBonus((AbstractTalentFighting)e.Talent, e.Value);
+            if(e != null)
+            {
+                viewModel.Trait.SetATBonus((AbstractTalentFighting)e.Talent, e.Value);
+            }
         }
         private void XAML_ATBonus_RemoveTrait(object sender, Hilfsklassen.TraitTalentBonus e)
         {
@@ -111,6 +117,18 @@ namespace DSAProject.Layout.Pages.BasePages
         public void SetTrait(Trait trait)
         {
             viewModel.Trait = trait;
+            foreach (var item in trait.GetTawBonus())
+            {
+                XAML_TaWBonus.NewTalent(true, item.Key, item.Value);
+            }
+            foreach (var item in trait.GetATBonus())
+            {
+                XAML_ATBonus.NewTalent(true, item.Key, item.Value);
+            }
+            foreach (var item in trait.GetPABonus())
+            {
+                XAML_PABonus.NewTalent(true, item.Key, item.Value);
+            }
         }
         public void SetTraitType(TraitType trait)
         {
@@ -128,6 +146,7 @@ namespace DSAProject.Layout.Pages.BasePages
                 set
                 {
                     trait = value;
+
                     OnPropertyChanged(nameof(Trait));
                     OnPropertyChanged(nameof(Title));
                     OnPropertyChanged(nameof(Description));

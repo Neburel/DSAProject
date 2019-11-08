@@ -25,10 +25,10 @@
         <TextBlock Grid.Row="0" Grid.ColumnSpan="10" Text="{x:Bind viewModel.Title}" HorizontalAlignment="Center" HorizontalTextAlignment="Center" VerticalAlignment="Center" Foreground="Black"></TextBlock>
         
         <views1:AKT_MOD_MAX_ItemPage    Grid.Row="1" Grid.Column="0" AKTValue="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="XAML_AKTMINMAX" Event_ValueHigher="XAML_AKTMINMAX_Event_ValueHigher" Event_ValueLower="XAML_AKTMINMAX_Event_ValueLower"></views1:AKT_MOD_MAX_ItemPage>
-        <ComboBox                       Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" ItemsSource="{x:Bind viewModel.TalentList}" x:Name="XAML_ComboBoxTalent"></ComboBox>
+        <ComboBox                       Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" ItemsSource="{x:Bind viewModel.TalentList}" x:Name="XAML_ComboBoxTalent" SelectedValue="{x:Bind viewModel.SelectedItem, Mode=TwoWay}"></ComboBox>
         <itempages:PlusButton           Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="AddTalent" Clicked="AddTalent_Clicked"></itempages:PlusButton>
         <itempages:PlusButton           Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="RemoveTalent" IsInversed="True" Clicked="RemoveTalent_Clicked"></itempages:PlusButton>
-        <ListView                       Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="10" ItemsSource="{x:Bind viewModel.TalenteTaw}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <ListView                       Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="10" ItemsSource="{x:Bind viewModel.TalenteTaw}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ItemClick="ListView_ItemClick" IsItemClickEnabled="True" SelectedItem="{x:Bind viewModel.SelectedListViewItem, Mode=TwoWay}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>

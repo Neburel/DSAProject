@@ -128,21 +128,21 @@ namespace DSAProject.Layout.Pages
                 Game.Charakter.Name = ViewModel.PlayerName.DescriptionText;
             };
             #region ExampleDate
-            ViewModel.Age.DescriptionText               = "25";
-            ViewModel.Race.DescriptionText              = "Tiefling";
-            ViewModel.Faith.DescriptionText             = "Firun";
-            ViewModel.Gender.DescriptionText            = "♂";
-            ViewModel.Culture.DescriptionText           = "Sonnenanbeter12345678910111213141516171819";
-            ViewModel.EyeColor.DescriptionText          = "grün";
-            ViewModel.HairColor.DescriptionText         = "schwarz";
-            ViewModel.SkinColor.DescriptionText         = "hell";
-            ViewModel.BirthDate.DescriptionText         = "12.05.1991";
-            ViewModel.PlayerName.DescriptionText        = "Kazarik";
-            ViewModel.Profession.DescriptionText        = "Jäger";
-            ViewModel.Familistatus.DescriptionText      = "ledig";
-            ViewModel.PlayerHeight.DescriptionText      = "168";
-            ViewModel.PlayerWeight.DescriptionText      = "50";
-            ViewModel.PlayerAdressName.DescriptionText  = "Kaza";
+            //ViewModel.Age.DescriptionText               = "25";
+            //ViewModel.Race.DescriptionText              = "Tiefling";
+            //ViewModel.Faith.DescriptionText             = "Firun";
+            //ViewModel.Gender.DescriptionText            = "♂";
+            //ViewModel.Culture.DescriptionText           = "Sonnenanbeter12345678910111213141516171819";
+            //ViewModel.EyeColor.DescriptionText          = "grün";
+            //ViewModel.HairColor.DescriptionText         = "schwarz";
+            //ViewModel.SkinColor.DescriptionText         = "hell";
+            //ViewModel.BirthDate.DescriptionText         = "12.05.1991";
+            //ViewModel.PlayerName.DescriptionText        = "Kazarik";
+            //ViewModel.Profession.DescriptionText        = "Jäger";
+            //ViewModel.Familistatus.DescriptionText      = "ledig";
+            //ViewModel.PlayerHeight.DescriptionText      = "168";
+            //ViewModel.PlayerWeight.DescriptionText      = "50";
+            //ViewModel.PlayerAdressName.DescriptionText  = "Kaza";
             #endregion
             CharakterChange();
         }

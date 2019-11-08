@@ -57,16 +57,15 @@ namespace DSAProject.Layout.Pages.ItemPages
             this.InitializeComponent();
 
             var k = new List<ITalent>(Game.TalenteDSA.Where(x => x.GetType() == typeof(AbstractTalentFighting)).OrderBy(x => x.Name));
-            var q = Game.TalenteDSA.Where(x => x.GetType() == typeof(AbstractTalentFighting)) ;
+            var q = Game.TalenteDSA.Where(x => x.GetType() == typeof(AbstractTalentFighting));
 
-            foreach(var item in Game.TalenteDSA)
+            foreach (var item in Game.TalenteDSA)
             {
                 var type = item.GetType();
                 if (typeof(AbstractTalentFighting).IsAssignableFrom(type))
                 {
 
                 }
-
             }
         }
         #region Handler
@@ -103,47 +102,92 @@ namespace DSAProject.Layout.Pages.ItemPages
         private void NewTalent(bool add)
         {
             var value = (ITalent)XAML_ComboBoxTalent.SelectedItem;
-            if (value != null)
+            if (Int32.TryParse(XAML_AKTMINMAX.AKTValue, out int intValue))
             {
-                var innerValue = viewModel.TalenteTaw.Where(x => x.Talent == value).FirstOrDefault();
+                NewTalent(add, value, intValue);
+            }
+            else
+            {
+                NewTalent(add, value);
+            }
+        }
+        public void NewTalent(bool add, ITalent talent, int value = 0)
+        {
+            if (talent != null)
+            {
+                var innerValue = viewModel.TalenteTaw.Where(x => x.Talent == talent).FirstOrDefault();
                 var removed = viewModel.TalenteTaw.Remove(innerValue);
                 if (add)
                 {
-                    if (Int32.TryParse(XAML_AKTMINMAX.AKTValue, out int intValue))
+                    if (value > 0)
                     {
-                        if (intValue > 0)
+                        TraitTalentBonus element = null;
+                        if (removed)
                         {
-                            TraitTalentBonus element = null;
-                            if (removed)
-                            {
-                                innerValue.Talent = value;
-                                innerValue.Value = intValue;
-                            }
-                            else
-                            {
-                                element = new TraitTalentBonus
-                                {
-                                    Talent = value,
-                                    Value = intValue
-                                };
-                            }
-                            viewModel.TalenteTaw.Add(element);
-                            AddTrait?.Invoke(this, element);
+                            innerValue.Talent = talent;
+                            innerValue.Value = value;
                         }
+                        else
+                        {
+                            element = new TraitTalentBonus
+                            {
+                                Talent = talent,
+                                Value = value
+                            };
+                        }
+                        viewModel.TalenteTaw.Add(element);
+                        AddTrait?.Invoke(this, element);
                     }
+
                 }
                 else
                 {
-                    RemoveTrait(this, innerValue);
+                    if (removed)
+                    {
+                        RemoveTrait(this, innerValue);
+                    }
                 }
-
             }
         }
         #endregion
         private class CreateTrait_ViewModel : AbstractPropertyChanged
         {
             private string title = "Talent TaW Bonus";
+            private ITalent selectedItem;
+            private TraitTalentBonus selectedListViewItem;
             private List<ITalent> talentList = new List<ITalent>(Game.TalenteDSA.OrderBy(x => x.Name));
+
+            public bool DeselectItem { get; set; } = true;
+
+            public ITalent SelectedItem
+            {
+                get => selectedItem;
+                set
+                {
+                    if(value != selectedItem)
+                    {
+                        selectedItem = value;
+                        OnPropertyChanged(nameof(SelectedItem));
+
+                        if (DeselectItem)
+                        {
+                            SelectedListViewItem = null;
+                        }
+                    }
+                }
+            }
+            public TraitTalentBonus SelectedListViewItem
+            {
+                get => selectedListViewItem;
+                set
+                {
+                    if(selectedListViewItem != value)
+                    {
+                        selectedListViewItem = value;
+                        OnPropertyChanged(nameof(SelectedListViewItem));
+                    }
+                }
+            }
 
             public string Title
             {
@@ -164,6 +208,23 @@ namespace DSAProject.Layout.Pages.ItemPages
                 }
             }
             public ObservableCollection<TraitTalentBonus> TalenteTaw { get; set; } = new ObservableCollection<TraitTalentBonus>();
+        }
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var item = (TraitTalentBonus)(e.ClickedItem);
+
+
+            if (viewModel.SelectedItem == viewModel.SelectedItem)
+            {
+                viewModel.SelectedItem = null;
+                viewModel.SelectedListViewItem = null;
+            }
+            else
+            {
+                viewModel.DeselectItem = false;
+                viewModel.SelectedItem = item.Talent;
+                viewModel.DeselectItem = true;
+            }
         }
     }
 }

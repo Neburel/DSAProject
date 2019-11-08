@@ -43,6 +43,18 @@ namespace DSAProject.Classes.Charakter
                     taw = taw - fatherTAW;
                 }
             }
+            else if (typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
+            {
+                var fightTalent = (AbstractTalentFighting)talent;
+                var minTaw = GetPA(fightTalent) + GetAT(fightTalent);
+
+
+                if(taw < minTaw)
+                {
+                    taw = minTaw;
+                }
+            }
+
             TAWDictionary.Add(talent, taw);
 
             if(innerTAW != taw)
@@ -116,7 +128,6 @@ namespace DSAProject.Classes.Charakter
                     innerTAW = innerTAW + fatherTAW;
                 }
             }
-
             return innerTAW;
         }
         public int GetAT(AbstractTalentFighting talent)
@@ -152,7 +163,7 @@ namespace DSAProject.Classes.Charakter
                 var at = charakter.Values.GetMAXValue(baseAttack, out error) + GetAT(innertalent) + bonusAT;
                 var pa = charakter.Values.GetMAXValue(baseParade, out error) + GetPA(innertalent) + bonusPA;
 
-                probe = (at + bonusAT).ToString() + "/" + (pa + bonusPA).ToString();
+                probe = (at).ToString() + "/" + (pa).ToString();
             } 
             else if (typeof(TalentRange).IsAssignableFrom(talentType))
             {
@@ -160,7 +171,7 @@ namespace DSAProject.Classes.Charakter
                 var baseAttack  = charakter.Values.UsedValues.Where(x => x.GetType() == typeof(BaseRange)).ToList()[0];
                 var at          = charakter.Values.GetMAXValue(baseAttack, out error) + GetAT(innertalent) + bonusAT;
 
-                probe           = (at + bonusAT).ToString();
+                probe           = (at).ToString();
             }
             else if (typeof(AbstractTalentGeneral).IsAssignableFrom(talentType))
             {

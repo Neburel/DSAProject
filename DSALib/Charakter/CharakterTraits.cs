@@ -48,11 +48,11 @@ namespace DSALib.Charakter
             };
             item.ATChanged += (sender, args) =>
             {
-                ATChanged(this, args);
+                ATChanged?.Invoke(this, args);
             };
             item.PAChanged += (sender, args) =>
             {
-                PAChanged(this, args);
+                PAChanged?.Invoke(this, args);
             };
 
             CallChangedAll(item);
@@ -125,7 +125,6 @@ namespace DSALib.Charakter
             }
             return ret;
         }
-
 
         private void CallChangedAll(Trait trait)
         {

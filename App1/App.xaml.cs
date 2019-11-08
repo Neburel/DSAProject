@@ -1,17 +1,21 @@
-﻿using DSALib;
-using DSAProject.Classes;
-using DSAProject.Classes.Game;
-using DSAProject.util.ErrrorManagment;
-
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Storage;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace DSAProject
+namespace App1
 {
     /// <summary>
     /// Stellt das anwendungsspezifische Verhalten bereit, um die Standardanwendungsklasse zu ergänzen.
@@ -20,21 +24,10 @@ namespace DSAProject
     {
         /// <summary>
         /// Initialisiert das Singletonanwendungsobjekt. Dies ist die erste Zeile von erstelltem Code
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
         /// und daher das logische Äquivalent von main() bzw. WinMain().
         /// </summary>
         public App()
         {
-            ///Welches Spiel wird Gestartet
-            Logger.Log(LogLevel.ActionLog, "GameStart", nameof(App), nameof(App));
-            Logger.Log(LogLevel.DebugInfo, "CurrentFolder: " + ApplicationData.Current.LocalFolder.Path, nameof(App), nameof(App));
-            
-            Game.LoadTalente();
-
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
@@ -46,10 +39,11 @@ namespace DSAProject
         /// <param name="e">Details über Startanforderung und -prozess.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            Frame rootFrame = Window.Current.Content as Frame;
 
             // App-Initialisierung nicht wiederholen, wenn das Fenster bereits Inhalte enthält.
             // Nur sicherstellen, dass das Fenster aktiv ist.
-            if (!(Window.Current.Content is Frame rootFrame))
+            if (rootFrame == null)
             {
                 // Frame erstellen, der als Navigationskontext fungiert und zum Parameter der ersten Seite navigieren
                 rootFrame = new Frame();
@@ -72,7 +66,7 @@ namespace DSAProject
                     // Wenn der Navigationsstapel nicht wiederhergestellt wird, zur ersten Seite navigieren
                     // und die neue Seite konfigurieren, indem die erforderlichen Informationen als Navigationsparameter
                     // übergeben werden
-                    rootFrame.Navigate(typeof(GamePage), e.Arguments);
+                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
                 // Sicherstellen, dass das aktuelle Fenster aktiv ist
                 Window.Current.Activate();
