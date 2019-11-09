@@ -30,6 +30,8 @@
             <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.Save}"              Content="{x:Bind viewModel.Save.Content}"></NavigationViewItem>
             <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.Load}"              Content="{x:Bind viewModel.Load.Content}"></NavigationViewItem>
             <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.CreateCharkter}"    Content="{x:Bind viewModel.CreateCharkter.Content}"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.InfoPage}"          Content="{x:Bind viewModel.InfoPage.Content}">
+            </NavigationViewItem>
         </NavigationView.MenuItems>
         <Frame 
             x:Name="ContentFrame" 

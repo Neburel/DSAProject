@@ -12,6 +12,5 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
             CharakterAttribut.Konstitution,
         };
         internal override int CalculateValue => 2;
-
     }
 }

@@ -67,6 +67,15 @@ namespace DSAProject.Layout.Pages.BasePages
             Game.Charakter.Traits.AddTrait(trait);
             Game.RequestNav(new EventNavRequest { Side = NavEnum.StartPage });
         }
+        private void XAML_ButtonDelte_Click(object sender, RoutedEventArgs e)
+        {
+            var trait = viewModel.Trait;
+            if(trait != null)
+            {
+                Game.Charakter.Traits.RemoveTrait(trait);
+            }
+            Game.RequestNav(new EventNavRequest { Side = NavEnum.StartPage });
+        }
         private void XAML_TaWBonus_AddTrait(object sender, Hilfsklassen.TraitTalentBonus e)
         {
             if(e != null)
@@ -222,6 +231,7 @@ namespace DSAProject.Layout.Pages.BasePages
                     OnPropertyChanged(nameof(Description));
                 }
             }
-        }        
+        }
+
     }
 }

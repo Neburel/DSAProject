@@ -83,7 +83,7 @@
                 <x:String>Ledig</x:String>
                 <x:String>Verheiratet</x:String>
                 <x:String>Gechieden</x:String>
-                <x:String>Verwitfet</x:String>
+                <x:String>Verwitwet</x:String>
             </ComboBox>
 
             <TextBlock  Grid.Row="8" Grid.Column="1" x:Name="XAML_SkinColorTitle" Foreground="Black" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Left"       FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0" Text="{x:Bind ViewModel.SkinColor.DescriptionTitle, Mode=TwoWay}"/>
@@ -144,33 +144,6 @@
             </StackPanel>
 
             <TextBlock  Grid.Row="11" Grid.Column="1" x:Name="XAML_TechMinValue" Foreground="Black" Text="Techstufe Min:" TextAlignment="Left" VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
-            <StackPanel Grid.Row="11" Grid.Column="2" x:Name="XAML_StackPanelTechMin"  Orientation="Horizontal">
-                <TextBlock Text="{x:Bind ViewModel.TechstufeMin, Mode=TwoWay}" Foreground="Black" TextAlignment="Center" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
-                <Border BorderBrush="Green" BorderThickness="1"  Grid.Row="1" Grid.Column="4" Width="40" Height="40">
-                    <Button x:Name="XAML_TechMinValuePlus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Margin="0,0,0,0" Padding="0,0,0,0" FontSize="24" FontWeight="Bold" Click="XAML_TechMinValuePlus_Click">
-                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="+" FontSize="20"></TextBlock>
-                    </Button>
-                </Border>
-                <Border BorderBrush="Red" BorderThickness="1" Grid.Row="1" Grid.Column="5" Width="40" Height="40">
-                    <Button x:Name="XAML_TechMinValueMinus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Margin="0,0,0,0" Padding="0,0,0,0" FontSize="24" FontWeight="Bold" Click="XAML_TechMinValueMinus_Click">
-                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="-" FontSize="20"></TextBlock>
-                    </Button>
-                </Border>
-            </StackPanel>
-            <TextBlock  Grid.Row="11" Grid.Column="3" x:Name="XAML_TechMaxValue" Foreground="Black" Text="Techstufe Max:" TextAlignment="Left"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
-            <StackPanel Grid.Row="11" Grid.Column="4" x:Name="XAML_StackPanelTechMax" Orientation="Horizontal">
-                <TextBlock Text="{x:Bind ViewModel.TechstufeMax, Mode=TwoWay}" Foreground="Black" TextAlignment="Center" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
-                <Border BorderBrush="Green" BorderThickness="1"  Grid.Row="1" Grid.Column="4" Width="40" Height="40">
-                    <Button x:Name="XAML_TechMaxValuePlus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Margin="0,0,0,0" Padding="0,0,0,0" FontSize="24" FontWeight="Bold" Click="XAML_TechMaxValuePlus_Click">
-                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="+" FontSize="20"></TextBlock>
-                    </Button>
-                </Border>
-                <Border BorderBrush="Red" BorderThickness="1" Grid.Row="1" Grid.Column="5" Width="40" Height="40">
-                    <Button x:Name="XAML_TechMaxValueMinus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Margin="0,0,0,0" Padding="0,0,0,0" FontSize="24" FontWeight="Bold" Click="XAML_TechMaxValueMinus_Click">
-                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="-" FontSize="20"></TextBlock>
-                    </Button>
-                </Border>
-            </StackPanel>
         </Grid>
     </Grid>
 </Page>

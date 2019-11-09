@@ -256,7 +256,7 @@ namespace DSAProject.Layout.Pages
                         newView.MinValueAsInt = values.GetAKTValue(args, out error);
                         if (error != null)
                         {
-                            Logger.Log(error);
+                            Logger.Log(LogLevel.ErrorLog, error);
                         }
                     }
                 };

@@ -1,12 +1,11 @@
 ﻿using DSAProject.Classes.Charakter;
-using DSAProject.Classes.Interfaces;
 using System.Collections.Generic;
 
 namespace DSALib.Charakter.Resources
 {
     public class Vitality : AbstractAttributeResources
     {
-        public override string Name => "Ausdauer";
+        public override string Name => DSALib.Resources.Vitality;
         public Vitality(CharakterAttribute attribute) : base(attribute) { }
         internal override List<CharakterAttribut> attributeList => new List<CharakterAttribut>()
         {

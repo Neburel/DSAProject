@@ -29,14 +29,17 @@ namespace DSAProject.Classes.Charakter
         #endregion
         public AbstractCharakter(Guid id)
         {
+            CreateNew(id);
+        }
+        private void CreateNew(Guid id)
+        {
             ID = id;
             Traits = new CharakterTraits();
             Talente = new CharakterTalente(this);
             Descriptions = new CharakterDescription();
             Attribute = CreateAttribute();
-            Values = CreateValues();
             Resources = CreateResources();
-
+            Values = CreateValues();
 
             if (Attribute == null)
             {
@@ -125,7 +128,6 @@ namespace DSAProject.Classes.Charakter
                     charakter.TalentTAW.Add(item.Key.ID, item.Value);
                 }
             }
-
             foreach (var item in Talente.ATDictionary)
             {
                 if (item.Value > 0)
@@ -138,6 +140,19 @@ namespace DSAProject.Classes.Charakter
                 if (item.Value > 0)
                 {
                     charakter.TalentPA.Add(item.Key.ID, item.Value);
+                }
+            }
+
+            var allTalents = new List<ITalent>(Talente.TAWDictionary.Keys);
+            allTalents.AddRange(Talente.ATDictionary.Keys);
+            allTalents.AddRange(Talente.PADictionary.Keys);
+
+            charakter.TalentGuidsNames = new Dictionary<Guid, string>();
+            foreach (var item in allTalents)
+            {
+                if (!charakter.TalentGuidsNames.ContainsKey(item.ID))
+                {
+                    charakter.TalentGuidsNames.Add(item.ID, item.Name);
                 }
             }
             #endregion
@@ -203,7 +218,7 @@ namespace DSAProject.Classes.Charakter
         }
         public void Load(JSON_Charakter json_charakter, List<ITalent> talents) 
         {
-            ID = json_charakter.ID;
+            CreateNew(json_charakter.ID);
             Name = json_charakter.Name;
             #region Attribute Laden
             foreach (var item in json_charakter.AttributeBaseValue.Keys)
@@ -229,21 +244,33 @@ namespace DSAProject.Classes.Charakter
                 {
                     Talente.SetTAW(talent, item.Value);
                 }
+                else
+                {
+                    TalentMissing(json_charakter, item.Key);
+                }
             }
-            foreach (var item in json_charakter.TalentAT)
+            foreach(var item in json_charakter.TalentAT)
             {
-                var talent = talents.Where(x => x.ID == item.Key).FirstOrDefault(null);
-                if (talent != null && talent.GetType() == typeof(AbstractTalentFighting))
+                var talent = talents.Where(x => x.ID == item.Key).FirstOrDefault();
+                if (talent != null && typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
                 {
                     Talente.SetAT((AbstractTalentFighting)talent, item.Value);
                 }
+                else
+                {
+                    TalentMissing(json_charakter, item.Key);
+                }
             }
-            foreach (var item in json_charakter.TalentPA)
+            foreach(var item in json_charakter.TalentPA)
             {
-                var talent = talents.Where(x => x.ID == item.Key).FirstOrDefault(null);
-                if (talent != null && talent.GetType() == typeof(AbstractTalentFighting)) 
+                var talent = talents.Where(x => x.ID == item.Key).FirstOrDefault();
+                if (talent != null && typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
                 {
                     Talente.SetPA((AbstractTalentFighting)talent, item.Value);
+                }
+                else
+                {
+                    TalentMissing(json_charakter, item.Key);
                 }
             }
             #endregion
@@ -322,6 +349,18 @@ namespace DSAProject.Classes.Charakter
             }
             #endregion
         }
+        private void TalentMissing(JSON_Charakter json_charakter, Guid guid)
+        {
+            try
+            {
+                var talent = json_charakter.TalentGuidsNames.Where(x => x.Key == guid).FirstOrDefault();
+                LogStrings.GetLogString(LogLevel.ErrorLog, "Talent Fehlt: " + talent.Key + " " + talent.Value);
+            }
+            catch (Exception)
+            {
+
+            }
+        }
         internal IValue GetValue(string name)
         {
             return Values.UsedValues.Where(x => x.Name == name).FirstOrDefault();
@@ -330,7 +369,6 @@ namespace DSAProject.Classes.Charakter
         {
             return Resources.UsedValues.Where(x => x.Name == name).FirstOrDefault();
         }
-
         #endregion
     }
 }

@@ -115,33 +115,38 @@ namespace DSAProject.Layout.Pages.ItemPages
         {
             if (talent != null)
             {
+                var k = viewModel.TalenteTaw;
                 var innerValue = viewModel.TalenteTaw.Where(x => x.Talent == talent).FirstOrDefault();
-                var removed = viewModel.TalenteTaw.Remove(innerValue);
-                if (add)
+                if (add == true && (innerValue == null || innerValue.Value != value))
                 {
-                    if (value > 0)
-                    {
-                        TraitTalentBonus element = null;
-                        if (removed)
-                        {
-                            innerValue.Talent = talent;
-                            innerValue.Value = value;
-                        }
-                        else
-                        {
-                            element = new TraitTalentBonus
-                            {
-                                Talent = talent,
-                                Value = value
-                            };
-                        }
-                        viewModel.TalenteTaw.Add(element);
-                        AddTrait?.Invoke(this, element);
-                    }
+                    var removed = viewModel.TalenteTaw.Remove(innerValue);
 
+                    {
+                        if (value > 0)
+                        {
+                            TraitTalentBonus element = null;
+                            if (removed)
+                            {
+                                element = innerValue;
+                                innerValue.Talent = talent;
+                                innerValue.Value = value;
+                            }
+                            else
+                            {
+                                element = new TraitTalentBonus
+                                {
+                                    Talent = talent,
+                                    Value = value
+                                };
+                            }
+                            viewModel.TalenteTaw.Add(element);
+                            AddTrait?.Invoke(this, element);
+                        }
+                    }
                 }
-                else
+                else if (add == false)
                 {
+                    var removed = viewModel.TalenteTaw.Remove(innerValue);
                     if (removed)
                     {
                         RemoveTrait(this, innerValue);
@@ -164,7 +169,7 @@ namespace DSAProject.Layout.Pages.ItemPages
                 get => selectedItem;
                 set
                 {
-                    if(value != selectedItem)
+                    if (value != selectedItem)
                     {
                         selectedItem = value;
                         OnPropertyChanged(nameof(SelectedItem));
@@ -181,7 +186,7 @@ namespace DSAProject.Layout.Pages.ItemPages
                 get => selectedListViewItem;
                 set
                 {
-                    if(selectedListViewItem != value)
+                    if (selectedListViewItem != value)
                     {
                         selectedListViewItem = value;
                         OnPropertyChanged(nameof(SelectedListViewItem));
@@ -212,19 +217,9 @@ namespace DSAProject.Layout.Pages.ItemPages
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var item = (TraitTalentBonus)(e.ClickedItem);
-
-
-            if (viewModel.SelectedItem == viewModel.SelectedItem)
-            {
-                viewModel.SelectedItem = null;
-                viewModel.SelectedListViewItem = null;
-            }
-            else
-            {
-                viewModel.DeselectItem = false;
-                viewModel.SelectedItem = item.Talent;
-                viewModel.DeselectItem = true;
-            }
+            viewModel.DeselectItem = false;
+            viewModel.SelectedItem = item.Talent;
+            viewModel.DeselectItem = true;
         }
     }
 }

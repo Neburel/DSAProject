@@ -1,0 +1,30 @@
+﻿<Page
+    x:Class="DSAProject.Layout.Pages.BasePages.InfoPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DSAProject.Layout.Pages.BasePages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="AppPath: " Grid.Row="0" Grid.Column="0"></TextBlock> 
+        <TextBlock Text="{x:Bind AppPAth}" Grid.Row="0" Grid.Column="1"></TextBlock>
+     
+        <TextBlock Text="SaveFolder: " Grid.Row="1" Grid.Column="0"></TextBlock>
+        <TextBlock Text="{x:Bind AppSavePAth}" Grid.Row="1" Grid.Column="1"></TextBlock>
+        <Button Click="Button_Click_1" Grid.Row="1" Grid.Column="2">
+            <TextBlock Text="Öffnen"/>
+        </Button>
+    </Grid>
+</Page>

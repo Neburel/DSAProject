@@ -9,7 +9,9 @@ using DSAProject.Layout.Pages.BasePages;
 using DSAProject.Layout.Pages.ToolPages;
 using System;
 using System.Linq;
+using Windows.Foundation;
 using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -32,6 +34,12 @@ namespace DSAProject
             this.InitializeComponent();
             currentPage = "HeroLetter";
             ContentFrame.Navigate(typeof(HeroLetterPage));
+
+            var standartSize = new Size(1400, 1000);
+
+            ApplicationView.PreferredLaunchViewSize         = standartSize;
+            ApplicationView.PreferredLaunchWindowingMode    = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(standartSize);
 
             Game.NavRequested += (sender, args) =>
             {
@@ -132,6 +140,7 @@ namespace DSAProject
             public GameContentItem Load { get; private set; }       = new GameContentItem { Content = "Charakter Laden",                Type = typeof(LoadPage) };
             public GameContentItem CreateCharkter { get; private set; } = new GameContentItem { Content = "Charakter erstellen/editieren",  Type = typeof(CharakterCreation) };
             public GameContentItem CreateTrait { get; private set; }    = new GameContentItem { Content = "Create Trait", Type = typeof(CreateTrait) };
+            public GameContentItem InfoPage { get; private set; }       = new GameContentItem { Content = "Info", Type = typeof(InfoPage) };
         }
         private class GameContentItem
         {

@@ -30,6 +30,7 @@ namespace DSAProject
         public App()
         {
             ///Welches Spiel wird Gestartet
+            Logger.ListenLibLogger();
             Logger.Log(LogLevel.ActionLog, "GameStart", nameof(App), nameof(App));
             Logger.Log(LogLevel.DebugInfo, "CurrentFolder: " + ApplicationData.Current.LocalFolder.Path, nameof(App), nameof(App));
             

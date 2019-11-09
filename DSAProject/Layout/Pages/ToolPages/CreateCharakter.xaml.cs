@@ -59,29 +59,6 @@ namespace DSAProject.Layout.Pages
                 }
             }
         }
-        private bool DisplayTech
-        {
-            set
-            {
-                if(XAML_TechMaxValue != null && XAML_StackPanelTechMax != null && XAML_TechMinValue != null && XAML_StackPanelTechMin != null)
-                {
-                    if (value)
-                    {
-                        XAML_TechMaxValue.Visibility = Visibility.Visible;
-                        XAML_StackPanelTechMax.Visibility = Visibility.Visible;
-                        XAML_TechMinValue.Visibility = Visibility.Visible;
-                        XAML_StackPanelTechMin.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        XAML_TechMaxValue.Visibility = Visibility.Collapsed;
-                        XAML_StackPanelTechMax.Visibility = Visibility.Collapsed;
-                        XAML_TechMinValue.Visibility = Visibility.Collapsed;
-                        XAML_StackPanelTechMin.Visibility = Visibility.Collapsed;
-                    }
-                }
-            }
-        }
         #endregion
         public CharakterCreationViewModel ViewModel { get; set; } = new CharakterCreationViewModel();
         public CharakterCreation()
@@ -198,7 +175,6 @@ namespace DSAProject.Layout.Pages
                 #region setDSALayout
                 ViewModel.CurrentDate.DescriptionText = Game.CurrentYearDSA;
                 ViewModel.Culture.DescriptionTitle = DSA_CultureName;
-                DisplayTech = false;
                 #endregion
 
             } else if (result == CreateNewChar.PNP)
@@ -207,7 +183,6 @@ namespace DSAProject.Layout.Pages
                 #region setPNPLayout
                 ViewModel.CurrentDate.DescriptionText = Game.CurrentYearPNP;
                 ViewModel.Culture.DescriptionTitle = "Vorgeschichte-/en:";
-                DisplayTech = true;
                 #endregion
             }
 
@@ -286,7 +261,6 @@ namespace DSAProject.Layout.Pages
         }
         #endregion
         #region Dialog
-
         private async Task<CreateNewChar> DisplayCreateNewDialog()
         {
             ContentDialog newDialog = new ContentDialog
@@ -314,7 +288,6 @@ namespace DSAProject.Layout.Pages
 
             return ret;
         }
-
         private async Task<bool> DisplayWarningDialog()
         {
             ContentDialog noWifiDialog = new ContentDialog

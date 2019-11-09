@@ -31,9 +31,14 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="XAML_ButtonCreate" Margin="100, 0, 0 , 0" Grid.Column="3" Grid.RowSpan="4" Grid.ColumnSpan="4" Width="200" Click="XAML_ButtonCreate_Click">
+            <Button x:Name="XAML_ButtonCreate" Margin="100, 0, 0 , 0" Grid.Row="0" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="4" Width="200" Click="XAML_ButtonCreate_Click">
                 <Border BorderBrush="Gray" BorderThickness="1">
                     <TextBlock Text="Erstellen" Foreground="Black" FontSize="20" TextAlignment="Center" Width="100"></TextBlock>
+                </Border>
+            </Button>
+            <Button x:Name="XAML_ButtonDelte" Margin="100, 0, 0 , 0" Grid.Row="2" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="4" Width="200" Click="XAML_ButtonDelte_Click">
+                <Border BorderBrush="Gray" BorderThickness="1">
+                    <TextBlock Text="Löschen" Foreground="Black" FontSize="20" TextAlignment="Center" Width="100"></TextBlock>
                 </Border>
             </Button>
 

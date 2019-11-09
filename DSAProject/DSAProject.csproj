@@ -107,6 +107,9 @@
     <Compile Include="Layout\Pages\BasePages\CreateTrait.xaml.cs">
       <DependentUpon>CreateTrait.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Layout\Pages\BasePages\InfoPage.xaml.cs">
+      <DependentUpon>InfoPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Layout\Pages\ItemPages\PlusButton.xaml.cs">
       <DependentUpon>PlusButton.xaml</DependentUpon>
     </Compile>
@@ -186,6 +189,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Layout\Pages\BasePages\CreateTrait.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Layout\Pages\BasePages\InfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

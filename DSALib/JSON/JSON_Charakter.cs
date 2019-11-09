@@ -26,7 +26,6 @@ namespace DSALib.Classes.JSON
             }
         }
         #endregion
-
         [DataMember]
         public Dictionary<CharakterAttribut, int> AttributeBaseValue { get; set; }
         [DataMember]
@@ -37,6 +36,8 @@ namespace DSALib.Classes.JSON
         public Dictionary<Guid, int> TalentAT { get; set; }
         [DataMember]
         public Dictionary<Guid, int> TalentPA { get; set; }
+        [DataMember]
+        public Dictionary<Guid, string> TalentGuidsNames { get; set; }
         [DataMember]
         public List<JSON_Trait> Traits { get; set; }
     }

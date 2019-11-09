@@ -1,6 +1,7 @@
 ﻿using DSALib;
 using DSALib.Charakter;
 using DSALib.Charakter.Resources;
+using DSALib.Charakter.Values;
 using DSALib.Interfaces;
 using DSAProject.Classes.Charakter.Values;
 using DSAProject.Classes.Charakter.Values.Attribute;
@@ -34,9 +35,11 @@ namespace DSAProject.Classes.Charakter
             {
                 new BaseAttack(Attribute),
                 new BaseParade(Attribute),
+                new BaseBlock(Attribute),
                 new BaseRange(Attribute),
                 new BaseInitiative(Attribute),
                 new ControllValue(),
+                new ArtifactControl(Resources, Attribute),
                 new WoundSwell(Attribute),
                 new Rapture(),
 
