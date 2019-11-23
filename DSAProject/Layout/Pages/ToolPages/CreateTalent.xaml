@@ -74,8 +74,7 @@
                     <RadioButton x:Name="XAML_RadioButton_Knowldage"    Grid.Row="2" Grid.Column="3" Content="{x:Bind TalentChoice_Knwoldage}"      Checked="RadioButton_TalentChoice_Checked" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}"></RadioButton>
                     <RadioButton x:Name="XAML_RadioButton_Crafting"     Grid.Row="2" Grid.Column="4" Content="{x:Bind TalentChoice_Crafting}"       Checked="RadioButton_TalentChoice_Checked" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}"></RadioButton>
 
-                    <RadioButton x:Name="XAML_RadioButton_LanguageFam"  Grid.Row="3" Grid.Column="0" Content="{x:Bind TalentChoice_LanguageFamily}" Checked="RadioButton_TalentChoice_Checked" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}"></RadioButton>
-                    <RadioButton x:Name="XAML_RadioButton_Language"     Grid.Row="3" Grid.Column="1" Content="{x:Bind TalentChoice_Language}"       Checked="RadioButton_TalentChoice_Checked" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}"></RadioButton>
+                     <RadioButton x:Name="XAML_RadioButton_Language"     Grid.Row="3" Grid.Column="1" Content="{x:Bind TalentChoice_Language}"       Checked="RadioButton_TalentChoice_Checked" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}"></RadioButton>
                 </Grid>
             </Border>
 

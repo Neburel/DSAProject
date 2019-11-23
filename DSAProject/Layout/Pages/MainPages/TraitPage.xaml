@@ -5,11 +5,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:other="using:DSALib.Charakter.Other"
+    xmlns:converter="using:DSAProject.Layout.Converter"
     mc:Ignorable="d"
     Background="{x:Bind viewModel.BackgroundColor }">
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <ListView Grid.Row="1" ItemsSource="{x:Bind viewModel.Traits}" Margin="0" Padding="0" ItemClick="ListView_ItemClick" IsItemClickEnabled="True">
@@ -23,16 +25,16 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <TextBlock Grid.Column="0" TextAlignment="Center" Text="Title" Foreground="Black"></TextBlock>
+                            <TextBlock Grid.Column="0" TextAlignment="Center" Text="Title" Foreground="White"></TextBlock>
                         </Border>
                         <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1">
-                            <TextBlock Grid.Column="1" TextAlignment="Center" Text="GP" Foreground="Black"></TextBlock>
+                            <TextBlock Grid.Column="1" TextAlignment="Center" Text="GP" Foreground="White"></TextBlock>
                         </Border>
                         <Border Grid.Column="2" BorderBrush="Gray" BorderThickness="1">
-                            <TextBlock Grid.Column="2" TextAlignment="Center" Text="Value" Foreground="Black"></TextBlock>
+                            <TextBlock Grid.Column="2" TextAlignment="Center" Text="Value" Foreground="White"></TextBlock>
                         </Border>
                         <Border Grid.Column="3" BorderBrush="Gray" BorderThickness="1">
-                            <TextBlock Grid.Column="3" TextAlignment="Center" Text="Beschreibung" Foreground="Black"></TextBlock>
+                            <TextBlock Grid.Column="3" TextAlignment="Center" Text="Beschreibung" Foreground="White"></TextBlock>
                         </Border>
                     </Grid>
                 </DataTemplate>

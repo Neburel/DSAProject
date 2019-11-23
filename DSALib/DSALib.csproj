@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Charakter\Exceptions\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="Windows.Foundation.UniversalApiContract">
       <HintPath>..\..\..\Windows Kits\10\References\10.0.17134.0\Windows.Foundation.UniversalApiContract\6.0.0.0\Windows.Foundation.UniversalApiContract.winmd</HintPath>
       <IsWinMDFile>true</IsWinMDFile>

@@ -172,6 +172,7 @@ namespace DSAProject.Classes.Game
             //var jSON_talentLocal    = JSON_TalentSaveFile.DeSerializeJson(jStringLocal, out string serrorLocal);
 
             TalenteDSA = TalentHelper.LoadTalent(jSON_talentAssests.Talente_DSA);
+            //var LanguageFamilies = TalentHelper.LoadLanguageFamilies(TalenteDSA.ToList(), jSON_talentAssests.Families_DSA);
         }
         public static Guid GenerateNextCharakterGUID()
         {

@@ -122,7 +122,7 @@ namespace DSAProject.Layout.Pages.ItemPages
                     var removed = viewModel.TalenteTaw.Remove(innerValue);
 
                     {
-                        if (value > 0)
+                        if (value != 0)
                         {
                             TraitTalentBonus element = null;
                             if (removed)

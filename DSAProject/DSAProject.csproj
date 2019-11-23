@@ -103,12 +103,16 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Game.cs" />
+    <Compile Include="Layout\Converter\ColorHelpConverter.cs" />
     <Compile Include="Layout\MessageDialoge\SaveDialog.cs" />
     <Compile Include="Layout\Pages\BasePages\CreateTrait.xaml.cs">
       <DependentUpon>CreateTrait.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\Pages\BasePages\InfoPage.xaml.cs">
       <DependentUpon>InfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Layout\Pages\ItemPages\Language_ItemPage.xaml.cs">
+      <DependentUpon>Language_ItemPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\Pages\ItemPages\PlusButton.xaml.cs">
       <DependentUpon>PlusButton.xaml</DependentUpon>
@@ -169,6 +173,7 @@
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="Assets\Talente_.json" />
     <Content Include="Assets\Talente.json" />
     <None Include="DSAProject_TemporaryKey.pfx" />
   </ItemGroup>
@@ -193,6 +198,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Layout\Pages\BasePages\InfoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Layout\Pages\ItemPages\Language_ItemPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

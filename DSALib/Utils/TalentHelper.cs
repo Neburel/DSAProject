@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using DSALib;
+using DSALib.Charakter.Talente.TalentLanguage;
 using DSALib.Classes.JSON;
 using DSALib.Utils;
 using DSAProject.Classes.Charakter.Talente;
@@ -127,13 +128,13 @@ namespace DSAProject.Classes
             {
                 talent = new TalentSocial(guid, probe);
             }
-            else if (contentType == nameof(TalentLanguageBase))
+            else if (contentType == nameof(TalentLanguage))
             {
                 talent = new TalentLanguageBase(guid);
             }
-            else if (contentType == nameof(TalentLanguageFamily))
+            else if (contentType == nameof(TalentWriting))
             {
-                talent = new TalentLanguageFamily(guid);
+                talent = new TalentWriting(guid);
             }
             else
             {

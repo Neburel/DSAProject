@@ -2,6 +2,7 @@
 using DSALib.Charakter.Other;
 using DSAProject.Classes.Game;
 using DSAProject.util;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml.Controls;
@@ -19,10 +20,16 @@ namespace DSAProject.Layout.Pages
         private Trait createNewTrait = new Trait { Description = "CreateNew" };
         private TraitType? trailFilter = null;
 
+        private bool Advantages { get; set; }
+        private bool DisAdvantages { get; set; }
+
+
         public SolidColorBrush BackgroundColor
         {
             set => viewModel.BackgroundColor = value;
         }
+        public SolidColorBrush TextColor = new SolidColorBrush(Windows.UI.Colors.Green);
+
         public TraitType TraitFilter
         {
             set
@@ -33,6 +40,22 @@ namespace DSAProject.Layout.Pages
                 trailFilter = value;
             }
         }
+        private List<TraitType> TraitFilters
+        {
+            set
+            {
+                var list = value.Distinct();
+                var traitList = new List<Trait>();
+                foreach(var item in list)
+                {
+                    var traits = Game.Charakter.Traits.GetTraits().Where(x => x.TraitType == item).ToList();
+                    traitList.AddRange(traits);
+                }
+                viewModel.Traits = new ObservableCollection<Trait>(traitList);
+                viewModel.Traits.Add(createNewTrait);
+            }
+        }
+
         public TraitPage()
         {
             this.InitializeComponent();
@@ -53,7 +76,6 @@ namespace DSAProject.Layout.Pages
                 }
             }
         }
-
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             if(e.ClickedItem == createNewTrait)
@@ -65,6 +87,15 @@ namespace DSAProject.Layout.Pages
             {
                 Game.RequestNav(new EventNavRequest { Side = NavEnum.CreateTraitPage, Parameter = e.ClickedItem });
             }
+        }
+
+        private void CheckBox_Checked(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            var list = new List<TraitType>();
+            if (Advantages) list.Add(TraitType.Vorteil);
+            if (DisAdvantages) list.Add(TraitType.Nachteil);
+
+            TraitFilters = list;
         }
     }
 }
