@@ -5,10 +5,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:other="using:DSALib.Charakter.Other"
-    xmlns:converter="using:DSAProject.Layout.Converter"
+    xmlns:converter="using:DSAProject.Converter"
     mc:Ignorable="d"
-    Background="{x:Bind viewModel.BackgroundColor }">
-
+    Background="Transparent">
+    <Page.Resources>
+        <converter:ColorConverter x:Key="Converter" ></converter:ColorConverter>
+        <SolidColorBrush x:Key="PrimaryBrush" Color="Yellow"/>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -25,16 +28,16 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <TextBlock Grid.Column="0" TextAlignment="Center" Text="Title" Foreground="White"></TextBlock>
+                            <TextBlock Grid.Column="0" TextAlignment="Center" Text="Title" Foreground="{ThemeResource PrimaryBrush}"></TextBlock>
                         </Border>
                         <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1">
-                            <TextBlock Grid.Column="1" TextAlignment="Center" Text="GP" Foreground="White"></TextBlock>
+                            <TextBlock Grid.Column="1" TextAlignment="Center" Text="GP" Foreground="{ThemeResource PrimaryBrush}"></TextBlock>
                         </Border>
                         <Border Grid.Column="2" BorderBrush="Gray" BorderThickness="1">
-                            <TextBlock Grid.Column="2" TextAlignment="Center" Text="Value" Foreground="White"></TextBlock>
+                            <TextBlock Grid.Column="2" TextAlignment="Center" Text="Value" Foreground="{ThemeResource PrimaryBrush}"></TextBlock>
                         </Border>
                         <Border Grid.Column="3" BorderBrush="Gray" BorderThickness="1">
-                            <TextBlock Grid.Column="3" TextAlignment="Center" Text="Beschreibung" Foreground="White"></TextBlock>
+                            <TextBlock Grid.Column="3" TextAlignment="Center" Text="Beschreibung" Foreground="{ThemeResource PrimaryBrush}"></TextBlock>
                         </Border>
                     </Grid>
                 </DataTemplate>
@@ -51,6 +54,7 @@
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="other:Trait">
+                    
                     <Grid Margin="0" Padding="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150"/>
@@ -62,16 +66,16 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="1">
-                            <TextBlock Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center" Text="{x:Bind Title}" Foreground="Black" TextWrapping="Wrap" FontSize="10"/>
+                            <TextBlock Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center" Text="{x:Bind Title}" Foreground="{x:Bind Title, Converter={StaticResource Converter}}" TextWrapping="Wrap" FontSize="10"/>
                         </Border>
                         <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1">
-                            <TextBlock Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center" Text="{x:Bind GP}" Foreground="Black"/>
+                            <TextBlock Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center" Text="{x:Bind GP}" Foreground="{x:Bind Title, Converter={StaticResource Converter}}"/>
                         </Border>
                         <Border Grid.Column="2" BorderBrush="Gray" BorderThickness="1">
-                            <TextBlock Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center" Text="{x:Bind Value}" Foreground="Black"/>
+                            <TextBlock Grid.Column="2" TextAlignment="Center" VerticalAlignment="Center" Text="{x:Bind Value}" Foreground="{x:Bind Title, Converter={StaticResource Converter}}"/>
                         </Border>
                         <Border Grid.Column="3" BorderBrush="Gray" BorderThickness="1">
-                            <TextBlock Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center" Text="{x:Bind LongDescription}" TextWrapping="Wrap" Foreground="Black" FontSize="10"/>
+                            <TextBlock Grid.Column="3" TextAlignment="Center" VerticalAlignment="Center" Text="{x:Bind LongDescription}" TextWrapping="Wrap" Foreground="{x:Bind Title, Converter={StaticResource Converter}}" FontSize="10"/>
                         </Border>
                     </Grid>
                 </DataTemplate>

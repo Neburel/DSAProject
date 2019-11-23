@@ -102,8 +102,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converter\ColorConverter.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="Layout\Converter\ColorHelpConverter.cs" />
     <Compile Include="Layout\MessageDialoge\SaveDialog.cs" />
     <Compile Include="Layout\Pages\BasePages\CreateTrait.xaml.cs">
       <DependentUpon>CreateTrait.xaml</DependentUpon>

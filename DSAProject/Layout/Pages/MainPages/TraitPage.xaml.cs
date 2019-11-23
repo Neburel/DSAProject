@@ -1,6 +1,7 @@
 ﻿using DSALib;
 using DSALib.Charakter.Other;
 using DSAProject.Classes.Game;
+using DSAProject.Converter;
 using DSAProject.util;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,12 +24,6 @@ namespace DSAProject.Layout.Pages
         private bool Advantages { get; set; }
         private bool DisAdvantages { get; set; }
 
-
-        public SolidColorBrush BackgroundColor
-        {
-            set => viewModel.BackgroundColor = value;
-        }
-        public SolidColorBrush TextColor = new SolidColorBrush(Windows.UI.Colors.Green);
 
         public TraitType TraitFilter
         {
@@ -59,22 +54,12 @@ namespace DSAProject.Layout.Pages
         public TraitPage()
         {
             this.InitializeComponent();
+
+            this.Resources.Remove("PrimaryBrush");
+            Resources.Add("PrimaryBrush",  ColorConverter.SolidColorBrush);
+
             viewModel.Traits = new ObservableCollection<Trait>(Game.Charakter.Traits.GetTraits());
             viewModel.Traits.Add(createNewTrait);
-        }
-        private class TraitPageViewModel : AbstractPropertyChanged
-        {
-            public SolidColorBrush BackgroundColor = new SolidColorBrush();
-            private ObservableCollection<Trait> traits;
-            public ObservableCollection<Trait> Traits
-            {
-                get => traits;
-                set
-                {
-                    traits = value;
-                    OnPropertyChanged(nameof(Traits));
-                }
-            }
         }
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -88,7 +73,6 @@ namespace DSAProject.Layout.Pages
                 Game.RequestNav(new EventNavRequest { Side = NavEnum.CreateTraitPage, Parameter = e.ClickedItem });
             }
         }
-
         private void CheckBox_Checked(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             var list = new List<TraitType>();
@@ -96,6 +80,19 @@ namespace DSAProject.Layout.Pages
             if (DisAdvantages) list.Add(TraitType.Nachteil);
 
             TraitFilters = list;
+        }
+        private class TraitPageViewModel : AbstractPropertyChanged
+        {
+            private ObservableCollection<Trait> traits;
+            public ObservableCollection<Trait> Traits
+            {
+                get => traits;
+                set
+                {
+                    traits = value;
+                    OnPropertyChanged(nameof(Traits));
+                }
+            }
         }
     }
 }

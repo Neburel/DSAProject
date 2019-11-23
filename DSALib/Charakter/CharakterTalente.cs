@@ -64,7 +64,7 @@ namespace DSAProject.Classes.Charakter
         }
         public void SetAT(AbstractTalentFighting talent, int AT)
         {
-            var taw = GetTAW(talent);
+            var taw = GetMaxTaw(talent);
             var pa  = GetPA(talent);
             var maxAT = taw - pa;
             var newAT = 0;
@@ -90,7 +90,7 @@ namespace DSAProject.Classes.Charakter
         }
         public void SetPA(AbstractTalentFighting talent, int PA)
         {
-            var taw     = GetTAW(talent);
+            var taw     = GetMaxTaw(talent);
             var at      = GetAT(talent);
             var maxPA   = taw - at;
             var newPA   = 0;
@@ -129,6 +129,13 @@ namespace DSAProject.Classes.Charakter
                 }
             }
             return innerTAW;
+        }
+        private int GetMaxTaw(ITalent talent)
+        {
+            var taw = GetTAW(talent);
+            var bonusTaw = charakter.Traits.GetTawBonus(talent);
+
+            return taw + bonusTaw;
         }
         public int GetAT(AbstractTalentFighting talent)
         {

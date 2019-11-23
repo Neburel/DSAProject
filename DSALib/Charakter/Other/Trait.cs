@@ -5,7 +5,7 @@ using DSAProject.Classes.Charakter.Talente;
 using DSAProject.Classes.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
+using Windows.UI.Xaml.Media;
 
 namespace DSALib.Charakter.Other
 {
@@ -29,9 +29,14 @@ namespace DSALib.Charakter.Other
         #endregion
         #region Properties
         public TraitType TraitType { get; set; }
+        public SolidColorBrush SolidColorBrush
+        {
+            get;
+            set;
+        } 
         public string GP { get; set; }
         public string Value { get; set; }
-        public string Title { get; set; } 
+        public string Title { get; set; }
         public string Description { get; set; }
         public string LongDescription { get => GenerateLongDescription(); }
         #endregion

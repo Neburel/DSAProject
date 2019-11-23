@@ -5,18 +5,17 @@ using DSAProject.Classes.Charakter.Talente;
 using DSAProject.Classes.Charakter.Talente.TalentFighting;
 using DSAProject.Classes.Charakter.Talente.TalentGeneral;
 using DSAProject.Classes.Game;
-using DSAProject.Classes.Interfaces;
+using DSAProject.Converter;
 using DSAProject.Layout.MessageDialoge;
 using DSAProject.Layout.Pages;
 using DSAProject.Layout.Pages.BasePages;
-using DSAProject.Layout.Pages.ToolPages;
 using System;
 using System.Linq;
 using Windows.Foundation;
-using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x407 dokumentiert.
 
@@ -96,7 +95,11 @@ namespace DSAProject
                     currentItem = navItem;
                 }
 
-                if (navItem.Type == typeof(TalentPage))
+                if(navItem.Type == typeof(HeroLetterPage))
+                {
+                    ColorConverter.SolidColorBrush = new SolidColorBrush(Windows.UI.Colors.Black);
+                } 
+                else if (navItem.Type == typeof(TalentPage))
                 {
                     TalentPage page = (TalentPage)ContentFrame.Content;
 
@@ -127,10 +130,10 @@ namespace DSAProject
                 }
                 else if(navItem.Type == typeof(TraitPage))
                 {
+                    ColorConverter.SolidColorBrush = new SolidColorBrush(Windows.UI.Colors.White);
                     var currentItem = (TraitPage)ContentFrame.Content;
-                    currentItem.BackgroundColor = new Windows.UI.Xaml.Media.SolidColorBrush(Colors.Black);
 
-                    if(navItem.SelectionType != null)
+                    if (navItem.SelectionType != null)
                     {
                         var type = (TraitType)navItem.SelectionType;
                         currentItem.TraitFilter = type;
