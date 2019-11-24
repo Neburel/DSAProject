@@ -179,11 +179,11 @@ namespace DSAProject.Layout.Pages
 
             } else if (result == CreateNewChar.PNP)
             {
-                Game.Charakter = new CharakterPNP(Game.GenerateNextCharakterGUID());
-                #region setPNPLayout
-                ViewModel.CurrentDate.DescriptionText = Game.CurrentYearPNP;
-                ViewModel.Culture.DescriptionTitle = "Vorgeschichte-/en:";
-                #endregion
+                //Game.Charakter = new CharakterPNP(Game.GenerateNextCharakterGUID());
+                //#region setPNPLayout
+                //ViewModel.CurrentDate.DescriptionText = Game.CurrentYearPNP;
+                //ViewModel.Culture.DescriptionTitle = "Vorgeschichte-/en:";
+                //#endregion
             }
 
             if(result != CreateNewChar.Abbruch)

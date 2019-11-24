@@ -61,7 +61,7 @@ namespace DSAProject.Layout.Pages.ToolPages
             ViewModel.IsProbeSelectionVisibile = Visibility.Collapsed;
             ViewModel.IsRequirementSelectionVisible = Visibility.Collapsed;
 
-            ViewModel.Talents = new ObservableCollection<ITalent>(Game.TalenteDSA.OrderBy(x => x.ToString()).ToList());
+            ViewModel.Talents = new ObservableCollection<ITalent>(Game.TalentList.OrderBy(x => x.ToString()).ToList());
         }
         private void XAML_ComboBoxEditTalent_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -152,19 +152,19 @@ namespace DSAProject.Layout.Pages.ToolPages
         }
         private void XAML_RadioButtonGameTypValueDSA_Checked(object sender, RoutedEventArgs e)
         {
-            ViewModel.Talents = new ObservableCollection<ITalent>(Game.TalenteDSA.OrderBy(x => x.Name).ToList());
+            ViewModel.Talents = new ObservableCollection<ITalent>(Game.TalentList.OrderBy(x => x.Name).ToList());
             gameType = GameType.DSA;
 
-            ViewModel.Talents = new ObservableCollection<ITalent>(Game.TalenteDSA);
-            ViewModel.FatherTalents = new ObservableCollection<ITalent>(Game.TalenteDSA.Where(x => (typeof(AbstractTalentGeneral).IsAssignableFrom(x.GetType()))).ToList());
+            ViewModel.Talents = new ObservableCollection<ITalent>(Game.TalentList);
+            ViewModel.FatherTalents = new ObservableCollection<ITalent>(Game.TalentList.Where(x => (typeof(AbstractTalentGeneral).IsAssignableFrom(x.GetType()))).ToList());
         }
         private void XAML_RadioButtonGameTypValuePNP_Checked(object sender, RoutedEventArgs e)
         {
-            ViewModel.Talents = new ObservableCollection<ITalent>(Game.TalentePNP.OrderBy(x => x.Name).ToList());
-            gameType = GameType.PNP;
+            //ViewModel.Talents = new ObservableCollection<ITalent>(Game.TalentePNP.OrderBy(x => x.Name).ToList());
+            //gameType = GameType.PNP;
 
-            ViewModel.Talents = new ObservableCollection<ITalent>(Game.TalentePNP);
-            ViewModel.FatherTalents = new ObservableCollection<ITalent>(Game.TalentePNP.Where(x => (typeof(AbstractTalentGeneral).IsAssignableFrom(x.GetType()))).ToList());
+            //ViewModel.Talents = new ObservableCollection<ITalent>(Game.TalentePNP);
+            //ViewModel.FatherTalents = new ObservableCollection<ITalent>(Game.TalentePNP.Where(x => (typeof(AbstractTalentGeneral).IsAssignableFrom(x.GetType()))).ToList());
         }
         private void RadioButton_TalentChoice_Checked(object sender, RoutedEventArgs e)
         {

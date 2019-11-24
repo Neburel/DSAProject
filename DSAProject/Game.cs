@@ -33,29 +33,16 @@ namespace DSAProject.Classes.Game
 
     public enum NavEnum
     {
-        StartPage = 1,         
+        StartPage = 1,
         CreateTraitPage = 2
     };
 
-    public static class Game 
+    public static class Game
     {
         public static event EventHandler<EventNavRequest> NavRequested;
         public static event EventHandler CharakterChanged;
-        #region TalentContent
-        public static string Talente_BaseFolder { get => "Talente"; }
-        public static string TalentContent_Weaponless { get => "Waffenlose Kampftechnik"; }
-        public static string TalentContent_Close { get => "Bewaffnete Kampftechnik"; }
-        public static string TalentContent_Range { get => "Fernkampftechnik"; }
-        public static string TalentContent_Physical { get => "Körperliches Talent"; }
-        public static string TalentContent_Social { get => "Gesellschaftliches Talent"; }
-        public static string TalentContent_Nature { get => "Natur Talent"; }
-        public static string TalentContent_Knwoldage { get => "Wissens Talent"; }
-        public static string TalentContent_Crafting { get => "Handwerkstalent"; }
-        public static string TalentContent_LanguageFamily { get => "Sprachfamilie"; }
-        public static string TalentContent_Language { get => "Sprache"; }
-        #endregion
         #region Variables
-        private static string talentSaveFile                = "Talente.json";
+        private static string talentSaveFile = "Talente.json";
         private static ICharakter charakter;
         private static JSON_TalentSaveFile jSON_talentLocal = new JSON_TalentSaveFile();
         #endregion
@@ -64,10 +51,10 @@ namespace DSAProject.Classes.Game
         {
             get
             {
-                if(charakter != null)
+                if (charakter != null)
                 {
                     return charakter;
-                } 
+                }
                 else
                 {
                     charakter = new CharakterDSA(GenerateNextCharakterGUID());
@@ -79,14 +66,12 @@ namespace DSAProject.Classes.Game
                 charakter = value;
                 CharakterChanged?.Invoke(null, null);
             }
-        } 
+        }
         public static string CharakterSaveFolder { get; } = Path.Combine("Save", "Data");
-        public static string CharakterMetaFolder{ get; } = Path.Combine("Save", "Meta");
+        public static string CharakterMetaFolder { get; } = Path.Combine("Save", "Meta");
         public static string CurrentYearDSA { get; } = "? nach Bosporos Fall";
-        public static string CurrentYearPNP { get; } = "3135";
-        public static List<ITalent> TalentePNP { get; private set; }     = new List<ITalent>();
-        public static List<ITalent> TalenteDSA { get; private set; }    = new List<ITalent>();
-        public static List<LanguageFamily> LanguageFamilies             = new List<LanguageFamily>();
+        public static List<ITalent> TalentList { get; private set; } = new List<ITalent>();
+        public static List<LanguageFamily> LanguageFamilies = new List<LanguageFamily>();
         #endregion
         #region Funktion
         public static void RequestNav(EventNavRequest nav)
@@ -94,27 +79,21 @@ namespace DSAProject.Classes.Game
             NavRequested?.Invoke(null, nav);
         }
         public static void SaveTalent(ITalent talent, GameType gameType, out Error error)
-        {   
-            error                           = null;
+        {
+            error = null;
             #region Talenttype
-            List<JSON_Talent> jTalentList               = null;
-            List<ITalent> talentList    = null;
-            var talenttype                              = talent.GetType().ToString();
-            var lastIndex                               = talenttype.LastIndexOf(".");
-            talenttype                                  = talenttype.Substring(lastIndex + 1);
+            List<JSON_Talent> jTalentList = null;
+            List<ITalent> talentList = null;
+            var talenttype = talent.GetType().ToString();
+            var lastIndex = talenttype.LastIndexOf(".");
+            talenttype = talenttype.Substring(lastIndex + 1);
             #endregion
             #region GameType
             if (gameType == GameType.DSA)
             {
                 if (jSON_talentLocal.Talente == null) jSON_talentLocal.Talente = new List<JSON_Talent>();
                 jTalentList = jSON_talentLocal.Talente;
-                talentList = TalenteDSA;
-            }
-            else if (gameType == GameType.PNP)
-            {
-                if (jSON_talentLocal.Talente_PNP == null) jSON_talentLocal.Talente_PNP = new List<JSON_Talent>();
-                jTalentList = jSON_talentLocal.Talente_PNP;
-                talentList = TalentePNP;
+                talentList = TalentList;
             }
             else
             {
@@ -161,23 +140,23 @@ namespace DSAProject.Classes.Game
         }
         public static void LoadTalente()
         {
-            var jstringAssests      = FileManagment.LoadTextAssestFile(talentSaveFile, out Error errorAssest);
-            var jSON_talentAssests  = JSON_TalentSaveFile.DeSerializeJson(jstringAssests, out string serrorAssest);
-         
-            TalenteDSA          = TalentHelper.LoadTalent(jSON_talentAssests.Talente);
-            LanguageFamilies    = TalentHelper.LoadLanguageFamily(jSON_talentAssests.Families, TalenteDSA);
+            var jstringAssests = FileManagment.LoadTextAssestFile(talentSaveFile, out Error errorAssest);
+            var jSON_talentAssests = JSON_TalentSaveFile.DeSerializeJson(jstringAssests, out string serrorAssest);
+
+            TalentList = TalentHelper.LoadTalent(jSON_talentAssests.Talente);
+            LanguageFamilies = TalentHelper.LoadLanguageFamily(jSON_talentAssests.Families, TalentList);
         }
         public static Guid GenerateNextCharakterGUID()
         {
-            var guid            = Guid.NewGuid();
-            var files           = FileManagment.GetFilesDictionary(CharakterMetaFolder, out Error error);
-            var list            = new List<Guid>();
+            var guid = Guid.NewGuid();
+            var files = FileManagment.GetFilesDictionary(CharakterMetaFolder, out Error error);
+            var list = new List<Guid>();
 
             foreach (var file in files)
             {
                 var stringguid = System.IO.Path.ChangeExtension(file, null);
 
-                if(Guid.TryParse(stringguid, out Guid result))
+                if (Guid.TryParse(stringguid, out Guid result))
                 {
                     list.Add(Guid.Parse(stringguid));
                 }
@@ -194,15 +173,10 @@ namespace DSAProject.Classes.Game
         {
             List<ITalent> talents = null;
 
-            if(typeof(CharakterDSA) == charakter.GetType())
+            if (typeof(CharakterDSA) == charakter.GetType())
             {
-                talents = TalenteDSA;
+                talents = TalentList;
             }
-            else if (typeof(CharakterDSA) == charakter.GetType())
-            {
-
-                talents = TalentePNP;
-            } 
             else
             {
                 Logger.Log(LogLevel.ErrorLog, "Talent nicht verfügbar", nameof(Game), nameof(GetTalentForCurrentCharakter));
@@ -228,7 +202,7 @@ namespace DSAProject.Classes.Game
                         var sfile = await folder.CreateFileAsync(Charakter.ID.ToString() + ".save", CreationCollisionOption.ReplaceExisting);
                         await FileIO.AppendTextAsync(sfile, saveFile.JSONContent);
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         Logger.Log(LogLevel.ErrorLog, "Sicherung konnte nicht erstellt werden");
                         //"https://support.microsoft.com/de-de/help/4468237/windows-10-file-system-access-and-privacy-microsoft-privacy"
@@ -268,7 +242,7 @@ namespace DSAProject.Classes.Game
         public static void LoadCharakter(JSON_Charakter json_charakter, out Error error)
         {
             error = null;
-            charakter.Load(json_charakter, TalenteDSA.ToList());
+            charakter.Load(json_charakter, TalentList.ToList());
         }
 
         #endregion

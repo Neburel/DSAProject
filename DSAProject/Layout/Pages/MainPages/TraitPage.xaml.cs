@@ -7,8 +7,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
-// Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
 namespace DSAProject.Layout.Pages
 {
@@ -53,10 +51,10 @@ namespace DSAProject.Layout.Pages
 
         public TraitPage()
         {
-            this.InitializeComponent();
-
             this.Resources.Remove("PrimaryBrush");
             Resources.Add("PrimaryBrush",  ColorConverter.SolidColorBrush);
+
+            this.InitializeComponent();
 
             viewModel.Traits = new ObservableCollection<Trait>(Game.Charakter.Traits.GetTraits());
             viewModel.Traits.Add(createNewTrait);

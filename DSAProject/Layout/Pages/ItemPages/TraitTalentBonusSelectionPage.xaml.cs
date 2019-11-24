@@ -36,15 +36,15 @@ namespace DSAProject.Layout.Pages.ItemPages
                 switch (value)
                 {
                     case TraitTalentBonusSelectionPage_Mode.All:
-                        viewModel.TalentList = new List<ITalent>(Game.TalenteDSA.OrderBy(x => x.Name));
+                        viewModel.TalentList = new List<ITalent>(Game.TalentList.OrderBy(x => x.Name));
                         viewModel.Title = "Talent TaW Bonus";
                         break;
                     case TraitTalentBonusSelectionPage_Mode.AT:
-                        viewModel.TalentList = new List<ITalent>(Game.TalenteDSA.Where(x => typeof(AbstractTalentFighting).IsAssignableFrom(x.GetType())).OrderBy(x => x.Name));
+                        viewModel.TalentList = new List<ITalent>(Game.TalentList.Where(x => typeof(AbstractTalentFighting).IsAssignableFrom(x.GetType())).OrderBy(x => x.Name));
                         viewModel.Title = "Talent AT Bonus";
                         break;
                     case TraitTalentBonusSelectionPage_Mode.PA:
-                        viewModel.TalentList = new List<ITalent>(Game.TalenteDSA.Where(x => typeof(AbstractTalentFighting).IsAssignableFrom(x.GetType()) && x.GetType() != typeof(TalentRange)).OrderBy(x => x.Name));
+                        viewModel.TalentList = new List<ITalent>(Game.TalentList.Where(x => typeof(AbstractTalentFighting).IsAssignableFrom(x.GetType()) && x.GetType() != typeof(TalentRange)).OrderBy(x => x.Name));
                         viewModel.Title = "Talent PA Bonus";
                         break;
                 }
@@ -56,10 +56,10 @@ namespace DSAProject.Layout.Pages.ItemPages
         {
             this.InitializeComponent();
 
-            var k = new List<ITalent>(Game.TalenteDSA.Where(x => x.GetType() == typeof(AbstractTalentFighting)).OrderBy(x => x.Name));
-            var q = Game.TalenteDSA.Where(x => x.GetType() == typeof(AbstractTalentFighting));
+            var k = new List<ITalent>(Game.TalentList.Where(x => x.GetType() == typeof(AbstractTalentFighting)).OrderBy(x => x.Name));
+            var q = Game.TalentList.Where(x => x.GetType() == typeof(AbstractTalentFighting));
 
-            foreach (var item in Game.TalenteDSA)
+            foreach (var item in Game.TalentList)
             {
                 var type = item.GetType();
                 if (typeof(AbstractTalentFighting).IsAssignableFrom(type))
@@ -160,7 +160,7 @@ namespace DSAProject.Layout.Pages.ItemPages
             private string title = "Talent TaW Bonus";
             private ITalent selectedItem;
             private TraitTalentBonus selectedListViewItem;
-            private List<ITalent> talentList = new List<ITalent>(Game.TalenteDSA.OrderBy(x => x.Name));
+            private List<ITalent> talentList = new List<ITalent>(Game.TalentList.OrderBy(x => x.Name));
 
             public bool DeselectItem { get; set; } = true;
 

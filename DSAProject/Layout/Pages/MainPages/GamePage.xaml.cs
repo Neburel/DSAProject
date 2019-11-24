@@ -27,7 +27,7 @@ namespace DSAProject
     public sealed partial class GamePage : Page
     {
         #region Pages
-        private string currentPage      = string.Empty;
+        private string currentPage = string.Empty;
         private GameContentItem currentItem;
         #endregion
         private GamePageViewModel viewModel = new GamePageViewModel();
@@ -39,8 +39,8 @@ namespace DSAProject
 
             var standartSize = new Size(1400, 1000);
 
-            ApplicationView.PreferredLaunchViewSize         = standartSize;
-            ApplicationView.PreferredLaunchWindowingMode    = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+            ApplicationView.PreferredLaunchViewSize = standartSize;
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
             ApplicationView.GetForCurrentView().SetPreferredMinSize(standartSize);
 
             Game.NavRequested += (sender, args) =>
@@ -65,7 +65,7 @@ namespace DSAProject
         {
             var y = args.InvokedItem;
 
-            if(args.InvokedItem.GetType() == typeof(string))
+            if (args.InvokedItem.GetType() == typeof(string))
             {
                 var item = sender.MenuItems.OfType<NavigationViewItem>().First(x => (string)x.Content == (string)args.InvokedItem);
                 NavView_Navigate(item as NavigationViewItem);
@@ -89,24 +89,28 @@ namespace DSAProject
         {
             if (currentItem != navItem)
             {
+                if (navItem.Type == typeof(HeroLetterPage))
+                {
+                    ColorConverter.SolidColorBrush = new SolidColorBrush(Windows.UI.Colors.Black);
+                }
+                else if (navItem.Type == typeof(TraitPage))
+                {
+                    ColorConverter.SolidColorBrush = new SolidColorBrush(Windows.UI.Colors.White);
+                }
+
                 if (navItem.Type != null)
                 {
                     ContentFrame.Navigate(navItem.Type);
                     currentItem = navItem;
                 }
-
-                if(navItem.Type == typeof(HeroLetterPage))
-                {
-                    ColorConverter.SolidColorBrush = new SolidColorBrush(Windows.UI.Colors.Black);
-                } 
-                else if (navItem.Type == typeof(TalentPage))
+                if (navItem.Type == typeof(TalentPage))
                 {
                     TalentPage page = (TalentPage)ContentFrame.Content;
 
                     var selectionType = (Type)navItem.SelectionType;
                     var k = Game.GetTalentForCurrentCharakter().Where(x => x.GetType() == selectionType);
 
-                    if(k.Count() == 0)
+                    if (k.Count() == 0)
                     {
                         page.SetTalents(Game.GetTalentForCurrentCharakter().Where(x => selectionType.IsAssignableFrom(x.GetType())).ToList());
                     }
@@ -115,7 +119,7 @@ namespace DSAProject
                         page.SetTalents(Game.GetTalentForCurrentCharakter().Where(x => x.GetType() == selectionType).ToList());
                     }
                 }
-                else if(navItem.Type == typeof(CreateTrait) && parameter != null)
+                else if (navItem.Type == typeof(CreateTrait) && parameter != null)
                 {
                     CreateTrait page = (CreateTrait)ContentFrame.Content;
 
@@ -128,9 +132,8 @@ namespace DSAProject
                         page.SetTraitType((DSALib.TraitType)parameter);
                     }
                 }
-                else if(navItem.Type == typeof(TraitPage))
+                else if (navItem.Type == typeof(TraitPage))
                 {
-                    ColorConverter.SolidColorBrush = new SolidColorBrush(Windows.UI.Colors.White);
                     var currentItem = (TraitPage)ContentFrame.Content;
 
                     if (navItem.SelectionType != null)
@@ -149,29 +152,29 @@ namespace DSAProject
         }
         private class GamePageViewModel
         {
-            public GameContentItem HeroLetter { get; private set; }     = new GameContentItem { Content = "Heldenbrief",                Type = typeof(HeroLetterPage) };
-            public GameContentItem GeneralTalent { get; private set; }  = new GameContentItem { Content = "Alle Allgemeinen",           Type = typeof(TalentPage), SelectionType = typeof(AbstractTalentGeneral) };
-            public GameContentItem FightingTalent { get; private set; } = new GameContentItem { Content = "Alle Kampf",                 Type = typeof(TalentPage), SelectionType = typeof(AbstractTalentFighting) };
-            public GameContentItem Weaponless { get; private set; }     = new GameContentItem { Content = "Waffenlose Kampftechniken",  Type = typeof(TalentPage), SelectionType = typeof(TalentWeaponless) };
-            public GameContentItem Close { get; private set; }          = new GameContentItem { Content = "Bewaffnete Kampftechniken",  Type = typeof(TalentPage), SelectionType = typeof(TalentClose) };
-            public GameContentItem Range { get; private set; }          = new GameContentItem { Content = "Fehrnkampf Kampftechniken",  Type = typeof(TalentPage), SelectionType = typeof(TalentRange)};
-            public GameContentItem Pyhsical { get; private set; }       = new GameContentItem { Content = "Körperliche Talente",        Type = typeof(TalentPage), SelectionType = typeof(TalentPhysical) };
-            public GameContentItem Social { get; private set; }         = new GameContentItem { Content = "Gesellschaftliche Talente",  Type = typeof(TalentPage), SelectionType = typeof(TalentSocial) };
-            public GameContentItem Nature { get; private set; }         = new GameContentItem { Content = "Natur Talente",              Type = typeof(TalentPage), SelectionType = typeof(TalentNature) };
-            public GameContentItem Knowldage { get; private set; }      = new GameContentItem { Content = "Wissenstalente",             Type = typeof(TalentPage), SelectionType = typeof(TalentKnowldage) };
-            public GameContentItem Crafting { get; private set; }       = new GameContentItem { Content = "Handwerkstalente",           Type = typeof(TalentPage), SelectionType = typeof(TalentCrafting) };
-            public GameContentItem Advanced { get; private set; }       = new GameContentItem { Content = "Vorteile",                   Type = typeof(TraitPage), SelectionType = TraitType.Vorteil };
-            public GameContentItem DisAdvanced { get; private set; }    = new GameContentItem { Content = "Nachteile",                  Type = typeof(TraitPage), SelectionType = TraitType.Nachteil };
-            public GameContentItem Event { get; private set; }          = new GameContentItem { Content = "Event",                      Type = typeof(TraitPage), SelectionType = TraitType.Event };
-            public GameContentItem Birthday { get; private set; }       = new GameContentItem { Content = "Geburstag",                  Type = typeof(TraitPage), SelectionType = TraitType.Geburstag };
-            public GameContentItem Quest { get; private set; }          = new GameContentItem { Content = "Quest",                      Type = typeof(TraitPage), SelectionType = TraitType.Quest };
-            public GameContentItem Belohnung { get; private set; }      = new GameContentItem { Content = "Belohnung",                  Type = typeof(TraitPage), SelectionType = TraitType.Belohnung };
-            public GameContentItem Trait { get; private set; }          = new GameContentItem { Content = "Alle Eigenschaften",         Type = typeof(TraitPage) };
-            public GameContentItem Save { get; private set; }           = new GameContentItem { Content = "Charakter Speichern" };
-            public GameContentItem Load { get; private set; }           = new GameContentItem { Content = "Charakter Laden",                Type = typeof(LoadPage) };
-            public GameContentItem CreateCharkter { get; private set; } = new GameContentItem { Content = "Charakter erstellen/editieren",  Type = typeof(CharakterCreation) };
-            public GameContentItem CreateTrait { get; private set; }    = new GameContentItem { Content = "Create Trait", Type = typeof(CreateTrait) };
-            public GameContentItem InfoPage { get; private set; }       = new GameContentItem { Content = "Info", Type = typeof(InfoPage) };
+            public GameContentItem HeroLetter { get; private set; } = new GameContentItem { Content = "Heldenbrief", Type = typeof(HeroLetterPage) };
+            public GameContentItem GeneralTalent { get; private set; } = new GameContentItem { Content = "Alle Allgemeinen", Type = typeof(TalentPage), SelectionType = typeof(AbstractTalentGeneral) };
+            public GameContentItem FightingTalent { get; private set; } = new GameContentItem { Content = "Alle Kampf", Type = typeof(TalentPage), SelectionType = typeof(AbstractTalentFighting) };
+            public GameContentItem Weaponless { get; private set; } = new GameContentItem { Content = "Waffenlose Kampftechniken", Type = typeof(TalentPage), SelectionType = typeof(TalentWeaponless) };
+            public GameContentItem Close { get; private set; } = new GameContentItem { Content = "Bewaffnete Kampftechniken", Type = typeof(TalentPage), SelectionType = typeof(TalentClose) };
+            public GameContentItem Range { get; private set; } = new GameContentItem { Content = "Fehrnkampf Kampftechniken", Type = typeof(TalentPage), SelectionType = typeof(TalentRange) };
+            public GameContentItem Pyhsical { get; private set; } = new GameContentItem { Content = "Körperliche Talente", Type = typeof(TalentPage), SelectionType = typeof(TalentPhysical) };
+            public GameContentItem Social { get; private set; } = new GameContentItem { Content = "Gesellschaftliche Talente", Type = typeof(TalentPage), SelectionType = typeof(TalentSocial) };
+            public GameContentItem Nature { get; private set; } = new GameContentItem { Content = "Natur Talente", Type = typeof(TalentPage), SelectionType = typeof(TalentNature) };
+            public GameContentItem Knowldage { get; private set; } = new GameContentItem { Content = "Wissenstalente", Type = typeof(TalentPage), SelectionType = typeof(TalentKnowldage) };
+            public GameContentItem Crafting { get; private set; } = new GameContentItem { Content = "Handwerkstalente", Type = typeof(TalentPage), SelectionType = typeof(TalentCrafting) };
+            public GameContentItem Advanced { get; private set; } = new GameContentItem { Content = "Vorteile", Type = typeof(TraitPage), SelectionType = TraitType.Vorteil };
+            public GameContentItem DisAdvanced { get; private set; } = new GameContentItem { Content = "Nachteile", Type = typeof(TraitPage), SelectionType = TraitType.Nachteil };
+            public GameContentItem Event { get; private set; } = new GameContentItem { Content = "Event", Type = typeof(TraitPage), SelectionType = TraitType.Event };
+            public GameContentItem Birthday { get; private set; } = new GameContentItem { Content = "Geburstag", Type = typeof(TraitPage), SelectionType = TraitType.Geburstag };
+            public GameContentItem Quest { get; private set; } = new GameContentItem { Content = "Quest", Type = typeof(TraitPage), SelectionType = TraitType.Quest };
+            public GameContentItem Belohnung { get; private set; } = new GameContentItem { Content = "Belohnung", Type = typeof(TraitPage), SelectionType = TraitType.Belohnung };
+            public GameContentItem Trait { get; private set; } = new GameContentItem { Content = "Alle Eigenschaften", Type = typeof(TraitPage) };
+            public GameContentItem Save { get; private set; } = new GameContentItem { Content = "Charakter Speichern" };
+            public GameContentItem Load { get; private set; } = new GameContentItem { Content = "Charakter Laden", Type = typeof(LoadPage) };
+            public GameContentItem CreateCharkter { get; private set; } = new GameContentItem { Content = "Charakter erstellen/editieren", Type = typeof(CharakterCreation) };
+            public GameContentItem CreateTrait { get; private set; } = new GameContentItem { Content = "Create Trait", Type = typeof(CreateTrait) };
+            public GameContentItem InfoPage { get; private set; } = new GameContentItem { Content = "Info", Type = typeof(InfoPage) };
         }
         private class GameContentItem
         {
