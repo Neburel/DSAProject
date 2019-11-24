@@ -28,6 +28,9 @@ namespace DSAProject.Classes
         #region Variables
         private static List<Guid> talentGuids = new List<Guid>();
         #endregion
+        #region Const
+        private const string EXCELTITLE = "//Title//";
+        #endregion
         public static bool IsTalentTypeAvaivible(string contentType)
         {
             try
@@ -39,6 +42,10 @@ namespace DSAProject.Classes
             {
                 return false;
             }
+        }
+        public static Type GetTypeFromString(string contentType)
+        {
+            return CreateTalent(contentType).GetType();
         }
         #region Creator
         public static ITalent EditTalent(ITalent talent, List<ITalentDeduction> deductions = null, List<ITalentRequirement> requirements = null, AbstractTalentGeneral fatherTalent = null)
@@ -240,14 +247,15 @@ namespace DSAProject.Classes
             }
             return jsonTalent;
         }
+        
         #endregion
         #region Loader
         public static List<ITalent> LoadTalent(List<JSON_Talent> talents)
         {
             var list = new List<ITalent>();
-            Dictionary<ITalent, JSON_Talent> talentwithDedcut                       = new Dictionary<ITalent, JSON_Talent>();
-            Dictionary<AbstractTalentGeneral, JSON_Talent> talentWithRequirement    = new Dictionary<AbstractTalentGeneral, JSON_Talent>();
-            Dictionary<AbstractTalentGeneral, JSON_Talent> talentWithFather         = new Dictionary<AbstractTalentGeneral, JSON_Talent>();
+            Dictionary<ITalent, JSON_Talent> talentwithDedcut = new Dictionary<ITalent, JSON_Talent>();
+            Dictionary<AbstractTalentGeneral, JSON_Talent> talentWithRequirement = new Dictionary<AbstractTalentGeneral, JSON_Talent>();
+            Dictionary<AbstractTalentGeneral, JSON_Talent> talentWithFather = new Dictionary<AbstractTalentGeneral, JSON_Talent>();
 
             if (talents != null)
             {
@@ -389,7 +397,7 @@ namespace DSAProject.Classes
         {
             var ret = new List<LanguageFamily>();
 
-            foreach(var json_Family in json_FamilyList)
+            foreach (var json_Family in json_FamilyList)
             {
                 var family = new LanguageFamily(json_Family.Name);
 
@@ -410,9 +418,15 @@ namespace DSAProject.Classes
         }
         #endregion
         #region Excel
-        public static List<ITalent> ExcelImport(string importFile, out List<LanguageFamily> families)
+        private enum ExcleRowType
         {
-            families = new List<LanguageFamily>();
+            NoValidTalent = 0,
+            ValidTalent = 1,
+            Title = 2
+        }
+        public static List<ITalent> ExcelImport(string importFile, out List<LanguageFamily> familieList)
+        {
+            familieList = new List<LanguageFamily>();
             var ret = new List<ITalent>();
             var excelTalentDic = new Dictionary<string, List<ExcelTalent>>();
             var talentsWithDeduction = new Dictionary<ITalent, ExcelTalent>();
@@ -422,9 +436,11 @@ namespace DSAProject.Classes
             SpreadsheetDocument document = SpreadsheetDocument.Open(importFile, false);
             WorkbookPart wbPart = document.WorkbookPart;
             List<Sheet> sheets = wbPart.Workbook.Descendants<Sheet>().ToList();
+
             foreach (var sheet in sheets)
             {
                 var contentType = sheet.Name;
+                var currentTitle = string.Empty;
                 var excelTalents = new List<ExcelTalent>();
                 WorksheetPart wsPart = (WorksheetPart)(wbPart.GetPartById(sheet.Id));
                 var rowList = wsPart.Worksheet.GetFirstChild<SheetData>().Elements<Row>().ToList();
@@ -449,8 +465,15 @@ namespace DSAProject.Classes
                         excelTalent.AddValue(titleRowHeaders[counter], cellValue);
                         counter++;
                     }
-                    if (excelTalent.IsValid())
+                    var excelRowType = excelTalent.ExcelRowType();
+                    if (excelRowType == ExcleRowType.Title)
                     {
+                        var title = excelTalent.Talent.Replace(EXCELTITLE, "");
+                        currentTitle = title;
+                    }
+                    else if (excelRowType == ExcleRowType.ValidTalent)
+                    {
+                        excelTalent.Title = currentTitle;
                         excelTalents.Add(excelTalent);
                     }
                 }
@@ -460,7 +483,9 @@ namespace DSAProject.Classes
             #region Talente Erstellen
             foreach (var talentGroup in excelTalentDic)
             {
+                LanguageFamily currentLanguageFamily = null;
                 var talentList = talentGroup.Value;
+                var pos = 0;
                 foreach (var excelTalent in talentList)
                 {
                     var name = string.Empty;
@@ -475,17 +500,75 @@ namespace DSAProject.Classes
                     {
                         name = excelTalent.Talent;
                     }
+                    ITalent newTalent = null;
+                    if (!string.IsNullOrEmpty(name))
+                    {
+                        newTalent = SearchTalent(name, ret, GetTypeFromString(talentGroup.Key));
+                        if(newTalent == null)
+                        {
+                            newTalent = CreateTalent(
+                                contentType: talentGroup.Key,
+                                probe: excelTalent.GetConvertAttribute(),
+                                be: excelTalent.BE,
+                                name: name,
+                                nameExtension: nameExtension);
+                        }
+                    }
 
-                    var newTalent = CreateTalent(
-                        contentType: talentGroup.Key,
-                        probe: excelTalent.GetConvertAttribute(),
-                        be: excelTalent.BE,
-                        name: name,
-                        nameExtension: nameExtension);
+                    if (talentGroup.Key == nameof(TalentLanguage))
+                    {
+                        TalentLanguage talentLanguage = null;
+                        TalentWriting talentWriting = null;
+                        if (newTalent != null) talentLanguage = (TalentLanguage)newTalent;
+
+                        if (!string.IsNullOrEmpty(excelTalent.Schrift))
+                        {
+                            talentWriting = (TalentWriting)SearchTalent(excelTalent.Schrift, ret, typeof(TalentWriting));
+
+                            if(talentWriting == null)
+                            {
+                                talentWriting = (TalentWriting)CreateTalent(
+                                    contentType: nameof(TalentWriting),
+                                    probe: excelTalent.GetConvertAttribute(),
+                                    be: excelTalent.BE,
+                                    name: excelTalent.Schrift,
+                                    nameExtension: nameExtension);
+                            }
+                        }
+
+                        if(currentLanguageFamily == null || currentLanguageFamily.Name != excelTalent.Title)
+                        {
+                            currentLanguageFamily = new LanguageFamily(excelTalent.Title);
+                            familieList.Add(currentLanguageFamily);
+                        }
+                        if(talentLanguage != null)
+                        {
+                            currentLanguageFamily.Languages.Add(pos, talentLanguage);
+                        }
+                        if(talentWriting != null)
+                        {
+                            currentLanguageFamily.Writings.Add(pos, talentWriting);
+                        }
+
+                        if(talentWriting != null && !ret.Contains(talentWriting))
+                        {
+                            if(talentWriting.Name == " Kusliker Zeichen")
+                            {
+
+                            }
+
+                            ret.Add(talentWriting);
+                        }
+                    }
+
                     if (excelTalent.IsValidVerwanteFertigkeit()) { talentsWithDeduction.Add(newTalent, excelTalent); }
                     if (excelTalent.IsValidAnforderung()) { talentWithRequirements.Add(newTalent, excelTalent); }
 
-                    ret.Add(newTalent);
+                    if(newTalent != null && !ret.Contains(newTalent))
+                    {
+                        ret.Add(newTalent);
+                    }
+                    pos++;
                 }
             }
             ret = new List<ITalent>(ret.OrderBy(x => x.Name));
@@ -652,9 +735,11 @@ namespace DSAProject.Classes
             }
             return cellValue;
         }
+
         private class ExcelTalent
         {
             public string Talent { get; set; }
+            public string Title { get; set; }
             public string Probe { get; set; }
             public string TaW { get; set; }
             public string BE { get; set; }
@@ -664,6 +749,12 @@ namespace DSAProject.Classes
             public string Ableiten { get; set; }
             public string Anforderungen { get; set; }
             public string VerwandteFertigkeiten { get; set; }
+
+            public string Sprache { get; set; }
+            public string Schrift { get; set; }
+            public string Komplex1 { get; set; }
+            public string Komplex2 { get; set; }
+
 
             public List<CharakterAttribut> GetConvertAttribute()
             {
@@ -685,12 +776,12 @@ namespace DSAProject.Classes
                 }
                 return ret;
             }
-            public bool IsValid()
+            public ExcleRowType ExcelRowType()
             {
-                if (string.IsNullOrEmpty(Talent)) return false;
-                else if (Talent.StartsWith("//Title//")) return false;
+                if (string.IsNullOrEmpty(Talent) && string.IsNullOrEmpty(Schrift)) return ExcleRowType.NoValidTalent;
+                else if (Talent.StartsWith(EXCELTITLE)) return ExcleRowType.Title;
 
-                return true;
+                return ExcleRowType.ValidTalent;
             }
             public void AddValue(string titleValue, string value)
             {
@@ -706,11 +797,23 @@ namespace DSAProject.Classes
                 else if (titleValue == nameof(Anforderungen)) Anforderungen = value;
                 else if (titleValue.StartsWith(nameof(VerwandteFertigkeiten))) VerwandteFertigkeiten = value;
                 else if (titleValue.StartsWith(nameof(Ableiten))) Ableiten = value;
-
-                if (Ableiten != null)
+                else if (titleValue == nameof(Sprache))
                 {
-
+                    value = RemoveLanguageSymbols(value);
+                    Talent = value;
+                    Sprache = value;
                 }
+                else if (titleValue == nameof(Schrift))
+                {
+                    Schrift = RemoveLanguageSymbols(value).Trim();
+                }
+                else if (titleValue == "Komplex.")
+                {
+                    if (string.IsNullOrEmpty(Komplex1)) Komplex1 = value;
+                    else Komplex2 = value;
+                }
+                //Sprache M.	Komplex.TaW Schrift Komplex.TaW
+
             }
             private bool IsValidString(string value)
             {
@@ -763,6 +866,13 @@ namespace DSAProject.Classes
             {
                 return SplitString(Anforderungen, new List<string>());
             }
+
+
+            private string RemoveLanguageSymbols(string value)
+            {
+                value = value.Split('*')[0];
+                return value;
+            }
         }
         #endregion
         #region Hilfsmethoden
@@ -770,6 +880,16 @@ namespace DSAProject.Classes
         {
             return talentList.Where(x => x.ID == guid).FirstOrDefault();
         }
+        public static ITalent SearchTalent(string name, List<ITalent> talentList, Type type)
+        {
+            var innerTalent = talentList.Where(x => x.Name == name).FirstOrDefault();
+            if (innerTalent != null && type.IsAssignableFrom(innerTalent.GetType()))
+            {
+                return innerTalent;
+            }
+            return null;
+        }
+
         public static T SearchTalentGeneric<T>(Guid guid, List<ITalent> talentList)
         {
             var talent = SearchTalent(guid, talentList);
