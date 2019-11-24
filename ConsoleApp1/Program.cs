@@ -23,19 +23,19 @@ namespace ConsoleApp1
 
             var exelTalente     = TalentHelper.ExcelImport(importFile, out List<LanguageFamily> families);
             var jsonString      = string.Empty;
-            var talenteCurrent  = new ObservableCollection<ITalent>();
+            var talenteCurrent  = new List<ITalent>();
             var counter = 0;
 
             if (File.Exists(talentFile))
             {
                 jsonString = File.ReadAllText(talentFile);
                 var json = JSON_TalentSaveFile.DeSerializeJson(jsonString, out string serrorAssest);
-                talenteCurrent = TalentHelper.LoadTalent(json.Talente_DSA);
+                talenteCurrent = TalentHelper.LoadTalent(json.Talente);
             }
 
             var jSON_talentLocal = new JSON_TalentSaveFile
             {
-                Talente_DSA = new List<JSON_Talent>()
+                Talente = new List<JSON_Talent>()
             };
 
             #region Alte Talente
@@ -45,7 +45,7 @@ namespace ConsoleApp1
             {
                 var jsonTalent = TalentHelper.CreateJSON(
                     talent: item);
-                jSON_talentLocal.Talente_DSA.Add(jsonTalent);
+                jSON_talentLocal.Talente.Add(jsonTalent);
                 Console.WriteLine(counter++ + " " + item.Name + " " + item.ID);
             }
             Console.WriteLine("------------------------------------------------------------");
@@ -60,30 +60,25 @@ namespace ConsoleApp1
             Console.WriteLine("------------------------------------------------------------");
             #endregion
 
-            jSON_talentLocal.Talente_DSA    =  new List<JSON_Talent>(jSON_talentLocal.Talente_DSA.OrderBy(x => x.Name));
-            jSON_talentLocal.Families_DSA   = new List<JSON_TalentLanguageFamily>();
+            jSON_talentLocal.Talente    =  new List<JSON_Talent>(jSON_talentLocal.Talente.OrderBy(x => x.Name));
+            jSON_talentLocal.Families   = new List<JSON_TalentLanguageFamily>();
 
 
             //Set Guid
             counter = 0;
             foreach (var item in exelTalente)
-            {                
-                if(item.Name == "Schleuder")
-                {
-
-                }
-
-                var doppleTalent = jSON_talentLocal.Talente_DSA.Where(x => x.Name.Trim() == item.Name.Trim()).FirstOrDefault();
+            {     
+                var doppleTalent = jSON_talentLocal.Talente.Where(x => x.Name.Trim() == item.Name.Trim()).FirstOrDefault();
                 if (doppleTalent != null)
                 {
                     Console.WriteLine(counter++ + " Doppeltes Talent: " + doppleTalent.Name + " " + item.ID + " " + doppleTalent.ID);
-                    jSON_talentLocal.Talente_DSA.Remove(doppleTalent);
+                    jSON_talentLocal.Talente.Remove(doppleTalent);
                     item.ID = doppleTalent.ID;
                 }
             }
             Console.WriteLine("------------------------------------------------------------");
 
-            foreach (var item in jSON_talentLocal.Talente_DSA)
+            foreach (var item in jSON_talentLocal.Talente)
             {
                 Console.WriteLine(counter++ + " Nicht Doppeltes Talent: " + item.Name + " " + item.ID);
             }
@@ -94,7 +89,7 @@ namespace ConsoleApp1
                     talent: item);
 
 
-                jSON_talentLocal.Talente_DSA.Add(jsonTalent);
+                jSON_talentLocal.Talente.Add(jsonTalent);
             }
             foreach(var item in families)
             {
@@ -111,11 +106,11 @@ namespace ConsoleApp1
                 {
                     famile.Writings.Add(inneritem.Key, inneritem.Value.ID);
                 }
-                jSON_talentLocal.Families_DSA.Add(famile);
+                jSON_talentLocal.Families.Add(famile);
             }
 
             File.WriteAllText(saveFile, jSON_talentLocal.JSONContent);
-            var talents = TalentHelper.LoadTalent(jSON_talentLocal.Talente_DSA);
+            var talents = TalentHelper.LoadTalent(jSON_talentLocal.Talente);
         }
     }
 }

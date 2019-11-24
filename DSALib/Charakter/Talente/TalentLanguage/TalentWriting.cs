@@ -6,5 +6,9 @@ namespace DSALib.Charakter.Talente.TalentLanguage
     public class TalentWriting : AbstractTalentLanguage
     {
         public TalentWriting(Guid id) : base(id) { }
+        public override string ToString()
+        {
+            return base.ToString() +"(Schrift)" ; 
+        }
     }
 }

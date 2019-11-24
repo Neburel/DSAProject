@@ -1,6 +1,7 @@
 ﻿using DSALib;
 using DSALib.Charakter.Talente;
 using DSALib.Classes.JSON;
+using DSALib.Exceptions;
 using DSALib.Utils;
 
 using DSAProject.Classes.Charakter;

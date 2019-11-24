@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using DSALib;
 using DSALib.Charakter.Talente;
@@ -16,6 +15,10 @@ using DSAProject.Classes.Charakter.Talente.TalentGeneral;
 using DSAProject.Classes.Charakter.Talente.TalentLanguage;
 using DSAProject.Classes.Charakter.Talente.TalentRequirement;
 using DSAProject.Classes.Interfaces;
+
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
+using System.Text.RegularExpressions;
 
 namespace DSAProject.Classes
 {
@@ -130,7 +133,7 @@ namespace DSAProject.Classes
             }
             else if (contentType == nameof(TalentLanguage))
             {
-                talent = new TalentLanguageBase(guid);
+                talent = new TalentLanguage(guid);
             }
             else if (contentType == nameof(TalentWriting))
             {
@@ -406,32 +409,249 @@ namespace DSAProject.Classes
             return ret;
         }
         #endregion
-        #region Hilfsklassen
-        public static ITalent SearchTalent(Guid guid, List<ITalent> talentList)
+        #region Excel
+        public static List<ITalent> ExcelImport(string importFile, out List<LanguageFamily> families)
         {
-            return talentList.Where(x => x.ID == guid).FirstOrDefault();
+            families = new List<LanguageFamily>();
+            var ret = new List<ITalent>();
+            var excelTalentDic = new Dictionary<string, List<ExcelTalent>>();
+            var talentsWithDeduction = new Dictionary<ITalent, ExcelTalent>();
+            var talentWithRequirements = new Dictionary<ITalent, ExcelTalent>();
+
+            #region Import der Exel Datei
+            SpreadsheetDocument document = SpreadsheetDocument.Open(importFile, false);
+            WorkbookPart wbPart = document.WorkbookPart;
+            List<Sheet> sheets = wbPart.Workbook.Descendants<Sheet>().ToList();
+            foreach (var sheet in sheets)
+            {
+                var contentType = sheet.Name;
+                var excelTalents = new List<ExcelTalent>();
+                WorksheetPart wsPart = (WorksheetPart)(wbPart.GetPartById(sheet.Id));
+                var rowList = wsPart.Worksheet.GetFirstChild<SheetData>().Elements<Row>().ToList();
+                var titleRowHeaders = new List<string>();
+                var titleRow = rowList[0];
+                rowList.RemoveAt(0);    //Titel Leiste Entfernen
+
+                foreach (var cell in titleRow.Descendants<Cell>().ToList())
+                {
+                    var cellValue = ExcelImportGetCellValue(wbPart, cell);
+                    titleRowHeaders.Add(cellValue);
+                }
+                foreach (var row in rowList)
+                {
+                    var excelTalent = new ExcelTalent();
+                    var celllist = row.Descendants<Cell>().ToList();
+                    var counter = 0;
+
+                    foreach (var cell in celllist)
+                    {
+                        var cellValue = ExcelImportGetCellValue(wbPart, cell);
+                        excelTalent.AddValue(titleRowHeaders[counter], cellValue);
+                        counter++;
+                    }
+                    if (excelTalent.IsValid())
+                    {
+                        excelTalents.Add(excelTalent);
+                    }
+                }
+                excelTalentDic.Add(contentType, excelTalents);
+            }
+            #endregion
+            #region Talente Erstellen
+            foreach (var talentGroup in excelTalentDic)
+            {
+                var talentList = talentGroup.Value;
+                foreach (var excelTalent in talentList)
+                {
+                    var name = string.Empty;
+                    var nameExtension = string.Empty;
+                    if (excelTalent.Talent.Contains("("))
+                    {
+                        var items = excelTalent.Talent.Split('(');
+                        name = items[0];
+                        nameExtension = items[1].Split(')').First();
+                    }
+                    else
+                    {
+                        name = excelTalent.Talent;
+                    }
+
+                    var newTalent = CreateTalent(
+                        contentType: talentGroup.Key,
+                        probe: excelTalent.GetConvertAttribute(),
+                        be: excelTalent.BE,
+                        name: name,
+                        nameExtension: nameExtension);
+                    if (excelTalent.IsValidVerwanteFertigkeit()) { talentsWithDeduction.Add(newTalent, excelTalent); }
+                    if (excelTalent.IsValidAnforderung()) { talentWithRequirements.Add(newTalent, excelTalent); }
+
+                    ret.Add(newTalent);
+                }
+            }
+            ret = new List<ITalent>(ret.OrderBy(x => x.Name));
+            foreach (var talentwithDeduction in talentsWithDeduction)
+            {
+                var deductionTalentStrings = talentwithDeduction.Value.GetSplitDeduction();
+                foreach (var deductionString in deductionTalentStrings)
+                {
+                    var value = deductionString;
+                    var valueint = -1;
+                    var mainReqg = new Regex("[(][+][0-9]?[0-9][)]");
+                    var innerReqg = new Regex("[0-9]?[0-9]");
+                    var fatherReqg = new Regex("[(][A-Za-z]{1,}[)]");
+
+                    if (mainReqg.IsMatch(deductionString))
+                    {
+                        value = mainReqg.Split(deductionString)[0].Trim();
+                        valueint = Int32.Parse(innerReqg.Match(deductionString).ToString());
+                    }
+                    if (valueint == -1) { valueint = talentwithDeduction.Key.BaseDeduction; }
+
+                    ITalentDeduction deduction = null;
+                    var deductionTalent = ret.Where(x => x.Name.StartsWith(value));
+                    if (deductionTalent.Count() != 0)
+                    {
+                        deduction = new TalentDeductionTalent(deductionTalent.First(), valueint, talentwithDeduction.Key.BaseDeduction);
+                    }
+                    else
+                    {
+                        var createdNew = false;
+
+                        value = mainReqg.Split(deductionString)[0].Trim();
+                        Int32.TryParse(innerReqg.Match(deductionString).ToString(), out valueint);
+
+                        var valueFather = fatherReqg.Split(deductionString)[0].Trim();
+                        var fatherTalent = ret.Where(x => x.Name == valueFather).FirstOrDefault();
+
+                        if (fatherTalent != null)
+                        {
+                            foreach (var item in excelTalentDic)
+                            {
+                                ITalent innerDeductionTalent = null;
+                                var fatherTalentExcel = item.Value.Where(x => x.Talent == valueFather).FirstOrDefault();
+                                if (fatherTalentExcel != null)
+                                {
+                                    var talentExist = false;
+                                    var valueNewName = deductionString.Split('(', ')')[1];
+                                    var talentExit = ret.Where(x => x.Name == valueNewName).FirstOrDefault();
+                                    if (talentExit != null && typeof(AbstractTalentGeneral).IsAssignableFrom(talentExit.GetType()))
+                                    {
+                                        var talentExistAbstract = (AbstractTalentGeneral)talentExit;
+                                        if (talentExistAbstract.FatherTalent.Name == fatherTalentExcel.Talent)
+                                        {
+                                            innerDeductionTalent = talentExit;
+                                            talentExist = true;
+                                        }
+                                    }
+                                    if (!talentExist)
+                                    {
+                                        innerDeductionTalent = CreateTalent(
+                                            contentType: item.Key,
+                                            probe: fatherTalentExcel.GetConvertAttribute(),
+                                            be: "",
+                                            name: valueNewName,
+                                            nameExtension: "");
+
+                                        if (typeof(AbstractTalentGeneral).IsAssignableFrom(innerDeductionTalent.GetType()))
+                                        {
+                                            var t = (AbstractTalentGeneral)innerDeductionTalent;
+                                            t.FatherTalent = fatherTalent;
+                                        }
+                                    }
+                                    if (innerDeductionTalent != null)
+                                    {
+                                        if (!ret.Contains(innerDeductionTalent))
+                                        {
+                                            ret.Add(innerDeductionTalent);
+                                        }
+                                        createdNew = true;
+                                        deduction = new TalentDeductionTalent(fatherTalent, valueint, talentwithDeduction.Key.BaseDeduction);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        if (!createdNew)
+                        {
+                            deduction = new TalentDeductionFreeText(deductionString);
+                        }
+                    }
+                    talentwithDeduction.Key.Deductions.Add(deduction);
+
+                }
+            }
+            foreach (var talentWithRequirement in talentWithRequirements)
+            {
+                var splitRequirement = talentWithRequirement.Value.GetSplitRequirement();
+                foreach (var requirementString in splitRequirement)
+                {
+                    ITalentRequirement requirement;
+                    var talent = (AbstractTalentGeneral)talentWithRequirement.Key;
+                    var value = requirementString;
+                    var valueStart = -1;
+                    var valueEnd = -1;
+                    var reqTalent = ret.Where(x => x.Name.StartsWith(value));
+
+                    var startReqg = new Regex("[0-9]?[0-9][+][:]");
+                    var endReqg = new Regex("[ ][0-9]?[0-9]");
+
+                    if (endReqg.IsMatch(value))
+                    {
+                        if (startReqg.IsMatch(value))
+                        {
+                            var innerStartReq = new Regex("[0-9]?[0-9]");
+                            var startvalue = startReqg.Match(value).ToString();
+                            var truestartValue = innerStartReq.Match(startvalue).ToString();
+                            valueStart = Int32.Parse(truestartValue);
+                            value = startReqg.Split(value)[1];
+                        }
+
+                        var startSplit = startReqg.Split(value);
+                        valueEnd = Int32.Parse(endReqg.Match(value).ToString());
+                        value = endReqg.Split(value)[0].Trim();
+                    }
+
+                    requirement = new TalentRequirementFreeText(requirementString);
+
+                    if (reqTalent.Count() != 0 && valueEnd != -1 && valueStart != -1)
+                    {
+                        requirement = new TalentRequirementTalent(reqTalent.First(), valueEnd, valueStart);
+                    }
+                    else if (reqTalent.Count() != 0 && valueEnd != -1)
+                    {
+                        var trueReqTalent = reqTalent.First();
+                        requirement = new TalentRequirementTalent(reqTalent.First(), valueEnd);
+                    }
+                    else
+                    {
+                        requirement = new TalentRequirementFreeText(requirementString);
+                    }
+
+                    talent.Requirements.Add(requirement);
+                }
+            }
+            #endregion
+            return ret;
         }
-        public static T SearchTalentGeneric<T>(Guid guid, List<ITalent> talentList)
+        private static string ExcelImportGetCellValue(WorkbookPart wbPart, Cell cell)
         {
-            var talent = SearchTalent(guid, talentList);
-            if (talent != null && typeof(T).IsAssignableFrom(talent.GetType()))
-            {
-                return (T)talent;
-            }
-            if(talent == null)
-            {
-                LogStrings.LogString(LogLevel.ErrorLog, "Das Talent mit der GUID " + guid + " konnte nicht gefunden werden. Erwarteter Talent Typ: " + typeof(T));
-            }
-            else
-            {
-                LogStrings.LogString(LogLevel.ErrorLog, "Das Talent mit der GUID " + guid + " konnte nicht mit dem Angegebenen Typen gefunden werden. Erwarteter Talent Typ: " + typeof(T) + " eigentlicher Typ: " + talent.GetType());
+            var strintTableValue = wbPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
+            var cellValue = cell.InnerText;
 
-            }
+            if (!string.IsNullOrEmpty(cellValue))
+            {
+                //Kontrolle nötig, Beabsichtigter Effekt?
+                try
+                {
+                    cellValue = strintTableValue.SharedStringTable.ElementAt(int.Parse(cellValue)).InnerText;
+                }
+                catch (Exception)
+                {
 
-            return default(T);
+                }
+            }
+            return cellValue;
         }
-        #endregion
-        #region Hilfsklassen
         private class ExcelTalent
         {
             public string Talent { get; set; }
@@ -543,6 +763,31 @@ namespace DSAProject.Classes
             {
                 return SplitString(Anforderungen, new List<string>());
             }
+        }
+        #endregion
+        #region Hilfsmethoden
+        public static ITalent SearchTalent(Guid guid, List<ITalent> talentList)
+        {
+            return talentList.Where(x => x.ID == guid).FirstOrDefault();
+        }
+        public static T SearchTalentGeneric<T>(Guid guid, List<ITalent> talentList)
+        {
+            var talent = SearchTalent(guid, talentList);
+            if (talent != null && typeof(T).IsAssignableFrom(talent.GetType()))
+            {
+                return (T)talent;
+            }
+            if (talent == null)
+            {
+                LogStrings.LogString(LogLevel.ErrorLog, "Das Talent mit der GUID " + guid + " konnte nicht gefunden werden. Erwarteter Talent Typ: " + typeof(T));
+            }
+            else
+            {
+                LogStrings.LogString(LogLevel.ErrorLog, "Das Talent mit der GUID " + guid + " konnte nicht mit dem Angegebenen Typen gefunden werden. Erwarteter Talent Typ: " + typeof(T) + " eigentlicher Typ: " + talent.GetType());
+
+            }
+
+            return default(T);
         }
         #endregion
     }

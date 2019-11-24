@@ -1,4 +1,5 @@
 ﻿using DSALib;
+using DSALib.Exceptions;
 using DSAProject.Classes;
 using DSAProject.Classes.Game;
 using DSAProject.util.ErrrorManagment;
@@ -30,13 +31,22 @@ namespace DSAProject
         public App()
         {
             ///Welches Spiel wird Gestartet
-            Logger.ListenLibLogger();
-            Logger.Log(LogLevel.ActionLog, "GameStart", nameof(App), nameof(App));
-            Logger.Log(LogLevel.DebugInfo, "CurrentFolder: " + ApplicationData.Current.LocalFolder.Path, nameof(App), nameof(App));
-            
-            Game.LoadTalente();
 
-            this.InitializeComponent();
+            try
+            {
+                Logger.ListenLibLogger();
+                Game.LoadTalente();
+
+                this.InitializeComponent();
+            }
+            catch (AbstractDSAException dsaEX)
+            {
+                throw new Exception("", dsaEX);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("", ex);
+            }
             this.Suspending += OnSuspending;
         }
 
