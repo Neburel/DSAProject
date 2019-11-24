@@ -155,7 +155,7 @@ namespace DSAProject.Layout.Pages.ToolPages
             ViewModel.Talents = new ObservableCollection<ITalent>(Game.TalenteDSA.OrderBy(x => x.Name).ToList());
             gameType = GameType.DSA;
 
-            ViewModel.Talents = Game.TalenteDSA;
+            ViewModel.Talents = new ObservableCollection<ITalent>(Game.TalenteDSA);
             ViewModel.FatherTalents = new ObservableCollection<ITalent>(Game.TalenteDSA.Where(x => (typeof(AbstractTalentGeneral).IsAssignableFrom(x.GetType()))).ToList());
         }
         private void XAML_RadioButtonGameTypValuePNP_Checked(object sender, RoutedEventArgs e)
@@ -163,7 +163,7 @@ namespace DSAProject.Layout.Pages.ToolPages
             ViewModel.Talents = new ObservableCollection<ITalent>(Game.TalentePNP.OrderBy(x => x.Name).ToList());
             gameType = GameType.PNP;
 
-            ViewModel.Talents = Game.TalentePNP;
+            ViewModel.Talents = new ObservableCollection<ITalent>(Game.TalentePNP);
             ViewModel.FatherTalents = new ObservableCollection<ITalent>(Game.TalentePNP.Where(x => (typeof(AbstractTalentGeneral).IsAssignableFrom(x.GetType()))).ToList());
         }
         private void RadioButton_TalentChoice_Checked(object sender, RoutedEventArgs e)

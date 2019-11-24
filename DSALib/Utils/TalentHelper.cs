@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using DSALib;
+using DSALib.Charakter.Talente;
 using DSALib.Charakter.Talente.TalentLanguage;
 using DSALib.Classes.JSON;
+using DSALib.JSON;
 using DSALib.Utils;
 using DSAProject.Classes.Charakter.Talente;
 using DSAProject.Classes.Charakter.Talente.TalentDeductions;
@@ -142,7 +144,7 @@ namespace DSAProject.Classes
             return talent;
         }
 
-        public static ObservableCollection<ITalent> LoadTalent(List<JSON_Talent> talents)
+        public static List<ITalent> LoadTalent(List<JSON_Talent> talents)
         {
             var list = new List<ITalent>();
             Dictionary<ITalent, JSON_Talent> talentwithDedcut                       = new Dictionary<ITalent, JSON_Talent>();
@@ -183,9 +185,6 @@ namespace DSAProject.Classes
                                 {
                                     talentWithFather.Add(abstractTalentGeneral, item);
                                 }
-                            }
-                            else if (typeof(AbstractTalentLanguage).IsAssignableFrom(talent.GetType()))
-                            {
                             }
                             #endregion
                             list.Add(talent);
@@ -286,8 +285,32 @@ namespace DSAProject.Classes
                 }
             }
 
-            return new ObservableCollection<ITalent>(list.OrderBy(x => x.Name).ToList());
+            return list.OrderBy(x => x.Name).ToList();
         }
+        public static List<LanguageFamily> LoadLanguageFamily(List<JSON_TalentLanguageFamily> json_FamilyList, List<ITalent> talentList)
+        {
+            var ret = new List<LanguageFamily>();
+
+            foreach(var json_Family in json_FamilyList)
+            {
+                var family = new LanguageFamily(json_Family.Name);
+
+                foreach (var item in json_Family.Writings)
+                {
+                    var talent = SearchTalentGeneric<TalentWriting>(item.Value, talentList);
+                    family.Writings.Add(item.Key, talent);
+                }
+                foreach (var item in json_Family.Languages)
+                {
+                    var talent = SearchTalentGeneric<TalentLanguage>(item.Value, talentList);
+                    family.Languages.Add(item.Key, talent);
+                }
+                ret.Add(family);
+            }
+
+            return ret;
+        }
+
         public static JSON_Talent CreateJSON(ITalent talent, GameType gameType = GameType.DSA)
         {
             JSON_Talent jsonTalent = null;
@@ -381,6 +404,33 @@ namespace DSAProject.Classes
             }
             return jsonTalent;
         }
+
+        #region Hilfsklassen
+        public static ITalent SearchTalent(Guid guid, List<ITalent> talentList)
+        {
+            return talentList.Where(x => x.ID == guid).FirstOrDefault();
+        }
+        public static T SearchTalentGeneric<T>(Guid guid, List<ITalent> talentList)
+        {
+            var talent = SearchTalent(guid, talentList);
+            if (talent != null && typeof(T).IsAssignableFrom(talent.GetType()))
+            {
+                return (T)talent;
+            }
+            if(talent == null)
+            {
+                LogStrings.LogString(LogLevel.ErrorLog, "Das Talent mit der GUID " + guid + " konnte nicht gefunden werden. Erwarteter Talent Typ: " + typeof(T));
+            }
+            else
+            {
+                LogStrings.LogString(LogLevel.ErrorLog, "Das Talent mit der GUID " + guid + " konnte nicht mit dem Angegebenen Typen gefunden werden. Erwarteter Talent Typ: " + typeof(T) + " eigentlicher Typ: " + talent.GetType());
+
+            }
+
+            return default(T);
+        }
+
+        #endregion
 
         private class ExcelTalent
         {

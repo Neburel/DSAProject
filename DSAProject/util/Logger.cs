@@ -34,12 +34,12 @@ namespace DSAProject.util.ErrrorManagment
         {
             if (error != null)
             {
-                LogStrings.GetLogString(logLevel, error, callerMemberName, CallerFilePath, callerLineNumber);
+                LogStrings.LogString(logLevel, error, callerMemberName, CallerFilePath, callerLineNumber);
             }
         }
         public static void Log(LogLevel logLevel, string message, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string CallerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
-            LogStrings.GetLogString(logLevel, message, callerMemberName, CallerFilePath, callerLineNumber);
+            LogStrings.LogString(logLevel, message, callerMemberName, CallerFilePath, callerLineNumber);
         }
         private static void Log(string message)
         {

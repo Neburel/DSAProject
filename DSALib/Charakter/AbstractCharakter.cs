@@ -354,7 +354,7 @@ namespace DSAProject.Classes.Charakter
             try
             {
                 var talent = json_charakter.TalentGuidsNames.Where(x => x.Key == guid).FirstOrDefault();
-                LogStrings.GetLogString(LogLevel.ErrorLog, "Talent Fehlt: " + talent.Key + " " + talent.Value);
+                LogStrings.LogString(LogLevel.ErrorLog, "Talent Fehlt: " + talent.Key + " " + talent.Value);
             }
             catch (Exception)
             {

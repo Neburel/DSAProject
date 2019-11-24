@@ -1,4 +1,5 @@
 ﻿using DSALib;
+using DSALib.Charakter.Talente;
 using DSALib.Classes.JSON;
 using DSALib.Utils;
 
@@ -38,7 +39,6 @@ namespace DSAProject.Classes.Game
 
     public static class Game 
     {
-
         public static event EventHandler<EventNavRequest> NavRequested;
         public static event EventHandler CharakterChanged;
         #region TalentContent
@@ -84,8 +84,9 @@ namespace DSAProject.Classes.Game
         public static string CharakterMetaFolder{ get; } = Path.Combine("Save", "Meta");
         public static string CurrentYearDSA { get; } = "? nach Bosporos Fall";
         public static string CurrentYearPNP { get; } = "3135";
-        public static ObservableCollection<ITalent> TalentePNP { get; private set; }     = new ObservableCollection<ITalent>();
-        public static ObservableCollection<ITalent> TalenteDSA { get; private set; }     = new ObservableCollection<ITalent>();
+        public static List<ITalent> TalentePNP { get; private set; }     = new List<ITalent>();
+        public static List<ITalent> TalenteDSA { get; private set; }    = new List<ITalent>();
+        public static List<LanguageFamily> LanguageFamilies             = new List<LanguageFamily>();
         #endregion
         #region Funktion
         public static void RequestNav(EventNavRequest nav)
@@ -97,7 +98,7 @@ namespace DSAProject.Classes.Game
             error                           = null;
             #region Talenttype
             List<JSON_Talent> jTalentList               = null;
-            ObservableCollection<ITalent> talentList    = null;
+            List<ITalent> talentList    = null;
             var talenttype                              = talent.GetType().ToString();
             var lastIndex                               = talenttype.LastIndexOf(".");
             talenttype                                  = talenttype.Substring(lastIndex + 1);
@@ -105,8 +106,8 @@ namespace DSAProject.Classes.Game
             #region GameType
             if (gameType == GameType.DSA)
             {
-                if (jSON_talentLocal.Talente_DSA == null) jSON_talentLocal.Talente_DSA = new List<JSON_Talent>();
-                jTalentList = jSON_talentLocal.Talente_DSA;
+                if (jSON_talentLocal.Talente == null) jSON_talentLocal.Talente = new List<JSON_Talent>();
+                jTalentList = jSON_talentLocal.Talente;
                 talentList = TalenteDSA;
             }
             else if (gameType == GameType.PNP)
@@ -160,19 +161,11 @@ namespace DSAProject.Classes.Game
         }
         public static void LoadTalente()
         {
-            //Begrenzung erstmal auf Talente, da bearbeiten von Talenten zurückgestellt wurde
-
-            //TalenteDSA = new ObservableCollection<ITalent>(TalentHelper.ExcelImport("TalentImport.xlsx"));
-           
-            //Vorgeschriebene Talente
-            var jstringAssests = FileManagment.LoadTextAssestFile(talentSaveFile, out Error errorAssest);
-            //var jStringLocal   = FileManagment.LoadTextFile(talentSaveFile, out Error errorLocal);
-
+            var jstringAssests      = FileManagment.LoadTextAssestFile(talentSaveFile, out Error errorAssest);
             var jSON_talentAssests  = JSON_TalentSaveFile.DeSerializeJson(jstringAssests, out string serrorAssest);
-            //var jSON_talentLocal    = JSON_TalentSaveFile.DeSerializeJson(jStringLocal, out string serrorLocal);
-
-            TalenteDSA = TalentHelper.LoadTalent(jSON_talentAssests.Talente_DSA);
-            //var LanguageFamilies = TalentHelper.LoadLanguageFamilies(TalenteDSA.ToList(), jSON_talentAssests.Families_DSA);
+         
+            TalenteDSA          = TalentHelper.LoadTalent(jSON_talentAssests.Talente);
+            LanguageFamilies    = TalentHelper.LoadLanguageFamily(jSON_talentAssests.Families, TalenteDSA);
         }
         public static Guid GenerateNextCharakterGUID()
         {
@@ -197,9 +190,9 @@ namespace DSAProject.Classes.Game
 
             return guid;
         }
-        public static ObservableCollection<ITalent> GetTalentForCurrentCharakter()
+        public static List<ITalent> GetTalentForCurrentCharakter()
         {
-            ObservableCollection<ITalent> talents = null;
+            List<ITalent> talents = null;
 
             if(typeof(CharakterDSA) == charakter.GetType())
             {
