@@ -22,6 +22,8 @@ namespace DSAProject.Layout.Pages
     /// </summary>
     public sealed partial class LoadPage : Page
     {
+        private const string CHARNAME = "Namenlos";
+        private bool GivenName = false;
         public ObservableCollection<JSON_Charakter> Items { get; } = new ObservableCollection<JSON_Charakter>();
         public LoadPage()
         {
@@ -31,9 +33,15 @@ namespace DSAProject.Layout.Pages
             var cFileList = FileManagment.GetFilesDictionary(Game.CharakterSaveFolder, out Error error);
             foreach(var item in cFileList)
             {
-                var file    = Path.Combine(Game.CharakterSaveFolder, item);
+                var file            = Path.Combine(Game.CharakterSaveFolder, item);
                 var fileContent     = FileManagment.LoadTextFile(file, out error);
                 var json_charakter = JSON_Charakter.DeSerializeJson(fileContent, out string errorstring);
+                if (string.IsNullOrEmpty(json_charakter.Name))
+                {
+                    json_charakter.Name = CHARNAME;
+                    GivenName = true;
+                }
+
                 items.Add(json_charakter);
             }
             items.OrderBy(x => x.Name).ThenBy(x => x.SaveTime);
@@ -43,6 +51,12 @@ namespace DSAProject.Layout.Pages
         {
             Error error             = null;
             var charakter            = (JSON_Charakter)e.ClickedItem;
+
+            if (GivenName)
+            {
+                charakter.Name = string.Empty;
+            }
+
             Game.LoadCharakter(charakter, out error);
 
             Game.RequestNav(new util.EventNavRequest { Side = NavEnum.StartPage });

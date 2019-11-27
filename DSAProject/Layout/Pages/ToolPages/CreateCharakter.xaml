@@ -142,8 +142,6 @@
                     </Button>
                 </Border>
             </StackPanel>
-
-            <TextBlock  Grid.Row="11" Grid.Column="1" x:Name="XAML_TechMinValue" Foreground="Black" Text="Techstufe Min:" TextAlignment="Left" VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Margin="0,0,0,0"/>
         </Grid>
     </Grid>
 </Page>

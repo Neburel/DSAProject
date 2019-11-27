@@ -28,8 +28,10 @@ namespace DSAProject.Layout.Pages
             set
             {
                 var traits = Game.Charakter.Traits.GetTraits().Where(x => x.TraitType == value).ToList();
-                viewModel.Traits = new ObservableCollection<Trait>(traits);
-                viewModel.Traits.Add(createNewTrait);
+                viewModel.Traits = new ObservableCollection<Trait>(traits)
+                {
+                    createNewTrait
+                };
                 trailFilter = value;
             }
         }
@@ -44,8 +46,10 @@ namespace DSAProject.Layout.Pages
                     var traits = Game.Charakter.Traits.GetTraits().Where(x => x.TraitType == item).ToList();
                     traitList.AddRange(traits);
                 }
-                viewModel.Traits = new ObservableCollection<Trait>(traitList);
-                viewModel.Traits.Add(createNewTrait);
+                viewModel.Traits = new ObservableCollection<Trait>(traitList)
+                {
+                    createNewTrait
+                };
             }
         }
 
@@ -56,8 +60,10 @@ namespace DSAProject.Layout.Pages
 
             this.InitializeComponent();
 
-            viewModel.Traits = new ObservableCollection<Trait>(Game.Charakter.Traits.GetTraits());
-            viewModel.Traits.Add(createNewTrait);
+            viewModel.Traits = new ObservableCollection<Trait>(Game.Charakter.Traits.GetTraits())
+            {
+                createNewTrait
+            };
         }
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {

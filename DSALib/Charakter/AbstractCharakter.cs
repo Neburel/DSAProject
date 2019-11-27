@@ -78,12 +78,12 @@ namespace DSAProject.Classes.Charakter
         #region Methods
         public JSON_Charakter CreateSave()
         {
-            #region Speichern Möglich?
-            if (Name == null || Name == string.Empty)
-            {
-                throw new Exception("Der Charakter benötigt einen Namen");
-            }
-            #endregion
+            //#region Speichern Möglich?
+            //if (Name == null || Name == string.Empty)
+            //{
+            //    throw new Exception("Der Charakter benötigt einen Namen");
+            //}
+            //#endregion
             var charakter = new JSON_Charakter
             {
                 ID          = ID,
