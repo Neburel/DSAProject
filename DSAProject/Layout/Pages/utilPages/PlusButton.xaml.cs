@@ -18,6 +18,13 @@ namespace DSAProject.Layout.Pages.ItemPages
             get => viewModel.IsInversed;
             set => viewModel.IsInversed = value;
         }
+        public SolidColorBrush TextColor
+        {
+            set
+            {
+                viewModel.TextColor = value;
+            }
+        }
         private PlusButton_ViewModel viewModel = new PlusButton_ViewModel();
 
         public PlusButton()
@@ -30,6 +37,7 @@ namespace DSAProject.Layout.Pages.ItemPages
             private bool isInversed = false;
             private string symbol = "+";
             private SolidColorBrush borderColor = new SolidColorBrush(Windows.UI.Colors.Green);
+            private SolidColorBrush textColor = new SolidColorBrush(Windows.UI.Colors.Black);
             public bool IsInversed
             {
                 get => isInversed;
@@ -66,6 +74,15 @@ namespace DSAProject.Layout.Pages.ItemPages
                 {
                     borderColor = value;
                     OnPropertyChanged(nameof(BorderColor));
+                }
+            }
+            public SolidColorBrush TextColor
+            {
+                get => textColor;
+                set
+                {
+                    textColor = value;
+                    OnPropertyChanged(nameof(TextColor));
                 }
             }
         }

@@ -1,9 +1,9 @@
-﻿using DSAProject.Layout.ViewModels;
-using DSAProject.util;
+﻿using DSAProject.util;
 using System;
 using System.ComponentModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -26,13 +26,38 @@ namespace DSAProject.Layout.Views
         #region Event
         public event EventHandler Event_ValueHigher;
         public event EventHandler Event_ValueLower;
+        //public event PropertyChangedEventHandler PropertyChanged
+        //{
+        //    add
+        //    {
+        //        ((INotifyPropertyChanged)ViewModel).PropertyChanged += value;
+        //    }
+
+        //    remove
+        //    {
+        //        ((INotifyPropertyChanged)ViewModel).PropertyChanged -= value;
+        //    }
+        //}
         #endregion
         #region Variables
         private AKT_MOD_MAX_ViewModel ViewModel = new AKT_MOD_MAX_ViewModel();
         private AKTMODMAXMode mode;
         #endregion
         #region Dependency
-        public static readonly DependencyProperty AKTValueProperty = DependencyProperty.Register(nameof(AKTValue), typeof(string), typeof(AKT_MOD_MAX_ItemPage), new PropertyMetadata(null, new PropertyChangedCallback(OnAKTValueChanged)));
+        public static readonly DependencyProperty AKTValueProperty  = DependencyProperty.Register(nameof(AKTValue), typeof(string), typeof(AKT_MOD_MAX_ItemPage), new PropertyMetadata(null, new PropertyChangedCallback(OnAKTValueChanged)));
+        public static readonly DependencyProperty TextColorProperty = DependencyProperty.Register(nameof(TextColor), typeof(SolidColorBrush), typeof(AKT_MOD_MAX_ItemPage), new PropertyMetadata(null, new PropertyChangedCallback(OnTextColorChanged)));
+        #endregion
+        #region Dependency Properties
+        public string AKTValue
+        {
+            get => (string)GetValue(AKTValueProperty);
+            set => SetValue(AKTValueProperty, value);
+        }
+        public SolidColorBrush TextColor
+        {
+            get => (SolidColorBrush)GetValue(TextColorProperty);
+            set => SetValue(TextColorProperty, value);
+        }
         #endregion
         #region Properties
         public int MinValueAsInt
@@ -43,11 +68,6 @@ namespace DSAProject.Layout.Views
                 return innerValue;
             }
             set => ViewModel.AKTValue = value.ToString();
-        }
-        public string AKTValue
-        {
-            get => (string)GetValue(AKTValueProperty); 
-            set  => SetValue(AKTValueProperty, value);
         }
         public int ValueTwo { get => ViewModel.MODValue; set => ViewModel.MODValue = value; }
         public int ValueThree { get => ViewModel.MaxValue; }
@@ -109,6 +129,7 @@ namespace DSAProject.Layout.Views
             }
         }
         #endregion
+        #region Propertie Event 
         private static void OnAKTValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (e.NewValue != e.OldValue)
@@ -116,9 +137,14 @@ namespace DSAProject.Layout.Views
                 ((AKT_MOD_MAX_ItemPage)d).ViewModel.AKTValue = (string)e.NewValue;
             }
         }
-
-
-
+        private static void OnTextColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue != e.OldValue)
+            {
+                ((AKT_MOD_MAX_ItemPage)d).ViewModel.TextColor = (SolidColorBrush)e.NewValue;
+            }
+        }
+        #endregion
         public AKT_MOD_MAX_ItemPage()
         {
             ViewModel.GetWidthName = 0;
@@ -131,20 +157,6 @@ namespace DSAProject.Layout.Views
 
             InitializeComponent();
         }
-
-        public event PropertyChangedEventHandler PropertyChanged
-        {
-            add
-            {
-                ((INotifyPropertyChanged)ViewModel).PropertyChanged += value;
-            }
-
-            remove
-            {
-                ((INotifyPropertyChanged)ViewModel).PropertyChanged -= value;
-            }
-        }
-
         private void XML_ButtonReduceValue_Click(object sender, RoutedEventArgs e)
         {
             Event_ValueLower?.Invoke(this, null);
@@ -155,8 +167,10 @@ namespace DSAProject.Layout.Views
         }
         public void SetTooltip(string toolTipText)
         {
-            ToolTip toolTip = new ToolTip();
-            toolTip.Content = toolTipText;
+            ToolTip toolTip = new ToolTip
+            {
+                Content = toolTipText
+            };
             ToolTipService.SetToolTip(XAML_AttributName, toolTip);
         }
 
@@ -173,17 +187,17 @@ namespace DSAProject.Layout.Views
             private Visibility isTitle1Visible = Visibility.Collapsed;
             private Visibility isTitle2Visible = Visibility.Collapsed;
             private Visibility isTitle3Visible = Visibility.Collapsed;
-            private Visibility isMaxVible = Visibility.Collapsed;
+            private Visibility isMaxVible   = Visibility.Collapsed;
+            private SolidColorBrush textColor = new SolidColorBrush(Windows.UI.Colors.Black);
             #endregion
             #region Properties
-            public string AKTValue
+            public bool IsValueEditable
             {
-                get => aktValue;
+                get => isValueEditable;
                 set
                 {
-                    aktValue = value;
-                    OnPropertyChanged(nameof(AKTValue));
-                    OnPropertyChanged(nameof(MaxValue));
+                    isValueEditable = value;
+                    OnPropertyChanged(nameof(IsValueEditable));
                 }
             }
             public int MODValue
@@ -204,13 +218,41 @@ namespace DSAProject.Layout.Views
                     return innerValue + MODValue;
                 }
             }
-            public bool IsValueEditable
+            public double GetWidthName
             {
-                get => isValueEditable;
+                get => getWidthName;
                 set
                 {
-                    isValueEditable = value;
-                    OnPropertyChanged(nameof(IsValueEditable));
+                    getWidthName = value;
+                    OnPropertyChanged(nameof(GetWidthName));
+                }
+            }
+            public double GetBoxLength
+            {
+                get => getBoxLength;
+                set
+                {
+                    getBoxLength = value;
+                    OnPropertyChanged(nameof(GetBoxLength));
+                }
+            }
+            public string AKTValue
+            {
+                get => aktValue;
+                set
+                {
+                    aktValue = value;
+                    OnPropertyChanged(nameof(AKTValue));
+                    OnPropertyChanged(nameof(MaxValue));
+                }
+            }
+            public string Name
+            {
+                get => name;
+                set
+                {
+                    name = value;
+                    OnPropertyChanged(nameof(Name));
                 }
             }
             public Visibility IsModVisible
@@ -258,31 +300,13 @@ namespace DSAProject.Layout.Views
                     OnPropertyChanged(nameof(IsTitle3Visible));
                 }
             }
-            public string Name
+            public SolidColorBrush TextColor
             {
-                get => name;
+                get => textColor;
                 set
                 {
-                    name = value;
-                    OnPropertyChanged(nameof(Name));
-                }
-            }
-            public double GetWidthName
-            {
-                get => getWidthName;
-                set
-                {
-                    getWidthName = value;
-                    OnPropertyChanged(nameof(GetWidthName));
-                }
-            }
-            public double GetBoxLength
-            {
-                get => getBoxLength;
-                set
-                {
-                    getBoxLength = value;
-                    OnPropertyChanged(nameof(GetBoxLength));
+                    textColor = value;
+                    OnPropertyChanged(nameof(TextColor));
                 }
             }
             #endregion

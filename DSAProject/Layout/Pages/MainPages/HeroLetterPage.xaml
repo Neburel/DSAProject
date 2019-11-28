@@ -27,9 +27,9 @@
 
         <StackPanel Grid.Row="1">
             <StackPanel Orientation="Horizontal" Spacing="10">
-                <views:AttributPage />
-                <views:AttributPage Mode="ValueStandart" VerticalAlignment="Top"/>
-                <views:AttributPage Mode="ResourceStandart" VerticalAlignment="Top"/>
+                <views:AttributPage TextColor="Black"/>
+                <views:AttributPage Mode="ValueStandart" VerticalAlignment="Top" TextColor="Black"/>
+                <views:AttributPage Mode="ResourceStandart" VerticalAlignment="Top" TextColor="Black"/>
             </StackPanel>
             <Grid ColumnSpacing="20">
                 <Grid.RowDefinitions>

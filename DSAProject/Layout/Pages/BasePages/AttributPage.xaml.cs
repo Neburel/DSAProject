@@ -8,12 +8,32 @@ using DSAProject.Layout.Views;
 using DSAProject.util.ErrrorManagment;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using static DSAProject.Layout.Views.AKT_MOD_MAX_ItemPage;
 
 namespace DSAProject.Layout.Pages
 {
     public sealed partial class AttributPage : Page
     {
+        #region Variables
+        SolidColorBrush textColor = new SolidColorBrush(Windows.UI.Colors.White);
+        List<AKT_MOD_MAX_ItemPage> items = new List<AKT_MOD_MAX_ItemPage>();
+        #endregion
+        #region Properties
+        public SolidColorBrush TextColor
+        {
+            set
+            {
+                textColor = value;
+                foreach(var item in items)
+                {
+                    item.TextColor = textColor;
+                }
+            }
+            private get => textColor;
+        }
+        #endregion
+
         public enum AttributePageMode
         {
             AttributeNormal = 1,
@@ -52,7 +72,7 @@ namespace DSAProject.Layout.Pages
         }
 
         #region Helper
-        private static AKT_MOD_MAX_ItemPage CreateNewView(Grid mainGrid, int pos, AKTMODMAXMode mode, bool IsValueEditable, int width, int aktValue, int modValue, string name, string toolTip = "")
+        private static AKT_MOD_MAX_ItemPage CreateNewView(Grid mainGrid, int pos, AKTMODMAXMode mode, SolidColorBrush textColor, bool IsValueEditable, int width, int aktValue, int modValue, string name, string toolTip = "")
         {
             mainGrid.RowDefinitions.Add(new RowDefinition());
             var newView = CreateNewView(
@@ -62,17 +82,22 @@ namespace DSAProject.Layout.Pages
                 aktValue: aktValue,
                 modValue: modValue,
                 name: name,
-                toolTip: toolTip);
+                toolTip: toolTip,
+                textColor: textColor);
+
             mainGrid.Children.Add(newView);
             Grid.SetRow(newView, pos);
             return newView;
         }
-        private static AKT_MOD_MAX_ItemPage CreateNewView(AKTMODMAXMode mode, bool IsValueEditable, int width, int aktValue, int modValue, string name, string toolTip = "")
+        private static AKT_MOD_MAX_ItemPage CreateNewView(AKTMODMAXMode mode, SolidColorBrush textColor, bool IsValueEditable, int width, int aktValue, int modValue, string name, string toolTip = "")
         {
-            var newView = new AKT_MOD_MAX_ItemPage(width, name);
-            newView.Mode = mode;
-            newView.MinValueAsInt = aktValue;
-            newView.ValueTwo = modValue;
+            var newView = new AKT_MOD_MAX_ItemPage(width, name)
+            {
+                Mode = mode,
+                MinValueAsInt = aktValue,
+                ValueTwo = modValue,
+                TextColor = textColor
+            };
 
             if (!string.IsNullOrEmpty(toolTip))
             {
@@ -84,35 +109,37 @@ namespace DSAProject.Layout.Pages
 
         private void BuildPage()
         {
+
             var mainGrid = XAML_Grid;
             mainGrid.Children.Clear();
             switch (Mode)
             {
                 case AttributePageMode.AttributeNormal:
                 case AttributePageMode.AttributeNormalEdit:
-                    BuildAttributPage(mainGrid, mode);
+                    items = BuildAttributPage(mainGrid, mode, textColor);
                     break;
                 case AttributePageMode.AttributeTrait:
-                    BuildAttributTraitPage(mainGrid, Game.Charakter.Attribute.UsedAttributs, trait);
+                    items = BuildAttributTraitPage(mainGrid, textColor, Game.Charakter.Attribute.UsedAttributs, trait);
                     break;
                 case AttributePageMode.ValueStandart:
-                    BuildValuePage(mainGrid);
+                    items = BuildValuePage(mainGrid, textColor);
                     break;
                 case AttributePageMode.ValueTrait:
-                    BuildValueTraitPage(mainGrid, Game.Charakter.Values.UsedValues, trait);
+                    items = BuildValueTraitPage(mainGrid, textColor, Game.Charakter.Values.UsedValues, trait);
                     break;
                 case AttributePageMode.ResourceStandart:
-                    BuildResourcePage(mainGrid);
+                    items = BuildResourcePage(mainGrid, textColor);
                     break;
                 case AttributePageMode.ResourceTrait:
-                    BuildResourceTraitPage(mainGrid, Game.Charakter.Resources.UsedValues, trait);
+                    items = BuildResourceTraitPage(mainGrid, textColor, Game.Charakter.Resources.UsedValues, trait);
                     break;
                 default:
                     throw new System.NotImplementedException();
             }
         }
-        private static void BuildAttributPage(Grid mainGrid, AttributePageMode mode, int width = 110)
+        private static List<AKT_MOD_MAX_ItemPage> BuildAttributPage(Grid mainGrid, AttributePageMode mode, SolidColorBrush textColor, int width = 110)
         {
+            var ret = new List<AKT_MOD_MAX_ItemPage>();
             var attribute = Game.Charakter.Attribute;
             mainGrid.RowDefinitions.Add(new RowDefinition());
 
@@ -141,8 +168,9 @@ namespace DSAProject.Layout.Pages
                 IsValueEditable: false,
                 aktValue: attribute.GetSumValueAttributeAKT,
                 modValue: attribute.GetSumValueAttributMod,
-                name: "Gesamt");
-
+                name: "Gesamt",
+                textColor: textColor);
+            ret.Add(sumVieW);
             #endregion
             var i = 0;
             foreach (var item in attribute.UsedAttributs)
@@ -156,7 +184,11 @@ namespace DSAProject.Layout.Pages
                     IsValueEditable: true,
                     aktValue: attribute.GetAttributAKTValue(item, out Error error),
                     modValue: attribute.GetAttributMODValue(item, out error),
-                    name: item.ToString());
+                    name: item.ToString(),
+                    textColor: textColor);
+
+                ret.Add(newView);
+
                 if (i == 0)
                 {
                     newView.Mode = titleMode;
@@ -190,10 +222,12 @@ namespace DSAProject.Layout.Pages
                 Grid.SetRow(sumVieW, i);
             }
             #endregion
+            return ret;
         }
-        private static void BuildAttributTraitPage(Grid mainGrid, List<CharakterAttribut> attribute, Trait trait, int width = 110)
+        private static List<AKT_MOD_MAX_ItemPage> BuildAttributTraitPage(Grid mainGrid, SolidColorBrush textColor, List<CharakterAttribut> attribute, Trait trait, int width = 110)
         {
             int i = 0;
+            var ret = new List<AKT_MOD_MAX_ItemPage>();
             foreach (var item in attribute)
             {
                 mainGrid.RowDefinitions.Add(new RowDefinition());
@@ -205,7 +239,9 @@ namespace DSAProject.Layout.Pages
                     IsValueEditable: true,
                     aktValue: trait.GetValue(item),
                     modValue: 0,
-                    name: item.ToString());
+                    name: item.ToString(),
+                    textColor: textColor);
+                ret.Add(newView);
 
                 newView.Event_ValueHigher += (sender, args) =>
                 {
@@ -221,9 +257,11 @@ namespace DSAProject.Layout.Pages
                 };
                 i++;
             }
+            return ret;
         }
-        private static void BuildValuePage(Grid mainGrid)
+        private static List<AKT_MOD_MAX_ItemPage> BuildValuePage(Grid mainGrid, SolidColorBrush textColor)
         {
+            var ret = new List<AKT_MOD_MAX_ItemPage>();
             var values = Game.Charakter.Values;
             mainGrid.RowDefinitions.Add(new RowDefinition());
 
@@ -239,7 +277,10 @@ namespace DSAProject.Layout.Pages
                     aktValue: values.GetAKTValue(item, out Error error),
                     modValue: values.GetMODValue(item, out error),
                     name: item.Name,
-                    toolTip: item.InfoText);
+                    toolTip: item.InfoText,
+                    textColor: textColor);
+                ret.Add(newView);
+
                 if (i == 0)
                 {
                     newView.Mode = AKTMODMAXMode.AKTModMaxTitle;
@@ -261,10 +302,12 @@ namespace DSAProject.Layout.Pages
                     }
                 };
             }
+            return ret;
         }
-        private static void BuildValueTraitPage(Grid mainGrid, List<IValue> values, Trait trait)
+        private static List<AKT_MOD_MAX_ItemPage> BuildValueTraitPage(Grid mainGrid, SolidColorBrush textColor, List<IValue> values, Trait trait)
         {
             var i = 0;
+            var ret = new List<AKT_MOD_MAX_ItemPage>();
             foreach (var item in values)
             {
                 mainGrid.RowDefinitions.Add(new RowDefinition());
@@ -275,8 +318,10 @@ namespace DSAProject.Layout.Pages
                     aktValue: trait.GetValue(item),
                     modValue: 0,
                     name: item.Name,
-                    toolTip: item.InfoText);
+                    toolTip: item.InfoText,
+                    textColor: textColor);
 
+                ret.Add(newView);
                 mainGrid.Children.Add(newView);
                 Grid.SetRow(newView, i);
 
@@ -294,9 +339,11 @@ namespace DSAProject.Layout.Pages
                 };
                 i++;
             }
+            return ret;
         }
-        private static void BuildResourcePage(Grid mainGrid)
+        private static List<AKT_MOD_MAX_ItemPage> BuildResourcePage(Grid mainGrid, SolidColorBrush textColor)
         {
+            var ret = new List<AKT_MOD_MAX_ItemPage>();
             var values = Game.Charakter.Resources;
             mainGrid.RowDefinitions.Add(new RowDefinition());
 
@@ -312,7 +359,11 @@ namespace DSAProject.Layout.Pages
                     aktValue: values.GetAKTValue(item, out Error error),
                     modValue: values.GetMODValue(item, out error),
                     name: item.Name,
-                    toolTip: item.InfoText);
+                    toolTip: item.InfoText,
+                    textColor: textColor);
+
+                ret.Add(newView);
+
                 if (i == 0)
                 {
                     newView.Mode = AKTMODMAXMode.AKTModMaxTitle;
@@ -330,10 +381,12 @@ namespace DSAProject.Layout.Pages
                     }
                 };
             }
+            return ret;
         }
-        private static void BuildResourceTraitPage(Grid mainGrid, List<IResource> values, Trait trait)
-        {
+        private static List<AKT_MOD_MAX_ItemPage> BuildResourceTraitPage(Grid mainGrid, SolidColorBrush textColor, List<IResource> values, Trait trait)
+        {   
             var i = 0;
+            var ret = new List<AKT_MOD_MAX_ItemPage>();
             foreach (var item in values)
             {
                 mainGrid.RowDefinitions.Add(new RowDefinition());
@@ -344,8 +397,10 @@ namespace DSAProject.Layout.Pages
                     aktValue: trait.GetValue(item),
                     modValue: 0,
                     name: item.Name,
-                    toolTip: item.InfoText);
+                    toolTip: item.InfoText,
+                    textColor: textColor);
 
+                ret.Add(newView);
                 mainGrid.Children.Add(newView);
                 Grid.SetRow(newView, i);
 
@@ -363,6 +418,7 @@ namespace DSAProject.Layout.Pages
                 };
                 i++;
             }
+            return ret;
         }
         #endregion
     }

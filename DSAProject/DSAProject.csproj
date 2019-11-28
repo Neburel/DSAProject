@@ -105,7 +105,7 @@
     <Compile Include="Converter\ColorConverter.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Layout\MessageDialoge\SaveDialog.cs" />
-    <Compile Include="Layout\Pages\BasePages\CreateTrait.xaml.cs">
+    <Compile Include="Layout\Pages\ToolPages\CreateTrait.xaml.cs">
       <DependentUpon>CreateTrait.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\Pages\BasePages\InfoPage.xaml.cs">
@@ -199,7 +199,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Layout\Pages\BasePages\CreateTrait.xaml">
+    <Page Include="Layout\Pages\ToolPages\CreateTrait.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -13,6 +13,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -22,13 +23,13 @@
             <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.ColumnSpan="10" Text="{x:Bind viewModel.Title}" HorizontalAlignment="Center" HorizontalTextAlignment="Center" VerticalAlignment="Center" Foreground="Black"></TextBlock>
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="10" Text="{x:Bind viewModel.Title}" Foreground="{x:Bind viewModel.TextColor}" HorizontalAlignment="Center" HorizontalTextAlignment="Center" VerticalAlignment="Center"></TextBlock>
         
-        <views1:AKT_MOD_MAX_ItemPage    Grid.Row="1" Grid.Column="0" AKTValue="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="XAML_AKTMINMAX" Event_ValueHigher="XAML_AKTMINMAX_Event_ValueHigher" Event_ValueLower="XAML_AKTMINMAX_Event_ValueLower"></views1:AKT_MOD_MAX_ItemPage>
-        <ComboBox                       Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" ItemsSource="{x:Bind viewModel.TalentList}" x:Name="XAML_ComboBoxTalent" SelectedValue="{x:Bind viewModel.SelectedItem, Mode=TwoWay}"></ComboBox>
-        <itempages:PlusButton           Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="AddTalent" Clicked="AddTalent_Clicked"></itempages:PlusButton>
-        <itempages:PlusButton           Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="RemoveTalent" IsInversed="True" Clicked="RemoveTalent_Clicked"></itempages:PlusButton>
-        <ListView                       Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="10" ItemsSource="{x:Bind viewModel.TalenteTaw}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ItemClick="ListView_ItemClick" IsItemClickEnabled="True" SelectedItem="{x:Bind viewModel.SelectedListViewItem, Mode=TwoWay}">
+        <views1:AKT_MOD_MAX_ItemPage    Grid.Row="1" Grid.Column="0" AKTValue="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="XAML_AKTMINMAX" Event_ValueHigher="XAML_AKTMINMAX_Event_ValueHigher" Event_ValueLower="XAML_AKTMINMAX_Event_ValueLower" TextColor="{x:Bind viewModel.TextColor }"></views1:AKT_MOD_MAX_ItemPage>
+        <ComboBox                       Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" ItemsSource="{x:Bind viewModel.TalentList}" x:Name="XAML_ComboBoxTalent" SelectedValue="{x:Bind viewModel.SelectedItem, Mode=TwoWay}" Foreground="{x:Bind viewModel.TextColor}"></ComboBox>
+        <itempages:PlusButton           Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="AddTalent" Clicked="AddTalent_Clicked" TextColor="{x:Bind viewModel.TextColor}"></itempages:PlusButton>
+        <itempages:PlusButton           Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="RemoveTalent" IsInversed="True" Clicked="RemoveTalent_Clicked" TextColor="{x:Bind viewModel.TextColor}"></itempages:PlusButton>
+        <ListView                       Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="10" ItemsSource="{x:Bind viewModel.TalenteTaw}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ItemClick="ListView_ItemClick" IsItemClickEnabled="True" SelectedItem="{x:Bind viewModel.SelectedListViewItem, Mode=TwoWay}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
@@ -49,8 +50,8 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding Talent}" Foreground="Black" VerticalAlignment="Center"></TextBlock>
-                        <TextBlock Grid.Column="1" Text="{Binding Value}" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                        <TextBlock Grid.Column="0" Text="{Binding Talent}" Foreground="{Binding TextColor}" VerticalAlignment="Center"></TextBlock>
+                        <TextBlock Grid.Column="1" Text="{Binding Value}" Foreground="{Binding TextColor}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

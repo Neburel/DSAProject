@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     Background="Transparent">
     <Page.Resources>
-        <converter:ColorConverter x:Key="Converter" ></converter:ColorConverter>
+        <converter:ColorConverter x:Key="Converter"></converter:ColorConverter>
         <SolidColorBrush x:Key="PrimaryBrush" Color="Yellow"/>
     </Page.Resources>
     <Grid>

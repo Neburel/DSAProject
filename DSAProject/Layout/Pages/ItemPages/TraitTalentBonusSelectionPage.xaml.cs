@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using static DSAProject.util.Hilfsklassen;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
@@ -28,6 +29,13 @@ namespace DSAProject.Layout.Pages.ItemPages
         #endregion
         #region Properties
         private CreateTrait_ViewModel viewModel = new CreateTrait_ViewModel();
+        public SolidColorBrush TextColor
+        {
+            set
+            {
+                viewModel.TextColor = value;
+            }
+        }
         public TraitTalentBonusSelectionPage_Mode Mode
         {
             set
@@ -55,18 +63,6 @@ namespace DSAProject.Layout.Pages.ItemPages
         public TraitTalentBonusSelectionPage()
         {
             this.InitializeComponent();
-
-            var k = new List<ITalent>(Game.TalentList.Where(x => x.GetType() == typeof(AbstractTalentFighting)).OrderBy(x => x.Name));
-            var q = Game.TalentList.Where(x => x.GetType() == typeof(AbstractTalentFighting));
-
-            foreach (var item in Game.TalentList)
-            {
-                var type = item.GetType();
-                if (typeof(AbstractTalentFighting).IsAssignableFrom(type))
-                {
-
-                }
-            }
         }
         #region Handler
         private void XAML_AKTMINMAX_Event_ValueHigher(object sender, EventArgs e)
@@ -155,15 +151,47 @@ namespace DSAProject.Layout.Pages.ItemPages
             }
         }
         #endregion
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var item = (TraitTalentBonus)(e.ClickedItem);
+            viewModel.DeselectItem = false;
+            viewModel.SelectedItem = item.Talent;
+            viewModel.DeselectItem = true;
+        }
         private class CreateTrait_ViewModel : AbstractPropertyChanged
         {
+            #region Variables
             private string title = "Talent TaW Bonus";
             private ITalent selectedItem;
             private TraitTalentBonus selectedListViewItem;
             private List<ITalent> talentList = new List<ITalent>(Game.TalentList.OrderBy(x => x.Name));
+            private SolidColorBrush textColor = new SolidColorBrush(Windows.UI.Colors.Black);
+            #endregion
+
+            public CreateTrait_ViewModel()
+            {
+                TalenteTaw.CollectionChanged += (sender, args) =>
+                {
+                    if (args.NewItems != null)
+                    {
+                        foreach (TraitTalentBonus item in args.NewItems)
+                        {
+                            item.TextColor = TextColor;
+                        }
+                    }
+                };
+            }
 
             public bool DeselectItem { get; set; } = true;
-
+            public string Title
+            {
+                get => title;
+                set
+                {
+                    title = value;
+                    OnPropertyChanged(nameof(Title));
+                }
+            }
             public ITalent SelectedItem
             {
                 get => selectedItem;
@@ -181,6 +209,15 @@ namespace DSAProject.Layout.Pages.ItemPages
                     }
                 }
             }
+            public List<ITalent> TalentList
+            {
+                get => talentList;
+                set
+                {
+                    talentList = value;
+                    OnPropertyChanged(nameof(TalentList));
+                }
+            }
             public TraitTalentBonus SelectedListViewItem
             {
                 get => selectedListViewItem;
@@ -193,33 +230,23 @@ namespace DSAProject.Layout.Pages.ItemPages
                     }
                 }
             }
+            public SolidColorBrush TextColor
+            {
+                get => textColor;
+                set
+                {
+                    textColor = value;
+                    foreach(var item in TalenteTaw)
+                    {
+                        item.TextColor = value;
+                    }
 
-            public string Title
-            {
-                get => title;
-                set
-                {
-                    title = value;
-                    OnPropertyChanged(nameof(Title));
+                    OnPropertyChanged(nameof(TextColor));
+                    
+                    OnPropertyChanged(nameof(TalenteTaw));
                 }
             }
-            public List<ITalent> TalentList
-            {
-                get => talentList;
-                set
-                {
-                    talentList = value;
-                    OnPropertyChanged(nameof(TalentList));
-                }
-            }
-            public ObservableCollection<TraitTalentBonus> TalenteTaw { get; set; } = new ObservableCollection<TraitTalentBonus>();
-        }
-        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            var item = (TraitTalentBonus)(e.ClickedItem);
-            viewModel.DeselectItem = false;
-            viewModel.SelectedItem = item.Talent;
-            viewModel.DeselectItem = true;
+            public ObservableCollection<TraitTalentBonus> TalenteTaw { get; private set; } = new ObservableCollection<TraitTalentBonus>();
         }
     }
 }

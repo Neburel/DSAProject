@@ -8,14 +8,15 @@
     xmlns:views1="using:DSAProject.Layout.Views"
     xmlns:itempages="using:DSAProject.Layout.Pages.ItemPages"
     mc:Ignorable="d"
-    Background="White">
-
+    Background="Transparent">
+    
     <Grid RowSpacing="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="5"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.RowDefinitions>
@@ -27,55 +28,44 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="XAML_ButtonCreate" Margin="100, 0, 0 , 0" Grid.Row="0" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="4" Width="200" Click="XAML_ButtonCreate_Click">
-                <Border BorderBrush="Gray" BorderThickness="1">
-                    <TextBlock Text="Erstellen" Foreground="Black" FontSize="20" TextAlignment="Center" Width="100"></TextBlock>
-                </Border>
-            </Button>
-            <Button x:Name="XAML_ButtonDelte" Margin="100, 0, 0 , 0" Grid.Row="2" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="4" Width="200" Click="XAML_ButtonDelte_Click">
-                <Border BorderBrush="Gray" BorderThickness="1">
-                    <TextBlock Text="Löschen" Foreground="Black" FontSize="20" TextAlignment="Center" Width="100"></TextBlock>
-                </Border>
-            </Button>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Name" Foreground="{x:Bind TextColor}" VerticalAlignment="Center"></TextBlock>
+            <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" Text="{x:Bind viewModel.Title, Mode=TwoWay}"></TextBox>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Name"         Foreground="Black" VerticalAlignment="Center"></TextBlock>
-            <TextBox Grid.Row="0" Grid.Column="1" Width="200" Text="{x:Bind viewModel.Title, Mode=TwoWay}"></TextBox>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Beschreibung" Foreground="{x:Bind TextColor}" VerticalAlignment="Center"></TextBlock>
+            <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" Text="{x:Bind viewModel.Description, Mode=TwoWay}"></TextBox>
 
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="Beschreibung" Foreground="Black" VerticalAlignment="Center"></TextBlock>
-            <TextBox Grid.Row="1" Grid.Column="1" Width="200" Text="{x:Bind viewModel.Description, Mode=TwoWay}"></TextBox>
-
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="Type" Foreground="Black" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Type" Foreground="{x:Bind TextColor}" VerticalAlignment="Center"/>
             <ComboBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" ItemsSource="{x:Bind viewModel.TraitTypes}" SelectedItem="{x:Bind viewModel.SelectedItem, Mode=TwoWay}"></ComboBox>
 
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="Wert"         Foreground="Black"></TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Wert" Foreground="{x:Bind TextColor}"></TextBlock>
             <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" Spacing="2">
-                <views1:AKT_MOD_MAX_ItemPage x:Name="XAML_TraitValue" AKTValue="{x:Bind viewModel.Value, Mode=TwoWay}" Grid.Row="2" Grid.Column="1" Event_ValueHigher="XAML_TraitValue_Event_ValueHigher" Event_ValueLower="XAML_TraitValue_Event_ValueLower"></views1:AKT_MOD_MAX_ItemPage>
+                <views1:AKT_MOD_MAX_ItemPage x:Name="XAML_TraitValue" AKTValue="{x:Bind viewModel.Value, Mode=TwoWay}" TextColor="{x:Bind TextColor}" Grid.Row="2" Grid.Column="1" Event_ValueHigher="XAML_TraitValue_Event_ValueHigher" Event_ValueLower="XAML_TraitValue_Event_ValueLower"></views1:AKT_MOD_MAX_ItemPage>
                 <Border BorderBrush="Gray" BorderThickness="1"  Grid.Row="1" Grid.Column="5" Width="Auto" Height="26" HorizontalAlignment="Center">
-                    <Button  x:Name="XAML_ValueXButton" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" Click="XAML_ValueXButton_Click">
+                    <Button  x:Name="XAML_ValueXButton" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{x:Bind TextColor}" Click="XAML_ValueXButton_Click">
                         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="X" FontSize="10"></TextBlock>
                     </Button>
                 </Border>
                 <Border BorderBrush="Gray" BorderThickness="1"  Grid.Row="1" Grid.Column="5" Width="Auto" Height="26" HorizontalAlignment="Center">
-                    <Button x:Name="XAML_ValueClearButton" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" Click="XAML_ValueClearButton_Click">
+                    <Button x:Name="XAML_ValueClearButton" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{x:Bind TextColor}" Click="XAML_ValueClearButton_Click">
                         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="Clear" FontSize="10"></TextBlock>
                     </Button>
                 </Border>
             </StackPanel>
 
-            <TextBlock Grid.Row="4" Grid.Column="0" Text="GP"         Foreground="Black"></TextBlock>
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="GP" Foreground="{x:Bind TextColor}"></TextBlock>
             <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="5" Spacing="2">
-                <views1:AKT_MOD_MAX_ItemPage x:Name="XAML_TraitGP" AKTValue="{x:Bind viewModel.GP, Mode=TwoWay}" Grid.Row="3" Grid.Column="1" Event_ValueHigher="XAML_TraitGP_Event_ValueHigher" Event_ValueLower="XAML_TraitGP_Event_ValueLower"></views1:AKT_MOD_MAX_ItemPage>
+                <views1:AKT_MOD_MAX_ItemPage x:Name="XAML_TraitGP" AKTValue="{x:Bind viewModel.GP, Mode=TwoWay}" TextColor="{x:Bind TextColor}" Grid.Row="3" Grid.Column="1" Event_ValueHigher="XAML_TraitGP_Event_ValueHigher" Event_ValueLower="XAML_TraitGP_Event_ValueLower"></views1:AKT_MOD_MAX_ItemPage>
                 <Border BorderBrush="Gray" BorderThickness="1"  Grid.Row="1" Grid.Column="5" Width="Auto" Height="26" HorizontalAlignment="Center">
-                    <Button   x:Name="XAML_GPXButton" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" Click="XAML_GPXButton_Click">
+                    <Button   x:Name="XAML_GPXButton" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{x:Bind TextColor}" Click="XAML_GPXButton_Click">
                         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="X" FontSize="10"></TextBlock>
                     </Button>
                 </Border>
                 <Border BorderBrush="Gray" BorderThickness="1"  Grid.Row="1" Grid.Column="5" Width="Auto" Height="26" HorizontalAlignment="Center">
-                    <Button  x:Name="XAML_GPClearButton"  HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" Click="XAML_GPClearButton_Click">
+                    <Button  x:Name="XAML_GPClearButton"  HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{x:Bind TextColor}" Click="XAML_GPClearButton_Click">
                         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="Clear" FontSize="10"></TextBlock>
                     </Button>
                 </Border>
@@ -83,9 +73,9 @@
         </Grid>
         <StackPanel Grid.Row="2">
             <StackPanel Orientation="Horizontal" Spacing="10">
-                <views:AttributPage Mode="AttributeTrait" Trait="{x:Bind viewModel.Trait}"/>
-                <views:AttributPage Mode="ValueTrait" Trait="{x:Bind viewModel.Trait}"/>
-                <views:AttributPage Mode="ResourceTrait" Trait="{x:Bind viewModel.Trait}"/>
+                <views:AttributPage Mode="AttributeTrait" Trait="{x:Bind viewModel.Trait}" TextColor="{x:Bind TextColor}"/>
+                <views:AttributPage Mode="ValueTrait" Trait="{x:Bind viewModel.Trait}" TextColor="{x:Bind TextColor}"/>
+                <views:AttributPage Mode="ResourceTrait" Trait="{x:Bind viewModel.Trait}" TextColor="{x:Bind TextColor}"/>
             </StackPanel>
         </StackPanel>
         <Grid Grid.Row="3" ColumnSpacing="20">
@@ -102,7 +92,8 @@
                 HorizontalAlignment="Stretch" 
                 VerticalAlignment="Stretch"
                 AddTrait="XAML_TaWBonus_AddTrait"
-                RemoveTrait="XAML_TaWBonus_RemoveTrait"/>
+                RemoveTrait="XAML_TaWBonus_RemoveTrait"
+                TextColor="White"/>
             <itempages:TraitTalentBonusSelectionPage 
                 x:Name="XAML_ATBonus"
                 Grid.Column="1" 
@@ -110,7 +101,8 @@
                 HorizontalAlignment="Stretch" 
                 VerticalAlignment="Stretch"
                 AddTrait="XAML_ATBonus_AddTrait"
-                RemoveTrait="XAML_ATBonus_RemoveTrait"/>
+                RemoveTrait="XAML_ATBonus_RemoveTrait"
+                TextColor="White"/>
             <itempages:TraitTalentBonusSelectionPage 
                 x:Name="XAML_PABonus"
                 Grid.Column="2"
@@ -118,7 +110,18 @@
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 AddTrait="XAML_PABonus_AddTrait"
-                RemoveTrait="XAML_PABonus_RemoveTrait"/>
+                RemoveTrait="XAML_PABonus_RemoveTrait"
+                TextColor="White"/>
+        </Grid>
+        <Grid Grid.Row="4" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="XAML_ButtonCreate" Margin="100, 0, 0 , 0" Grid.Row="0" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="4" Width="200" Click="XAML_ButtonCreate_Click">
+                    <TextBlock Text="Erstellen" Foreground="{x:Bind TextColor}" FontSize="20" TextAlignment="Center" Width="100"></TextBlock>
+                </Button>
+                <Button x:Name="XAML_ButtonDelte" Margin="100, 0, 0 , 0" Grid.Row="2" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="4" Width="200" Click="XAML_ButtonDelte_Click">
+                    <TextBlock Text="Löschen" Foreground="{x:Bind TextColor}" FontSize="20" TextAlignment="Center" Width="100"></TextBlock>
+                </Button>
+            </StackPanel>
         </Grid>
     </Grid>
 </Page>

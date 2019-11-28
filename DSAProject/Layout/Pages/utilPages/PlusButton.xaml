@@ -16,7 +16,7 @@
         </Grid.ColumnDefinitions>
         <Border x:Name="XML_ButtonHigherValueBorder" BorderBrush="{x:Bind viewModel.BorderColor}" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button x:Name="XML_ButtonHigherValue" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Click="XML_ButtonHigherValue_Click">
-                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="{x:Bind viewModel.Symbol}" FontSize="8" FontStretch="UltraExpanded" FontWeight="ExtraBold"></TextBlock>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="{x:Bind viewModel.Symbol}" Foreground="{x:Bind viewModel.TextColor}" FontSize="8" FontStretch="UltraExpanded" FontWeight="ExtraBold"></TextBlock>
             </Button>
         </Border>
     </Grid>

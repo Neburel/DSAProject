@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -18,6 +19,8 @@ namespace DSAProject.Layout.Pages.BasePages
     public sealed partial class CreateTrait : Page
     {
         private CreateTrait_ViewModel viewModel = new CreateTrait_ViewModel();
+        private SolidColorBrush TextColor = new SolidColorBrush(Windows.UI.Colors.White);
+
         public CreateTrait()
         {
             this.InitializeComponent();

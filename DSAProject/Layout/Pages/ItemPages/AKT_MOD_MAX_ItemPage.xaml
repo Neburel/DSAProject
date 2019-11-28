@@ -33,25 +33,25 @@
         <TextBlock x:Name="XAML_TitleResult"    Grid.Row="0" Grid.Column="3" Text="Max"     TextAlignment="Center" VerticalAlignment="Bottom" Foreground="Black" FontSize="8" Visibility="{x:Bind ViewModel.IsTitle3Visible}"></TextBlock>
 
         <Border BorderBrush="Gray" Grid.Row="1" Grid.Column="0" Width="{x:Bind ViewModel.GetWidthName, Mode=OneWay}">
-            <TextBlock  x:Name="XAML_AttributName" Foreground="Black" Margin="0,0,0,0" Text="{x:Bind ViewModel.Name}" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="24"/>
+            <TextBlock  x:Name="XAML_AttributName" Margin="0,0,0,0" Text="{x:Bind ViewModel.Name}" Foreground="{x:Bind ViewModel.TextColor}" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="24"/>
         </Border>
         <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="1" Grid.Column="1" Width="{x:Bind ViewModel.GetBoxLength, Mode=OneWay}">
-            <TextBlock x:Name="XML_CurrentValue" Text="{x:Bind ViewModel.AKTValue, Mode=OneWay}" Foreground="Black" Margin="0,0,0,0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center"/>
+            <TextBlock x:Name="XML_CurrentValue" Text="{x:Bind ViewModel.AKTValue, Mode=OneWay}" Foreground="{x:Bind ViewModel.TextColor}" Margin="0,0,0,0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center"/>
         </Border>
         <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="1" Grid.Column="2" Visibility="{x:Bind ViewModel.IsModVisible }" Width="{x:Bind ViewModel.GetBoxLength, Mode=OneWay}">
-            <TextBlock x:Name="XML_ExtraValue" Text="{x:Bind ViewModel.MODValue, Mode=OneWay}" Foreground="Black" Margin="0,0,0,0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center"/>
+            <TextBlock x:Name="XML_ExtraValue" Text="{x:Bind ViewModel.MODValue, Mode=OneWay}" Foreground="{x:Bind ViewModel.TextColor}" Margin="0,0,0,0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center"/>
         </Border>
         <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="1" Grid.Column="3" Visibility="{x:Bind ViewModel.IsMaxVisible}" Width="{x:Bind ViewModel.GetBoxLength, Mode=OneWay}">
-            <TextBlock x:Name="XML_MaxValue" Text="{x:Bind ViewModel.MaxValue, Mode=OneWay}" Foreground="Black" Margin="0,0,0,0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center" FontFamily="Segoe UI"/>
+            <TextBlock x:Name="XML_MaxValue" Text="{x:Bind ViewModel.MaxValue, Mode=OneWay}" Foreground="{x:Bind ViewModel.TextColor}" Margin="0,0,0,0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center" FontFamily="Segoe UI"/>
         </Border>
 
         <Border x:Name="XML_ButtonHigherValueBorder" BorderBrush="Green" BorderThickness="1" Grid.Row="1" Grid.Column="4" Width="26" Height="26" Visibility="{x:Bind ViewModel.IsValueEditable}">
-            <Button x:Name="XML_ButtonHigherValue" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Click="XML_ButtonHigherValue_Click">
+            <Button x:Name="XML_ButtonHigherValue" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="{x:Bind ViewModel.TextColor}" Click="XML_ButtonHigherValue_Click">
                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="+" FontSize="8" FontStretch="UltraExpanded" FontWeight="ExtraBold"></TextBlock>
             </Button>
         </Border>
         <Border x:Name="XML_ButtonReduceValueBorder" BorderBrush="Red" BorderThickness="1"  Grid.Row="1" Grid.Column="5" Width="26" Height="26" Visibility="{x:Bind ViewModel.IsValueEditable}">
-            <Button x:Name="XML_ButtonReduceValue" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" Click="XML_ButtonReduceValue_Click">
+            <Button x:Name="XML_ButtonReduceValue" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{x:Bind ViewModel.TextColor}" Click="XML_ButtonReduceValue_Click">
                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="-" FontSize="10"></TextBlock>
             </Button>
         </Border>
