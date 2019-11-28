@@ -1,5 +1,6 @@
 ﻿using DSALib.Charakter.Talente.TalentLanguage;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DSALib.Charakter.Talente
 {
@@ -12,6 +13,21 @@ namespace DSALib.Charakter.Talente
         public LanguageFamily(string name)
         {
             Name = name;
+        }
+        public int GetHighestPosition()
+        {
+            int x = 0;
+            int y = 0;
+
+            if(Writings.Count != 0)
+            {
+                x = Writings.Keys.Max();
+            }
+            if(Languages.Count != 0)
+            {
+                y = Languages.Keys.Max();
+            }
+            return x > y ? x : y;
         }
     }
 }

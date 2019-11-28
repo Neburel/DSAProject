@@ -11,7 +11,8 @@
         x:Name="NavigationView"
         ItemInvoked="NavigationView_ItemInvoked"
         Loaded="NavigationView_Loaded"
-        BackRequested="NavigationView_BackRequested">       
+        BackRequested="NavigationView_BackRequested"
+        IsSettingsVisible="False">       
         <NavigationView.MenuItems>
             <NavigationViewItemHeader Content="Briefe" ></NavigationViewItemHeader>
             <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.HeroLetter}" Content="{x:Bind viewModel.HeroLetter.Content}"></NavigationViewItem>
@@ -27,6 +28,7 @@
             <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.Knowldage}"         Content="{x:Bind viewModel.Knowldage.Content}"></NavigationViewItem>
             <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.Crafting}"          Content="{x:Bind viewModel.Crafting.Content}"></NavigationViewItem>
             <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.GeneralTalent}"     Content="{x:Bind viewModel.GeneralTalent.Content}"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.LanguagePage}"      Content="{x:Bind viewModel.LanguagePage.Content}"></NavigationViewItem>
             <NavigationViewItemHeader Content="Eigenschaften" ></NavigationViewItemHeader>
             <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.Advanced}"          Content="{x:Bind viewModel.Advanced.Content}"></NavigationViewItem>
             <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.DisAdvanced}"       Content="{x:Bind viewModel.DisAdvanced.Content}"></NavigationViewItem>

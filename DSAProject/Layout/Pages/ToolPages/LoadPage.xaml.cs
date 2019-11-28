@@ -59,7 +59,7 @@ namespace DSAProject.Layout.Pages
 
             Game.LoadCharakter(charakter, out error);
 
-            Game.RequestNav(new util.EventNavRequest { Side = NavEnum.StartPage });
+            Game.RequestNav(new DSAProject.util.EventNavRequest { Side = NavEnum.StartPage });
         }
     }
 }

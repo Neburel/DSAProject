@@ -114,11 +114,14 @@
     <Compile Include="Layout\Pages\ItemPages\Language_ItemPage.xaml.cs">
       <DependentUpon>Language_ItemPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Layout\Pages\ItemPages\PlusButton.xaml.cs">
+    <Compile Include="Layout\Pages\utilPages\PlusButton.xaml.cs">
       <DependentUpon>PlusButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\Pages\ItemPages\TraitTalentBonusSelectionPage.xaml.cs">
       <DependentUpon>TraitTalentBonusSelectionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Layout\Pages\MainPages\LanguagePage.xaml.cs">
+      <DependentUpon>LanguagePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\Pages\ToolPages\CreateCharakter.xaml.cs">
       <DependentUpon>CreateCharakter.xaml</DependentUpon>
@@ -155,6 +158,9 @@
     </Compile>
     <Compile Include="Layout\Pages\MainPages\TraitPage.xaml.cs">
       <DependentUpon>TraitPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Layout\Pages\utilPages\TaWItem.xaml.cs">
+      <DependentUpon>TaWItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\ViewModels\CharakterCreationViewModel.cs" />
     <Compile Include="Layout\ViewModels\CreateTalentViewModel.cs" />
@@ -205,11 +211,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Layout\Pages\ItemPages\PlusButton.xaml">
+    <Page Include="Layout\Pages\utilPages\PlusButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Layout\Pages\ItemPages\TraitTalentBonusSelectionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Layout\Pages\MainPages\LanguagePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -258,6 +268,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Layout\Pages\MainPages\TraitPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Layout\Pages\utilPages\TaWItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

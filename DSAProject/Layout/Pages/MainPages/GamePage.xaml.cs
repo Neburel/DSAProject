@@ -9,6 +9,7 @@ using DSAProject.Converter;
 using DSAProject.Layout.MessageDialoge;
 using DSAProject.Layout.Pages;
 using DSAProject.Layout.Pages.BasePages;
+using DSAProject.Layout.Pages.MainPages;
 using DSAProject.util;
 using System;
 using System.Linq;
@@ -176,6 +177,7 @@ namespace DSAProject
             public GameContentItem CreateCharkter { get; private set; } = new GameContentItem { Content = "Charakter erstellen/editieren", Type = typeof(CharakterCreation) };
             public GameContentItem CreateTrait { get; private set; } = new GameContentItem { Content = "Create Trait", Type = typeof(CreateTrait) };
             public GameContentItem InfoPage { get; private set; } = new GameContentItem { Content = "Info", Type = typeof(InfoPage) };
+            public GameContentItem LanguagePage { get; private set; } = new GameContentItem { Content = "Sprachen", Type = typeof(LanguagePage) };
         }
         private class GameContentItem
         {

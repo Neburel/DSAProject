@@ -1,0 +1,25 @@
+﻿<Page
+    x:Class="DSAProject.Layout.Pages.utilPages.TaWItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DSAProject.Layout.Pages.utilPages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:itempages="using:DSAProject.Layout.Pages.ItemPages"
+    mc:Ignorable="d"
+    Background="Transparent">
+
+    <Border BorderBrush="LightSlateGray" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid ColumnSpacing="1" Padding="1,1,1,1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="30"/>
+                <ColumnDefinition Width="Auto" MaxWidth="26"/>
+                <ColumnDefinition Width="Auto" MaxWidth="26"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock TextWrapping="Wrap" Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+            <itempages:PlusButton Grid.Column="1"></itempages:PlusButton>
+            <itempages:PlusButton Grid.Column="2" IsInversed="True"></itempages:PlusButton>
+        </Grid>
+    </Border>
+</Page>
