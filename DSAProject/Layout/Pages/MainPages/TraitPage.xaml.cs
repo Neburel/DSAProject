@@ -2,11 +2,14 @@
 using DSALib.Charakter.Other;
 using DSAProject.Classes.Game;
 using DSAProject.Converter;
+using DSAProject.Layout.Pages.BasePages;
 using DSAProject.util;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace DSAProject.Layout.Pages
 {
@@ -15,6 +18,7 @@ namespace DSAProject.Layout.Pages
     /// </summary>
     public sealed partial class TraitPage : Page
     {
+        private Frame currentFrame;
         private TraitPageViewModel viewModel = new TraitPageViewModel();
         private Trait createNewTrait = new Trait { Description = "CreateNew" };
         private TraitType? trailFilter = null;
@@ -22,6 +26,20 @@ namespace DSAProject.Layout.Pages
         private bool Advantages { get; set; }
         private bool DisAdvantages { get; set; }
 
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            currentFrame = Frame;
+        }
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+        }
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+        }
 
         public TraitType TraitFilter
         {
@@ -69,7 +87,6 @@ namespace DSAProject.Layout.Pages
         {
             if(e.ClickedItem == createNewTrait)
             {
-                //Game.RequestNav(new EventNavRequest { Side = NavEnum.CreateTraitPage, Parameter = null });
                 Game.RequestNav(new EventNavRequest { Side = NavEnum.CreateTraitPage, Parameter = trailFilter });
             }
             else

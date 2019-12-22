@@ -246,8 +246,7 @@ namespace DSAProject.Classes
                 throw new Exception("Es sind nicht alle nötigen Variablen für das erstellen eines Talent gefüllt");
             }
             return jsonTalent;
-        }
-        
+        }        
         #endregion
         #region Loader
         public static List<ITalent> LoadTalent(List<JSON_Talent> talents)
@@ -473,6 +472,7 @@ namespace DSAProject.Classes
                     }
                     else if (excelRowType == ExcleRowType.ValidTalent)
                     {
+                        var k = excelTalent.Talent;
                         excelTalent.Title = currentTitle;
                         excelTalents.Add(excelTalent);
                     }
@@ -530,7 +530,7 @@ namespace DSAProject.Classes
                                 talentWriting = (TalentWriting)CreateTalent(
                                     contentType: nameof(TalentWriting),
                                     probe: excelTalent.GetConvertAttribute(),
-                                    be: excelTalent.BE,
+                                    be: excelTalent.Komplex2,
                                     name: excelTalent.Schrift,
                                     nameExtension: nameExtension);
                             }
@@ -540,6 +540,7 @@ namespace DSAProject.Classes
                         {
                             currentLanguageFamily = new LanguageFamily(excelTalent.Title);
                             familieList.Add(currentLanguageFamily);
+                            pos = 0;
                         }
                         if(talentLanguage != null)
                         {
@@ -552,11 +553,6 @@ namespace DSAProject.Classes
 
                         if(talentWriting != null && !ret.Contains(talentWriting))
                         {
-                            if(talentWriting.Name == " Kusliker Zeichen")
-                            {
-
-                            }
-
                             ret.Add(talentWriting);
                         }
                     }
@@ -738,6 +734,8 @@ namespace DSAProject.Classes
 
         private class ExcelTalent
         {
+            private bool komplex1Found = false;
+
             public string Talent { get; set; }
             public string Title { get; set; }
             public string Probe { get; set; }
@@ -752,7 +750,11 @@ namespace DSAProject.Classes
 
             public string Sprache { get; set; }
             public string Schrift { get; set; }
-            public string Komplex1 { get; set; }
+            public string Komplex1
+            {
+                get => BE;
+                set => BE = value;
+            }
             public string Komplex2 { get; set; }
 
 
@@ -788,7 +790,7 @@ namespace DSAProject.Classes
                 titleValue = titleValue.Replace(" ", "");
 
                 if (titleValue == nameof(Talent)) Talent = value;
-                else if (titleValue == nameof(BE)) BE = value;
+                else if (titleValue == nameof(BE)) BE       = value;
                 else if (titleValue == nameof(Probe)) Probe = value;
                 else if (titleValue == nameof(Billiger)) Billiger = value;
                 else if (titleValue == nameof(Spezialisierung)) Spezialisierung = value;
@@ -809,8 +811,9 @@ namespace DSAProject.Classes
                 }
                 else if (titleValue == "Komplex.")
                 {
-                    if (string.IsNullOrEmpty(Komplex1)) Komplex1 = value;
+                    if (!komplex1Found) Komplex1 = value;
                     else Komplex2 = value;
+                    komplex1Found = true;
                 }
                 //Sprache M.	Komplex.TaW Schrift Komplex.TaW
 

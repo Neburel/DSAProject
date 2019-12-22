@@ -36,15 +36,16 @@ namespace DSAProject
         public GamePage()
         {
             this.InitializeComponent();
-            currentPage = "HeroLetter";
-            ContentFrame.Navigate(typeof(HeroLetterPage));
-
             var standartSize = new Size(1400, 1000);
 
             ApplicationView.PreferredLaunchViewSize = standartSize;
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
             ApplicationView.GetForCurrentView().SetPreferredMinSize(standartSize);
-
+            
+            currentPage = "HeroLetter";
+            //ContentFrame.Navigate(typeof(HeroLetterPage));
+            ContentFrame.NavigationStopped += Frame_NavigationStopped;
+            
             Game.NavRequested += (sender, args) =>
             {
                 switch (args.Side)
@@ -60,13 +61,15 @@ namespace DSAProject
                 }
             };
         }
+        private void Frame_NavigationStopped(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
+        {
+        }
+
         private void NavigationView_Loaded(object sender, RoutedEventArgs e)
         {
         }
         private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
-            var y = args.InvokedItem;
-
             if (args.InvokedItem.GetType() == typeof(string))
             {
                 var item = sender.MenuItems.OfType<NavigationViewItem>().First(x => (string)x.Content == (string)args.InvokedItem);
@@ -76,12 +79,12 @@ namespace DSAProject
             {
                 NavView_Navigate(args.InvokedItem as NavigationViewItem);
             }
-
         }
         private void NavigationView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
         {
-
+            sender.SelectedItem = null;
         }
+
         private void NavView_Navigate(NavigationViewItem item)
         {
             var tag = (GameContentItem)item.Tag;
@@ -105,7 +108,7 @@ namespace DSAProject
                     ContentFrame.Navigate(navItem.Type);
                     currentItem = navItem;
                 }
-                if (navItem.Type == typeof(TalentPage))
+                if (navItem.Type == typeof(TalentPage) && ContentFrame.Content.GetType() == typeof(TalentPage))
                 {
                     TalentPage page = (TalentPage)ContentFrame.Content;
 
@@ -184,6 +187,11 @@ namespace DSAProject
             public string Content { get; set; }
             public Type Type { get; set; }
             public object SelectionType { get; set; }
+        }
+
+        private void NavigationView_ContextCanceled(UIElement sender, RoutedEventArgs args)
+        {
+
         }
     }
 }

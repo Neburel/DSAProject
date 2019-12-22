@@ -69,7 +69,7 @@ namespace DSAProject.Layout.Pages
             ViewModel.EyeColor.DescriptionTitle = "Augenfarbe:";
             ViewModel.HairColor.DescriptionTitle = "Haarfarbe:";
             ViewModel.SkinColor.DescriptionTitle = "Hautfarbe:";
-            ViewModel.BirthDate.DescriptionTitle = "Geburtsdatum:";
+            ViewModel.BirthDate.DescriptionTitle = ResourcesProject.BirthDate;
             ViewModel.PlayerName.DescriptionTitle = "Name:";
             ViewModel.Profession.DescriptionTitle = "Profession:";
             ViewModel.CurrentDate.DescriptionTitle = "Aktuelles Datum:";
@@ -140,6 +140,12 @@ namespace DSAProject.Layout.Pages
             ViewModel.PlayerHeight = CheckDescriptor(existingDescriptorList, ViewModel.PlayerHeight);
             ViewModel.PlayerWeight = CheckDescriptor(existingDescriptorList, ViewModel.PlayerWeight);
             ViewModel.PlayerAdressName = CheckDescriptor(existingDescriptorList, ViewModel.PlayerAdressName);
+
+            ViewModel.PlayerName.PropertyChanged += (sender, args) =>
+            {
+                Game.Charakter.Name = ViewModel.PlayerName.DescriptionText;
+            };
+            Game.Charakter.Name = ViewModel.PlayerName.DescriptionText;
         }
         private Descriptor CheckDescriptor(List<Descriptor> charakterDescriptors, Descriptor siteDescriptor)
         {

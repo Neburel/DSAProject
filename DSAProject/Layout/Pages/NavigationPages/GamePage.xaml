@@ -8,14 +8,16 @@
     RequestedTheme="Dark"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <NavigationView
-        x:Name="NavigationView"
+        x:Name="navView"
         ItemInvoked="NavigationView_ItemInvoked"
+        ContextCanceled="NavigationView_ContextCanceled"
         Loaded="NavigationView_Loaded"
         BackRequested="NavigationView_BackRequested"
-        IsSettingsVisible="False">       
+        IsSettingsVisible="False"
+        IsBackButtonVisible="Collapsed">       
         <NavigationView.MenuItems>
             <NavigationViewItemHeader Content="Briefe" ></NavigationViewItemHeader>
-            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.HeroLetter}" Content="{x:Bind viewModel.HeroLetter.Content}"></NavigationViewItem>
+            <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.HeroLetter}"        Content="{x:Bind viewModel.HeroLetter.Content}" IsSelected="True"></NavigationViewItem>
             <NavigationViewItemHeader Content="Kampf Talente" ></NavigationViewItemHeader>
             <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.Weaponless}"        Content="{x:Bind viewModel.Weaponless.Content}"></NavigationViewItem>
             <NavigationViewItem Icon="Home" IsEnabled="True" Tag="{x:Bind viewModel.Close}"             Content="{x:Bind viewModel.Close.Content}"></NavigationViewItem>

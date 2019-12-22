@@ -2,12 +2,14 @@
 using DSALib.Charakter.Other;
 using DSAProject.Classes.Charakter.Talente;
 using DSAProject.Classes.Game;
+using DSAProject.Layout.MessageDialoge;
 using DSAProject.util;
 using System;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -18,6 +20,8 @@ namespace DSAProject.Layout.Pages.BasePages
     /// </summary>
     public sealed partial class CreateTrait : Page
     {
+        private Frame currentFrame;
+        private bool leaveButtonClicked = false;
         private CreateTrait_ViewModel viewModel = new CreateTrait_ViewModel();
         private SolidColorBrush TextColor = new SolidColorBrush(Windows.UI.Colors.White);
 
@@ -26,6 +30,27 @@ namespace DSAProject.Layout.Pages.BasePages
             this.InitializeComponent();
             XAML_TraitValue.AKTValue    = string.Empty;
             XAML_TraitGP.AKTValue       = string.Empty;
+        }
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            //    bool test = true;
+            //    if (!leaveButtonClicked)
+            //    {
+            //        test = await CreateTraitDialog.ShowDialog();
+            //    }
+            base.OnNavigatingFrom(e);
+
+            if (!leaveButtonClicked)
+            {
+                e.Cancel = true;
+
+                Frame.Navigate(e.SourcePageType, true);
+            }
+        }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            currentFrame= Frame;
+            base.OnNavigatedTo(e);
         }
         #region Value
         private void XAML_TraitValue_Event_ValueHigher(object sender, EventArgs e)
@@ -66,18 +91,11 @@ namespace DSAProject.Layout.Pages.BasePages
         #region Handler
         private void XAML_ButtonCreate_Click(object sender, RoutedEventArgs e)
         {
-            var trait = viewModel.Trait;
-            Game.Charakter.Traits.AddTrait(trait);
-            Game.RequestNav(new EventNavRequest { Side = NavEnum.StartPage });
+            LeaveSideWithButton(true);
         }
         private void XAML_ButtonDelte_Click(object sender, RoutedEventArgs e)
         {
-            var trait = viewModel.Trait;
-            if(trait != null)
-            {
-                Game.Charakter.Traits.RemoveTrait(trait);
-            }
-            Game.RequestNav(new EventNavRequest { Side = NavEnum.StartPage });
+            LeaveSideWithButton(false);
         }
         private void XAML_TaWBonus_AddTrait(object sender, Hilfsklassen.TraitTalentBonus e)
         {
@@ -145,6 +163,21 @@ namespace DSAProject.Layout.Pages.BasePages
         public void SetTraitType(TraitType trait)
         {
             viewModel.SelectedItem = Enum.GetName(typeof(TraitType), trait);
+        }
+        private void LeaveSideWithButton(bool create)
+        {
+            leaveButtonClicked = true;
+
+            var trait = viewModel.Trait;
+            if (trait != null && !create)
+            {
+                Game.Charakter.Traits.RemoveTrait(trait);
+            }
+            else
+            {
+                Game.Charakter.Traits.AddTrait(trait);
+            }
+            Game.RequestNav(new EventNavRequest { Side = NavEnum.StartPage });
         }
         #endregion
         private class CreateTrait_ViewModel : AbstractPropertyChanged
@@ -235,6 +268,5 @@ namespace DSAProject.Layout.Pages.BasePages
                 }
             }
         }
-
     }
 }

@@ -2,6 +2,7 @@
 using DSALib.Exceptions;
 using DSAProject.Classes;
 using DSAProject.Classes.Game;
+using DSAProject.Layout.Pages.NavigationPages;
 using DSAProject.util.ErrrorManagment;
 
 using System;
@@ -83,7 +84,8 @@ namespace DSAProject
                     // Wenn der Navigationsstapel nicht wiederhergestellt wird, zur ersten Seite navigieren
                     // und die neue Seite konfigurieren, indem die erforderlichen Informationen als Navigationsparameter
                     // übergeben werden
-                    rootFrame.Navigate(typeof(GamePage), e.Arguments);
+                    //rootFrame.Navigate(typeof(GamePage), e.Arguments);
+                    rootFrame.Navigate(typeof(GameNavPage), e.Arguments);
                 }
                 // Sicherstellen, dass das aktuelle Fenster aktiv ist
                 Window.Current.Activate();

@@ -8,6 +8,7 @@ using DSAProject.util.ErrrorManagment;
 using DSAProject.util.FileManagment;
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace DSAProject.Layout.Pages
     public sealed partial class LoadPage : Page
     {
         private const string CHARNAME = "Namenlos";
-        private bool GivenName = false;
+        Dictionary<JSON_Charakter, bool> CharGivenName = new Dictionary<JSON_Charakter, bool>();
         public ObservableCollection<JSON_Charakter> Items { get; } = new ObservableCollection<JSON_Charakter>();
         public LoadPage()
         {
@@ -39,7 +40,11 @@ namespace DSAProject.Layout.Pages
                 if (string.IsNullOrEmpty(json_charakter.Name))
                 {
                     json_charakter.Name = CHARNAME;
-                    GivenName = true;
+                    CharGivenName.Add(json_charakter, true);
+                }
+                else
+                {
+                    CharGivenName.Add(json_charakter, false);
                 }
 
                 items.Add(json_charakter);
@@ -51,14 +56,14 @@ namespace DSAProject.Layout.Pages
         {
             Error error             = null;
             var charakter            = (JSON_Charakter)e.ClickedItem;
+            CharGivenName.TryGetValue(charakter, out bool givenName);
 
-            if (GivenName)
+            if (givenName)
             {
                 charakter.Name = string.Empty;
             }
 
             Game.LoadCharakter(charakter, out error);
-
             Game.RequestNav(new DSAProject.util.EventNavRequest { Side = NavEnum.StartPage });
         }
     }

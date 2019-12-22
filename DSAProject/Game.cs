@@ -69,7 +69,6 @@ namespace DSAProject.Classes.Game
             }
         }
         public static string CharakterSaveFolder { get; } = Path.Combine("Save", "Data");
-        public static string CharakterMetaFolder { get; } = Path.Combine("Save", "Meta");
         public static string CurrentYearDSA { get; } = "? nach Bosporos Fall";
         public static List<ITalent> TalentList { get; private set; } = new List<ITalent>();
         public static List<LanguageFamily> LanguageFamilies = new List<LanguageFamily>();
@@ -150,7 +149,7 @@ namespace DSAProject.Classes.Game
         public static Guid GenerateNextCharakterGUID()
         {
             var guid = Guid.NewGuid();
-            var files = FileManagment.GetFilesDictionary(CharakterMetaFolder, out Error error);
+            var files = FileManagment.GetFilesDictionary(CharakterSaveFolder, out Error error);
             var list = new List<Guid>();
 
             foreach (var file in files)
@@ -211,25 +210,6 @@ namespace DSAProject.Classes.Game
                 });
                 task.Start();
                 #endregion
-
-
-                if (error == null)
-                {
-                    #region Meta File
-                    var metaFile = new JSON_CharakterMetaData
-                    {
-                        ID = Charakter.ID,
-                        Name = Charakter.Name,
-                        SaveFile = Charakter.ID.ToString() + ".save",
-                        SaveTime = DateTime.Now,
-                        Game = Charakter.GetType().ToString()
-                    };
-                    var y = DateTime.Now;
-                    var metaFilePath = Path.Combine(CharakterMetaFolder, Charakter.ID.ToString() + ".save");
-                    FileManagment.WriteToFile(metaFile.JSONContent, metaFilePath, Windows.Storage.CreationCollisionOption.ReplaceExisting, out error);
-                    #endregion
-                }
-
             }
             catch (Exception ex)
             {

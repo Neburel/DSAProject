@@ -34,15 +34,39 @@ namespace DSAProject.Layout.Pages.MainPages
 
             var languageFamily = Game.LanguageFamilies[0];
 
-            foreach(var family in Game.LanguageFamilies)
+            //< Border BorderBrush = "LightSlateGray" Grid.Row = "0" Grid.Column = "2" BorderThickness = "1" >
+       
+            //       < TextBlock TextWrapping = "Wrap" Text = "{x:Bind ViewModel.LanguageTalent.BE, Mode=TwoWay}" TextAlignment = "Center" HorizontalTextAlignment = "Center" HorizontalAlignment = "Center" VerticalAlignment = "Center" ></ TextBlock >
+                  
+            //              </ Border >
+
+            foreach (var family in Game.LanguageFamilies)
             {
                 XAML_Grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0, GridUnitType.Auto) });
-                var title = new TextBlock { Text = family.Name };
-                XAML_Grid.Children.Add(title);
-                Grid.SetRow(title, counter);
+
+                var border = new Border
+                {
+                    BorderBrush = new SolidColorBrush(Windows.UI.Colors.LightSlateGray),
+                    BorderThickness = new Thickness(1),
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    VerticalAlignment = VerticalAlignment.Stretch
+                };
+                var title = new TextBlock
+                {
+                    Text = family.Name,
+                    Padding = new Thickness(0, 10, 0, 0),
+                    HorizontalTextAlignment = TextAlignment.Center
+
+                };
+                border.Child = title;
+
+
+                XAML_Grid.Children.Add(border);
+                Grid.SetRow(border, counter);
                 counter++;
 
-                for (int i=0; i<family.GetHighestPosition(); i++)
+                var max = family.GetHighestPosition();
+                for (int i=0; i<=max; i++)
                 {
                     Language_ItemPage x = new Language_ItemPage();
                     if(family.Languages.TryGetValue(i, out TalentLanguage language))
