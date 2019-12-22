@@ -27,6 +27,7 @@ namespace DSAProject.Layout.Pages.MainPages
     public sealed partial class LanguagePage : Page
     {
         private int counter = 0;
+        private static List<Language_ItemPage> testList;
 
         public LanguagePage()
         {

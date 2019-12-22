@@ -8,6 +8,7 @@ using DSAProject.Classes.Game;
 using DSAProject.Converter;
 using DSAProject.Layout.MessageDialoge;
 using DSAProject.Layout.Pages.BasePages;
+using DSAProject.Layout.Pages.MainPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,7 @@ namespace DSAProject.Layout.Pages.NavigationPages
             {
                 new NavigationViewItemHeader    { Content = "Briefe" },
                 startItem,
+                new NavigationViewItem          { Content = "Sprachenbrief",                Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(LanguagePage) } },
 
                 new NavigationViewItemHeader    { Content = "Kampf Talente" },
                 new NavigationViewItem          { Content = "Waffenlose Kampftechniken",    Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage), Parameter = typeof(TalentWeaponless) } },
@@ -47,7 +49,6 @@ namespace DSAProject.Layout.Pages.NavigationPages
                 new NavigationViewItem          { Content = "Natur Talente",                Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage), Parameter = typeof(TalentNature) } },
                 new NavigationViewItem          { Content = "Wissenstalente",               Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage), Parameter = typeof(TalentKnowldage) } },
                 new NavigationViewItem          { Content = "Handwerkstalente",             Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage), Parameter = typeof(TalentCrafting) } },
-                new NavigationViewItem          { Content = "Alle",                         Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage), Parameter = typeof(AbstractTalentGeneral) } },
 
                 new NavigationViewItemHeader    { Content = "Eigenschaften" },
                 new NavigationViewItem          { Content = "Vorteile",                     Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Vorteil } },
@@ -106,7 +107,6 @@ namespace DSAProject.Layout.Pages.NavigationPages
 
             if (parameter != null)
             {
-
                 if (e.SourcePageType == typeof(TalentPage))
                 {
                     var page            = (TalentPage)XAML_ContentFrame.Content;
@@ -189,8 +189,6 @@ namespace DSAProject.Layout.Pages.NavigationPages
                 {
                     ColorConverter.SolidColorBrush = new SolidColorBrush(Windows.UI.Colors.White);
                 }
-
-
                 XAML_ContentFrame.Navigate(navItem.NavType, navItem.Parameter);
             }
         }

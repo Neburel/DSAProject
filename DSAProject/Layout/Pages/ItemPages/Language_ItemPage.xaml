@@ -14,39 +14,32 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
 
-        <Border BorderBrush="LightSlateGray" Grid.Row="0" Grid.Column="0" BorderThickness="1">
+        <Border BorderBrush="LightSlateGray" Grid.Row="0" Grid.Column="0" BorderThickness="1" Visibility="{x:Bind ViewModel.LanguageTalentBorderVisible}">
             <TextBlock TextWrapping="Wrap" Text="{x:Bind ViewModel.LanguageTalent.Name }" TextAlignment="Center" HorizontalTextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         </Border>
-        <Border BorderBrush="LightSlateGray" Grid.Row="0" Grid.Column="1" BorderThickness="1">
-            <CheckBox></CheckBox>
-            <!--<TextBlock TextWrapping="Wrap" Text="{x:Bind ViewModel.LanguageM, Mode=TwoWay}" TextAlignment="Center" HorizontalTextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>-->
+        <Border BorderBrush="LightSlateGray" Grid.Row="0" Grid.Column="1" BorderThickness="1" Visibility="{x:Bind ViewModel.LanguageTalentBorderVisible}">
+            <CheckBox Margin="14, 0,0,0"/>
         </Border>
-        <Border BorderBrush="LightSlateGray" Grid.Row="0" Grid.Column="2" BorderThickness="1">
+        <Border BorderBrush="LightSlateGray" Grid.Row="0" Grid.Column="2" BorderThickness="1" Visibility="{x:Bind ViewModel.LanguageTalentBorderVisible}">
             <TextBlock TextWrapping="Wrap" Text="{x:Bind ViewModel.LanguageTalent.BE, Mode=TwoWay}" TextAlignment="Center" HorizontalTextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         </Border>
-        <utilpages:TaWItem Grid.Row="2" Grid.Column="3"></utilpages:TaWItem>
-        <Border BorderBrush="LightSlateGray" Grid.Row="0" Grid.Column="4" BorderThickness="1">
-            <TextBlock TextWrapping="Wrap" Text="{x:Bind ViewModel.LanguageProbe, Mode=TwoWay}" TextAlignment="Center" HorizontalTextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-        </Border>
-        
-        <Border BorderBrush="LightSlateGray" Grid.Row="0" Grid.Column="5" BorderThickness="1">
+        <utilpages:TaWItem Grid.Row="2" Grid.Column="3" TAW="{x:Bind ViewModel.LanguageTAW, Mode=TwoWay}"></utilpages:TaWItem>
+        <Border BorderBrush="LightSlateGray" Grid.Row="0" Grid.Column="4" BorderThickness="1" Visibility="{x:Bind ViewModel.WritingTalentBorderVisible}">
             <TextBlock TextWrapping="Wrap" Text="{x:Bind ViewModel.WritingTalent.Name }" TextAlignment="Center" HorizontalTextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         </Border>
-        <Border BorderBrush="LightSlateGray" Grid.Row="1" Grid.Column="6" BorderThickness="1">
+        <Border BorderBrush="LightSlateGray" Grid.Row="1" Grid.Column="5" BorderThickness="1" Visibility="{x:Bind ViewModel.WritingTalentBorderVisible}">
             <TextBlock TextWrapping="Wrap" Text="{x:Bind ViewModel.WritingTalent.BE, Mode=TwoWay}" TextAlignment="Center" HorizontalTextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         </Border>
-        <utilpages:TaWItem Grid.Row="2" Grid.Column="7"></utilpages:TaWItem>
-        <Border BorderBrush="LightSlateGray" Grid.Row="0" Grid.Column="8" BorderThickness="1">
+        <utilpages:TaWItem Grid.Row="2" Grid.Column="7" Visibility="{x:Bind ViewModel.WritingTalentBorderVisible}"></utilpages:TaWItem>
+        <Border BorderBrush="LightSlateGray" Grid.Row="0" Grid.Column="6" BorderThickness="1" Visibility="{x:Bind ViewModel.WritingTalentBorderVisible}">
             <TextBlock TextWrapping="Wrap" Text="{x:Bind ViewModel.WritingProbe, Mode=TwoWay}" TextAlignment="Center" HorizontalTextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         </Border>
         
