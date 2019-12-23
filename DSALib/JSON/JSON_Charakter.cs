@@ -37,6 +37,8 @@ namespace DSALib.Classes.JSON
         [DataMember]
         public Dictionary<Guid, int> TalentPA { get; set; }
         [DataMember]
+        public Dictionary<Guid, bool> MotherLanguages { get; set; }
+        [DataMember]
         public Dictionary<Guid, string> TalentGuidsNames { get; set; }
         [DataMember]
         public List<JSON_Trait> Traits { get; set; }

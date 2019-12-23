@@ -19,6 +19,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Border BorderBrush="Gray" BorderThickness="1">
@@ -31,20 +32,20 @@
                 <views:AttributPage Mode="ValueStandart" VerticalAlignment="Top" TextColor="Black"/>
                 <views:AttributPage Mode="ResourceStandart" VerticalAlignment="Top" TextColor="Black"/>
             </StackPanel>
-            <Grid ColumnSpacing="20">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="Vorteile" VerticalAlignment="Center" HorizontalTextAlignment="Center" Foreground="Black"></TextBlock>
-                <TextBlock Grid.Row="0" Grid.Column="1" Text="Nachteile" VerticalAlignment="Center" HorizontalTextAlignment="Center" Foreground="Black"></TextBlock>
-                <views:TraitPage Grid.Row="1" Grid.Column="0" TraitFilter="Vorteil" ></views:TraitPage>
-                <views:TraitPage Grid.Row="1" Grid.Column="1" TraitFilter="Nachteil"></views:TraitPage>
-            </Grid>
         </StackPanel>
+        <Grid Grid.Row="2" ColumnSpacing="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Vorteile" VerticalAlignment="Center" HorizontalTextAlignment="Center" Foreground="Black"></TextBlock>
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="Nachteile" VerticalAlignment="Center" HorizontalTextAlignment="Center" Foreground="Black"></TextBlock>
+            <views:TraitPage Grid.Row="1" Grid.Column="0" TraitFilter="Vorteil" ></views:TraitPage>
+            <views:TraitPage Grid.Row="1" Grid.Column="1" TraitFilter="Nachteil"></views:TraitPage>
+        </Grid>
     </Grid>
 </Page>

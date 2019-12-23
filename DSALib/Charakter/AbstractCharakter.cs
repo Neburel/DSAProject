@@ -7,6 +7,7 @@ using DSALib.JSON;
 using DSALib.Utils;
 using DSAProject.Classes.Charakter.Description;
 using DSAProject.Classes.Charakter.Talente;
+using DSAProject.Classes.Charakter.Talente.TalentLanguage;
 using DSAProject.Classes.Interfaces;
 
 using System;
@@ -78,12 +79,6 @@ namespace DSAProject.Classes.Charakter
         #region Methods
         public JSON_Charakter CreateSave()
         {
-            //#region Speichern Möglich?
-            //if (Name == null || Name == string.Empty)
-            //{
-            //    throw new Exception("Der Charakter benötigt einen Namen");
-            //}
-            //#endregion
             var charakter = new JSON_Charakter
             {
                 ID          = ID,
@@ -118,8 +113,10 @@ namespace DSAProject.Classes.Charakter
             #endregion
             #region Talente Speichern
             charakter.TalentTAW = new Dictionary<Guid, int>();
-            charakter.TalentAT = new Dictionary<Guid, int>();
-            charakter.TalentPA = new Dictionary<Guid, int>();
+            charakter.TalentAT  = new Dictionary<Guid, int>();
+            charakter.TalentPA  = new Dictionary<Guid, int>();
+            charakter.MotherLanguages = new Dictionary<Guid, bool>();
+            
 
             foreach (var item in Talente.TAWDictionary)
             {
@@ -142,7 +139,11 @@ namespace DSAProject.Classes.Charakter
                     charakter.TalentPA.Add(item.Key.ID, item.Value);
                 }
             }
-
+            foreach (var item in Talente.MotherDicionary)
+            {
+                charakter.MotherLanguages.Add(item.Key.ID, item.Value);
+            }
+ 
             var allTalents = new List<ITalent>(Talente.TAWDictionary.Keys);
             allTalents.AddRange(Talente.ATDictionary.Keys);
             allTalents.AddRange(Talente.PADictionary.Keys);
@@ -218,6 +219,11 @@ namespace DSAProject.Classes.Charakter
         }
         public void Load(JSON_Charakter json_charakter, List<ITalent> talents) 
         {
+            #region Nullprüfungen
+            if (json_charakter.MotherLanguages == null) json_charakter.MotherLanguages = new Dictionary<Guid, bool>();
+            #endregion
+
+
             CreateNew(json_charakter.ID);
             Name = json_charakter.Name;
             #region Attribute Laden
@@ -272,6 +278,11 @@ namespace DSAProject.Classes.Charakter
                 {
                     TalentMissing(json_charakter, item.Key);
                 }
+            }
+            foreach(var item in json_charakter.MotherLanguages)
+            {
+                var talent = talents.Where(x => x.ID == item.Key).FirstOrDefault();
+                Talente.SetMother((TalentLanguage)talent, item.Value);
             }
             #endregion
             #region Descriptoren Laden

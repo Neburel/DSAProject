@@ -14,7 +14,6 @@ namespace DSAProject.Classes.Charakter.Talente.TalentLanguage
                 DSALib.CharakterAttribut.Charisma
             };
         }
-
         public override string ToString()
         {
             return base.ToString() + "(Sprache)";

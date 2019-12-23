@@ -11,10 +11,13 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-                
-        <Grid RowSpacing="0" ColumnSpacing="0" Grid.Row="1">
+            
+        <Grid x:Name="XAML_TitleRow" Grid.Row="0"></Grid>
+        <AutoSuggestBox Grid.Row="1" SuggestionChosen="AutoSuggestBox_SuggestionChosen" QueryIcon="Find" TextChanged="AutoSuggestBox_TextChanged"></AutoSuggestBox>
+        <Grid RowSpacing="0" ColumnSpacing="0" Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="50"/>
@@ -64,7 +67,7 @@
             </Border>
         </Grid>
         <ScrollViewer 
-            Grid.Row="2"
+            Grid.Row="3"
             HorizontalScrollBarVisibility="Disabled"
             VerticalScrollMode="Enabled"
             HorizontalScrollMode="Enabled"
@@ -76,9 +79,7 @@
                 RowSpacing="0">
                 
             </Grid>
-        </ScrollViewer>
-
-        <AutoSuggestBox Grid.Row="0" SuggestionChosen="AutoSuggestBox_SuggestionChosen" QueryIcon="Find" TextChanged="AutoSuggestBox_TextChanged"></AutoSuggestBox>
+        </ScrollViewer>        
     </Grid>
 
 </Page>

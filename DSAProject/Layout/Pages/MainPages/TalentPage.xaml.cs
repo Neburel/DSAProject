@@ -1,4 +1,6 @@
-﻿using DSAProject.Classes.Charakter.Talente;
+﻿using DSALib.Utils;
+using DSAProject.Classes.Charakter.Talente;
+using DSAProject.Classes.Game;
 using DSAProject.Classes.Interfaces;
 using DSAProject.Layout.Pages.ItemPages;
 using System.Collections.Generic;
@@ -21,6 +23,22 @@ namespace DSAProject.Layout.Pages
         public TalentPage()
         {
             this.InitializeComponent();
+
+            int counter = 0;
+            foreach(var item in Game.Charakter.Attribute.UsedAttributs)
+            {
+                var textBloc    = new TextBlock();
+                var attribut    = Helper.GetShort(item);
+                var value       = Game.Charakter.Attribute.GetAttributMAXValue(item, out Error error);
+                textBloc.Text = attribut + " " + value;
+                textBloc.HorizontalAlignment = HorizontalAlignment.Center;
+                textBloc.VerticalAlignment = VerticalAlignment.Center;
+
+                XAML_TitleRow.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                XAML_TitleRow.Children.Add(textBloc);
+                Grid.SetColumn(textBloc, counter);
+                counter++;
+            }
         }
         public void SetTalents(List<ITalent> talent)
         {

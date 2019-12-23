@@ -15,7 +15,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <ListView Grid.Row="1" ItemsSource="{x:Bind viewModel.Traits}" Margin="0" Padding="0" ItemClick="ListView_ItemClick" IsItemClickEnabled="True">
             <ListView.HeaderTemplate>

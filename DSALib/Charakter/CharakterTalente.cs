@@ -2,6 +2,7 @@
 using DSALib.Utils;
 using DSAProject.Classes.Charakter.Talente;
 using DSAProject.Classes.Charakter.Talente.TalentFighting;
+using DSAProject.Classes.Charakter.Talente.TalentLanguage;
 using DSAProject.Classes.Charakter.Values.Attribute;
 using DSAProject.Classes.Interfaces;
 
@@ -20,9 +21,9 @@ namespace DSAProject.Classes.Charakter
         private ICharakter charakter;
 
         internal Dictionary<ITalent, int> TAWDictionary = new Dictionary<ITalent, int>();
-        internal Dictionary<AbstractTalentFighting, int> ATDictionary  = new Dictionary<AbstractTalentFighting, int>();
-        internal Dictionary<AbstractTalentFighting, int> PADictionary  = new Dictionary<AbstractTalentFighting, int>();
-
+        internal Dictionary<AbstractTalentFighting, int> ATDictionary   = new Dictionary<AbstractTalentFighting, int>();
+        internal Dictionary<AbstractTalentFighting, int> PADictionary   = new Dictionary<AbstractTalentFighting, int>();
+        internal Dictionary<TalentLanguage, bool> MotherDicionary       = new Dictionary<TalentLanguage, bool>();
         public CharakterTalente(ICharakter charakter)
         {
             this.charakter = charakter;
@@ -114,6 +115,15 @@ namespace DSAProject.Classes.Charakter
                 PAChanged?.Invoke(this, talent);
             }
         }
+        public void SetMother(TalentLanguage talent, bool value)
+        {
+            MotherDicionary.Remove(talent);
+
+            if (value)
+            {
+                MotherDicionary.Add(talent, value);
+            }
+        }
 
         public int GetTAW(ITalent talent)
         {
@@ -153,7 +163,11 @@ namespace DSAProject.Classes.Charakter
             }
             return 0;
         }
-          
+        public bool GetMother(TalentLanguage talent)
+        {
+            return MotherDicionary.TryGetValue(talent, out bool value);
+        }
+        
         /// <summary>
         /// Sollte auf dauer Überarbeitet und entfernt werden
         /// </summary>
