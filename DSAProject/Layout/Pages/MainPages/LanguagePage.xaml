@@ -20,37 +20,39 @@
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
 
             <Border BorderBrush="Gray" Grid.Row="0" Grid.Column="0" BorderThickness="1">
                 <TextBlock Foreground="White" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="French Script MT" FontSize="20" Text="Sprache"></TextBlock>
             </Border>
-
             <Border BorderBrush="Gray" Grid.Row="0" Grid.Column="1" BorderThickness="1">
                 <TextBlock Foreground="White" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="French Script MT" FontSize="20" Text="M."></TextBlock>
             </Border>
-
             <Border BorderBrush="Gray" Grid.Row="0" Grid.Column="2" BorderThickness="1">
                 <TextBlock Foreground="White" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="French Script MT" FontSize="20" Text="K."></TextBlock>
             </Border>
-
             <Border BorderBrush="Gray" Grid.Row="0" Grid.Column="3" BorderThickness="1">
                 <TextBlock Foreground="White" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="French Script MT" FontSize="20" Text="TAW"></TextBlock>
             </Border>
-
             <Border BorderBrush="Gray" Grid.Row="0" Grid.Column="4" BorderThickness="1">
+                <TextBlock Foreground="White" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="French Script MT" FontSize="20" Text="Probe"></TextBlock>
+            </Border>
+            <Border BorderBrush="Gray" Grid.Row="0" Grid.Column="5" BorderThickness="1">
                 <TextBlock Foreground="White" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="French Script MT" FontSize="20" Text="Schrift"></TextBlock>
             </Border>
-
-            <Border BorderBrush="Gray" Grid.Row="0" Grid.Column="5" BorderThickness="1">
+            <Border BorderBrush="Gray" Grid.Row="0" Grid.Column="6" BorderThickness="1">
                 <TextBlock Foreground="White" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="French Script MT" FontSize="20" Text="K."></TextBlock>
             </Border>
-
-            <Border BorderBrush="Gray" Grid.Row="0" Grid.Column="6" BorderThickness="1">
+            <Border BorderBrush="Gray" Grid.Row="0" Grid.Column="7" BorderThickness="1">
                 <TextBlock Foreground="White" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="French Script MT" FontSize="20" Text="TAW"></TextBlock>
+            </Border>
+            <Border BorderBrush="Gray" Grid.Row="0" Grid.Column="8" BorderThickness="1">
+                <TextBlock Foreground="White" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="French Script MT" FontSize="20" Text="Probe"></TextBlock>
             </Border>
         </Grid>
         <ScrollViewer 

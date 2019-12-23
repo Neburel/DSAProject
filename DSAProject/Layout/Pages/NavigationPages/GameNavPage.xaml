@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    
     <NavigationView
         x:Name="XAML_NavigationView"
         IsSettingsVisible="False"
@@ -23,6 +23,6 @@
                 </TransitionCollection>
             </Frame.ContentTransitions>
         </Frame>
-        
+
     </NavigationView>
 </Page>

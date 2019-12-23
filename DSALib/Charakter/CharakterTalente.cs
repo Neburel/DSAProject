@@ -153,7 +153,15 @@ namespace DSAProject.Classes.Charakter
             }
             return 0;
         }
-
+          
+        /// <summary>
+        /// Sollte auf dauer Überarbeitet und entfernt werden
+        /// </summary>
+        /// <param name="talent"></param>
+        /// <param name="bonusTaW"></param>
+        /// <param name="bonusAT"></param>
+        /// <param name="bonusPA"></param>
+        /// <returns></returns>
         public string GetProbeString(ITalent talent, int bonusTaW = 0, int bonusAT = 0, int bonusPA = 0)
         {
             var talentType  = talent.GetType();
@@ -169,7 +177,7 @@ namespace DSAProject.Classes.Charakter
 
                 var at = charakter.Values.GetMAXValue(baseAttack, out error) + GetAT(innertalent) + bonusAT;
                 var pa = charakter.Values.GetMAXValue(baseParade, out error) + GetPA(innertalent) + bonusPA;
-
+                
                 probe = (at).ToString() + "/" + (pa).ToString();
             } 
             else if (typeof(TalentRange).IsAssignableFrom(talentType))
@@ -189,7 +197,20 @@ namespace DSAProject.Classes.Charakter
                     value = value +charakter.Attribute.GetAttributMAXValue(item, out error);
                 }
 
-                probe = (value + bonusTaW).ToString();
+                //probe = (value + bonusTaW).ToString();
+                probe = (value).ToString();
+            }
+            else if (typeof(AbstractTalentLanguage).IsAssignableFrom(talentType))
+            {
+                var innerTalent = (AbstractTalentLanguage)talent;
+                var value = 0;
+                foreach (var item in innerTalent.Attributs)
+                {
+                    value = value + charakter.Attribute.GetAttributMAXValue(item, out error);
+                }
+
+                //probe = (value + bonusTaW).ToString();
+                probe = (value).ToString();
             }
             else
             {

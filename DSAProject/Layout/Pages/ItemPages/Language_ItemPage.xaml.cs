@@ -36,6 +36,8 @@ namespace DSAProject.Layout.Pages.ItemPages
             private bool writingTalentBorderVisible     = false;
             private int languageTaw                     = 0;
             private int writingTaW                      = 0;
+            private string languageProbeString          = string.Empty;
+            private string writingProbeString           = string.Empty;
             private AbstractTalent languageTalent;
             private AbstractTalent writingTalent;
             #endregion
@@ -46,7 +48,8 @@ namespace DSAProject.Layout.Pages.ItemPages
                 {
                     languageTalent = value;
                     LanguageTalentBorderVisible = true;
-                    LanguageTAW = Game.Charakter.Talente.GetTAW(LanguageTalent);
+                    LanguageTAW     = Game.Charakter.Talente.GetTAW(LanguageTalent);
+                    LanguageProbe   = Game.Charakter.Talente.GetProbeString(LanguageTalent);
                     OnPropertyChanged(nameof(LanguageTalent));
                 }
             }
@@ -57,7 +60,8 @@ namespace DSAProject.Layout.Pages.ItemPages
                 {
                     writingTalent = value;
                     WritingTalentBorderVisible = true;
-                    WritingTAW = Game.Charakter.Talente.GetTAW(WritingTalent);
+                    WritingTAW      = Game.Charakter.Talente.GetTAW(WritingTalent);
+                    WritingProbe    = Game.Charakter.Talente.GetProbeString(WritingTalent);
                     OnPropertyChanged(nameof(WritingTalent));
                 }
             }
@@ -84,7 +88,15 @@ namespace DSAProject.Layout.Pages.ItemPages
                     OnPropertyChanged(nameof(LanguageTAW));
                 }
             }
-            public string LanguageProbe { get; set; }
+            public string LanguageProbe
+            {
+                get => languageProbeString;
+                set
+                {
+                    languageProbeString = value;
+                    OnPropertyChanged(nameof(LanguageProbe));
+                }
+            }
             public string LanguageM { get; set; }
 
             public bool WritingTalentBorderVisible
@@ -109,7 +121,15 @@ namespace DSAProject.Layout.Pages.ItemPages
                     OnPropertyChanged(nameof(WritingTAW));
                 }
             }
-            public string WritingProbe { get; set; }
+            public string WritingProbe 
+            {
+                get => writingProbeString;
+                set
+                {
+                    writingProbeString = value;
+                    OnPropertyChanged(nameof(WritingProbe));
+                }
+            }
         }
     }
 }

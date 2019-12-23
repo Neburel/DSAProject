@@ -2,20 +2,9 @@
 using DSAProject.Classes.Charakter.Talente.TalentLanguage;
 using DSAProject.Classes.Game;
 using DSAProject.Layout.Pages.ItemPages;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -27,19 +16,10 @@ namespace DSAProject.Layout.Pages.MainPages
     public sealed partial class LanguagePage : Page
     {
         private int counter = 0;
-        private static List<Language_ItemPage> testList;
 
         public LanguagePage()
         {
             this.InitializeComponent();
-
-            var languageFamily = Game.LanguageFamilies[0];
-
-            //< Border BorderBrush = "LightSlateGray" Grid.Row = "0" Grid.Column = "2" BorderThickness = "1" >
-       
-            //       < TextBlock TextWrapping = "Wrap" Text = "{x:Bind ViewModel.LanguageTalent.BE, Mode=TwoWay}" TextAlignment = "Center" HorizontalTextAlignment = "Center" HorizontalAlignment = "Center" VerticalAlignment = "Center" ></ TextBlock >
-                  
-            //              </ Border >
 
             foreach (var family in Game.LanguageFamilies)
             {
@@ -60,8 +40,7 @@ namespace DSAProject.Layout.Pages.MainPages
 
                 };
                 border.Child = title;
-
-
+                
                 XAML_Grid.Children.Add(border);
                 Grid.SetRow(border, counter);
                 counter++;
