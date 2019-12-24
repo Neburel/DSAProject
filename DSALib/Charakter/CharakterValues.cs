@@ -1,4 +1,6 @@
 ﻿using DSALib;
+using DSALib.Charakter.Values;
+using DSALib.Charakter.Values.Settable;
 using DSALib.Utils;
 using DSAProject.Classes.Interfaces;
 using System;
@@ -31,11 +33,16 @@ namespace DSAProject.Classes.Charakter
             {
                 aktValues.Add(item, item.Value);
                 modValue.Add(item, 0);
-                item.ValueChanged += (sender, args) =>
+
+                if (typeof(AbstractChangeHandlerValue).IsAssignableFrom(item.GetType()))
                 {
-                    aktValues[item] = item.Value;
-                    ChangedAKTEvent?.Invoke(this, item);
-                };
+                    var innerItem = (AbstractChangeHandlerValue)item;
+                    innerItem.ValueChanged += (sender, args) =>
+                    {
+                        aktValues[item] = item.Value;
+                        ChangedAKTEvent?.Invoke(this, item);
+                    };
+                }
             }
         }
         #region Getter
@@ -44,13 +51,13 @@ namespace DSAProject.Classes.Charakter
             error   = null;
             var ret = -1;
 
-            if (aktValues.TryGetValue(value, out int currentValue) == false)
+            if (aktValues.ContainsKey(value))
             {
-                error = new Error { ErrorCode = ErrorCode.InvalidValue, Message = "Das Gewählte Attribut exestiert bei diesem Charakter nicht" };
+                ret = aktValues[value];
             }
             else
             {
-                ret = aktValues[value];
+                error = new Error { ErrorCode = ErrorCode.InvalidValue, Message = "Das Gewählte Attribut exestiert bei diesem Charakter nicht" };
             }
 
             return ret;
@@ -76,8 +83,6 @@ namespace DSAProject.Classes.Charakter
             catch (Exception ex)
             {
                 throw ex;
-                //Logger.Log(LogLevel.ErrorLog, ex.Message, nameof(CharakterValues), nameof(GetAKTValue));
-                error = new Error { ErrorCode = ErrorCode.Error, Message = ex.Message };
             }
             return ret;
         }
@@ -108,6 +113,17 @@ namespace DSAProject.Classes.Charakter
         }
         #endregion
         #region Setter
+        public void SetAKTValue(AbstractSettableValue item, int value)
+        {
+            if (aktValues.ContainsKey(item))
+            {
+                aktValues[item] = value;
+            }
+            else
+            {
+                aktValues.Add(item, value);
+            }
+        }
         /// <summary>
         /// Internal da es Von dem Charakter gesteuert wird
         /// Die Steuerung erfolgt durch den Charakter damit der Trait nicht als Klasse übergeben werden muss und keine 

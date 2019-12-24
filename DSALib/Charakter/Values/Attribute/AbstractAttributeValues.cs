@@ -1,4 +1,5 @@
 ﻿using DSALib;
+using DSALib.Charakter.Values;
 using DSALib.Utils;
 using DSAProject.Classes.Interfaces;
 
@@ -10,17 +11,20 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
     /*
      *  Values die Aufgrundlage von Attributen berechnet werden
      */
-    public abstract class AbstractAttributeValues : IValue
+    public abstract class AbstractAttributeValues : AbstractChangeHandlerValue
     {
         #region Event
-        public event EventHandler ValueChanged;
+        public override event EventHandler ValueChanged;
+        #endregion
+        #region Variables
+        private int value;
         #endregion
         #region Properties
-        public int Value { get; private set; }
+        public override int Value { get => value; }
         internal abstract int CalculateValue { get; }
         protected CharakterAttribute Attribute { get; private set; }
-        public abstract string Name { get; }
-        public string InfoText
+        public override abstract string Name { get; }
+        public override string InfoText
         {
             get
             {
@@ -45,12 +49,12 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
         public AbstractAttributeValues(CharakterAttribute attribute)
         {
             Attribute   = attribute;
-            Value       = (int) Math.Ceiling(Calculate());
+            value       = (int) Math.Ceiling(Calculate());
             Attribute.ChangedMAX += (object sender, CharakterAttribut args) =>
             {
                 var oldValue    = Value;
                 var calculateV  = Calculate();
-                Value           = (int)Math.Ceiling(calculateV); ;
+                value           = (int)Math.Ceiling(calculateV); ;
                 if (Value != oldValue)
                 {
                     ValueChanged?.Invoke(this, null);

@@ -72,8 +72,6 @@ namespace DSAProject.Classes.Charakter
             catch(Exception ex)
             {
                 throw ex;
-                //Logger.Log(LogLevel.ErrorLog, ex.Message, nameof(CharakterAttribute), nameof(SetAttributAKTValue));
-                error = new Error { ErrorCode = ErrorCode.Error, Message = ex.Message };
             }
         }
         /// <summary>
@@ -121,8 +119,6 @@ namespace DSAProject.Classes.Charakter
             catch (Exception ex)
             {
                 throw ex;
-                //Logger.Log(LogLevel.ErrorLog, ex.Message, nameof(CharakterAttribute), nameof(SetAttributAKTValue));
-                error = new Error { ErrorCode = ErrorCode.Error, Message = ex.Message };
             }
             return ret;
         }
@@ -145,8 +141,6 @@ namespace DSAProject.Classes.Charakter
             catch (Exception ex)
             {
                 throw ex;
-                //Logger.Log(LogLevel.ErrorLog, ex.Message, nameof(CharakterAttribute), nameof(GetAttributMODValue));
-                error = new Error { ErrorCode = ErrorCode.Error, Message = ex.Message };
             }
             return ret;
         }

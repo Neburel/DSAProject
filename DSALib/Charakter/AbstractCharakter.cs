@@ -1,6 +1,7 @@
 ﻿using DSALib;
 using DSALib.Charakter;
 using DSALib.Charakter.Other;
+using DSALib.Charakter.Values.Settable;
 using DSALib.Classes.JSON;
 using DSALib.Interfaces;
 using DSALib.JSON;
@@ -54,6 +55,11 @@ namespace DSAProject.Classes.Charakter
             {
                 throw new ArgumentNullException(nameof(Traits));
             }
+            else if(Values.UsedValues.Where(x => Values.UsedValues.Where(y => y.Name == x.Name).Count() > 1).ToList().Count() > 0)
+            {
+                throw new ArgumentException("Der Charakter enthält einen Doppelten Namen bei den Values. Er kann nicht verwendet werden");
+            }
+
 
             Traits.AttributeChanged += (sender, args) =>
             {
@@ -85,9 +91,14 @@ namespace DSAProject.Classes.Charakter
                 Name        = Name,
                 SaveTime    = DateTime.Now
             };
-
             #region Values Speichern
-            //Kein Sepeichern notwendig, da es errechnet wird....
+            charakter.SettableValues = new Dictionary<string, int>();
+            var settableValues = Values.UsedValues.Where(x => typeof(AbstractSettableValue).IsAssignableFrom(x.GetType()));
+            foreach(var item in settableValues)
+            {
+                var value = Values.GetAKTValue(item, out Error error);
+                charakter.SettableValues.Add(item.Name, value);
+            }
             #endregion
             #region Attribute Speichern
             var attributeDictionary = new Dictionary<CharakterAttribut, int>();
@@ -222,8 +233,6 @@ namespace DSAProject.Classes.Charakter
             #region Nullprüfungen
             if (json_charakter.MotherLanguages == null) json_charakter.MotherLanguages = new Dictionary<Guid, bool>();
             #endregion
-
-
             CreateNew(json_charakter.ID);
             Name = json_charakter.Name;
             #region Attribute Laden
@@ -237,13 +246,23 @@ namespace DSAProject.Classes.Charakter
             }
             #endregion
             #region Values Laden
-            //kein Laden notwending
+            if(json_charakter.SettableValues != null)
+            {
+                foreach(var item in json_charakter.SettableValues)
+                {
+                    var settableValue = Values.UsedValues.Where(x => x.Name == item.Key).FirstOrDefault();
+                    if (settableValue != null && typeof(AbstractSettableValue).IsAssignableFrom(settableValue.GetType()))
+                    {
+                        Values.SetAKTValue((AbstractSettableValue)settableValue, item.Value);
+                    }
+                }
+            }
             #endregion
             #region Resources Laden
             //kein Laden notwendig
             #endregion
             #region Talente Laden
-            foreach(var item in json_charakter.TalentTAW)
+            foreach (var item in json_charakter.TalentTAW)
             {
                 var talent = talents.Where(x => x.ID == item.Key).FirstOrDefault();
                 if(talent != null)

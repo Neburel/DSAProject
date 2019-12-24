@@ -29,6 +29,8 @@ namespace DSALib.Classes.JSON
         [DataMember]
         public Dictionary<CharakterAttribut, int> AttributeBaseValue { get; set; }
         [DataMember]
+        public Dictionary<string, int> SettableValues { get; set; }
+        [DataMember]
         public List<JSON_Descriptor> Descriptors { get; set; }
         [DataMember]
         public Dictionary<Guid, int> TalentTAW { get; set; }

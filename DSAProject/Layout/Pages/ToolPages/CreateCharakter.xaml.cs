@@ -1,15 +1,15 @@
-﻿using DSAProject.Classes.Charakter;
+﻿using DSALib.Charakter.Values.Settable;
+using DSALib.Utils;
+using DSAProject.Classes.Charakter;
 using DSAProject.Classes.Charakter.Description;
+using DSAProject.Classes.Charakter.Values;
 using DSAProject.Classes.Game;
 using DSAProject.Layout.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-
-using static System.WindowsRuntimeSystemExtensions;
 
 namespace DSAProject.Layout.Pages
 {
@@ -29,7 +29,12 @@ namespace DSAProject.Layout.Pages
         profession = 13,
         race = 14,
         faith = 15
-
+    }
+    enum Speed
+    {
+        GroundSpeed = 1,
+        AirSpeed = 2,
+        WaterSpeed = 3
     }
     /// <summary>
     /// Eine leere Seite, die eigenständig verwendet oder zu der innerhalb eines Rahmens navigiert werden kann.
@@ -41,18 +46,6 @@ namespace DSAProject.Layout.Pages
         #endregion
         #region Properties Seiten Einstellugen
         public int TextFontSize { get; } = 26;
-        #endregion
-        #region Properties Funktions
-        private string SetCulture
-        {
-            set
-            {
-                if (XAML_CultureTitle != null)
-                {
-                    XAML_CultureTitle.Text = value;
-                }
-            }
-        }
         #endregion
         public CharakterCreationViewModel ViewModel { get; set; } = new CharakterCreationViewModel();
         public CharakterCreation()
@@ -94,10 +87,7 @@ namespace DSAProject.Layout.Pages
             ViewModel.PlayerWeight.Priority = (int)CreationOrder.playerWight;
             ViewModel.PlayerAdressName.Priority = (int)CreationOrder.playerAdressName;
             #endregion
-            ViewModel.PlayerName.PropertyChanged += (sender, args) =>
-            {
-                Game.Charakter.Name = ViewModel.PlayerName.DescriptionText;
-            };
+            SetChangeHandler();
             #region ExampleDate
             //ViewModel.Age.DescriptionText               = "25";
             //ViewModel.Race.DescriptionText              = "Tiefling";
@@ -141,11 +131,59 @@ namespace DSAProject.Layout.Pages
             ViewModel.PlayerWeight = CheckDescriptor(existingDescriptorList, ViewModel.PlayerWeight);
             ViewModel.PlayerAdressName = CheckDescriptor(existingDescriptorList, ViewModel.PlayerAdressName);
 
+            SetChangeHandler();
+
+            #region Speed
+            var landSpeed   = Game.Charakter.Values.UsedValues.Where(x => typeof(AbstractSettableValue).IsAssignableFrom(x.GetType())).Where(x => x.GetType() == typeof(SpeedLand)).FirstOrDefault();
+            var airSpeed    = Game.Charakter.Values.UsedValues.Where(x => typeof(AbstractSettableValue).IsAssignableFrom(x.GetType())).Where(x => x.GetType() == typeof(SpeedLand)).FirstOrDefault();
+            var waterSpeed  = Game.Charakter.Values.UsedValues.Where(x => typeof(AbstractSettableValue).IsAssignableFrom(x.GetType())).Where(x => x.GetType() == typeof(SpeedLand)).FirstOrDefault();
+
+            if (landSpeed != null)
+            {
+                ViewModel.GroundSpeed = Game.Charakter.Values.GetAKTValue(landSpeed, out Error error);
+            }
+            if (airSpeed != null)
+            {
+                ViewModel.GroundSpeed = Game.Charakter.Values.GetAKTValue(airSpeed, out Error error);
+            }
+            if (waterSpeed != null)
+            {
+                ViewModel.GroundSpeed = Game.Charakter.Values.GetAKTValue(waterSpeed, out Error error);
+            }
+            #endregion
+
+            Game.Charakter.Name = ViewModel.PlayerName.DescriptionText;
+        }
+        private void SetChangeHandler()
+        {
             ViewModel.PlayerName.PropertyChanged += (sender, args) =>
             {
                 Game.Charakter.Name = ViewModel.PlayerName.DescriptionText;
             };
-            Game.Charakter.Name = ViewModel.PlayerName.DescriptionText;
+        }
+        private void ChangeSpeed(Speed speed, int value)
+        {
+            Type type = null;
+
+            switch (speed)
+            {
+                case Speed.AirSpeed:
+                    type = typeof(SpeedAir);
+                    break;
+                case Speed.WaterSpeed:
+                    type = typeof(SpeedWater);
+                    break;
+                case Speed.GroundSpeed:
+                    type = typeof(SpeedLand);
+                    break;
+            }
+            
+            var item = Game.Charakter.Values.UsedValues.Where(x => typeof(AbstractSettableValue).IsAssignableFrom(x.GetType())).Where(x => x.GetType() == type).FirstOrDefault();
+            if(item != null)
+            {
+                Game.Charakter.Values.SetAKTValue((AbstractSettableValue)item, value);
+            }
+
         }
         private Descriptor CheckDescriptor(List<Descriptor> charakterDescriptors, Descriptor siteDescriptor)
         {
@@ -168,27 +206,11 @@ namespace DSAProject.Layout.Pages
         #region Buttons
         private void XAML_ButtonCreate_Click(object sender, RoutedEventArgs e)
         {
-            //var result = await DisplayCreateNewDialog();
-            //if (result == CreateNewChar.DSA)
-            //{
             Game.Charakter = new CharakterDSA(Game.GenerateNextCharakterGUID());
             #region setDSALayout
             ViewModel.CurrentDate.DescriptionText = Game.CurrentYearDSA;
             ViewModel.Culture.DescriptionTitle = DSA_CultureName;
             #endregion
-
-            //}
-            //else if (result == CreateNewChar.PNP)
-            //{
-            //    //Game.Charakter = new CharakterPNP(Game.GenerateNextCharakterGUID());
-            //    //#region setPNPLayout
-            //    //ViewModel.CurrentDate.DescriptionText = Game.CurrentYearPNP;
-            //    //ViewModel.Culture.DescriptionTitle = "Vorgeschichte-/en:";
-            //    //#endregion
-            //}
-
-            //if (result != CreateNewChar.Abbruch)
-            //{
             #region Clear
             ViewModel.Age.DescriptionText = string.Empty;
             ViewModel.Race.DescriptionText = string.Empty;
@@ -207,31 +229,36 @@ namespace DSAProject.Layout.Pages
             ViewModel.PlayerAdressName.DescriptionText = string.Empty;
             #endregion
             CharakterChange();
-            //}
         }
         private void XAML_AirSpeedMinus_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.AirSpeed = ViewModel.AirSpeed - 1;
+            ChangeSpeed(Speed.AirSpeed, ViewModel.AirSpeed);
         }
         private void XAML_AirSpeedPlus_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.AirSpeed = ViewModel.AirSpeed + 1;
+            ChangeSpeed(Speed.AirSpeed, ViewModel.AirSpeed);
         }
         private void XAML_GroundWaterMinus_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.WaterSpeed = ViewModel.WaterSpeed - 1;
+            ChangeSpeed(Speed.WaterSpeed, ViewModel.WaterSpeed);
         }
         private void XAML_WaterSpeedPlus_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.WaterSpeed = ViewModel.WaterSpeed + 1;
+            ChangeSpeed(Speed.WaterSpeed, ViewModel.WaterSpeed);
         }
         private void XAML_GroundSpeedMinus_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.GroundSpeed = ViewModel.GroundSpeed - 1;
+            ChangeSpeed(Speed.GroundSpeed, ViewModel.GroundSpeed);
         }
         private void XAML_GroundSpeedPlus_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.GroundSpeed = ViewModel.GroundSpeed + 1;
+            ChangeSpeed(Speed.GroundSpeed, ViewModel.GroundSpeed);
 
         }
         private void XAML_GenderComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -241,22 +268,6 @@ namespace DSAProject.Layout.Pages
         private void XAML_FamilyStatuscomboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.Familistatus.DescriptionText = XAML_FamilyStatuscomboBox.SelectedValue.ToString();
-        }
-        private void XAML_TechMinValuePlus_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.TechstufeMin = ViewModel.TechstufeMin + 1;
-        }
-        private void XAML_TechMinValueMinus_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.TechstufeMin = ViewModel.TechstufeMin - 1;
-        }
-        private void XAML_TechMaxValuePlus_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.TechstufeMax = ViewModel.TechstufeMax + 1;
-        }
-        private void XAML_TechMaxValueMinus_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.TechstufeMax = ViewModel.TechstufeMax - 1;
         }
         #endregion
         #region Dialog

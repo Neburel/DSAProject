@@ -1,12 +1,9 @@
 ﻿using DSALib.Charakter.Resources;
 using DSALib.Utils;
 using DSAProject.Classes.Charakter;
-using DSAProject.Classes.Charakter.Values.Attribute;
 using DSAProject.Classes.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DSALib.Charakter.Values
 {

@@ -202,7 +202,7 @@ namespace DSAProject.Classes.Game
                         var sfile = await folder.CreateFileAsync(Charakter.ID.ToString() + ".save", CreationCollisionOption.ReplaceExisting);
                         await FileIO.AppendTextAsync(sfile, saveFile.JSONContent);
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         Logger.Log(LogLevel.ErrorLog, "Sicherung konnte nicht erstellt werden");
                         //"https://support.microsoft.com/de-de/help/4468237/windows-10-file-system-access-and-privacy-microsoft-privacy"

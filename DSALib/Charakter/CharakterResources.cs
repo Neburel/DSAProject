@@ -76,8 +76,6 @@ namespace DSALib.Charakter
             catch (Exception ex)
             {
                 throw ex;
-                //Logger.Log(LogLevel.ErrorLog, ex.Message, nameof(CharakterValues), nameof(GetAKTValue));
-                error = new Error { ErrorCode = ErrorCode.Error, Message = ex.Message };
             }
             return ret;
         }
@@ -101,8 +99,6 @@ namespace DSALib.Charakter
             catch (Exception ex)
             {
                 throw ex;
-                //Logger.Log(LogLevel.ErrorLog, ex.Message, nameof(CharakterValues), nameof(GetAKTValue));
-                error = new Error { ErrorCode = ErrorCode.Error, Message = ex.Message };
             }
             return ret;
         }
