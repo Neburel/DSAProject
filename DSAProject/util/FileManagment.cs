@@ -203,6 +203,28 @@ namespace DSAProject.util.FileManagment
             return sfile;
         }
 
+        public static void DeleteTextFile(string fileString)
+        {
+            var retText = string.Empty;
+            var semaphoreSlim = new SemaphoreSlim(0);
+
+            var task = new Task(async () =>
+            {
+                var localFolder = ApplicationData.Current.LocalFolder;
+                var file = await localFolder.GetFileAsync(fileString);
+
+                if(file != null)
+                {
+                    await file.DeleteAsync();
+                }
+                
+                semaphoreSlim.Release();
+            });
+            task.Start();
+            semaphoreSlim.Wait();
+        }
+
+
         private static async Task<IReadOnlyList<StorageFile>> GetFilesinFolderAsync(string folder)
         {
             var localFolder = ApplicationData.Current.LocalFolder.Path;

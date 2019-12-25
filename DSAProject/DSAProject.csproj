@@ -105,6 +105,7 @@
     <Compile Include="Converter\ColorConverter.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Layout\MessageDialoge\CreateTraitDialog.cs" />
+    <Compile Include="Layout\MessageDialoge\DeleteCharakterDialog.cs" />
     <Compile Include="Layout\MessageDialoge\SaveDialog.cs" />
     <Compile Include="Layout\Pages\NavigationPages\GameNavPage.xaml.cs">
       <DependentUpon>GameNavPage.xaml</DependentUpon>
@@ -112,7 +113,7 @@
     <Compile Include="Layout\Pages\ToolPages\CreateTrait.xaml.cs">
       <DependentUpon>CreateTrait.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Layout\Pages\BasePages\InfoPage.xaml.cs">
+    <Compile Include="Layout\Pages\MainPages\InfoPage.xaml.cs">
       <DependentUpon>InfoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\Pages\ItemPages\Language_ItemPage.xaml.cs">
@@ -217,7 +218,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Layout\Pages\BasePages\InfoPage.xaml">
+    <Page Include="Layout\Pages\MainPages\InfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

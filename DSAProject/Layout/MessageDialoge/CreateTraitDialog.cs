@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 
@@ -7,13 +6,8 @@ namespace DSAProject.Layout.MessageDialoge
 {
     public static class CreateTraitDialog
     {
-        
-
         public static async Task<bool> ShowDialog(bool traitExist = false)
         {
-            var sem = new SemaphoreSlim(0);
-
-
             var title   = "Trait erstellen?";
             var message = "Was soll mit dem Trait Geschehen?";
 

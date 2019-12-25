@@ -1,10 +1,7 @@
-﻿using DSALib;
-using DSALib.Classes.JSON;
+﻿using DSALib.Classes.JSON;
 using DSALib.Utils;
-using DSAProject.Classes.Charakter;
 using DSAProject.Classes.Game;
-using DSAProject.Classes.Interfaces;
-using DSAProject.util.ErrrorManagment;
+using DSAProject.Layout.MessageDialoge;
 using DSAProject.util.FileManagment;
 
 using System;
@@ -24,7 +21,7 @@ namespace DSAProject.Layout.Pages
     public sealed partial class LoadPage : Page
     {
         private const string CHARNAME = "Namenlos";
-        Dictionary<JSON_Charakter, bool> CharGivenName = new Dictionary<JSON_Charakter, bool>();
+        Dictionary<JSON_Charakter, bool> charGivenName = new Dictionary<JSON_Charakter, bool>();
         public ObservableCollection<JSON_Charakter> Items { get; } = new ObservableCollection<JSON_Charakter>();
         public LoadPage()
         {
@@ -36,15 +33,15 @@ namespace DSAProject.Layout.Pages
             {
                 var file            = Path.Combine(Game.CharakterSaveFolder, item);
                 var fileContent     = FileManagment.LoadTextFile(file, out error);
-                var json_charakter = JSON_Charakter.DeSerializeJson(fileContent, out string errorstring);
+                var json_charakter  = JSON_Charakter.DeSerializeJson(fileContent, out string errorstring);
                 if (string.IsNullOrEmpty(json_charakter.Name))
                 {
                     json_charakter.Name = CHARNAME;
-                    CharGivenName.Add(json_charakter, true);
+                    charGivenName.Add(json_charakter, true);
                 }
                 else
                 {
-                    CharGivenName.Add(json_charakter, false);
+                    charGivenName.Add(json_charakter, false);
                 }
 
                 items.Add(json_charakter);
@@ -56,7 +53,7 @@ namespace DSAProject.Layout.Pages
         {
             Error error             = null;
             var charakter            = (JSON_Charakter)e.ClickedItem;
-            CharGivenName.TryGetValue(charakter, out bool givenName);
+            charGivenName.TryGetValue(charakter, out bool givenName);
 
             if (givenName)
             {
@@ -65,6 +62,22 @@ namespace DSAProject.Layout.Pages
 
             Game.LoadCharakter(charakter, out error);
             Game.RequestNav(new DSAProject.util.EventNavRequest { Side = NavEnum.StartPage });
+        }
+
+        private async void PlusButton_Clicked(object sender, object e)
+        {
+            var guid = (Guid)((ItemPages.PlusButton)sender).Tag;
+            var jChar = Items.Where(x => x.ID == guid).FirstOrDefault();
+            if(jChar != null)
+            {
+                var result = await DeleteCharakterDialog.ShowDialog(jChar);
+                if (result)
+                {
+                    Items.Remove(jChar);
+                    var pFolder = Path.Combine(Game.CharakterSaveFolder, jChar.ID.ToString() + ".save");
+                    FileManagment.DeleteTextFile(pFolder);
+                }
+            }
         }
     }
 }

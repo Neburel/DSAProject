@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:json="using:DSALib.Classes.JSON"
+    xmlns:itempages="using:DSAProject.Layout.Pages.ItemPages"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -14,12 +15,23 @@
             ItemsSource="{x:Bind Items}"
             ItemClick="XAML_LoadListView_ItemClick"
             IsItemClickEnabled="True">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="json:JSON_Charakter">
-                    <StackPanel Orientation="Horizontal" Spacing="10">
-                        <TextBlock Text="{x:Bind Name}" FontFamily="French Script MT" FontSize="24" FontStyle="Oblique"/>
-                        <TextBlock Text="{x:Bind SaveTimeAsString}" FontFamily="French Script MT" FontSize="24" FontStyle="Oblique"/>
-                    </StackPanel>
+                    <Grid ColumnSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{x:Bind Name}" FontFamily="French Script MT" FontSize="24" FontStyle="Oblique"/>
+                        <TextBlock Grid.Column="1" Text="{x:Bind SaveTimeAsString}" FontFamily="French Script MT" FontSize="24" FontStyle="Oblique"/>
+                        <itempages:PlusButton Grid.Column="2" HorizontalAlignment="Right" IsInversed="True" Clicked="PlusButton_Clicked"  Tag="{x:Bind ID}"></itempages:PlusButton>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
             
