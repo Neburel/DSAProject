@@ -69,11 +69,11 @@ namespace DSAProject.Layout.Pages.NavigationPages
             Game.NavRequested += Game_NavRequested;
 
             this.InitializeComponent();
-            XAML_ContentFrame.NavigationStopped += Frame_NavigationStoppec;
-            XAML_ContentFrame.Navigated += ContentFrame_Navigated;
+            XAML_ContentFrame.NavigationStopped += Frame_NavigationStopped;
+            XAML_ContentFrame.Navigated         += ContentFrame_Navigated;
 
             XAML_NavigationView.SelectedItem = startItem;
-            XAML_ContentFrame.Navigate(typeof(HeroLetterPage));
+            Game.RequestNav(new util.EventNavRequest { Side = NavEnum.StartPage });
         }
         #region Handler
         private void Game_NavRequested(object sender, util.EventNavRequest e)
@@ -148,10 +148,10 @@ namespace DSAProject.Layout.Pages.NavigationPages
                 }
             }
         }
-        private void Frame_NavigationStoppec(object sender, NavigationEventArgs e)
+        private void Frame_NavigationStopped(object sender, NavigationEventArgs e)
         {
             var lastNav = navHistory.LastOrDefault();
-            var item    = NavItems.Where(x => (Type)x.Tag == lastNav.NavType).FirstOrDefault();
+            var item    = NavigationViewItem.Where(x => ((DSANavItem)x.Tag).NavType == lastNav.NavType).FirstOrDefault();
 
             if(item != null)
             {

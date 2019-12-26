@@ -31,20 +31,25 @@ namespace DSAProject.Layout.Pages.BasePages
             XAML_TraitValue.AKTValue    = string.Empty;
             XAML_TraitGP.AKTValue       = string.Empty;
         }
-        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        protected override async void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
-            //    bool test = true;
-            //    if (!leaveButtonClicked)
-            //    {
-            //        test = await CreateTraitDialog.ShowDialog();
-            //    }
             base.OnNavigatingFrom(e);
 
-            if (!leaveButtonClicked)
+            if (!leaveButtonClicked && !Game.Charakter.Traits.GetTraits().Contains(viewModel.Trait))
             {
                 e.Cancel = true;
-
                 Frame.Navigate(e.SourcePageType, true);
+
+                var traitResult = await CreateTraitDialog.ShowDialog();
+                if (traitResult)
+                {
+                    LeaveSideWithButton(traitResult);
+                }
+                else
+                {
+                    leaveButtonClicked = true;
+                    Game.RequestNav(new EventNavRequest { Side = NavEnum.StartPage });
+                }
             }
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
