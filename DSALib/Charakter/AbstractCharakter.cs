@@ -1,5 +1,6 @@
 ﻿using DSALib;
 using DSALib.Charakter;
+using DSALib.Charakter.Functions;
 using DSALib.Charakter.Other;
 using DSALib.Charakter.Values.Settable;
 using DSALib.Classes.JSON;
@@ -28,17 +29,20 @@ namespace DSAProject.Classes.Charakter
         public CharakterTalente Talente { get; private set; }
         public CharakterDescription Descriptions { get; private set; }
         public CharakterTraits Traits { get; private set; }
+        public CharakterOther Other { get; private set; }
         #endregion
         public AbstractCharakter(Guid id)
         {
             CreateNew(id);
         }
+
         private void CreateNew(Guid id)
         {
             ID = id;
             Traits = new CharakterTraits();
             Talente = new CharakterTalente(this);
             Descriptions = new CharakterDescription();
+            Other = new CharakterOther();
             Attribute = CreateAttribute();
             Resources = CreateResources();
             Values = CreateValues();
@@ -55,7 +59,7 @@ namespace DSAProject.Classes.Charakter
             {
                 throw new ArgumentNullException(nameof(Traits));
             }
-            else if(Values.UsedValues.Where(x => Values.UsedValues.Where(y => y.Name == x.Name).Count() > 1).ToList().Count() > 0)
+            else if (Values.UsedValues.Where(x => Values.UsedValues.Where(y => y.Name == x.Name).Count() > 1).ToList().Any())
             {
                 throw new ArgumentException("Der Charakter enthält einen Doppelten Namen bei den Values. Er kann nicht verwendet werden");
             }
@@ -226,6 +230,10 @@ namespace DSAProject.Classes.Charakter
                 charakter.Traits.Add(jTrait);
             }
             #endregion
+            #region Anderes Laden
+            charakter.AktAP = Other.TotalAPPlayer;
+            charakter.InvestAP = Other.InvestedAPPlayer;
+            #endregion
             return charakter;
         }
         public void Load(JSON_Charakter json_charakter, List<ITalent> talents) 
@@ -377,6 +385,10 @@ namespace DSAProject.Classes.Charakter
                     Traits.AddTrait(trait);
                 }
             }
+            #endregion
+            #region Anderes Laden
+            Other.TotalAPPlayer = json_charakter.AktAP;
+            Other.InvestedAPPlayer = json_charakter.InvestAP;
             #endregion
         }
         private void TalentMissing(JSON_Charakter json_charakter, Guid guid)

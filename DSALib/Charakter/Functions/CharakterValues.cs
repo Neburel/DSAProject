@@ -26,6 +26,8 @@ namespace DSAProject.Classes.Charakter
         #endregion
         public CharakterValues(List<IValue> values)
         {
+            if (values == null) throw new ArgumentNullException(nameof(values));
+
             aktValues   = new Dictionary<IValue, int>();
             modValue    = new Dictionary<IValue, int>();
 
@@ -46,6 +48,7 @@ namespace DSAProject.Classes.Charakter
             }
         }
         #region Getter
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Literale nicht als lokalisierte Parameter übergeben", Justification = "<Ausstehend>")]
         public int GetAKTValue(IValue value, out Error error)
         {
             error   = null;
@@ -62,6 +65,7 @@ namespace DSAProject.Classes.Charakter
 
             return ret;
         }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Literale nicht als lokalisierte Parameter übergeben", Justification = "<Ausstehend>")]
         public int GetMODValue(IValue value, out Error error)
         {
             error = null;
@@ -82,7 +86,7 @@ namespace DSAProject.Classes.Charakter
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("", ex);
             }
             return ret;
         }
@@ -105,9 +109,7 @@ namespace DSAProject.Classes.Charakter
             }
             catch (Exception ex)
             {
-                throw ex;
-                //Logger.Log(LogLevel.ErrorLog, ex.Message, nameof(CharakterValues), nameof(GetAKTValue));
-                error = new Error { ErrorCode = ErrorCode.Error, Message = ex.Message };
+                throw new Exception("", ex);
             }
             return ret;
         }
@@ -131,6 +133,7 @@ namespace DSAProject.Classes.Charakter
         /// </summary>
         /// <param name="attribut"></param>
         /// <param name="value"></param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Literale nicht als lokalisierte Parameter übergeben", Justification = "<Ausstehend>")]
         internal void SetModValue(IValue item, int value)
         {
             if (!UsedValues.Contains(item))

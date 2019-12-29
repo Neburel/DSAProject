@@ -12,6 +12,8 @@ using DSAProject.Layout.Pages.MainPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Windows.Foundation;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
@@ -32,6 +34,12 @@ namespace DSAProject.Layout.Pages.NavigationPages
 
         public GameNavPage()
         {
+            var standartSize = new Size(1400, 1000);
+
+            ApplicationView.PreferredLaunchViewSize = standartSize;
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(standartSize);
+
             NavItems = new List<NavigationViewItemBase>
             {
                 new NavigationViewItemHeader    { Content = "Briefe" },

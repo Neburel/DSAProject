@@ -1,4 +1,5 @@
 ﻿using DSALib.Charakter;
+using DSALib.Charakter.Functions;
 using DSALib.Classes.JSON;
 using DSAProject.Classes.Charakter;
 using DSAProject.Classes.Charakter.Description;
@@ -17,6 +18,7 @@ namespace DSAProject.Classes.Interfaces
         CharakterTalente Talente { get; }
         CharakterDescription Descriptions { get; }
         CharakterTraits Traits { get; }
+        CharakterOther Other { get; }
 
         JSON_Charakter CreateSave();
         void Load(JSON_Charakter json_charakter, List<ITalent> talents);

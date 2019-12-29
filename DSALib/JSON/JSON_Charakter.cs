@@ -27,6 +27,10 @@ namespace DSALib.Classes.JSON
         }
         #endregion
         [DataMember]
+        public int AktAP { get; set; }
+        [DataMember]
+        public int InvestAP { get; set; }
+        [DataMember]
         public Dictionary<CharakterAttribut, int> AttributeBaseValue { get; set; }
         [DataMember]
         public Dictionary<string, int> SettableValues { get; set; }

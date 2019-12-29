@@ -23,6 +23,8 @@ namespace DSALib.Charakter
 
         public CharakterResources(List<IResource> values)
         {
+            if (values == null) throw new ArgumentNullException(nameof(values));
+            
             aktValues   = new Dictionary<IResource, int>();
             modValue    = new Dictionary<IResource, int>();
 
@@ -39,6 +41,7 @@ namespace DSALib.Charakter
         }
 
         #region Getter
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Literale nicht als lokalisierte Parameter übergeben", Justification = "<Ausstehend>")]
         public int GetAKTValue(IResource value, out Error error)
         {
             error = null;
@@ -55,6 +58,7 @@ namespace DSALib.Charakter
 
             return ret;
         }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Literale nicht als lokalisierte Parameter übergeben", Justification = "<Ausstehend>")]
         public int GetMODValue(IResource value, out Error error)
         {
             error = null;
@@ -75,7 +79,7 @@ namespace DSALib.Charakter
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("", ex);
             }
             return ret;
         }
@@ -98,7 +102,7 @@ namespace DSALib.Charakter
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("", ex);
             }
             return ret;
         }
@@ -111,6 +115,7 @@ namespace DSALib.Charakter
         /// </summary>
         /// <param name="attribut"></param>
         /// <param name="value"></param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Literale nicht als lokalisierte Parameter übergeben", Justification = "<Ausstehend>")]
         internal void SetModValue(IResource item, int value)
         {
             if (!UsedValues.Contains(item))

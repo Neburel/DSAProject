@@ -284,7 +284,7 @@ namespace DSAProject.Layout.Pages
                 if (i == 0)
                 {
                     newView.Mode = AKTMODMAXMode.AKTModMaxTitle;
-                    newView.MaxString = "Ergebnis";
+                    newView.MaxString = "Erg.";
                 }
                 mainGrid.Children.Add(newView);
                 Grid.SetRow(newView, i);
@@ -367,7 +367,7 @@ namespace DSAProject.Layout.Pages
                 if (i == 0)
                 {
                     newView.Mode = AKTMODMAXMode.AKTModMaxTitle;
-                    newView.MaxString = "Ergebnis";
+                    newView.MaxString = "Erg.";
                 }
                 mainGrid.Children.Add(newView);
                 Grid.SetRow(newView, i);

@@ -31,6 +31,7 @@
                 <views:AttributPage TextColor="Black"/>
                 <views:AttributPage Mode="ValueStandart" VerticalAlignment="Top" TextColor="Black"/>
                 <views:AttributPage Mode="ResourceStandart" VerticalAlignment="Top" TextColor="Black"/>
+                <views2:AdventurePointPage Margin="0,12,0,0" VerticalAlignment="Top"></views2:AdventurePointPage>
             </StackPanel>
         </StackPanel>
         <Grid Grid.Row="2" ColumnSpacing="20">
