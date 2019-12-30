@@ -67,7 +67,7 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
             double value = 0;
             foreach(var item in attributeList)
             {
-               value = value + Attribute.GetAttributMAXValue(item, out Error error);
+               value = value + Attribute.GetAttributMAXValue(item);
             }
             return (value) / CalculateValue;
         }

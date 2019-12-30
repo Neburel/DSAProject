@@ -61,7 +61,7 @@ namespace DSALib.Charakter.Resources
             double value = 0;
             foreach (var item in attributeList)
             {
-                value = value + Attribute.GetAttributMAXValue(item, out Error error);
+                value = value + Attribute.GetAttributMAXValue(item);
             }
             if(CalculateValue != 0)
             {

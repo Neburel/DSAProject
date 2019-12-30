@@ -129,6 +129,33 @@
   <data name="BlockBasis" xml:space="preserve">
     <value>Blocken-Basis</value>
   </data>
+  <data name="ErrorAttrbutOverMax" xml:space="preserve">
+    <value>Der Maximum wert des Charakters wurde überschritte</value>
+  </data>
+  <data name="ErrorAttributNotExist" xml:space="preserve">
+    <value>Das Gewählte Attribut exestiert bei diesem Charakter nicht</value>
+  </data>
+  <data name="ErrorNullName" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ErrorTalentDobbleRequirement" xml:space="preserve">
+    <value>Versuch als Anforderung zweimal das gleiche Talent einzufügen"</value>
+  </data>
+  <data name="ErrorTalentMissingVariables" xml:space="preserve">
+    <value>Es sind nicht alle nötigen Variablen für das erstellen eines Talent gefüllt</value>
+  </data>
+  <data name="ErrorTalentUnknownTalentTypeEdit" xml:space="preserve">
+    <value>Es wurde Versucht Variablen in einem Talent Typen zu editieren in dem diese nicht vorhanden sind</value>
+  </data>
+  <data name="ErrorTalentUnknwonRequirement" xml:space="preserve">
+    <value>Unbekannter Requirement Typ</value>
+  </data>
+  <data name="ErrorUnknownTalentType" xml:space="preserve">
+    <value>Der Angegebene Talent Typ ist unbekannt</value>
+  </data>
+  <data name="ErrorValueDobbleElement" xml:space="preserve">
+    <value>Der Charakter enthält einen Doppelten Namen bei den Values. Er kann nicht verwendet werden</value>
+  </data>
   <data name="Vitality" xml:space="preserve">
     <value>Lebensenergie</value>
   </data>

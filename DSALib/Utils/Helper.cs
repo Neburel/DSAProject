@@ -4,11 +4,13 @@ using DSAProject.Classes.Charakter.Values;
 using DSAProject.Classes.Charakter.Values.Attribute;
 using DSAProject.Classes.Interfaces;
 using System;
+using System.Globalization;
 
 namespace DSALib.Utils
 {
     public static class Helper
     {
+        public static CultureInfo CultureInfo { get; set; } = new CultureInfo("de-DE");
         public static string GetShort(CharakterAttribut attribut)
         {
             var ret = string.Empty;

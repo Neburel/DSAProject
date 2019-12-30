@@ -1,4 +1,5 @@
 ﻿using DSALib;
+using DSALib.Exceptions;
 using DSALib.Utils;
 using System;
 using System.Collections.Generic;
@@ -29,51 +30,44 @@ namespace DSAProject.Classes.Charakter
         #endregion
         public CharakterAttribute(List<CharakterAttribut> attributs)
         {
+            if (attributs == null) throw new ArgumentNullException(nameof(attributs));
+
             usedAttributs = new List<CharakterAttribut>(attributs);
-            aktValues   = new Dictionary<CharakterAttribut, int>();
-            modValue    = new Dictionary<CharakterAttribut, int>();
+            aktValues = new Dictionary<CharakterAttribut, int>();
+            modValue = new Dictionary<CharakterAttribut, int>();
             limitValues = new Dictionary<CharakterAttribut, int>();
 
-            foreach(var item in attributs)
+            foreach (var item in attributs)
             {
                 aktValues.Add(item, 0);
                 modValue.Add(item, 0);
             }
         }
         #region Setter
-        public void SetAKTValue(CharakterAttribut attribut, int value, out Error error)
+        public void SetAKTValue(CharakterAttribut attribut, int value)
         {
-            error = null; 
-            try
-            {
-                error = null;
-                var regularValue        = aktValues.TryGetValue(attribut, out int currentValue);
-                var mattributMaxValues  = limitValues.TryGetValue(attribut, out int maxValue);
+            var regularValue = aktValues.TryGetValue(attribut, out int currentValue);
+            var mattributMaxValues = limitValues.TryGetValue(attribut, out int maxValue);
 
-                if(regularValue == false)
-                {
-                    error = new Error { ErrorCode = ErrorCode.InvalidValue, Message = "Das Gewählte Attribut exestiert bei diesem Charakter nicht" };
-                } 
-                else
-                {
-                    if (mattributMaxValues)
-                    {
-                        if(value > maxValue)
-                        {
-                            currentValue = maxValue;
-                            error = new Error { ErrorCode = ErrorCode.InvalidValue, Message = "Der Maximum wert des Charakters wurde überschritten" };
-                        }
-                    }
-                    aktValues[attribut] = value;
-                    ChangedAKT?.Invoke(this, attribut);
-                    ChangedMAX?.Invoke(this, attribut);
-                }
-            }
-            catch(Exception ex)
+            if (regularValue == false)
             {
-                throw ex;
+                throw new AttributException(error: ErrorCode.InvalidValue, message: DSALib.Resources.ErrorAttributNotExist);
+            }
+            else
+            {
+                if (mattributMaxValues)
+                {
+                    if (value > maxValue)
+                    {
+                        throw new AttributException(error: ErrorCode.InvalidValue, message: DSALib.Resources.ErrorAttrbutOverMax);
+                    }
+                }
+                aktValues[attribut] = value;
+                ChangedAKT?.Invoke(this, attribut);
+                ChangedMAX?.Invoke(this, attribut);
             }
         }
+
         /// <summary>
         /// Internal da es Von dem Charakter gesteuert wird
         /// Die Steuerung erfolgt durch den Charakter damit der Trait nicht als Klasse übergeben werden muss und keine 
@@ -85,7 +79,7 @@ namespace DSAProject.Classes.Charakter
         {
             if (!usedAttributs.Contains(attribut))
             {
-                throw new ArgumentException("Der Parameter wird nicht verwendet", nameof(attribut));
+                throw new AttributException(error: ErrorCode.InvalidValue, message: DSALib.Resources.ErrorAttributNotExist);
             }
             else
             {
@@ -98,66 +92,40 @@ namespace DSAProject.Classes.Charakter
         }
         #endregion
         #region Getter
-        public int GetAttributAKTValue(CharakterAttribut attribut, out Error error)
+        public int GetAttributAKTValue(CharakterAttribut attribut)
         {
-            error = null;
             var ret = -1;
 
-            try
-            {
-                var regularValue = aktValues.TryGetValue(attribut, out int currentValue);
+            var regularValue = aktValues.TryGetValue(attribut, out int currentValue);
 
-                if (regularValue == false)
-                {
-                    error = new Error { ErrorCode = ErrorCode.InvalidValue, Message = "Das Gewählte Attribut exestiert bei diesem Charakter nicht" };
-                }
-                else
-                {
-                    ret = aktValues[attribut];
-                }
-            }
-            catch (Exception ex)
+            if (regularValue == false)
             {
-                throw ex;
+                throw new AttributException(error: ErrorCode.InvalidValue, message: DSALib.Resources.ErrorAttributNotExist);
+            }
+            else
+            {
+                ret = aktValues[attribut];
             }
             return ret;
         }
-        public int GetAttributMODValue(CharakterAttribut attribut, out Error error)
+        public int GetAttributMODValue(CharakterAttribut attribut)
         {
-            error = null;
-            var ret = -1;
-
-            try
+            int ret;
+            if (UsedAttributs.Contains(attribut))
             {
-                if (UsedAttributs.Contains(attribut))
-                {
-                    ret = modValue[attribut];
-                } 
-                else
-                {
-                    error = new Error { ErrorCode = ErrorCode.InvalidValue, Message = "Das Gewählte Attribut exestiert bei diesem Charakter nicht" };
-                }
+                ret = modValue[attribut];
             }
-            catch (Exception ex)
+            else
             {
-                throw ex;
+                throw new AttributException(error: ErrorCode.InvalidValue, message: DSALib.Resources.ErrorAttributNotExist);
             }
             return ret;
         }
-        public int GetAttributMAXValue(CharakterAttribut attribut, out Error error)
+        public int GetAttributMAXValue(CharakterAttribut attribut)
         {
-            error   = null;
-            var ret = -1;
-            var akt = GetAttributAKTValue(attribut, out error);
-            if(error == null)
-            {
-                var mod = GetAttributMODValue(attribut, out error);
-                if(error == null)
-                {
-                    ret = akt + mod;
-                }
-            }
-            return ret;
+            var akt = GetAttributAKTValue(attribut);
+            var mod = GetAttributMODValue(attribut);
+            return akt + mod;
         }
         #endregion
     }

@@ -208,10 +208,8 @@ namespace DSAProject.Classes.Charakter
                 var value = 0;
                 foreach(var item in innerTalent.Attributs)
                 {
-                    value = value +charakter.Attribute.GetAttributMAXValue(item, out error);
+                    value = value +charakter.Attribute.GetAttributMAXValue(item);
                 }
-
-                //probe = (value + bonusTaW).ToString();
                 probe = (value).ToString();
             }
             else if (typeof(AbstractTalentLanguage).IsAssignableFrom(talentType))
@@ -220,7 +218,7 @@ namespace DSAProject.Classes.Charakter
                 var value = 0;
                 foreach (var item in innerTalent.Attributs)
                 {
-                    value = value + charakter.Attribute.GetAttributMAXValue(item, out error);
+                    value = value + charakter.Attribute.GetAttributMAXValue(item);
                 }
 
                 //probe = (value + bonusTaW).ToString();

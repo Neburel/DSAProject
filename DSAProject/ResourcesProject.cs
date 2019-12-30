@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.Globalization;
 namespace DSAProject
 {
     public static class ResourcesProject
-    {
+    {   
         public static string ArtifactControl { get; } = "Artefaktkontrolle";
         public static string BirthDate { get; } = "Geburtsdatum";
         public static string Birthday { get; } = "Geburtstag";

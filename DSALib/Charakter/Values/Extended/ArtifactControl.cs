@@ -50,13 +50,13 @@ namespace DSALib.Charakter.Values
         protected double Calculate()
         {
             double value    = 0;
-            var initative   = Attribute.GetAttributMAXValue(CharakterAttribut.Intuition, out Error error);
+            var initative   = Attribute.GetAttributMAXValue(CharakterAttribut.Intuition);
             var mr          = Res.UsedValues.Where(x => x.GetType() == typeof(MagicResistance)).FirstOrDefault();
             var mrValue     = 0;
 
             if (mr != null)
             {
-                mrValue = Res.GetMAXValue(mr, out error);
+                mrValue = Res.GetMAXValue(mr, out Error error);
             }
             value = initative + mrValue;
             return value;

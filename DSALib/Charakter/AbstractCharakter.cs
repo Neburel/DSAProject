@@ -49,19 +49,19 @@ namespace DSAProject.Classes.Charakter
 
             if (Attribute == null)
             {
-                throw new ArgumentNullException(nameof(Attribute) + " Die Attribute wurde nicht gesetzt. Bitte Implementieren sie die dazu Notwendige Methode");
+                throw new NotImplementedException(nameof(Attribute));
             }
             else if (Values == null)
             {
-                throw new ArgumentNullException(nameof(Values) + " Die Values wurde nicht gesetzt. Bitte Implementieren sie die dazu Notwendige Methode");
+                throw new NotImplementedException(nameof(Values));
             }
             else if (Resources == null)
             {
-                throw new ArgumentNullException(nameof(Traits));
+                throw new NotImplementedException(nameof(Traits));
             }
             else if (Values.UsedValues.Where(x => Values.UsedValues.Where(y => y.Name == x.Name).Count() > 1).ToList().Any())
             {
-                throw new ArgumentException("Der Charakter enthält einen Doppelten Namen bei den Values. Er kann nicht verwendet werden");
+                throw new ArgumentException(DSALib.Resources.ErrorValueDobbleElement);
             }
 
 
@@ -91,14 +91,14 @@ namespace DSAProject.Classes.Charakter
         {
             var charakter = new JSON_Charakter
             {
-                ID          = ID,
-                Name        = Name,
-                SaveTime    = DateTime.Now
+                ID = ID,
+                Name = Name,
+                SaveTime = DateTime.Now
             };
             #region Values Speichern
             charakter.SettableValues = new Dictionary<string, int>();
             var settableValues = Values.UsedValues.Where(x => typeof(AbstractSettableValue).IsAssignableFrom(x.GetType()));
-            foreach(var item in settableValues)
+            foreach (var item in settableValues)
             {
                 var value = Values.GetAKTValue(item, out Error error);
                 charakter.SettableValues.Add(item.Name, value);
@@ -110,16 +110,8 @@ namespace DSAProject.Classes.Charakter
 
             foreach (var attribut in attribute)
             {
-                Error error = null;
-                var value = Attribute.GetAttributAKTValue(attribut, out error);
-                if (error != null)
-                {
-                    throw new Exception("Beim Speichern des Attributes " + attribut.ToString() + " ist ein Fehler aufgetreten: " + error.Message);
-                }
-                else
-                {
-                    attributeDictionary.Add(attribut, value);
-                }
+                var value = Attribute.GetAttributAKTValue(attribut);
+                attributeDictionary.Add(attribut, value);
             }
             charakter.AttributeBaseValue = attributeDictionary;
             #endregion
@@ -128,10 +120,10 @@ namespace DSAProject.Classes.Charakter
             #endregion
             #region Talente Speichern
             charakter.TalentTAW = new Dictionary<Guid, int>();
-            charakter.TalentAT  = new Dictionary<Guid, int>();
-            charakter.TalentPA  = new Dictionary<Guid, int>();
+            charakter.TalentAT = new Dictionary<Guid, int>();
+            charakter.TalentPA = new Dictionary<Guid, int>();
             charakter.MotherLanguages = new Dictionary<Guid, bool>();
-            
+
 
             foreach (var item in Talente.TAWDictionary)
             {
@@ -158,7 +150,7 @@ namespace DSAProject.Classes.Charakter
             {
                 charakter.MotherLanguages.Add(item.Key.ID, item.Value);
             }
- 
+
             var allTalents = new List<ITalent>(Talente.TAWDictionary.Keys);
             allTalents.AddRange(Talente.ATDictionary.Keys);
             allTalents.AddRange(Talente.PADictionary.Keys);
@@ -186,44 +178,44 @@ namespace DSAProject.Classes.Charakter
             #endregion
             #region Traits Speichern
             charakter.Traits = new List<JSON_Trait>();
-            foreach(var item in Traits.traits)
+            foreach (var item in Traits.traits)
             {
                 var jTrait = new JSON_Trait
                 {
-                    TraitType       = item.TraitType,
-                    Description     = item.Description,
-                    GP              = item.GP,
-                    Title           = item.Title,
-                    Value           = item.Value,
+                    TraitType = item.TraitType,
+                    Description = item.Description,
+                    GP = item.GP,
+                    Title = item.Title,
+                    Value = item.Value,
                     AttributeValues = new Dictionary<CharakterAttribut, int>(),
-                    ResourceValues  = new Dictionary<string, int>(),
-                    ValueValues     = new Dictionary<string, int>(),
-                    TawBonus        = new Dictionary<Guid, int>(),
-                    AtBonus         = new Dictionary<Guid, int>(),
-                    PaBonus         = new Dictionary<Guid, int>()
-                    
+                    ResourceValues = new Dictionary<string, int>(),
+                    ValueValues = new Dictionary<string, int>(),
+                    TawBonus = new Dictionary<Guid, int>(),
+                    AtBonus = new Dictionary<Guid, int>(),
+                    PaBonus = new Dictionary<Guid, int>()
+
                 };
-                foreach(var innerItem in item.UsedAttributs())
+                foreach (var innerItem in item.UsedAttributs())
                 {
                     jTrait.AttributeValues.Add(innerItem, item.GetValue(innerItem));
                 }
-                foreach(var innerItem in item.UsedResources())
+                foreach (var innerItem in item.UsedResources())
                 {
                     jTrait.ResourceValues.Add(innerItem.Name, item.GetValue(innerItem));
                 }
-                foreach(var innerItem in item.UsedValues())
+                foreach (var innerItem in item.UsedValues())
                 {
                     jTrait.ValueValues.Add(innerItem.Name, item.GetValue(innerItem));
                 }
-                foreach(var innerItem in item.GetTawBonus())
+                foreach (var innerItem in item.GetTawBonus())
                 {
                     jTrait.TawBonus.Add(innerItem.Key.ID, innerItem.Value);
                 }
-                foreach(var innerItem in item.GetATBonus())
+                foreach (var innerItem in item.GetATBonus())
                 {
                     jTrait.AtBonus.Add(innerItem.Key.ID, innerItem.Value);
                 }
-                foreach(var innerItem in item.GetPABonus())
+                foreach (var innerItem in item.GetPABonus())
                 {
                     jTrait.PaBonus.Add(innerItem.Key.ID, innerItem.Value);
                 }
@@ -236,7 +228,7 @@ namespace DSAProject.Classes.Charakter
             #endregion
             return charakter;
         }
-        public void Load(JSON_Charakter json_charakter, List<ITalent> talents) 
+        public void Load(JSON_Charakter json_charakter, List<ITalent> talents)
         {
             #region Nullprüfungen
             if (json_charakter.MotherLanguages == null) json_charakter.MotherLanguages = new Dictionary<Guid, bool>();
@@ -246,17 +238,13 @@ namespace DSAProject.Classes.Charakter
             #region Attribute Laden
             foreach (var item in json_charakter.AttributeBaseValue.Keys)
             {
-                Attribute.SetAKTValue(item, json_charakter.AttributeBaseValue[item], out Error error);
-                if (error != null)
-                {
-                    throw new Exception(error.Message);
-                }
+                Attribute.SetAKTValue(item, json_charakter.AttributeBaseValue[item]);
             }
             #endregion
             #region Values Laden
-            if(json_charakter.SettableValues != null)
+            if (json_charakter.SettableValues != null)
             {
-                foreach(var item in json_charakter.SettableValues)
+                foreach (var item in json_charakter.SettableValues)
                 {
                     var settableValue = Values.UsedValues.Where(x => x.Name == item.Key).FirstOrDefault();
                     if (settableValue != null && typeof(AbstractSettableValue).IsAssignableFrom(settableValue.GetType()))
@@ -273,7 +261,7 @@ namespace DSAProject.Classes.Charakter
             foreach (var item in json_charakter.TalentTAW)
             {
                 var talent = talents.Where(x => x.ID == item.Key).FirstOrDefault();
-                if(talent != null)
+                if (talent != null)
                 {
                     Talente.SetTAW(talent, item.Value);
                 }
@@ -282,7 +270,7 @@ namespace DSAProject.Classes.Charakter
                     TalentMissing(json_charakter, item.Key);
                 }
             }
-            foreach(var item in json_charakter.TalentAT)
+            foreach (var item in json_charakter.TalentAT)
             {
                 var talent = talents.Where(x => x.ID == item.Key).FirstOrDefault();
                 if (talent != null && typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
@@ -294,7 +282,7 @@ namespace DSAProject.Classes.Charakter
                     TalentMissing(json_charakter, item.Key);
                 }
             }
-            foreach(var item in json_charakter.TalentPA)
+            foreach (var item in json_charakter.TalentPA)
             {
                 var talent = talents.Where(x => x.ID == item.Key).FirstOrDefault();
                 if (talent != null && typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
@@ -306,7 +294,7 @@ namespace DSAProject.Classes.Charakter
                     TalentMissing(json_charakter, item.Key);
                 }
             }
-            foreach(var item in json_charakter.MotherLanguages)
+            foreach (var item in json_charakter.MotherLanguages)
             {
                 var talent = talents.Where(x => x.ID == item.Key).FirstOrDefault();
                 Talente.SetMother((TalentLanguage)talent, item.Value);
@@ -336,11 +324,11 @@ namespace DSAProject.Classes.Charakter
                         Title = item.Title,
                         Value = item.Value,
                     };
-                    foreach(var innerItems in item.AttributeValues)
+                    foreach (var innerItems in item.AttributeValues)
                     {
                         trait.SetValue(innerItems.Key, innerItems.Value);
                     }
-                    foreach(var innerItems in item.ValueValues)
+                    foreach (var innerItems in item.ValueValues)
                     {
                         var value = GetValue(innerItems.Key);
                         if (value != null)
@@ -348,7 +336,7 @@ namespace DSAProject.Classes.Charakter
                             trait.SetValue(value, innerItems.Value);
                         }
                     }
-                    foreach(var innerItems in item.ResourceValues)
+                    foreach (var innerItems in item.ResourceValues)
                     {
                         var res = GetResource(innerItems.Key);
                         if (res != null)
@@ -357,10 +345,10 @@ namespace DSAProject.Classes.Charakter
                         }
                     }
 
-                    foreach(var innerItems in item.TawBonus)
+                    foreach (var innerItems in item.TawBonus)
                     {
                         var talent = talents.Where(x => x.ID == innerItems.Key).FirstOrDefault();
-                        if(talent != null)
+                        if (talent != null)
                         {
                             trait.SetTaWBonus(talent, innerItems.Value);
                         }

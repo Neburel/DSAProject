@@ -19,7 +19,7 @@ namespace DSALib {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -93,6 +93,87 @@ namespace DSALib {
         internal static string BlockBasis {
             get {
                 return ResourceManager.GetString("BlockBasis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Der Maximum wert des Charakters wurde überschritte ähnelt.
+        /// </summary>
+        internal static string ErrorAttrbutOverMax {
+            get {
+                return ResourceManager.GetString("ErrorAttrbutOverMax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Das Gewählte Attribut exestiert bei diesem Charakter nicht ähnelt.
+        /// </summary>
+        internal static string ErrorAttributNotExist {
+            get {
+                return ResourceManager.GetString("ErrorAttributNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  ähnelt.
+        /// </summary>
+        internal static string ErrorNullName {
+            get {
+                return ResourceManager.GetString("ErrorNullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Versuch als Anforderung zweimal das gleiche Talent einzufügen&quot; ähnelt.
+        /// </summary>
+        internal static string ErrorTalentDobbleRequirement {
+            get {
+                return ResourceManager.GetString("ErrorTalentDobbleRequirement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Es sind nicht alle nötigen Variablen für das erstellen eines Talent gefüllt ähnelt.
+        /// </summary>
+        internal static string ErrorTalentMissingVariables {
+            get {
+                return ResourceManager.GetString("ErrorTalentMissingVariables", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Es wurde Versucht Variablen in einem Talent Typen zu editieren in dem diese nicht vorhanden sind ähnelt.
+        /// </summary>
+        internal static string ErrorTalentUnknownTalentTypeEdit {
+            get {
+                return ResourceManager.GetString("ErrorTalentUnknownTalentTypeEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Unbekannter Requirement Typ ähnelt.
+        /// </summary>
+        internal static string ErrorTalentUnknwonRequirement {
+            get {
+                return ResourceManager.GetString("ErrorTalentUnknwonRequirement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Der Angegebene Talent Typ ist unbekannt ähnelt.
+        /// </summary>
+        internal static string ErrorUnknownTalentType {
+            get {
+                return ResourceManager.GetString("ErrorUnknownTalentType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Der Charakter enthält einen Doppelten Namen bei den Values. Er kann nicht verwendet werden ähnelt.
+        /// </summary>
+        internal static string ErrorValueDobbleElement {
+            get {
+                return ResourceManager.GetString("ErrorValueDobbleElement", resourceCulture);
             }
         }
         

@@ -50,6 +50,9 @@ namespace DSAProject.Classes
         #region Creator
         public static ITalent EditTalent(ITalent talent, List<ITalentDeduction> deductions = null, List<ITalentRequirement> requirements = null, AbstractTalentGeneral fatherTalent = null)
         {
+            if (talent == null) throw new ArgumentNullException(nameof(talent));
+            else if (deductions == null) throw new ArgumentNullException(nameof(deductions));
+
             talent.Deductions.Clear();
             foreach (var deduction in deductions)
             {
@@ -67,8 +70,8 @@ namespace DSAProject.Classes
                 {
                     throw new TalentException(
                         error: ErrorCode.Error,
-                        message: "Es wurde Versucht Variablen in einem Talent Typen zu editieren in dem diese nicht vorhanden sind"
-                        );
+                        message: Resources.ErrorTalentUnknownTalentTypeEdit
+                        ); 
                 }
             }
 
@@ -84,7 +87,7 @@ namespace DSAProject.Classes
             {
                 throw new TalentException(
                     error: ErrorCode.Error,
-                    message: "Der Name darf nicht null sein");
+                    message: Resources.ErrorNullName);
             }
             else if (talent != null)
             {
@@ -150,21 +153,23 @@ namespace DSAProject.Classes
             {
                 throw new TalentException(
                     error: ErrorCode.Error,
-                    message: "Der Angegebene Talent Typ ist unbekannt");
+                    message: Resources.ErrorUnknownTalentType);
             }
             return talent;
         }
         public static JSON_Talent CreateJSON(ITalent talent, GameType gameType = GameType.DSA)
         {
+            if (talent == null) throw new ArgumentNullException(nameof(talent));
+
             JSON_Talent jsonTalent = null;
 
             #region TalentType
-            var talenttype = talent.GetType().ToString();
-            var lastIndex = talenttype.LastIndexOf(".");
-            talenttype = talenttype.Substring(lastIndex + 1);
+            var talenttype  = talent.GetType().ToString();
+            var lastIndex   = talenttype.LastIndexOf(".", StringComparison.CurrentCulture);
+            talenttype      = talenttype.Substring(lastIndex + 1);
             #endregion
 
-            if (talent.Name != null && talent.Name != string.Empty)
+            if (!string.IsNullOrEmpty(talent.Name))
             {
                 jsonTalent = new JSON_Talent
                 {
@@ -210,7 +215,7 @@ namespace DSAProject.Classes
                             }
                             if (jsonTalent.RequirementOff.ContainsKey(req.Talent.ID))
                             {
-                                throw new Exception("Versuch als Anforderung zweimal das gleiche Talent einzufügen");
+                                throw new Exception(Resources.ErrorTalentDobbleRequirement);
                             }
                             else
                             {
@@ -232,7 +237,7 @@ namespace DSAProject.Classes
                         }
                         else
                         {
-                            throw new Exception("Unbekannter Requirement Typ");
+                            throw new Exception(Resources.ErrorTalentUnknwonRequirement);
                         }
                     }
                     if (abstractTalentGeneral.FatherTalent != null)
@@ -243,7 +248,7 @@ namespace DSAProject.Classes
             }
             else
             {
-                throw new Exception("Es sind nicht alle nötigen Variablen für das erstellen eines Talent gefüllt");
+                throw new Exception(Resources.ErrorTalentMissingVariables);
             }
             return jsonTalent;
         }        
@@ -392,11 +397,11 @@ namespace DSAProject.Classes
 
             return list.OrderBy(x => x.Name).ToList();
         }
-        public static List<LanguageFamily> LoadLanguageFamily(List<JSON_TalentLanguageFamily> json_FamilyList, List<ITalent> talentList)
+        public static List<LanguageFamily> LoadLanguageFamily(List<JSON_TalentLanguageFamily> jsonFamilyList, List<ITalent> talentList)
         {
             var ret = new List<LanguageFamily>();
 
-            foreach (var json_Family in json_FamilyList)
+            foreach (var json_Family in jsonFamilyList)
             {
                 var family = new LanguageFamily(json_Family.Name);
 
@@ -582,13 +587,13 @@ namespace DSAProject.Classes
                     if (mainReqg.IsMatch(deductionString))
                     {
                         value = mainReqg.Split(deductionString)[0].Trim();
-                        valueint = Int32.Parse(innerReqg.Match(deductionString).ToString());
+                        valueint = int.Parse(innerReqg.Match(deductionString).ToString(), Helper.CultureInfo);
                     }
                     if (valueint == -1) { valueint = talentwithDeduction.Key.BaseDeduction; }
 
                     ITalentDeduction deduction = null;
-                    var deductionTalent = ret.Where(x => x.Name.StartsWith(value));
-                    if (deductionTalent.Count() != 0)
+                    var deductionTalent = ret.Where(x => x.Name.StartsWith(value, StringComparison.CurrentCulture));
+                    if (deductionTalent.Any())
                     {
                         deduction = new TalentDeductionTalent(deductionTalent.First(), valueint, talentwithDeduction.Key.BaseDeduction);
                     }
@@ -597,7 +602,8 @@ namespace DSAProject.Classes
                         var createdNew = false;
 
                         value = mainReqg.Split(deductionString)[0].Trim();
-                        Int32.TryParse(innerReqg.Match(deductionString).ToString(), out valueint);
+                        var convertResult = Int32.TryParse(innerReqg.Match(deductionString).ToString(), out valueint);
+
 
                         var valueFather = fatherReqg.Split(deductionString)[0].Trim();
                         var fatherTalent = ret.Where(x => x.Name == valueFather).FirstOrDefault();
@@ -669,7 +675,7 @@ namespace DSAProject.Classes
                     var value = requirementString;
                     var valueStart = -1;
                     var valueEnd = -1;
-                    var reqTalent = ret.Where(x => x.Name.StartsWith(value));
+                    var reqTalent = ret.Where(x => x.Name.StartsWith(value, StringComparison.CurrentCulture));
 
                     var startReqg = new Regex("[0-9]?[0-9][+][:]");
                     var endReqg = new Regex("[ ][0-9]?[0-9]");
@@ -681,22 +687,22 @@ namespace DSAProject.Classes
                             var innerStartReq = new Regex("[0-9]?[0-9]");
                             var startvalue = startReqg.Match(value).ToString();
                             var truestartValue = innerStartReq.Match(startvalue).ToString();
-                            valueStart = Int32.Parse(truestartValue);
+                            valueStart = Int32.Parse(truestartValue, Helper.CultureInfo);
                             value = startReqg.Split(value)[1];
                         }
 
                         var startSplit = startReqg.Split(value);
-                        valueEnd = Int32.Parse(endReqg.Match(value).ToString());
+                        valueEnd = Int32.Parse(endReqg.Match(value).ToString(), Helper.CultureInfo);
                         value = endReqg.Split(value)[0].Trim();
                     }
 
                     requirement = new TalentRequirementFreeText(requirementString);
 
-                    if (reqTalent.Count() != 0 && valueEnd != -1 && valueStart != -1)
+                    if (reqTalent.Any() && valueEnd != -1 && valueStart != -1)
                     {
                         requirement = new TalentRequirementTalent(reqTalent.First(), valueEnd, valueStart);
                     }
-                    else if (reqTalent.Count() != 0 && valueEnd != -1)
+                    else if (reqTalent.Any() && valueEnd != -1)
                     {
                         var trueReqTalent = reqTalent.First();
                         requirement = new TalentRequirementTalent(reqTalent.First(), valueEnd);
@@ -722,7 +728,7 @@ namespace DSAProject.Classes
                 //Kontrolle nötig, Beabsichtigter Effekt?
                 try
                 {
-                    cellValue = strintTableValue.SharedStringTable.ElementAt(int.Parse(cellValue)).InnerText;
+                    cellValue = strintTableValue.SharedStringTable.ElementAt(int.Parse(cellValue, Helper.CultureInfo)).InnerText;
                 }
                 catch (Exception)
                 {
@@ -781,7 +787,7 @@ namespace DSAProject.Classes
             public ExcleRowType ExcelRowType()
             {
                 if (string.IsNullOrEmpty(Talent) && string.IsNullOrEmpty(Schrift)) return ExcleRowType.NoValidTalent;
-                else if (Talent.StartsWith(EXCELTITLE)) return ExcleRowType.Title;
+                else if (Talent.StartsWith(EXCELTITLE, StringComparison.CurrentCulture)) return ExcleRowType.Title;
 
                 return ExcleRowType.ValidTalent;
             }
@@ -797,8 +803,8 @@ namespace DSAProject.Classes
                 else if (titleValue == nameof(Waffenmeister)) Waffenmeister = value;
                 else if (titleValue == nameof(TaW)) TaW = value;
                 else if (titleValue == nameof(Anforderungen)) Anforderungen = value;
-                else if (titleValue.StartsWith(nameof(VerwandteFertigkeiten))) VerwandteFertigkeiten = value;
-                else if (titleValue.StartsWith(nameof(Ableiten))) Ableiten = value;
+                else if (titleValue.StartsWith(nameof(VerwandteFertigkeiten), StringComparison.CurrentCulture)) VerwandteFertigkeiten = value;
+                else if (titleValue.StartsWith(nameof(Ableiten), StringComparison.CurrentCulture)) Ableiten = value;
                 else if (titleValue == nameof(Sprache))
                 {
                     value = RemoveLanguageSymbols(value);
@@ -885,6 +891,8 @@ namespace DSAProject.Classes
         }
         public static ITalent SearchTalent(string name, List<ITalent> talentList, Type type)
         {
+            if (type == null) throw new ArgumentNullException(nameof(type));
+
             var innerTalent = talentList.Where(x => x.Name == name).FirstOrDefault();
             if (innerTalent != null && type.IsAssignableFrom(innerTalent.GetType()))
             {
