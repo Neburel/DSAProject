@@ -30,7 +30,7 @@ namespace DSAProject.util.ErrrorManagment
                 }
             };
         }
-        public static void Log(LogLevel logLevel, Error error, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string CallerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
+        public static void Log(LogLevel logLevel, DSAError error, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string CallerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
             if (error != null)
             {
@@ -45,7 +45,7 @@ namespace DSAProject.util.ErrrorManagment
         {
             var date = DateTime.Today.ToString("d").Replace(".", "");
             var fileString = Path.Combine(folder, fileName + "_" + date + fileExtension);
-            FileManagment.FileManagment.WriteToFile(message, fileString, CreationCollisionOption.OpenIfExists, out Error error);
+            FileManagment.FileManagment.WriteToFile(message, fileString, CreationCollisionOption.OpenIfExists, out DSAError error);
         }
     }
 }

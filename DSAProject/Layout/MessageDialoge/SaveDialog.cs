@@ -5,7 +5,7 @@ namespace DSAProject.Layout.MessageDialoge
 {
     public static class SaveDialog
     {
-        public static async void ShowDialog(DSALib.Utils.Error error)
+        public static async void ShowDialog(DSALib.Utils.DSAError error)
         {
             var title = "Speicher Dialog";
             var message = string.Empty;

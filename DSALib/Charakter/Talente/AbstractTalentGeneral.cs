@@ -74,11 +74,5 @@ namespace DSAProject.Classes.Charakter.Talente
 
             return ret;
         }
-
-
-        public string ProbeText
-        {
-            get => GetProbeText();
-        }
     }
 }

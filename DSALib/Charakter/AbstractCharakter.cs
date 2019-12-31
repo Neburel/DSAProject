@@ -101,7 +101,7 @@ namespace DSAProject.Classes.Charakter
             var settableValues = Values.UsedValues.Where(x => typeof(AbstractSettableValue).IsAssignableFrom(x.GetType()));
             foreach (var item in settableValues)
             {
-                var value = Values.GetAKTValue(item, out Error error);
+                var value = Values.GetAKTValue(item, out DSAError error);
                 charakter.SettableValues.Add(item.Name, value);
             }
             #endregion

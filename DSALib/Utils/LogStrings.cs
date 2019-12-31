@@ -19,7 +19,7 @@ namespace DSALib.Utils
         /// </summary>
         public static List<string> Logs { get; private set; } = new List<string>();
 
-        public static void LogString(LogLevel logLevel, Error error, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string CallerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
+        public static void LogString(LogLevel logLevel, DSAError error, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string CallerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
             if(error == null)
             {

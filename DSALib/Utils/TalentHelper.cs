@@ -829,7 +829,7 @@ namespace DSAProject.Classes
                 //Sprache M.	Komplex.TaW Schrift Komplex.TaW
 
             }
-            private bool IsValidString(string value)
+            private static bool IsValidString(string value)
             {
                 if (!string.IsNullOrEmpty(value))
                 {
@@ -853,7 +853,7 @@ namespace DSAProject.Classes
             {
                 return (IsValidString(Anforderungen));
             }
-            private List<string> SplitString(string valueString, List<string> retList)
+            private static List<string> SplitString(string valueString, List<string> retList)
             {
                 if (retList == null) retList = new List<string>();
                 if (!string.IsNullOrEmpty(valueString))
@@ -880,9 +880,7 @@ namespace DSAProject.Classes
             {
                 return SplitString(Anforderungen, new List<string>());
             }
-
-
-            private string RemoveLanguageSymbols(string value)
+            private static string RemoveLanguageSymbols(string value)
             {
                 value = value.Split('*')[0];
                 return value;

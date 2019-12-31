@@ -59,7 +59,7 @@ namespace DSALib.Charakter.Values
 
             if (mr != null)
             {
-                mrValue = Res.GetMAXValue(mr, out Error error);
+                mrValue = Res.GetMAXValue(mr, out DSAError error);
             }
             value = initative + mrValue;
             return value;

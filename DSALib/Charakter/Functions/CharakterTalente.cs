@@ -206,7 +206,7 @@ namespace DSAProject.Classes.Charakter
             if (talent == null) throw new ArgumentNullException(nameof(talent));
 
             var talentType  = talent.GetType();
-            Error error     = null;
+            DSAError error     = null;
             string probe    = string.Empty;
 
 

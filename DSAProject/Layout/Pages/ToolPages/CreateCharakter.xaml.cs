@@ -53,6 +53,9 @@ namespace DSAProject.Layout.Pages
             this.InitializeComponent();
             DataContext = this;
 
+            var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+            var stringBirthDate = loader.GetString("Birthday");
+
             #region SetDescriptiors
             ViewModel.Age.DescriptionTitle = "Alter:";
             ViewModel.Race.DescriptionTitle = "Rasse-/en:";
@@ -62,7 +65,7 @@ namespace DSAProject.Layout.Pages
             ViewModel.EyeColor.DescriptionTitle = "Augenfarbe:";
             ViewModel.HairColor.DescriptionTitle = "Haarfarbe:";
             ViewModel.SkinColor.DescriptionTitle = "Hautfarbe:";
-            ViewModel.BirthDate.DescriptionTitle = ResourcesProject.BirthDate;
+            ViewModel.BirthDate.DescriptionTitle = stringBirthDate;
             ViewModel.PlayerName.DescriptionTitle = "Name:";
             ViewModel.Profession.DescriptionTitle = "Profession:";
             ViewModel.CurrentDate.DescriptionTitle = "Aktuelles Datum:";
@@ -140,15 +143,15 @@ namespace DSAProject.Layout.Pages
 
             if (landSpeed != null)
             {
-                ViewModel.GroundSpeed = Game.Charakter.Values.GetAKTValue(landSpeed, out Error error);
+                ViewModel.GroundSpeed = Game.Charakter.Values.GetAKTValue(landSpeed, out DSAError error);
             }
             if (airSpeed != null)
             {
-                ViewModel.GroundSpeed = Game.Charakter.Values.GetAKTValue(airSpeed, out Error error);
+                ViewModel.GroundSpeed = Game.Charakter.Values.GetAKTValue(airSpeed, out DSAError error);
             }
             if (waterSpeed != null)
             {
-                ViewModel.GroundSpeed = Game.Charakter.Values.GetAKTValue(waterSpeed, out Error error);
+                ViewModel.GroundSpeed = Game.Charakter.Values.GetAKTValue(waterSpeed, out DSAError error);
             }
             #endregion
 

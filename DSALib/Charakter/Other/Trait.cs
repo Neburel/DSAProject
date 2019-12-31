@@ -274,7 +274,7 @@ namespace DSALib.Charakter.Other
 
             return ret;
         }
-        private string GenerateLongDescriptionHelper(int value, string returnValue, string addString)
+        private static string GenerateLongDescriptionHelper(int value, string returnValue, string addString)
         {
             if (value != 0)
             {

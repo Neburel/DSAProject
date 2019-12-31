@@ -312,14 +312,14 @@ namespace DSAProject.Layout.Pages.ToolPages
         private void XAML_ButtonCreateTalent_Click(object sender, RoutedEventArgs e)
         {
             ITalent currentTalent = selectedTalent;
-            Error error = null;
+            DSAError error = null;
 
             if (selectedTalent == null)
             {
                 if (!TalentHelper.IsTalentTypeAvaivible(currentContent))
                 {
                     ViewModel.TalentTypeBorderColor = borderColorWarning;
-                    error = new Error
+                    error = new DSAError
                     {
                         ErrorCode = ErrorCode.InvalidValue,
                         Message = "Es muss ein gültiger Talent Typ ausgewählt"
@@ -351,7 +351,7 @@ namespace DSAProject.Layout.Pages.ToolPages
             {
                 ViewModel.TalentNameBorderColor = borderColorWarning;
 
-                error = new Error
+                error = new DSAError
                 {
                     ErrorCode = ErrorCode.InvalidValue,
                     Message = "Es wird ein Talent Name Benötigt"

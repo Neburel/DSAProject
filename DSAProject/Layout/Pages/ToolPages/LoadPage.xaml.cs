@@ -28,7 +28,7 @@ namespace DSAProject.Layout.Pages
             this.InitializeComponent();
 
             var items = new ObservableCollection<JSONCharakter>();
-            var cFileList = FileManagment.GetFilesDictionary(Game.CharakterSaveFolder, out Error error);
+            var cFileList = FileManagment.GetFilesDictionary(Game.CharakterSaveFolder, out DSAError error);
             foreach(var item in cFileList)
             {
                 var file            = Path.Combine(Game.CharakterSaveFolder, item);
@@ -51,7 +51,7 @@ namespace DSAProject.Layout.Pages
         }
         private void XAML_LoadListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Error error             = null;
+            DSAError error             = null;
             var charakter            = (JSONCharakter)e.ClickedItem;
             charGivenName.TryGetValue(charakter, out bool givenName);
 

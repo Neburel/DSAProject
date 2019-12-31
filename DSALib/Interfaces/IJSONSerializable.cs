@@ -9,7 +9,7 @@ namespace DSALib.Classes.Interfaces
     public interface IJSONSerializable
     {
         string JSONContent { get; set; }
-        string ToJSON(Encoding encoding, out string error);
-        string ToJSON(out string error);
+        string ToJSON(Encoding encoding, out string errorString);
+        string ToJSON(out string errorString);
     }
 }

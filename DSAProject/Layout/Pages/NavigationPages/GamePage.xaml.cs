@@ -149,7 +149,7 @@ namespace DSAProject
                 }
                 if (navItem == viewModel.Save)
                 {
-                    Game.CharakterSave(out Error error);
+                    Game.CharakterSave(out DSAError error);
                     SaveDialog.ShowDialog(error);
                 }
                 return;

@@ -178,7 +178,7 @@ namespace DSAProject.Layout.Pages.NavigationPages
 
             if (navItem.NavType == typeof(SavePage))
             {
-                Game.CharakterSave(out Error error);
+                Game.CharakterSave(out DSAError error);
                 SaveDialog.ShowDialog(error);
                 XAML_NavigationView.SelectedItem = startItem;
 

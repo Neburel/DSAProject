@@ -182,7 +182,6 @@
     <Compile Include="Layout\ViewModels\CreateTalentViewModel.cs" />
     <Compile Include="Layout\ViewModels\Talent_ItemPageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResourcesProject.cs" />
     <Compile Include="util\Enum.cs" />
     <Compile Include="util\EventNavRequest.cs" />
     <Compile Include="util\Hilfsklassen.cs" />
@@ -200,6 +199,8 @@
     <Content Include="Assets\Talente_28112019.json" />
     <Content Include="Assets\Talente.json" />
     <None Include="DSAProject_TemporaryKey.pfx" />
+    <PRIResource Include="Strings\en\Resources.resw" />
+    <PRIResource Include="Strings\de-DE\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\01_Create\Square44x44Logo.altform-unplated_targetsize-16.png" />
@@ -317,6 +318,7 @@
       <Name>DSALib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

@@ -42,14 +42,14 @@ namespace DSALib.Charakter
 
         #region Getter
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Literale nicht als lokalisierte Parameter übergeben", Justification = "<Ausstehend>")]
-        public int GetAKTValue(IResource value, out Error error)
+        public int GetAKTValue(IResource value, out DSAError error)
         {
             error = null;
             var ret = -1;
 
             if (aktValues.TryGetValue(value, out int currentValue) == false)
             {
-                error = new Error { ErrorCode = ErrorCode.InvalidValue, Message = "Das Gewählte Attribut exestiert bei diesem Charakter nicht" };
+                error = new DSAError { ErrorCode = ErrorCode.InvalidValue, Message = "Das Gewählte Attribut exestiert bei diesem Charakter nicht" };
             }
             else
             {
@@ -59,7 +59,7 @@ namespace DSALib.Charakter
             return ret;
         }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Literale nicht als lokalisierte Parameter übergeben", Justification = "<Ausstehend>")]
-        public int GetMODValue(IResource value, out Error error)
+        public int GetMODValue(IResource value, out DSAError error)
         {
             error = null;
             var ret = -1;
@@ -70,7 +70,7 @@ namespace DSALib.Charakter
 
                 if (regularValue == false)
                 {
-                    error = new Error { ErrorCode = ErrorCode.InvalidValue, Message = "Das Gewählte Attribut exestiert bei diesem Charakter nicht" };
+                    error = new DSAError { ErrorCode = ErrorCode.InvalidValue, Message = "Das Gewählte Attribut exestiert bei diesem Charakter nicht" };
                 }
                 else
                 {
@@ -83,7 +83,7 @@ namespace DSALib.Charakter
             }
             return ret;
         }
-        public int GetMAXValue(IResource value, out Error error)
+        public int GetMAXValue(IResource value, out DSAError error)
         {
             error = null;
             var ret = -1;

@@ -12,7 +12,7 @@ namespace DSAProject.util.FileManagment
 {
     public static class FileManagment
     {
-        public static void WriteToFile(string message, string fileString, CreationCollisionOption option, out Error error)
+        public static void WriteToFile(string message, string fileString, CreationCollisionOption option, out DSAError error)
         {
             error = null;
 
@@ -31,7 +31,7 @@ namespace DSAProject.util.FileManagment
             }
             catch(Exception ex)
             {
-                error = new Error
+                error = new DSAError
                 {
                     ErrorCode = ErrorCode.Error,
                     Message = ex.Message
@@ -39,7 +39,7 @@ namespace DSAProject.util.FileManagment
                 Logger.Log(LogLevel.ErrorLog, "Schreiben in Datei fehlgeschlagen " + ex.Message, nameof(FileManagment), nameof(fileString));
             }
         }
-        public static string LoadTextFile(string fileString, out Error error)
+        public static string LoadTextFile(string fileString, out DSAError error)
         {
             error               = null;
             var retText         = string.Empty;
@@ -58,7 +58,7 @@ namespace DSAProject.util.FileManagment
             }
             catch (Exception ex)
             {
-                error = new Error
+                error = new DSAError
                 {
                     ErrorCode = ErrorCode.Error,
                     Message = ex.Message
@@ -67,7 +67,7 @@ namespace DSAProject.util.FileManagment
             }
             return retText;
         }
-        public static string LoadTextAssestFile(string fileString, out Error error)
+        public static string LoadTextAssestFile(string fileString, out DSAError error)
         {
             error = null;
             var retText = string.Empty;
@@ -86,7 +86,7 @@ namespace DSAProject.util.FileManagment
             }
             catch (Exception ex)
             {
-                error = new Error
+                error = new DSAError
                 {
                     ErrorCode = ErrorCode.Error,
                     Message = ex.Message
@@ -96,14 +96,14 @@ namespace DSAProject.util.FileManagment
 
             return retText;
         }
-        public static List<string> GetFilesDictionary(string dictionaryString, out Error error)
+        public static List<string> GetFilesDictionary(string dictionaryString, out DSAError error)
         {
             var ret = new List<string>();
             error   = null;
 
             try
             {
-                Error innererror    = null;
+                DSAError innererror    = null;
                 var semaphoreSlim   = new SemaphoreSlim(0);
                 var task = new Task(async () =>
                 {
@@ -117,7 +117,7 @@ namespace DSAProject.util.FileManagment
                     }
                     catch(Exception e)
                     {
-                        innererror = new Error
+                        innererror = new DSAError
                         {
                             ErrorCode = ErrorCode.Error,
                             Message = e.Message
@@ -134,7 +134,7 @@ namespace DSAProject.util.FileManagment
             }
             catch (Exception ex)
             {
-                error = new Error
+                error = new DSAError
                 {
                     ErrorCode = ErrorCode.Error,
                     Message = ex.Message
@@ -144,7 +144,7 @@ namespace DSAProject.util.FileManagment
 
             return ret;
         }
-        public static List<string> GetAssestFilesDictionary(string dictionaryString, out Error error)
+        public static List<string> GetAssestFilesDictionary(string dictionaryString, out DSAError error)
         {
             var ret = new List<string>();
             error = null;
@@ -176,7 +176,7 @@ namespace DSAProject.util.FileManagment
             }
             catch(Exception ex)
             {
-                error = new Error
+                error = new DSAError
                 {
                     ErrorCode = ErrorCode.Error,
                     Message = ex.Message

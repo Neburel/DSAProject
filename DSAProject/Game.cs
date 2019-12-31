@@ -78,7 +78,7 @@ namespace DSAProject.Classes.Game
         {
             NavRequested?.Invoke(null, nav);
         }
-        public static void SaveTalent(ITalent talent, GameType gameType, out Error error)
+        public static void SaveTalent(ITalent talent, GameType gameType, out DSAError error)
         {
             error = null;
             #region Talenttype
@@ -130,7 +130,7 @@ namespace DSAProject.Classes.Game
             }
             catch (Exception ex)
             {
-                error = new Error
+                error = new DSAError
                 {
                     ErrorCode = ErrorCode.InvalidValue,
                     Message = ex.Message
@@ -139,7 +139,7 @@ namespace DSAProject.Classes.Game
         }
         public static void LoadTalente()
         {
-            var jstringAssests = FileManagment.LoadTextAssestFile(talentSaveFile, out Error errorAssest);
+            var jstringAssests = FileManagment.LoadTextAssestFile(talentSaveFile, out DSAError errorAssest);
             var jSON_talentAssests = JSONTalentSaveFile.DeSerializeJson(jstringAssests, out string serrorAssest);
 
             TalentList = TalentHelper.LoadTalent(jSON_talentAssests.Talente);
@@ -148,7 +148,7 @@ namespace DSAProject.Classes.Game
         public static Guid GenerateNextCharakterGUID()
         {
             var guid = Guid.NewGuid();
-            var files = FileManagment.GetFilesDictionary(CharakterSaveFolder, out Error error);
+            var files = FileManagment.GetFilesDictionary(CharakterSaveFolder, out DSAError error);
             var list = new List<Guid>();
 
             foreach (var file in files)
@@ -183,7 +183,7 @@ namespace DSAProject.Classes.Game
 
             return talents;
         }
-        public static void CharakterSave(out Error error)
+        public static void CharakterSave(out DSAError error)
         {
             error = null;
             try
@@ -212,14 +212,14 @@ namespace DSAProject.Classes.Game
             }
             catch (Exception ex)
             {
-                error = new Error
+                error = new DSAError
                 {
                     ErrorCode = ErrorCode.Error,
                     Message = ex.Message
                 };
             }
         }
-        public static void LoadCharakter(JSONCharakter json_charakter, out Error error)
+        public static void LoadCharakter(JSONCharakter json_charakter, out DSAError error)
         {
             error = null;
             charakter.Load(json_charakter, TalentList.ToList());
