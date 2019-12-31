@@ -1,4 +1,5 @@
 ﻿using DSALib.JSON;
+using DSALib.Utils;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -6,7 +7,7 @@ using System.Runtime.Serialization;
 namespace DSALib.Classes.JSON
 {
     [DataContract]
-    public class JSON_Charakter : AbstractJSONSerializable<JSON_Charakter>
+    public class JSONCharakter : AbstractJSONSerializable<JSONCharakter>
     {
         #region Meta Data
         [DataMember]
@@ -19,10 +20,10 @@ namespace DSALib.Classes.JSON
         [IgnoreDataMember]
         public DateTime SaveTime
         {
-            get => Convert.ToDateTime(SaveTimeAsString);
+            get => Convert.ToDateTime(SaveTimeAsString, Helper.CultureInfo);
             set
             {
-                SaveTimeAsString = value.ToString("dd/MM/yyyy H:mm");
+                SaveTimeAsString = value.ToString("dd/MM/yyyy H:mm", Helper.CultureInfo);
             }
         }
         #endregion
@@ -35,7 +36,7 @@ namespace DSALib.Classes.JSON
         [DataMember]
         public Dictionary<string, int> SettableValues { get; set; }
         [DataMember]
-        public List<JSON_Descriptor> Descriptors { get; set; }
+        public List<JSONDescriptor> Descriptors { get; set; }
         [DataMember]
         public Dictionary<Guid, int> TalentTAW { get; set; }
         [DataMember]
@@ -47,6 +48,6 @@ namespace DSALib.Classes.JSON
         [DataMember]
         public Dictionary<Guid, string> TalentGuidsNames { get; set; }
         [DataMember]
-        public List<JSON_Trait> Traits { get; set; }
+        public List<JSONTrait> Traits { get; set; }
     }
 }

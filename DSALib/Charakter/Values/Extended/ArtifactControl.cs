@@ -15,6 +15,9 @@ namespace DSALib.Charakter.Values
 
         public ArtifactControl(CharakterResources res, CharakterAttribute attribut)
         {
+            if (res == null) throw new ArgumentNullException(nameof(res));
+            else if (attribut == null) throw new ArgumentNullException(nameof(attribut));
+
             Res         = res;
             Attribute   = attribut;
 

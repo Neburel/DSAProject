@@ -42,7 +42,7 @@ namespace DSAProject.Classes.Charakter.Talente.TalentDeductions
 
             if (!IgnoreValue)
             {
-                ret = ret + "(" + Value.ToString() + ")";
+                ret = ret + "(" + Value.ToString(DSALib.Utils.Helper.CultureInfo) + ")";
             }
             return ret;
         }

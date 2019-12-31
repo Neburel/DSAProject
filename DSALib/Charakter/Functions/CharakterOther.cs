@@ -15,7 +15,6 @@ namespace DSALib.Charakter.Functions
         #region Variables
         private int aktAP;
         private int investAP;
-        private int modAP;
         #endregion
         public int Level { get; set; }
         public int TotalAPPlayer 

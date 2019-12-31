@@ -48,7 +48,7 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
         #endregion
         public AbstractAttributeValues(CharakterAttribute attribute)
         {
-            Attribute   = attribute;
+            Attribute   = attribute ?? throw new ArgumentNullException(nameof(attribute));
             value       = (int) Math.Ceiling(Calculate());
             Attribute.ChangedMAX += (object sender, CharakterAttribut args) =>
             {

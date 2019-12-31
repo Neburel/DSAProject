@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace DSALib.Classes.JSON
 {
     [DataContract]
-    public class JSON_CharakterMetaData : AbstractJSONSerializable<JSON_CharakterMetaData>
+    public class JSONCharakterMetaData : AbstractJSONSerializable<JSONCharakterMetaData>
     {
         [DataMember]
         public Guid ID { get; set; }
@@ -24,10 +24,10 @@ namespace DSALib.Classes.JSON
         [IgnoreDataMember]
         public DateTime SaveTime
         {
-            get => Convert.ToDateTime(SaveTimeAsString);
+            get => Convert.ToDateTime(SaveTimeAsString, DSALib.Utils.Helper.CultureInfo);
             set
             {
-                SaveTimeAsString = value.ToString("MM/dd/yyyy H:mm");
+                SaveTimeAsString = value.ToString("MM/dd/yyyy H:mm", DSALib.Utils.Helper.CultureInfo);
             }
         }
         [IgnoreDataMember]

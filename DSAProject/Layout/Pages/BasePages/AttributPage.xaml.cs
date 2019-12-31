@@ -182,8 +182,8 @@ namespace DSAProject.Layout.Pages
                     width: width,
                     mode: normalMode,
                     IsValueEditable: true,
-                    aktValue: attribute.GetAttributAKTValue(item, out Error error),
-                    modValue: attribute.GetAttributMODValue(item, out error),
+                    aktValue: attribute.GetAttributAKTValue(item),
+                    modValue: attribute.GetAttributMODValue(item),
                     name: item.ToString(),
                     textColor: textColor);
 
@@ -197,20 +197,20 @@ namespace DSAProject.Layout.Pages
                 {
                     if (args == item)
                     {
-                        var value = attribute.GetAttributAKTValue(item, out error);
+                        var value = attribute.GetAttributAKTValue(item);
                         newView.MinValueAsInt = value;
                         sumVieW.MinValueAsInt = attribute.GetSumValueAttributeAKT;
                     }
                 };
                 newView.Event_ValueHigher += (sender, args) =>
                 {
-                    var currentValue = attribute.GetAttributAKTValue(item, out error);
-                    attribute.SetAKTValue(item, currentValue + 1, out error);
+                    var currentValue = attribute.GetAttributAKTValue(item);
+                    attribute.SetAKTValue(item, currentValue + 1);
                 };
                 newView.Event_ValueLower += (sender, agrs) =>
                 {
-                    var currentValue = attribute.GetAttributAKTValue(item, out error);
-                    attribute.SetAKTValue(item, currentValue - 1, out error);
+                    var currentValue = attribute.GetAttributAKTValue(item);
+                    attribute.SetAKTValue(item, currentValue - 1);
                 };
                 i++;
             }

@@ -169,7 +169,7 @@ namespace DSAProject.Layout.Pages.ItemPages
                 }
 
                 ViewModel.TAW = (Game.Charakter.Talente.GetTAW(Talent) + bonusTAW).ToString();
-                ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent, bonusTAW, bonusAT, bonusPA);
+                ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent, bonusAT, bonusPA);
 
                 view = XAML_TaW;
             }
@@ -186,7 +186,7 @@ namespace DSAProject.Layout.Pages.ItemPages
                 }
 
                 ViewModel.AT = (Game.Charakter.Talente.GetAT(talent) + bonusAT).ToString();
-                ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent, bonusTAW, bonusAT, bonusPA);
+                ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent, bonusAT, bonusPA);
 
                 view = XAML_AT;
             }
@@ -203,7 +203,7 @@ namespace DSAProject.Layout.Pages.ItemPages
                 }
 
                 ViewModel.PA = (Game.Charakter.Talente.GetPA(talent) + bonusPA).ToString();
-                ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent, bonusTAW, bonusAT, bonusPA);
+                ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent, bonusAT, bonusPA);
 
                 view = XAML_PA;
             }

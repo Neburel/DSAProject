@@ -24,6 +24,9 @@ namespace DSALib.Classes.JSON
             }
             set { this._jsonContent = value; }
         }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Keine allgemeinen Ausnahmetypen abfangen", Justification = "<Ausstehend>")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1000:Statische Member nicht in generischen Typen deklarieren", Justification = "<Ausstehend>")]
         public static T DeSerializeJson(Stream jsonStream, out string error)
         {
             error = null;
@@ -39,6 +42,9 @@ namespace DSALib.Classes.JSON
                 return null;
             }
         }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1000:Statische Member nicht in generischen Typen deklarieren", Justification = "<Ausstehend>")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:Argumente von öffentlichen Methoden validieren", Justification = "<Ausstehend>")]
         public static T DeSerializeJson(String jsonContent, Encoding encoding, out string error)
         {
             var bytes = encoding.GetBytes(jsonContent);
@@ -52,12 +58,21 @@ namespace DSALib.Classes.JSON
                 return t;
             }
         }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1000:Statische Member nicht in generischen Typen deklarieren", Justification = "<Ausstehend>")]
         public static T DeSerializeJson(String jsonContent, out string error)
         {
             return DeSerializeJson(jsonContent, Encoding.UTF8, out error);
         }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Keine allgemeinen Ausnahmetypen abfangen", Justification = "<Ausstehend>")]
         public string ToJSON(Encoding encoding, out string error)
         {
+            if (encoding is null)
+            {
+                throw new ArgumentNullException(nameof(encoding));
+            }
+
             error = null;
             try
             {

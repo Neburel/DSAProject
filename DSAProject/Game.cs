@@ -45,7 +45,7 @@ namespace DSAProject.Classes.Game
         #region Variables
         private static string talentSaveFile = "Talente.json";
         private static ICharakter charakter;
-        private static JSON_TalentSaveFile jSON_talentLocal = new JSON_TalentSaveFile();
+        private static JSONTalentSaveFile jSON_talentLocal = new JSONTalentSaveFile();
         #endregion
         #region Properties
         public static ICharakter Charakter
@@ -82,7 +82,7 @@ namespace DSAProject.Classes.Game
         {
             error = null;
             #region Talenttype
-            List<JSON_Talent> jTalentList = null;
+            List<JSONTalent> jTalentList = null;
             List<ITalent> talentList = null;
             var talenttype = talent.GetType().ToString();
             var lastIndex = talenttype.LastIndexOf(".");
@@ -91,7 +91,7 @@ namespace DSAProject.Classes.Game
             #region GameType
             if (gameType == GameType.DSA)
             {
-                if (jSON_talentLocal.Talente == null) jSON_talentLocal.Talente = new List<JSON_Talent>();
+                if (jSON_talentLocal.Talente == null) jSON_talentLocal.Talente = new List<JSONTalent>();
                 jTalentList = jSON_talentLocal.Talente;
                 talentList = TalentList;
             }
@@ -104,8 +104,7 @@ namespace DSAProject.Classes.Game
             try
             {
                 var jsonTalent = TalentHelper.CreateJSON(
-                    talent: talent,
-                    gameType: GameType.DSA);
+                    talent: talent);
 
                 #region Doppelte Elemente Entfernen
                 var jdoppledID = jTalentList.Where(x => x.ID == talent.ID).ToList();
@@ -141,7 +140,7 @@ namespace DSAProject.Classes.Game
         public static void LoadTalente()
         {
             var jstringAssests = FileManagment.LoadTextAssestFile(talentSaveFile, out Error errorAssest);
-            var jSON_talentAssests = JSON_TalentSaveFile.DeSerializeJson(jstringAssests, out string serrorAssest);
+            var jSON_talentAssests = JSONTalentSaveFile.DeSerializeJson(jstringAssests, out string serrorAssest);
 
             TalentList = TalentHelper.LoadTalent(jSON_talentAssests.Talente);
             LanguageFamilies = TalentHelper.LoadLanguageFamily(jSON_talentAssests.Families, TalentList);
@@ -220,7 +219,7 @@ namespace DSAProject.Classes.Game
                 };
             }
         }
-        public static void LoadCharakter(JSON_Charakter json_charakter, out Error error)
+        public static void LoadCharakter(JSONCharakter json_charakter, out Error error)
         {
             error = null;
             charakter.Load(json_charakter, TalentList.ToList());

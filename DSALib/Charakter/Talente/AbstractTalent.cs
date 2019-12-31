@@ -1,4 +1,5 @@
-﻿using DSAProject.Classes.Interfaces;
+﻿using DSALib.Utils;
+using DSAProject.Classes.Interfaces;
 using System;
 using System.Collections.Generic;
 
@@ -22,11 +23,11 @@ namespace DSAProject.Classes.Charakter.Talente
         public override string ToString()
         {
             var ret = string.Empty;
-            ret = ret + Name;
+            ret += Name;
 
-            if (NameExtension != null && NameExtension != string.Empty)
+            if (!string.IsNullOrEmpty(NameExtension))
             {
-                ret = ret + "(" + NameExtension.ToUpper() + ")";
+                ret = ret + "(" + NameExtension.ToUpper(Helper.CultureInfo) + ")";
             }
 
             return ret;

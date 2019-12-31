@@ -21,19 +21,19 @@ namespace DSAProject.Layout.Pages
     public sealed partial class LoadPage : Page
     {
         private const string CHARNAME = "Namenlos";
-        Dictionary<JSON_Charakter, bool> charGivenName = new Dictionary<JSON_Charakter, bool>();
-        public ObservableCollection<JSON_Charakter> Items { get; } = new ObservableCollection<JSON_Charakter>();
+        Dictionary<JSONCharakter, bool> charGivenName = new Dictionary<JSONCharakter, bool>();
+        public ObservableCollection<JSONCharakter> Items { get; } = new ObservableCollection<JSONCharakter>();
         public LoadPage()
         {
             this.InitializeComponent();
 
-            var items = new ObservableCollection<JSON_Charakter>();
+            var items = new ObservableCollection<JSONCharakter>();
             var cFileList = FileManagment.GetFilesDictionary(Game.CharakterSaveFolder, out Error error);
             foreach(var item in cFileList)
             {
                 var file            = Path.Combine(Game.CharakterSaveFolder, item);
                 var fileContent     = FileManagment.LoadTextFile(file, out error);
-                var json_charakter  = JSON_Charakter.DeSerializeJson(fileContent, out string errorstring);
+                var json_charakter  = JSONCharakter.DeSerializeJson(fileContent, out string errorstring);
                 if (string.IsNullOrEmpty(json_charakter.Name))
                 {
                     json_charakter.Name = CHARNAME;
@@ -52,7 +52,7 @@ namespace DSAProject.Layout.Pages
         private void XAML_LoadListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             Error error             = null;
-            var charakter            = (JSON_Charakter)e.ClickedItem;
+            var charakter            = (JSONCharakter)e.ClickedItem;
             charGivenName.TryGetValue(charakter, out bool givenName);
 
             if (givenName)

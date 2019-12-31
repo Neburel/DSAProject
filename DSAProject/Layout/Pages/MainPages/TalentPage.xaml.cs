@@ -29,7 +29,7 @@ namespace DSAProject.Layout.Pages
             {
                 var textBloc    = new TextBlock();
                 var attribut    = Helper.GetShort(item);
-                var value       = Game.Charakter.Attribute.GetAttributMAXValue(item, out Error error);
+                var value       = Game.Charakter.Attribute.GetAttributMAXValue(item);
                 textBloc.Text = attribut + " " + value;
                 textBloc.HorizontalAlignment = HorizontalAlignment.Center;
                 textBloc.VerticalAlignment = VerticalAlignment.Center;

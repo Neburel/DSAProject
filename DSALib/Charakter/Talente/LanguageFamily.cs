@@ -8,7 +8,7 @@ namespace DSALib.Charakter.Talente
     {
         public string Name { get; private set; }
         public Dictionary<int, TalentWriting> Writings { get; } = new Dictionary<int, TalentWriting>();
-        public Dictionary<int, DSAProject.Classes.Charakter.Talente.TalentLanguage.TalentLanguage> Languages { get; } = new Dictionary<int, DSAProject.Classes.Charakter.Talente.TalentLanguage.TalentLanguage>();
+        public Dictionary<int, DSAProject.Classes.Charakter.Talente.TalentLanguage.TalentSpeaking> Languages { get; } = new Dictionary<int, DSAProject.Classes.Charakter.Talente.TalentLanguage.TalentSpeaking>();
 
         public LanguageFamily(string name)
         {

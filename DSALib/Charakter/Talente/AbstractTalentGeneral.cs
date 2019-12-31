@@ -15,6 +15,8 @@ namespace DSAProject.Classes.Charakter.Talente
         #region Properties
         public ITalent FatherTalent { get; set; }
         public List<CharakterAttribut> Attributs { get; private set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Sammlungseigenschaften müssen schreibgeschützt sein", Justification = "<Ausstehend>")]
         public List<ITalentRequirement> Requirements { get; set; }
         #endregion
         public AbstractTalentGeneral(Guid id, List<CharakterAttribut> attributes) : base(id)
@@ -61,9 +63,9 @@ namespace DSAProject.Classes.Charakter.Talente
             }
             ret = ret + Name;
 
-            if (NameExtension != null && NameExtension != string.Empty)
+            if (!string.IsNullOrEmpty(NameExtension))
             {
-                ret = ret + "(" + NameExtension.ToUpper() + ")";
+                ret = ret + "(" + NameExtension.ToUpper(Helper.CultureInfo) + ")";
             }
             if (FatherTalent != null)
             {

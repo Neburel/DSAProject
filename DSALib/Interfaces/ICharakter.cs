@@ -20,7 +20,7 @@ namespace DSAProject.Classes.Interfaces
         CharakterTraits Traits { get; }
         CharakterOther Other { get; }
 
-        JSON_Charakter CreateSave();
-        void Load(JSON_Charakter json_charakter, List<ITalent> talents);
+        JSONCharakter CreateSave();
+        void Load(JSONCharakter jsoncharakter, List<ITalent> talents);
     }
 }

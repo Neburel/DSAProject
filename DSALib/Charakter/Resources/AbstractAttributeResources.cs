@@ -42,6 +42,8 @@ namespace DSALib.Charakter.Resources
         }
         public AbstractAttributeResources(CharakterAttribute attribute)
         {
+            if (attribute == null) throw new ArgumentNullException(nameof(attribute));
+
             Attribute = attribute;
             Value = (int)Math.Ceiling(Calculate());
             Attribute.ChangedMAX += (object sender, CharakterAttribut args) =>

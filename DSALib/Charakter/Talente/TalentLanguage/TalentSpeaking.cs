@@ -3,9 +3,9 @@
 
 namespace DSAProject.Classes.Charakter.Talente.TalentLanguage
 {
-    public class TalentLanguage : AbstractTalentLanguage
+    public class TalentSpeaking : AbstractTalentLanguage
     {
-        public TalentLanguage(Guid id) : base(id) 
+        public TalentSpeaking(Guid id) : base(id) 
         {
             Attributs = new System.Collections.Generic.List<DSALib.CharakterAttribut>
             {

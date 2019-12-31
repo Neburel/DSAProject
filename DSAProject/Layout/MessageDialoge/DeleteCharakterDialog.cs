@@ -7,7 +7,7 @@ namespace DSAProject.Layout.MessageDialoge
 {
     public class DeleteCharakterDialog
     {
-        public static async Task<bool> ShowDialog(JSON_Charakter jSON_Charakter)
+        public static async Task<bool> ShowDialog(JSONCharakter jSON_Charakter)
         {
             var title   = "Charakter Löschen";
             var message = "Soll der Folgende Charakter wirklich gelöcht werden? \n" +

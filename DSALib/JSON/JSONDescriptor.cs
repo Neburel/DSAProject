@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace DSALib.Classes.JSON
 {
     [DataContract]
-    public class JSON_Descriptor : AbstractJSONSerializable<JSON_Charakter>
+    public class JSONDescriptor : AbstractJSONSerializable<JSONCharakter>
     {
         [DataMember]
         public int Priority { get; set; }

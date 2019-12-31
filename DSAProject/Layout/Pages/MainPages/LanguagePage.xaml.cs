@@ -49,7 +49,7 @@ namespace DSAProject.Layout.Pages.MainPages
                 for (int i=0; i<=max; i++)
                 {
                     Language_ItemPage x = new Language_ItemPage();
-                    if(family.Languages.TryGetValue(i, out TalentLanguage language))
+                    if(family.Languages.TryGetValue(i, out TalentSpeaking language))
                     {
                         x.SetLanguageTalent(language);
                     }

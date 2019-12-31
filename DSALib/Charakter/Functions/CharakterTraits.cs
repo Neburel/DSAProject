@@ -26,6 +26,8 @@ namespace DSALib.Charakter
         }
         public void AddTrait(Trait item)
         {
+            if (item == null) throw new ArgumentNullException(nameof(item));
+
             if (!traits.Contains(item))
             {
                 traits.Add(item);
@@ -59,6 +61,8 @@ namespace DSALib.Charakter
         }
         public void RemoveTrait(Trait item)
         {
+            if (item == null) throw new ArgumentNullException(nameof(item));
+
             if (traits.Contains(item))
             {
                 traits.Remove(item);

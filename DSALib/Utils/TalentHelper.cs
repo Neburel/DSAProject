@@ -38,7 +38,7 @@ namespace DSAProject.Classes
                 CreateTalent(contentType);
                 return true;
             }
-            catch
+            catch(TalentException)
             {
                 return false;
             }
@@ -77,11 +77,11 @@ namespace DSAProject.Classes
 
             return talent;
         }
-        public static ITalent CreateTalent(string contentType, List<CharakterAttribut> probe, string be, string name, string nameExtension, Guid guid = new Guid())
+        public static ITalent CreateTalent(string contentType, List<CharakterAttribut> probe, string be, string name, string nameExtension, Guid talentGuid = new Guid())
         {
             ITalent talent = CreateTalent(
                 contentType: contentType,
-                guid: guid,
+                guid: talentGuid,
                 probe: probe);
             if (string.IsNullOrEmpty(name))
             {
@@ -141,9 +141,10 @@ namespace DSAProject.Classes
             {
                 talent = new TalentSocial(guid, probe);
             }
-            else if (contentType == nameof(TalentLanguage))
+            else if (contentType == nameof(TalentSpeaking) || contentType == "TalentLanguage")
             {
-                talent = new TalentLanguage(guid);
+                //TalentLanguage ist ein Relikt das aber vorhanden sein muss damit man alte Save dateien Laden kann
+                talent = new TalentSpeaking(guid);
             }
             else if (contentType == nameof(TalentWriting))
             {
@@ -157,12 +158,11 @@ namespace DSAProject.Classes
             }
             return talent;
         }
-        public static JSON_Talent CreateJSON(ITalent talent, GameType gameType = GameType.DSA)
+        public static JSONTalent CreateJSON(ITalent talent)
         {
             if (talent == null) throw new ArgumentNullException(nameof(talent));
-
-            JSON_Talent jsonTalent = null;
-
+            
+            JSONTalent jsonTalent;
             #region TalentType
             var talenttype  = talent.GetType().ToString();
             var lastIndex   = talenttype.LastIndexOf(".", StringComparison.CurrentCulture);
@@ -171,7 +171,7 @@ namespace DSAProject.Classes
 
             if (!string.IsNullOrEmpty(talent.Name))
             {
-                jsonTalent = new JSON_Talent
+                jsonTalent = new JSONTalent
                 {
                     ID = talent.ID,
                     BE = talent.BE,
@@ -254,12 +254,12 @@ namespace DSAProject.Classes
         }        
         #endregion
         #region Loader
-        public static List<ITalent> LoadTalent(List<JSON_Talent> talents)
+        public static List<ITalent> LoadTalent(List<JSONTalent> talents)
         {
             var list = new List<ITalent>();
-            Dictionary<ITalent, JSON_Talent> talentwithDedcut = new Dictionary<ITalent, JSON_Talent>();
-            Dictionary<AbstractTalentGeneral, JSON_Talent> talentWithRequirement = new Dictionary<AbstractTalentGeneral, JSON_Talent>();
-            Dictionary<AbstractTalentGeneral, JSON_Talent> talentWithFather = new Dictionary<AbstractTalentGeneral, JSON_Talent>();
+            Dictionary<ITalent, JSONTalent> talentwithDedcut = new Dictionary<ITalent, JSONTalent>();
+            Dictionary<AbstractTalentGeneral, JSONTalent> talentWithRequirement = new Dictionary<AbstractTalentGeneral, JSONTalent>();
+            Dictionary<AbstractTalentGeneral, JSONTalent> talentWithFather = new Dictionary<AbstractTalentGeneral, JSONTalent>();
 
             if (talents != null)
             {
@@ -270,7 +270,7 @@ namespace DSAProject.Classes
                     {
                         var talent = CreateTalent(
                             contentType: item.ContentType,
-                            guid: item.ID,
+                            talentGuid: item.ID,
                             probe: item.Probe,
                             be: item.BE,
                             name: item.Name,
@@ -397,8 +397,11 @@ namespace DSAProject.Classes
 
             return list.OrderBy(x => x.Name).ToList();
         }
-        public static List<LanguageFamily> LoadLanguageFamily(List<JSON_TalentLanguageFamily> jsonFamilyList, List<ITalent> talentList)
+        public static List<LanguageFamily> LoadLanguageFamily(List<JSONTalentLanguageFamily> jsonFamilyList, List<ITalent> talentList)
         {
+            if (jsonFamilyList == null) jsonFamilyList = new List<JSONTalentLanguageFamily>();
+            if (talentList == null) talentList = new List<ITalent>();
+
             var ret = new List<LanguageFamily>();
 
             foreach (var json_Family in jsonFamilyList)
@@ -412,7 +415,7 @@ namespace DSAProject.Classes
                 }
                 foreach (var item in json_Family.Languages)
                 {
-                    var talent = SearchTalentGeneric<TalentLanguage>(item.Value, talentList);
+                    var talent = SearchTalentGeneric<TalentSpeaking>(item.Value, talentList);
                     family.Languages.Add(item.Key, talent);
                 }
                 ret.Add(family);
@@ -520,11 +523,11 @@ namespace DSAProject.Classes
                         }
                     }
 
-                    if (talentGroup.Key == nameof(TalentLanguage))
+                    if (talentGroup.Key == nameof(TalentSpeaking))
                     {
-                        TalentLanguage talentLanguage = null;
+                        TalentSpeaking talentLanguage = null;
                         TalentWriting talentWriting = null;
-                        if (newTalent != null) talentLanguage = (TalentLanguage)newTalent;
+                        if (newTalent != null) talentLanguage = (TalentSpeaking)newTalent;
 
                         if (!string.IsNullOrEmpty(excelTalent.Schrift))
                         {
@@ -718,6 +721,8 @@ namespace DSAProject.Classes
             #endregion
             return ret;
         }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Keine allgemeinen Ausnahmetypen abfangen", Justification = "<Ausstehend>")]
         private static string ExcelImportGetCellValue(WorkbookPart wbPart, Cell cell)
         {
             var strintTableValue = wbPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
@@ -885,9 +890,9 @@ namespace DSAProject.Classes
         }
         #endregion
         #region Hilfsmethoden
-        public static ITalent SearchTalent(Guid guid, List<ITalent> talentList)
+        public static ITalent SearchTalent(Guid talentGuid, List<ITalent> talentList)
         {
-            return talentList.Where(x => x.ID == guid).FirstOrDefault();
+            return talentList.Where(x => x.ID == talentGuid).FirstOrDefault();
         }
         public static ITalent SearchTalent(string name, List<ITalent> talentList, Type type)
         {
@@ -901,20 +906,20 @@ namespace DSAProject.Classes
             return null;
         }
 
-        public static T SearchTalentGeneric<T>(Guid guid, List<ITalent> talentList)
+        public static T SearchTalentGeneric<T>(Guid talentGuid, List<ITalent> talentList)
         {
-            var talent = SearchTalent(guid, talentList);
+            var talent = SearchTalent(talentGuid, talentList);
             if (talent != null && typeof(T).IsAssignableFrom(talent.GetType()))
             {
                 return (T)talent;
             }
             if (talent == null)
             {
-                LogStrings.LogString(LogLevel.ErrorLog, "Das Talent mit der GUID " + guid + " konnte nicht gefunden werden. Erwarteter Talent Typ: " + typeof(T));
+                LogStrings.LogString(LogLevel.ErrorLog, "Das Talent mit der GUID " + talentGuid + " konnte nicht gefunden werden. Erwarteter Talent Typ: " + typeof(T));
             }
             else
             {
-                LogStrings.LogString(LogLevel.ErrorLog, "Das Talent mit der GUID " + guid + " konnte nicht mit dem Angegebenen Typen gefunden werden. Erwarteter Talent Typ: " + typeof(T) + " eigentlicher Typ: " + talent.GetType());
+                LogStrings.LogString(LogLevel.ErrorLog, "Das Talent mit der GUID " + talentGuid + " konnte nicht mit dem Angegebenen Typen gefunden werden. Erwarteter Talent Typ: " + typeof(T) + " eigentlicher Typ: " + talent.GetType());
 
             }
 

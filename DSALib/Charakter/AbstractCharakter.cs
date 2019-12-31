@@ -36,6 +36,7 @@ namespace DSAProject.Classes.Charakter
             CreateNew(id);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Literale nicht als lokalisierte Parameter übergeben", Justification = "<Ausstehend>")]
         private void CreateNew(Guid id)
         {
             ID = id;
@@ -87,9 +88,9 @@ namespace DSAProject.Classes.Charakter
         protected abstract CharakterResources CreateResources();
         #endregion
         #region Methods
-        public JSON_Charakter CreateSave()
+        public JSONCharakter CreateSave()
         {
-            var charakter = new JSON_Charakter
+            var charakter = new JSONCharakter
             {
                 ID = ID,
                 Name = Name,
@@ -165,10 +166,10 @@ namespace DSAProject.Classes.Charakter
             }
             #endregion
             #region Descriptor Speichern
-            charakter.Descriptors = new List<JSON_Descriptor>();
+            charakter.Descriptors = new List<JSONDescriptor>();
             foreach (var item in this.Descriptions.Descriptions)
             {
-                charakter.Descriptors.Add(new JSON_Descriptor
+                charakter.Descriptors.Add(new JSONDescriptor
                 {
                     Priority = item.Priority,
                     DescriptionTitle = item.DescriptionTitle,
@@ -177,10 +178,10 @@ namespace DSAProject.Classes.Charakter
             }
             #endregion
             #region Traits Speichern
-            charakter.Traits = new List<JSON_Trait>();
+            charakter.Traits = new List<JSONTrait>();
             foreach (var item in Traits.traits)
             {
-                var jTrait = new JSON_Trait
+                var jTrait = new JSONTrait
                 {
                     TraitType = item.TraitType,
                     Description = item.Description,
@@ -228,23 +229,25 @@ namespace DSAProject.Classes.Charakter
             #endregion
             return charakter;
         }
-        public void Load(JSON_Charakter json_charakter, List<ITalent> talents)
+        public void Load(JSONCharakter jsonCharakter, List<ITalent> talents)
         {
             #region Nullprüfungen
-            if (json_charakter.MotherLanguages == null) json_charakter.MotherLanguages = new Dictionary<Guid, bool>();
+            if (jsonCharakter == null) throw new ArgumentNullException(nameof(jsonCharakter));
+            else if (talents == null) throw new ArgumentNullException(nameof(talents));
+            else if (jsonCharakter.MotherLanguages == null) jsonCharakter.MotherLanguages = new Dictionary<Guid, bool>();
             #endregion
-            CreateNew(json_charakter.ID);
-            Name = json_charakter.Name;
+            CreateNew(jsonCharakter.ID);
+            Name = jsonCharakter.Name;
             #region Attribute Laden
-            foreach (var item in json_charakter.AttributeBaseValue.Keys)
+            foreach (var item in jsonCharakter.AttributeBaseValue.Keys)
             {
-                Attribute.SetAKTValue(item, json_charakter.AttributeBaseValue[item]);
+                Attribute.SetAKTValue(item, jsonCharakter.AttributeBaseValue[item]);
             }
             #endregion
             #region Values Laden
-            if (json_charakter.SettableValues != null)
+            if (jsonCharakter.SettableValues != null)
             {
-                foreach (var item in json_charakter.SettableValues)
+                foreach (var item in jsonCharakter.SettableValues)
                 {
                     var settableValue = Values.UsedValues.Where(x => x.Name == item.Key).FirstOrDefault();
                     if (settableValue != null && typeof(AbstractSettableValue).IsAssignableFrom(settableValue.GetType()))
@@ -258,7 +261,7 @@ namespace DSAProject.Classes.Charakter
             //kein Laden notwendig
             #endregion
             #region Talente Laden
-            foreach (var item in json_charakter.TalentTAW)
+            foreach (var item in jsonCharakter.TalentTAW)
             {
                 var talent = talents.Where(x => x.ID == item.Key).FirstOrDefault();
                 if (talent != null)
@@ -267,10 +270,10 @@ namespace DSAProject.Classes.Charakter
                 }
                 else
                 {
-                    TalentMissing(json_charakter, item.Key);
+                    TalentMissing(jsonCharakter, item.Key);
                 }
             }
-            foreach (var item in json_charakter.TalentAT)
+            foreach (var item in jsonCharakter.TalentAT)
             {
                 var talent = talents.Where(x => x.ID == item.Key).FirstOrDefault();
                 if (talent != null && typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
@@ -279,10 +282,10 @@ namespace DSAProject.Classes.Charakter
                 }
                 else
                 {
-                    TalentMissing(json_charakter, item.Key);
+                    TalentMissing(jsonCharakter, item.Key);
                 }
             }
-            foreach (var item in json_charakter.TalentPA)
+            foreach (var item in jsonCharakter.TalentPA)
             {
                 var talent = talents.Where(x => x.ID == item.Key).FirstOrDefault();
                 if (talent != null && typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
@@ -291,17 +294,17 @@ namespace DSAProject.Classes.Charakter
                 }
                 else
                 {
-                    TalentMissing(json_charakter, item.Key);
+                    TalentMissing(jsonCharakter, item.Key);
                 }
             }
-            foreach (var item in json_charakter.MotherLanguages)
+            foreach (var item in jsonCharakter.MotherLanguages)
             {
                 var talent = talents.Where(x => x.ID == item.Key).FirstOrDefault();
-                Talente.SetMother((TalentLanguage)talent, item.Value);
+                Talente.SetMother((TalentSpeaking)talent, item.Value);
             }
             #endregion
             #region Descriptoren Laden
-            foreach (var item in json_charakter.Descriptors)
+            foreach (var item in jsonCharakter.Descriptors)
             {
                 this.Descriptions.AddDescripton(new Descriptor
                 {
@@ -312,9 +315,9 @@ namespace DSAProject.Classes.Charakter
             }
             #endregion
             #region Traits Laden
-            if (json_charakter.Traits != null)
+            if (jsonCharakter.Traits != null)
             {
-                foreach (var item in json_charakter.Traits)
+                foreach (var item in jsonCharakter.Traits)
                 {
                     var trait = new Trait
                     {
@@ -375,21 +378,14 @@ namespace DSAProject.Classes.Charakter
             }
             #endregion
             #region Anderes Laden
-            Other.TotalAPPlayer = json_charakter.AktAP;
-            Other.InvestedAPPlayer = json_charakter.InvestAP;
+            Other.TotalAPPlayer = jsonCharakter.AktAP;
+            Other.InvestedAPPlayer = jsonCharakter.InvestAP;
             #endregion
         }
-        private void TalentMissing(JSON_Charakter json_charakter, Guid guid)
+        private void TalentMissing(JSONCharakter json_charakter, Guid guid)
         {
-            try
-            {
-                var talent = json_charakter.TalentGuidsNames.Where(x => x.Key == guid).FirstOrDefault();
-                LogStrings.LogString(LogLevel.ErrorLog, "Talent Fehlt: " + talent.Key + " " + talent.Value);
-            }
-            catch (Exception)
-            {
-
-            }
+            var talent = json_charakter.TalentGuidsNames.Where(x => x.Key == guid).FirstOrDefault();
+            LogStrings.LogString(LogLevel.ErrorLog, "Talent Fehlt: " + talent.Key + " " + talent.Value);
         }
         internal IValue GetValue(string name)
         {

@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace DSALib.Classes.JSON
 {
     [DataContract]
-    public class JSON_Talent : AbstractJSONSerializable<JSON_Talent>
+    public class JSONTalent : AbstractJSONSerializable<JSONTalent>
     {
         [DataMember]
         public string BE { get; set; }
@@ -40,7 +40,7 @@ namespace DSALib.Classes.JSON
         [IgnoreDataMember]
         public DateTime SaveTime
         {
-            get => Convert.ToDateTime(LastEditDateAsString);
+            get => Convert.ToDateTime(LastEditDateAsString, Utils.Helper.CultureInfo);
             set
             {
                 LastEditDateAsString = value.ToLongTimeString();

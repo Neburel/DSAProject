@@ -29,13 +29,13 @@ namespace ConsoleApp1
             if (File.Exists(talentFile))
             {
                 jsonString = File.ReadAllText(talentFile);
-                var json = JSON_TalentSaveFile.DeSerializeJson(jsonString, out string serrorAssest);
+                var json = JSONTalentSaveFile.DeSerializeJson(jsonString, out string serrorAssest);
                 talenteCurrent = TalentHelper.LoadTalent(json.Talente);
             }
 
-            var jSON_talentLocal = new JSON_TalentSaveFile
+            var jSON_talentLocal = new JSONTalentSaveFile
             {
-                Talente = new List<JSON_Talent>()
+                Talente = new List<JSONTalent>()
             };
 
             #region Alte Talente
@@ -60,8 +60,8 @@ namespace ConsoleApp1
             Console.WriteLine("------------------------------------------------------------");
             #endregion
 
-            jSON_talentLocal.Talente    =  new List<JSON_Talent>(jSON_talentLocal.Talente.OrderBy(x => x.Name));
-            jSON_talentLocal.Families   = new List<JSON_TalentLanguageFamily>();
+            jSON_talentLocal.Talente    =  new List<JSONTalent>(jSON_talentLocal.Talente.OrderBy(x => x.Name));
+            jSON_talentLocal.Families   = new List<JSONTalentLanguageFamily>();
 
             var neueTalente = new List<ITalent>();
             //Set Guid
@@ -103,7 +103,7 @@ namespace ConsoleApp1
             }
             foreach(var item in families)
             {
-                var famile = new JSON_TalentLanguageFamily
+                var famile = new JSONTalentLanguageFamily
                 {
                     Name = item.Name
                 };

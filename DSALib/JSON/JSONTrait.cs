@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 namespace DSALib.JSON
 {
     [DataContract]
-    public class JSON_Trait : AbstractJSONSerializable<JSON_Trait>
+    public class JSONTrait : AbstractJSONSerializable<JSONTrait>
     {
         [DataMember(Name = nameof(TraitType))]
         public int TraitTypeAsInt { get; set; }

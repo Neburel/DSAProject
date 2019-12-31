@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace DSALib.JSON
 {
     [DataContract]
-    public class JSON_TalentLanguageFamily
+    public class JSONTalentLanguageFamily
     {
         [DataMember]
         public string Name { get; set; }

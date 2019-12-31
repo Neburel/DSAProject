@@ -21,7 +21,14 @@ namespace DSALib.Utils
 
         public static void LogString(LogLevel logLevel, Error error, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string CallerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
-            LogString(logLevel, error.ErrorCode.ToString() + " " + error.Message, callerMemberName, CallerFilePath, callerLineNumber);
+            if(error == null)
+            {
+                LogString(logLevel, "", callerMemberName, CallerFilePath, callerLineNumber);
+            }
+            else
+            {
+                LogString(logLevel, error.ErrorCode.ToString() + " " + error.Message, callerMemberName, CallerFilePath, callerLineNumber);
+            }
         }
         public static void LogString(LogLevel logLevel, string message, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string CallerFilePath = "", [CallerLineNumber] int callerLineNumber = 0)
         {
@@ -30,7 +37,7 @@ namespace DSALib.Utils
         }
         private static void LogString(LogLevel logLevel, string message)
         {
-            var currentTime = DateTime.Now.ToString();
+            var currentTime = DateTime.Now.ToString(Helper.CultureInfo);
             message = currentTime + ": " + message;
 
             if(logLevel == LogLevel.ActionLog || logLevel == LogLevel.ErrorLog)

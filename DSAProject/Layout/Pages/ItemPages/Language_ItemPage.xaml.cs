@@ -19,14 +19,32 @@ namespace DSAProject.Layout.Pages.ItemPages
         public Language_ItemPage()
         {
             this.InitializeComponent();
+
+            Game.Charakter.Talente.TaWChanged += (sender, args) =>
+            {
+                if(args == ViewModel.LanguageTalent)
+                {
+                    ViewModel.LanguageTAW = Game.Charakter.Talente.GetMaxTaw(args);
+                }
+                else if(args == ViewModel.WritingTalent)
+                {
+                    ViewModel.WritingTAW = Game.Charakter.Talente.GetMaxTaw(args);
+                }
+            };
         }
-        public void SetLanguageTalent(TalentLanguage item)
+        public void SetLanguageTalent(TalentSpeaking item)
         {
             ViewModel.LanguageTalent = item;
         }
         public void SetWritingTalent(TalentWriting item)
         {
             ViewModel.WritingTalent = item;            
+        }
+        private void CheckBox_Checked(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            var box = (CheckBox)sender;
+            var value = (bool)box.IsChecked;
+            Game.Charakter.Talente.SetMother(ViewModel.LanguageTalent, value);
         }
 
         private class Language_ItemPageViewModel : AbstractPropertyChanged
@@ -39,17 +57,17 @@ namespace DSAProject.Layout.Pages.ItemPages
             private int writingTaW                      = 0;
             private string languageProbeString          = string.Empty;
             private string writingProbeString           = string.Empty;
-            private TalentLanguage languageTalent;
+            private TalentSpeaking languageTalent;
             private AbstractTalent writingTalent;
             #endregion
-            public TalentLanguage LanguageTalent
+            public TalentSpeaking LanguageTalent
             {
                 get => languageTalent;
                 set
                 {
                     languageTalent  = value;
                     LanguageTalentBorderVisible = true;
-                    LanguageTAW     = Game.Charakter.Talente.GetTAW(LanguageTalent);
+                    LanguageTAW     = Game.Charakter.Talente.GetMaxTaw(LanguageTalent);
                     LanguageProbe   = Game.Charakter.Talente.GetProbeString(LanguageTalent);
                     LanguageM       = Game.Charakter.Talente.GetMother(LanguageTalent);
                     OnPropertyChanged(nameof(LanguageTalent));
@@ -62,7 +80,7 @@ namespace DSAProject.Layout.Pages.ItemPages
                 {
                     writingTalent = value;
                     WritingTalentBorderVisible = true;
-                    WritingTAW      = Game.Charakter.Talente.GetTAW(WritingTalent);
+                    WritingTAW      = Game.Charakter.Talente.GetMaxTaw(WritingTalent);
                     WritingProbe    = Game.Charakter.Talente.GetProbeString(WritingTalent);
                     OnPropertyChanged(nameof(WritingTalent));
                 }
@@ -86,7 +104,9 @@ namespace DSAProject.Layout.Pages.ItemPages
                 set 
                 {
                     languageTaw = value;
-                    Game.Charakter.Talente.SetTAW(LanguageTalent, value);
+                    var talent = LanguageTalent;
+                    var newTaW = value - Game.Charakter.Talente.GetModTaW(talent);
+                    Game.Charakter.Talente.SetTAW(talent, newTaW);
                     OnPropertyChanged(nameof(LanguageTAW));
                 }
             }
@@ -127,7 +147,9 @@ namespace DSAProject.Layout.Pages.ItemPages
                 set
                 {
                     writingTaW = value;
-                    Game.Charakter.Talente.SetTAW(WritingTalent, value);
+                    var talent = WritingTalent;
+                    var newTaW = value - Game.Charakter.Talente.GetModTaW(talent);
+                    Game.Charakter.Talente.SetTAW(talent, newTaW);
                     OnPropertyChanged(nameof(WritingTAW));
                 }
             }
@@ -140,13 +162,6 @@ namespace DSAProject.Layout.Pages.ItemPages
                     OnPropertyChanged(nameof(WritingProbe));
                 }
             }
-        }
-
-        private void CheckBox_Checked(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            var box = (CheckBox)sender;
-            var value = (bool)box.IsChecked;            
-            Game.Charakter.Talente.SetMother(ViewModel.LanguageTalent, value);            
         }
     }
 }

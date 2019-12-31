@@ -26,7 +26,7 @@ namespace DSAProject.Classes.Charakter.Talente.TalentRequirement
 
             if(ReqOff != 0)
             {
-                ret = ReqOff.ToString() + "+" + " ";
+                ret = ReqOff.ToString(DSALib.Utils.Helper.CultureInfo) + "+" + " ";
             }
             ret = ret + Talent.Name;
             ret = ret + " " + ReqNeed;

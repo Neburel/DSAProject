@@ -23,7 +23,7 @@ namespace DSAProject.Classes.Charakter
         internal Dictionary<ITalent, int> TAWDictionary = new Dictionary<ITalent, int>();
         internal Dictionary<AbstractTalentFighting, int> ATDictionary   = new Dictionary<AbstractTalentFighting, int>();
         internal Dictionary<AbstractTalentFighting, int> PADictionary   = new Dictionary<AbstractTalentFighting, int>();
-        internal Dictionary<TalentLanguage, bool> MotherDicionary       = new Dictionary<TalentLanguage, bool>();
+        internal Dictionary<TalentSpeaking, bool> MotherDicionary       = new Dictionary<TalentSpeaking, bool>();
         public CharakterTalente(ICharakter charakter)
         {
             this.charakter = charakter;
@@ -31,6 +31,8 @@ namespace DSAProject.Classes.Charakter
 
         public void SetTAW(ITalent talent, int taw)
         {
+            if (talent == null) throw new ArgumentNullException(nameof(talent));
+
             if(TAWDictionary.TryGetValue(talent, out int innerTAW))
             {
                 TAWDictionary.Remove(talent);
@@ -115,7 +117,7 @@ namespace DSAProject.Classes.Charakter
                 PAChanged?.Invoke(this, talent);
             }
         }
-        public void SetMother(TalentLanguage talent, bool value)
+        public void SetMother(TalentSpeaking talent, bool value)
         {
             MotherDicionary.Remove(talent);
 
@@ -125,9 +127,16 @@ namespace DSAProject.Classes.Charakter
             }
         }
 
+        /// <summary>
+        /// Ruft die manuell gesetzen TaW ab
+        /// </summary>
+        /// <param name="talent"></param>
+        /// <returns></returns>
         public int GetTAW(ITalent talent)
         {
-            var innerTAW = 0;
+            if (talent == null) throw new ArgumentNullException(nameof(talent));
+
+            int innerTAW;
             TAWDictionary.TryGetValue(talent, out innerTAW);
             if (typeof(AbstractTalentGeneral).IsAssignableFrom(talent.GetType()))
             {
@@ -135,12 +144,26 @@ namespace DSAProject.Classes.Charakter
                 if(x.FatherTalent != null)
                 {
                     var fatherTAW = GetTAW(x.FatherTalent);
-                    innerTAW = innerTAW + fatherTAW;
+                    innerTAW += fatherTAW;
                 }
             }
             return innerTAW;
         }
-        private int GetMaxTaw(ITalent talent)
+        /// <summary>
+        /// Ruft die Bonus TaW ab die übder die Traits gesetzt werden
+        /// </summary>
+        /// <param name="talent"></param>
+        /// <returns></returns>
+        public int GetModTaW(ITalent talent)
+        {
+            return charakter.Traits.GetTawBonus(talent);
+        }
+        /// <summary>
+        /// Ruft die Summe von Manuellen und Bonus TaW ab
+        /// </summary>
+        /// <param name="talent"></param>
+        /// <returns></returns>
+        public int GetMaxTaw(ITalent talent)
         {
             var taw = GetTAW(talent);
             var bonusTaw = charakter.Traits.GetTawBonus(talent);
@@ -163,11 +186,12 @@ namespace DSAProject.Classes.Charakter
             }
             return 0;
         }
-        public bool GetMother(TalentLanguage talent)
+        public bool GetMother(TalentSpeaking talent)
         {
             return MotherDicionary.TryGetValue(talent, out bool value);
         }
-        
+
+
         /// <summary>
         /// Sollte auf dauer Überarbeitet und entfernt werden
         /// </summary>
@@ -176,8 +200,11 @@ namespace DSAProject.Classes.Charakter
         /// <param name="bonusAT"></param>
         /// <param name="bonusPA"></param>
         /// <returns></returns>
-        public string GetProbeString(ITalent talent, int bonusTaW = 0, int bonusAT = 0, int bonusPA = 0)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Stil", "IDE0060:Nicht verwendete Parameter entfernen", Justification = "<Ausstehend>")]
+        public string GetProbeString(ITalent talent, int bonusAT = 0, int bonusPA = 0)
         {
+            if (talent == null) throw new ArgumentNullException(nameof(talent));
+
             var talentType  = talent.GetType();
             Error error     = null;
             string probe    = string.Empty;
@@ -192,7 +219,7 @@ namespace DSAProject.Classes.Charakter
                 var at = charakter.Values.GetMAXValue(baseAttack, out error) + GetAT(innertalent) + bonusAT;
                 var pa = charakter.Values.GetMAXValue(baseParade, out error) + GetPA(innertalent) + bonusPA;
                 
-                probe = (at).ToString() + "/" + (pa).ToString();
+                probe = (at).ToString(Helper.CultureInfo) + "/" + (pa).ToString(Helper.CultureInfo);
             } 
             else if (typeof(TalentRange).IsAssignableFrom(talentType))
             {
@@ -200,7 +227,7 @@ namespace DSAProject.Classes.Charakter
                 var baseAttack  = charakter.Values.UsedValues.Where(x => x.GetType() == typeof(BaseRange)).ToList()[0];
                 var at          = charakter.Values.GetMAXValue(baseAttack, out error) + GetAT(innertalent) + bonusAT;
 
-                probe           = (at).ToString();
+                probe           = (at).ToString(Helper.CultureInfo);
             }
             else if (typeof(AbstractTalentGeneral).IsAssignableFrom(talentType))
             {
@@ -210,7 +237,7 @@ namespace DSAProject.Classes.Charakter
                 {
                     value = value +charakter.Attribute.GetAttributMAXValue(item);
                 }
-                probe = (value).ToString();
+                probe = (value).ToString(Helper.CultureInfo);
             }
             else if (typeof(AbstractTalentLanguage).IsAssignableFrom(talentType))
             {
@@ -222,7 +249,7 @@ namespace DSAProject.Classes.Charakter
                 }
 
                 //probe = (value + bonusTaW).ToString();
-                probe = (value).ToString();
+                probe = (value).ToString(Helper.CultureInfo);
             }
             else
             {
@@ -233,8 +260,8 @@ namespace DSAProject.Classes.Charakter
         }
         private string GetString(string ret, string newValue)
         {
-            var retu = string.Empty;
-            if (ret == string.Empty)
+            string retu;
+            if (string.IsNullOrEmpty(ret))
             {
                 retu = newValue;
             }

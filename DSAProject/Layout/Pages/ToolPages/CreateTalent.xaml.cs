@@ -48,7 +48,7 @@ namespace DSAProject.Layout.Pages.ToolPages
         private string TalentChoice_Nature { get => nameof(TalentNature); }
         private string TalentChoice_Knwoldage { get => nameof(TalentKnowldage); }
         private string TalentChoice_Crafting { get => nameof(TalentCrafting); }
-        private string TalentChoice_Language { get => nameof(TalentLanguage); }
+        private string TalentChoice_Language { get => nameof(TalentSpeaking); }
         #endregion
         private CreateTalentViewModel ViewModel = new CreateTalentViewModel();
         public CreateTalent()
@@ -103,7 +103,7 @@ namespace DSAProject.Layout.Pages.ToolPages
                 {
                     XAML_RadioButton_Sozial.IsChecked = true;
                 } 
-                else if (item.GetType() == typeof(TalentLanguage))
+                else if (item.GetType() == typeof(TalentSpeaking))
                 {
                     XAML_RadioButton_Language.IsChecked = true;
                 } 
@@ -329,7 +329,7 @@ namespace DSAProject.Layout.Pages.ToolPages
                 {
                     currentTalent = TalentHelper.CreateTalent(
                         contentType: currentContent,
-                        guid:           new Guid(),
+                        talentGuid:           new Guid(),
                         probe:          ViewModel.Probes.ToList(),
                         be:             ViewModel.BEString.Trim(),
                         name:           ViewModel.TalentName.Trim(),
