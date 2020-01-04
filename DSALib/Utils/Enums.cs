@@ -41,7 +41,8 @@
         Event = 4,
         Belohnung = 5,
         Quest = 6,
-        Geburstag = 7
+        Geburstag = 7,
+        Title = 8
     }
     
 }

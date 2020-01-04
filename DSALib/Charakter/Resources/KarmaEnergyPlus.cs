@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace DSALib.Charakter.Resources
 {
-    class KarmaEnergy : AbstractAttributeResources
+    class KarmaEnergyPlus : AbstractAttributeResources
     {
-        public override string Name => "Karma Neutral";
-        public KarmaEnergy(CharakterAttribute attribute) : base(attribute) { }
+        public override string Name => "Karma Positiv";
+        public KarmaEnergyPlus(CharakterAttribute attribute) : base(attribute) { }
         internal override List<CharakterAttribut> attributeList => new List<CharakterAttribut>()
         {
         };

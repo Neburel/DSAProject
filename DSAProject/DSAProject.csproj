@@ -181,6 +181,7 @@
     <Compile Include="Layout\ViewModels\CharakterCreationViewModel.cs" />
     <Compile Include="Layout\ViewModels\CreateTalentViewModel.cs" />
     <Compile Include="Layout\ViewModels\Talent_ItemPageViewModel.cs" />
+    <Compile Include="Layout\Wrapper\TraitWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="util\Enum.cs" />
     <Compile Include="util\EventNavRequest.cs" />

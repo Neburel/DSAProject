@@ -48,8 +48,8 @@ namespace DSAProject.Layout.Pages.NavigationPages
 
                 new NavigationViewItemHeader    { Content = "Kampf Talente" },
                 new NavigationViewItem          { Content = "Waffenlose Kampftechniken",    Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage), Parameter = typeof(TalentWeaponless) } },
-                new NavigationViewItem          { Content = "Fehrnkampf Kampftechniken",    Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage), Parameter = typeof(TalentClose) } },
-                new NavigationViewItem          { Content = "Nahkampf Kampftechniken",      Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage), Parameter = typeof(TalentRange) } },
+                new NavigationViewItem          { Content = "Nahkampf Kampftechniken",      Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage), Parameter = typeof(TalentClose) } },
+                new NavigationViewItem          { Content = "Fehrnkampf Kampftechniken",    Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage), Parameter = typeof(TalentRange) } },
 
                 new NavigationViewItemHeader    { Content = "Allgemeine Talente" },
                 new NavigationViewItem          { Content = "Körperliche Talente",          Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage), Parameter = typeof(TalentPhysical) } },
@@ -61,11 +61,17 @@ namespace DSAProject.Layout.Pages.NavigationPages
                 new NavigationViewItemHeader    { Content = "Eigenschaften" },
                 new NavigationViewItem          { Content = "Vorteile",                     Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Vorteil } },
                 new NavigationViewItem          { Content = "Nachteile",                    Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Nachteil} },
-                new NavigationViewItem          { Content = "Events",                       Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Event} },
-                new NavigationViewItem          { Content = "Geburstage",                   Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Geburstag } },
+                
+                new NavigationViewItemHeader    { Content = "Abenteuer" },
                 new NavigationViewItem          { Content = "Quest",                        Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Quest } },
+                new NavigationViewItem          { Content = "Events",                       Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Event} },
+
+                new NavigationViewItemHeader    { Content = "Belohnungen" },
+                new NavigationViewItem          { Content = "Titel",                        Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Title } },
+                new NavigationViewItem          { Content = "Geburstage",                   Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Geburstag } },
                 new NavigationViewItem          { Content = "Belohnungen",                  Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Belohnung } },
-                new NavigationViewItem          { Content = "Alle",                         Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage) } },
+                new NavigationViewItem          { Content = "Errungenschaften",             Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Nachteil} },
+                new NavigationViewItem          { Content = "Sonstige",                     Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage) } },
 
                 new NavigationViewItemHeader    { Content = "Werkzeuge" },
                 new NavigationViewItem          { Content = "Charakter erstellen/bearbeiten",   Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(CharakterCreation) } },
@@ -113,7 +119,25 @@ namespace DSAProject.Layout.Pages.NavigationPages
                 XAML_NavigationView.SelectedItem = null;
             }
 
-            if (parameter != null)
+            if(e.SourcePageType == typeof(TraitPage))
+            {
+                var currentItem = (TraitPage)XAML_ContentFrame.Content;
+                currentItem.TextColor = new SolidColorBrush(Windows.UI.Colors.White);
+
+                if(parameter != null)
+                {
+                    if (parameter.GetType() == typeof(TraitType))
+                    {
+                        var type = (TraitType)parameter;
+                        currentItem.TraitFilter = type;
+                    }
+                }
+                else
+                {
+                    currentItem.TraitFilter = TraitType.Keiner;
+                }
+            }
+            else if (parameter != null)
             {
                 if (e.SourcePageType == typeof(TalentPage))
                 {
@@ -142,16 +166,6 @@ namespace DSAProject.Layout.Pages.NavigationPages
                     else
                     {
                         page.SetTraitType((DSALib.TraitType)parameter);
-                    }
-                }
-                else if (e.SourcePageType == typeof(TraitPage))
-                {
-                    var currentItem = (TraitPage)XAML_ContentFrame.Content;
-
-                    if (parameter.GetType() == typeof(TraitType))
-                    {
-                        var type = (TraitType)parameter;
-                        currentItem.TraitFilter = type;
                     }
                 }
             }
@@ -189,14 +203,6 @@ namespace DSAProject.Layout.Pages.NavigationPages
             }
             else if (lastItem.NavType != navItem.NavType || lastItem.Parameter != navItem.Parameter)
             {
-                if (navItem.NavType == typeof(HeroLetterPage))
-                {
-                    ColorConverter.SolidColorBrush = new SolidColorBrush(Windows.UI.Colors.Black);
-                }
-                else if (navItem.NavType == typeof(TraitPage))
-                {
-                    ColorConverter.SolidColorBrush = new SolidColorBrush(Windows.UI.Colors.White);
-                }
                 XAML_ContentFrame.Navigate(navItem.NavType, navItem.Parameter);
             }
         }

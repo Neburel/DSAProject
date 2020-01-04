@@ -45,8 +45,8 @@
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Vorteile" VerticalAlignment="Center" HorizontalTextAlignment="Center" Foreground="Black"></TextBlock>
             <TextBlock Grid.Row="0" Grid.Column="1" Text="Nachteile" VerticalAlignment="Center" HorizontalTextAlignment="Center" Foreground="Black"></TextBlock>
-            <views:TraitPage Grid.Row="1" Grid.Column="0" TraitFilter="Vorteil" ></views:TraitPage>
-            <views:TraitPage Grid.Row="1" Grid.Column="1" TraitFilter="Nachteil"></views:TraitPage>
+            <views:TraitPage Grid.Row="1" Grid.Column="0" TraitFilter="Vorteil"  TextColor="Black"></views:TraitPage>
+            <views:TraitPage Grid.Row="1" Grid.Column="1" TraitFilter="Nachteil" TextColor="Black"></views:TraitPage>
         </Grid>
     </Grid>
 </Page>

@@ -29,11 +29,6 @@ namespace DSALib.Charakter.Other
         #endregion
         #region Properties
         public TraitType TraitType { get; set; }
-        public SolidColorBrush SolidColorBrush
-        {
-            get;
-            set;
-        } 
         public string GP { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1721:Eigenschaftennamen dürfen nicht mit Get-Methoden übereinstimmen", Justification = "<Ausstehend>")]

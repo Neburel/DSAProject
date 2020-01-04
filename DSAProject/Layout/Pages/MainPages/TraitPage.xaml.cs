@@ -1,15 +1,13 @@
 ﻿using DSALib;
 using DSALib.Charakter.Other;
 using DSAProject.Classes.Game;
-using DSAProject.Converter;
-using DSAProject.Layout.Pages.BasePages;
+using DSAProject.Layout.Wrapper;
 using DSAProject.util;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Media;
 
 namespace DSAProject.Layout.Pages
 {
@@ -18,67 +16,60 @@ namespace DSAProject.Layout.Pages
     /// </summary>
     public sealed partial class TraitPage : Page
     {
-        private Frame currentFrame;
-        private TraitPageViewModel viewModel = new TraitPageViewModel();
-        private Trait createNewTrait = new Trait { Description = "CreateNew" };
+        #region Variables
+        private readonly TraitPageViewModel viewModel = new TraitPageViewModel();
+        private readonly TraitWrapper createNewTrait = new TraitWrapper() { Trait = new Trait { Description = "CreateNew" } };
         private TraitType? trailFilter = null;
-
-        private bool Advantages { get; set; }
-        private bool DisAdvantages { get; set; }
-
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        #endregion
+        #region Properties
+        public SolidColorBrush TextColor
         {
-            base.OnNavigatedTo(e);
-            currentFrame = Frame;
+            set
+            {
+                viewModel.Header.TextColor  = value;
+                createNewTrait.TextColor    = value;
+            }
+            get => TextColor;
         }
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            base.OnNavigatedFrom(e);
-        }
-        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
-        {
-            base.OnNavigatingFrom(e);
-        }
+        #endregion
 
         public TraitType TraitFilter
         {
             set
             {
-                var traits = Game.Charakter.Traits.GetTraits().Where(x => x.TraitType == value).ToList();
-                viewModel.Traits = new ObservableCollection<Trait>(traits)
+                trailFilter = value;
+                List<Trait> traits;
+                if (value != TraitType.Keiner)
                 {
-                    createNewTrait
-                };
+                    traits = Game.Charakter.Traits.GetTraits().Where(x => x.TraitType == value).ToList();
+                }
+                else
+                {
+                    traits = Game.Charakter.Traits.GetTraits();
+                }
+                CreateNewItemList(traits);
                 trailFilter = value;
             }
         }
-        private List<TraitType> TraitFilters
-        {
-            set
-            {
-                var list = value.Distinct();
-                var traitList = new List<Trait>();
-                foreach(var item in list)
-                {
-                    var traits = Game.Charakter.Traits.GetTraits().Where(x => x.TraitType == item).ToList();
-                    traitList.AddRange(traits);
-                }
-                viewModel.Traits = new ObservableCollection<Trait>(traitList)
-                {
-                    createNewTrait
-                };
-            }
-        }
-
         public TraitPage()
         {
-            this.Resources.Remove("PrimaryBrush");
-            Resources.Add("PrimaryBrush",  ColorConverter.SolidColorBrush);
-
             this.InitializeComponent();
+        }
+        private void CreateNewItemList(List<Trait> traits)
+        {
+            var list = new List<TraitWrapper>();
 
-            viewModel.Traits = new ObservableCollection<Trait>(Game.Charakter.Traits.GetTraits())
+            foreach (var item in traits)
+            {
+                var newWrapper = new TraitWrapper
+                {
+                    TextColor = viewModel.Header.TextColor,
+                    Trait = item
+                };
+                list.Add(newWrapper);
+            }
+
+            viewModel.Traits = new ObservableCollection<TraitWrapper>(list)
             {
                 createNewTrait
             };
@@ -91,27 +82,57 @@ namespace DSAProject.Layout.Pages
             }
             else
             {
-                Game.RequestNav(new EventNavRequest { Side = NavEnum.CreateTraitPage, Parameter = e.ClickedItem });
+                var traitwrapper = (TraitWrapper)e.ClickedItem;
+                Game.RequestNav(new EventNavRequest { Side = NavEnum.CreateTraitPage, Parameter = traitwrapper.Trait });
             }
-        }
-        private void CheckBox_Checked(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-            var list = new List<TraitType>();
-            if (Advantages) list.Add(TraitType.Vorteil);
-            if (DisAdvantages) list.Add(TraitType.Nachteil);
-
-            TraitFilters = list;
         }
         private class TraitPageViewModel : AbstractPropertyChanged
         {
-            private ObservableCollection<Trait> traits;
-            public ObservableCollection<Trait> Traits
+            public TraitPageHeader Header
+            {
+                get;
+                set;
+            } = new TraitPageHeader();
+
+            private ObservableCollection<TraitWrapper> traits;
+            public ObservableCollection<TraitWrapper> Traits
             {
                 get => traits;
                 set
                 {
                     traits = value;
                     OnPropertyChanged(nameof(Traits));
+                }
+            }
+        }
+    }
+    public class TraitPageHeader : AbstractPropertyChanged
+    {
+        private bool apVisible = false;
+        private SolidColorBrush textColor = new SolidColorBrush(Windows.UI.Colors.Black);
+
+        public bool APVisible
+        {
+            get => apVisible;
+            set
+            {
+                if (apVisible != value)
+                {
+                    apVisible = value;
+                    OnPropertyChanged(nameof(APVisible));
+                }
+            }
+        }
+
+        public SolidColorBrush TextColor
+        {
+            get => textColor;
+            set
+            {
+                if (textColor != value)
+                {
+                    textColor = value;
+                    OnPropertyChanged(nameof(TextColor));
                 }
             }
         }
