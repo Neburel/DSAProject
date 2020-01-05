@@ -16,6 +16,12 @@ namespace DSAProject.Layout.Pages
     /// </summary>
     public sealed partial class TraitPage : Page
     {
+        public enum TraitStyleEn
+        {
+            Min = 1,
+            Max = 2
+        }
+
         #region Variables
         private readonly TraitPageViewModel viewModel = new TraitPageViewModel();
         private readonly TraitWrapper createNewTrait = new TraitWrapper() { Trait = new Trait { Description = "CreateNew" } };
@@ -30,6 +36,27 @@ namespace DSAProject.Layout.Pages
                 createNewTrait.TextColor    = value;
             }
             get => TextColor;
+        }
+        public TraitStyleEn TraitPageStyle
+        {
+            set
+            {
+                object header_Template = null;
+                object item_Template = null;
+                if (value == TraitStyleEn.Min)
+                {
+                    Resources.TryGetValue("DataTemplateHeaderMin", out header_Template);
+                    Resources.TryGetValue("DataTemplateItemMin", out item_Template);
+                }
+                else if(value == TraitStyleEn.Max)
+                {
+                    Resources.TryGetValue("DataTemplateHeaderMax", out header_Template);
+                    Resources.TryGetValue("DataTemplateItemMax", out item_Template);
+                }
+
+                XAML_TraitPageListView.HeaderTemplate = (Windows.UI.Xaml.DataTemplate)header_Template;
+                XAML_TraitPageListView.ItemTemplate = (Windows.UI.Xaml.DataTemplate)item_Template;
+            }
         }
         #endregion
 
@@ -108,21 +135,7 @@ namespace DSAProject.Layout.Pages
     }
     public class TraitPageHeader : AbstractPropertyChanged
     {
-        private bool apVisible = false;
         private SolidColorBrush textColor = new SolidColorBrush(Windows.UI.Colors.Black);
-
-        public bool APVisible
-        {
-            get => apVisible;
-            set
-            {
-                if (apVisible != value)
-                {
-                    apVisible = value;
-                    OnPropertyChanged(nameof(APVisible));
-                }
-            }
-        }
 
         public SolidColorBrush TextColor
         {
