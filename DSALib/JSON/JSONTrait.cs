@@ -10,6 +10,10 @@ namespace DSALib.JSON
     {
         [DataMember(Name = nameof(TraitType))]
         public int TraitTypeAsInt { get; set; }
+        [DataMember]
+        public int APEarned { get; set; }
+        [DataMember]
+        public int APInvest { get; set; }
 
         [DataMember]
         public string GP { get; set; }

@@ -81,6 +81,16 @@ namespace DSAProject.Classes.Charakter
                 var value = Traits.GetValue(args);
                 Values.SetModValue(args, value);
             };
+
+            Traits.APInvestChanged += (sender, args) =>
+            {
+                Other.APInvestedMod = args;
+            };
+            Traits.APEarnedChanged += (sender, args) =>
+            {
+                Other.APEarnedMod = args;
+            };
+
         }
         #region AbstractMethods
         protected abstract CharakterValues CreateValues();
@@ -183,17 +193,19 @@ namespace DSAProject.Classes.Charakter
             {
                 var jTrait = new JSONTrait
                 {
-                    TraitType = item.TraitType,
-                    Description = item.Description,
-                    GP = item.GP,
-                    Title = item.Title,
-                    Value = item.Value,
+                    TraitType       = item.TraitType,
+                    Description     = item.Description,
+                    GP              = item.GP,
+                    Title           = item.Title,
+                    Value           = item.Value,
+                    APEarned        = item.APEarned,
+                    APInvest        = item.APInvest,
                     AttributeValues = new Dictionary<CharakterAttribut, int>(),
-                    ResourceValues = new Dictionary<string, int>(),
-                    ValueValues = new Dictionary<string, int>(),
-                    TawBonus = new Dictionary<Guid, int>(),
-                    AtBonus = new Dictionary<Guid, int>(),
-                    PaBonus = new Dictionary<Guid, int>()
+                    ResourceValues  = new Dictionary<string, int>(),
+                    ValueValues     = new Dictionary<string, int>(),
+                    TawBonus        = new Dictionary<Guid, int>(),
+                    AtBonus         = new Dictionary<Guid, int>(),
+                    PaBonus         = new Dictionary<Guid, int>()
 
                 };
                 foreach (var innerItem in item.UsedAttributs())
@@ -224,8 +236,8 @@ namespace DSAProject.Classes.Charakter
             }
             #endregion
             #region Anderes Laden
-            charakter.AktAP = Other.TotalAPPlayer;
-            charakter.InvestAP = Other.InvestedAPPlayer;
+            charakter.AktAP = Other.APEarned;
+            charakter.InvestAP = Other.APInvested;
             #endregion
             return charakter;
         }
@@ -321,11 +333,13 @@ namespace DSAProject.Classes.Charakter
                 {
                     var trait = new Trait
                     {
-                        TraitType = item.TraitType,
+                        TraitType   = item.TraitType,
                         Description = item.Description,
-                        GP = item.GP,
-                        Title = item.Title,
-                        Value = item.Value,
+                        GP          = item.GP,
+                        Title       = item.Title,
+                        Value       = item.Value,
+                        APEarned    = item.APEarned,
+                        APInvest    = item.APInvest
                     };
                     foreach (var innerItems in item.AttributeValues)
                     {
@@ -378,8 +392,8 @@ namespace DSAProject.Classes.Charakter
             }
             #endregion
             #region Anderes Laden
-            Other.TotalAPPlayer = jsonCharakter.AktAP;
-            Other.InvestedAPPlayer = jsonCharakter.InvestAP;
+            Other.APEarned = jsonCharakter.AktAP;
+            Other.APInvested = jsonCharakter.InvestAP;
             #endregion
         }
         private void TalentMissing(JSONCharakter json_charakter, Guid guid)

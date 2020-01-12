@@ -42,7 +42,10 @@
         Belohnung = 5,
         Quest = 6,
         Geburstag = 7,
-        Title = 8
+        Title = 8,
+        Training = 9,
+        Errungenschaften = 10,
+        Bücher = 11
     }
     
 }

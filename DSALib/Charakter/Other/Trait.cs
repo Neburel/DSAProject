@@ -5,7 +5,6 @@ using DSAProject.Classes.Charakter.Talente;
 using DSAProject.Classes.Interfaces;
 using System;
 using System.Collections.Generic;
-using Windows.UI.Xaml.Media;
 
 namespace DSALib.Charakter.Other
 {
@@ -18,8 +17,12 @@ namespace DSALib.Charakter.Other
         public event EventHandler<ITalent> TaWChanged;
         public event EventHandler<AbstractTalentFighting> ATChanged;
         public event EventHandler<AbstractTalentFighting> PAChanged;
+        public event EventHandler<int> APEarnedChanged;
+        public event EventHandler<int> APInvestChanged;
         #endregion
         #region Variables
+        private int apEarned;
+        private int apInvest;
         private Dictionary<IValue, int> valueValues;
         private Dictionary<IResource, int> resourceValues;
         private Dictionary<CharakterAttribut, int> attributeValues;
@@ -28,14 +31,31 @@ namespace DSALib.Charakter.Other
         private Dictionary<AbstractTalentFighting, int> paBonus;
         #endregion
         #region Properties
-        public TraitType TraitType { get; set; }
+        public int APEarned 
+        {
+            get => apEarned;
+            set
+            {
+                apEarned = value;
+                APEarnedChanged?.Invoke(this, apEarned);
+            }
+        }
+        public int APInvest 
+        {
+            get => apInvest;
+            set
+            {
+                apInvest = value;
+                APInvestChanged?.Invoke(this, apInvest);
+            }
+        }
         public string GP { get; set; }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1721:Eigenschaftennamen dürfen nicht mit Get-Methoden übereinstimmen", Justification = "<Ausstehend>")]
         public string Value { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string LongDescription { get => GenerateLongDescription(); }
+        public TraitType TraitType { get; set; }
         #endregion
         public Trait()
         {
@@ -265,6 +285,16 @@ namespace DSALib.Charakter.Other
             {
                 var value = pair.Value;
                 ret = GenerateLongDescriptionHelper(value, ret, pair.Key.Name + " AT");
+            }
+
+            var adventurePointString = "Abenteuerpunkte";
+            if(APEarned != 0)
+            {
+                ret = ret + " " + APEarned + adventurePointString;
+            }
+            if (APInvest != 0)
+            {
+                ret = ret + " " + " -" + APInvest + adventurePointString;
             }
 
             return ret;

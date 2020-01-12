@@ -113,7 +113,6 @@
     <Compile Include="Layout\MessageDialoge\InvestAPDialog.xaml.cs">
       <DependentUpon>InvestAPDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Layout\MessageDialoge\InvestAPDialog_.cs" />
     <Compile Include="Layout\MessageDialoge\SaveDialog.cs" />
     <Compile Include="Layout\Pages\BasePages\AdventurePointPage.xaml.cs">
       <DependentUpon>AdventurePointPage.xaml</DependentUpon>

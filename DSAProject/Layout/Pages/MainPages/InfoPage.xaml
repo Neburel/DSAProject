@@ -20,9 +20,9 @@
         </Grid.ColumnDefinitions>
         <TextBlock Text="AppPath: " Grid.Row="0" Grid.Column="0"></TextBlock> 
         <TextBlock Text="{x:Bind AppPAth}" Grid.Row="0" Grid.Column="1"></TextBlock>
-     
-        <TextBlock Text="SaveFolder: " Grid.Row="1" Grid.Column="0"></TextBlock>
-        <TextBlock Text="{x:Bind AppSavePAth}" Grid.Row="1" Grid.Column="1"></TextBlock>
+
+        <TextBlock Text="SaveFolder: " Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"></TextBlock>
+        <TextBlock Text="{x:Bind AppSavePAth}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
         <Button Click="Button_Click_1" Grid.Row="1" Grid.Column="2">
             <TextBlock Text="Öffnen"/>
         </Button>

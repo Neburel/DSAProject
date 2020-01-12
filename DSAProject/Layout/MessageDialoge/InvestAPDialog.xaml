@@ -14,12 +14,28 @@
     <Grid RowSpacing="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="{x:Bind viewModel.Message}"></TextBlock>
-        <TextBox Grid.Row="1" InputScope="Number" TextAlignment="Center" HorizontalTextAlignment="Center" TextChanging="TextBox_TextChanging" Text="{x:Bind viewModel.Value, Mode=TwoWay}"></TextBox>
-        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
+        <Grid Grid.Row="0" Visibility="{x:Bind viewModel.InfoBarVisibility}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Bind viewModel.InfoAkt}"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="{x:Bind viewModel.InfoMod}"/>
+
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind viewModel.InfoAktValue}"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind viewModel.InfoModValue}"/>
+        </Grid>
+        <TextBlock Grid.Row="1" Text="{x:Bind viewModel.Message}" TextWrapping="Wrap"></TextBlock>
+        <TextBox Grid.Row="2" InputScope="Number" TextAlignment="Center" HorizontalTextAlignment="Center" TextChanging="TextBox_TextChanging" Text="{x:Bind viewModel.Value, Mode=TwoWay}"></TextBox>
+        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center" Visibility="{x:Bind viewModel.ChoiceVisibility}">
             <RadioButton x:Name="XAML_CheckedAdd"       Content="Hinzufügen" IsChecked="True" Checked="XAML_CheckedAdd_Checked"/>
             <RadioButton x:Name="XAML_CheckedRemove"    Content="Entfernen" Checked="XAML_CheckedRemove_Checked"></RadioButton>
         </StackPanel>

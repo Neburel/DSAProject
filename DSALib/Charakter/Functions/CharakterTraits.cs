@@ -4,6 +4,7 @@ using DSAProject.Classes.Charakter.Talente;
 using DSAProject.Classes.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DSALib.Charakter
 {
@@ -16,6 +17,8 @@ namespace DSALib.Charakter
         public event EventHandler<ITalent> TaWChanged;
         public event EventHandler<AbstractTalentFighting> ATChanged;
         public event EventHandler<AbstractTalentFighting> PAChanged;
+        public event EventHandler<int> APEarnedChanged;
+        public event EventHandler<int> APInvestChanged;
         #endregion
         #region Variables
         internal List<Trait> traits;
@@ -34,15 +37,15 @@ namespace DSALib.Charakter
             }
             item.AttributeChanged += (sender, args) =>
             {
-                AttributeChanged(this, args);
+                AttributeChanged?.Invoke(this, args);
             };
             item.ResourceChanged += (sender, args) =>
             {
-                ResourceChanged(this, args);
+                ResourceChanged?.Invoke(this, args);
             };
             item.ValueChanged += (sender, args) =>
             {
-                ValueChanged(this, args);
+                ValueChanged?.Invoke(this, args);
             };
             item.TaWChanged += (sender, args) =>
             {
@@ -55,6 +58,14 @@ namespace DSALib.Charakter
             item.PAChanged += (sender, args) =>
             {
                 PAChanged?.Invoke(this, args);
+            };
+            item.APInvestChanged += (sender, args) =>
+            {
+                APInvestChanged?.Invoke(this, GetAPInvested());
+            };
+            item.APEarnedChanged += (sender, args) =>
+            {
+                APEarnedChanged?.Invoke(this, GetAPEarned());
             };
 
             CallChangedAll(item);
@@ -100,6 +111,15 @@ namespace DSALib.Charakter
                 ret = ret + trait.GetValue(item);
             }
             return ret;
+        }
+
+        public int GetAPEarned()
+        {
+            return traits.Select(x => x.APEarned).Sum();
+        }
+        public int GetAPInvested()
+        {
+            return traits.Select(x => x.APInvest).Sum();
         }
 
         public int GetTawBonus(ITalent item)
@@ -156,6 +176,8 @@ namespace DSALib.Charakter
             {
                 PAChanged?.Invoke(this, item.Key);
             }
+            APInvestChanged?.Invoke(this, GetAPInvested());
+            APEarnedChanged?.Invoke(this, GetAPEarned());
 
         }
     }

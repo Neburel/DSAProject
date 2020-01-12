@@ -4,11 +4,6 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -30,8 +25,16 @@ namespace DSAProject.Layout.Pages.BasePages
         {
             var task = new Task(async () =>
             {
-                var storage = await StorageFolder.GetFolderFromPathAsync(AppSavePAth);
-                await Windows.System.Launcher.LaunchFolderAsync(storage);
+                try
+                {
+                    var storage = await StorageFolder.GetFolderFromPathAsync(AppSavePAth);
+                    await Windows.System.Launcher.LaunchFolderAsync(storage);
+                }
+                catch (Exception)
+                {
+                    var storage2 = await StorageFolder.GetFolderFromPathAsync(AppPAth);
+                    await Windows.System.Launcher.LaunchFolderAsync(storage2);
+                }
             });
             task.Start();
         }

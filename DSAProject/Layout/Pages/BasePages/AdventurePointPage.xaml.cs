@@ -2,19 +2,8 @@
 using DSAProject.Layout.MessageDialoge;
 using DSAProject.util;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -29,7 +18,7 @@ namespace DSAProject.Layout.Pages.BasePages
         public AdventurePointPage()
         {
             this.InitializeComponent();
-            Game.Charakter.Other.ChangedAKTAP += (sender, args) =>
+            Game.Charakter.Other.ChangedEarnedAP += (sender, args) =>
             {
                 viewModel.AP = args;
             };
@@ -46,9 +35,10 @@ namespace DSAProject.Layout.Pages.BasePages
                 viewModel.Level = args;
             };
 
-            viewModel.AP = Game.Charakter.Other.TotalAPPlayer;
-            viewModel.InvestedAP = Game.Charakter.Other.InvestedAPPlayer;
+            viewModel.AP = Game.Charakter.Other.APEarnedMax;
+            viewModel.InvestedAP = Game.Charakter.Other.APInvestedMax;
             viewModel.Level = Game.Charakter.Other.Level;
+            viewModel.RestAP = Game.Charakter.Other.RestAP;
         }
 
         private async void XAML_CurrentAPAdd_Clicked(object sender, object e)
@@ -59,7 +49,7 @@ namespace DSAProject.Layout.Pages.BasePages
 
             if(result == ContentDialogResult.Secondary)
             {
-                var currentValue = Game.Charakter.Other.TotalAPPlayer;
+                var currentValue = Game.Charakter.Other.APEarned;
                 if (dialog.Add)
                 {
                     currentValue = currentValue + dialog.Value;
@@ -68,7 +58,7 @@ namespace DSAProject.Layout.Pages.BasePages
                 {
                     currentValue = currentValue - dialog.Value;
                 }
-                Game.Charakter.Other.TotalAPPlayer = currentValue;
+                Game.Charakter.Other.APEarned = currentValue;
             }
         }
 
@@ -80,7 +70,7 @@ namespace DSAProject.Layout.Pages.BasePages
 
             if(result == ContentDialogResult.Secondary)
             {
-                var currentValue = Game.Charakter.Other.InvestedAPPlayer;
+                var currentValue = Game.Charakter.Other.APInvested;
                 if (dialog.Add)
                 {
                     currentValue = currentValue + dialog.Value;
@@ -89,7 +79,7 @@ namespace DSAProject.Layout.Pages.BasePages
                 {
                     currentValue = currentValue - dialog.Value;
                 }
-                Game.Charakter.Other.InvestedAPPlayer = currentValue;
+                Game.Charakter.Other.APInvested = currentValue;
             }
         }
 

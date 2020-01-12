@@ -20,7 +20,7 @@ namespace DSAProject.Layout.Pages.BasePages
     /// </summary>
     public sealed partial class CreateTrait : Page
     {
-        private Frame currentFrame;
+        
         private bool leaveButtonClicked = false;
         private CreateTrait_ViewModel viewModel = new CreateTrait_ViewModel();
         private SolidColorBrush TextColor = new SolidColorBrush(Windows.UI.Colors.White);
@@ -51,11 +51,6 @@ namespace DSAProject.Layout.Pages.BasePages
                     Game.RequestNav(new EventNavRequest { Side = NavEnum.StartPage });
                 }
             }
-        }
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            currentFrame= Frame;
-            base.OnNavigatedTo(e);
         }
         #region Value
         private void XAML_TraitValue_Event_ValueHigher(object sender, EventArgs e)
@@ -135,6 +130,28 @@ namespace DSAProject.Layout.Pages.BasePages
         {
             viewModel.Trait.RemovePABonus((AbstractTalentFighting)e.Talent);
         }
+        private async void XAML_CurrentAPAdd_Clicked(object sender, object e)
+        {
+            var dialog  = new InvestAPDialog();
+            dialog.Mode = InvestApDialogMode.AddOnly;
+            var result  = await dialog.ShowAsync();
+
+            if (result == ContentDialogResult.Secondary)
+            {
+                viewModel.APEarned = dialog.Value;
+            }
+        }
+        private async void XAML_CurrentAPInvest_Clicked(object sender, object e)
+        {
+            var dialog = new InvestAPDialog();
+            dialog.Mode = InvestApDialogMode.InvestOnly;
+            var result = await dialog.ShowAsync();
+
+            if (result == ContentDialogResult.Secondary)
+            {
+                viewModel.APInvested = dialog.Value;
+            }
+        }
         #endregion
         #region Hilfsmethoden
         private string NextValue(string current, bool plus)
@@ -187,55 +204,30 @@ namespace DSAProject.Layout.Pages.BasePages
         #endregion
         private class CreateTrait_ViewModel : AbstractPropertyChanged
         {
+            #region Variables
+            private Visibility apVisibility = Visibility.Collapsed;
             private Trait trait = new Trait();
             private List<string> traitTypes = new List<string>(Enum.GetNames(typeof(TraitType)));
-            private string selectedItem;
-            public Trait Trait
+            #endregion
+            #region Properties
+            public int APEarned
             {
-                get => trait;
+                get => trait.APEarned;
                 set
                 {
-                    trait = value;
-
-                    OnPropertyChanged(nameof(Trait));
-                    OnPropertyChanged(nameof(Title));
-                    OnPropertyChanged(nameof(Description));
-                    OnPropertyChanged(nameof(Value));
-                    OnPropertyChanged(nameof(GP));
-                    OnPropertyChanged(nameof(SelectedItem));
+                    trait.APEarned = value;
+                    OnPropertyChanged(nameof(APEarned));
                 }
             }
-
-            public List<string> TraitTypes
+            public int APInvested
             {
-                get => traitTypes;
+                get => trait.APInvest;
                 set
                 {
-                    traitTypes = value;
-                    OnPropertyChanged(nameof(TraitTypes));
+                    trait.APInvest = value;
+                    OnPropertyChanged(nameof(APInvested));
                 }
             }
-            public string SelectedItem
-            {
-                get
-                {
-                    return Enum.GetName(typeof(TraitType), trait.TraitType);
-                }
-                set
-                {
-                    selectedItem = value;
-
-                    if(Enum.TryParse(typeof(TraitType), value, out object type))
-                    {
-                        if(trait.TraitType != (TraitType)type)
-                        {
-                            trait.TraitType = (TraitType)type;
-                            OnPropertyChanged(nameof(SelectedItem));
-                        }
-                    }
-                }
-            }
-
             public string GP
             {
                 get => trait.GP;
@@ -270,6 +262,74 @@ namespace DSAProject.Layout.Pages.BasePages
                 {
                     trait.Description = value;
                     OnPropertyChanged(nameof(Description));
+                }
+            }
+            public string SelectedItem
+            {
+                get
+                {
+                    return Enum.GetName(typeof(TraitType), trait.TraitType);
+                }
+                set
+                {
+                    if (Enum.TryParse(typeof(TraitType), value, out object type))
+                    {
+                        if (trait.TraitType != (TraitType)type)
+                        {
+                            trait.TraitType = (TraitType)type;
+                            OnPropertyChanged(nameof(SelectedItem));
+
+                            SetVisibilityAP(trait.TraitType);
+                        }
+                    }
+                }
+            }
+            public Visibility APVisibility
+            {
+                get => apVisibility;
+                set
+                {
+                    apVisibility = value;
+                    OnPropertyChanged(nameof(APVisibility));
+                }
+            }
+            public Trait Trait
+            {
+                get => trait;
+                set
+                {
+                    trait = value;
+
+                    OnPropertyChanged(nameof(Trait));
+                    OnPropertyChanged(nameof(Title));
+                    OnPropertyChanged(nameof(Description));
+                    OnPropertyChanged(nameof(Value));
+                    OnPropertyChanged(nameof(GP));
+                    OnPropertyChanged(nameof(SelectedItem));
+                    SetVisibilityAP(trait.TraitType);
+                }
+            }
+            public List<string> TraitTypes
+            {
+                get => traitTypes;
+                set
+                {
+                    traitTypes = value;
+                    OnPropertyChanged(nameof(TraitTypes));
+                }
+            }
+            #endregion
+            private void SetVisibilityAP(TraitType traitType)
+            {
+                switch (traitType)
+                {
+                    case TraitType.Vorteil:
+                    case TraitType.Nachteil:
+                        APVisibility = Visibility.Collapsed;
+                        break;
+                    default:
+                        APVisibility = Visibility.Visible;
+                        break;
                 }
             }
         }

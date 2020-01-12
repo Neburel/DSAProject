@@ -65,13 +65,15 @@ namespace DSAProject.Layout.Pages.NavigationPages
                 new NavigationViewItemHeader    { Content = "Abenteuer" },
                 new NavigationViewItem          { Content = "Quest",                        Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Quest } },
                 new NavigationViewItem          { Content = "Events",                       Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Event} },
+                new NavigationViewItem          { Content = "Belohnungen",                  Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Belohnung } },
+                new NavigationViewItem          { Content = "Training",                     Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Training} },
 
                 new NavigationViewItemHeader    { Content = "Belohnungen" },
                 new NavigationViewItem          { Content = "Titel",                        Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Title } },
                 new NavigationViewItem          { Content = "Geburstage",                   Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Geburstag } },
-                new NavigationViewItem          { Content = "Belohnungen",                  Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Belohnung } },
-                new NavigationViewItem          { Content = "Errungenschaften",             Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Nachteil} },
-                new NavigationViewItem          { Content = "Sonstige",                     Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage) } },
+                new NavigationViewItem          { Content = "Bücher",                       Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Bücher} },
+                new NavigationViewItem          { Content = "Errungenschaften",             Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Errungenschaften} },
+                new NavigationViewItem          { Content = "Alle",                         Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage) } },
 
                 new NavigationViewItemHeader    { Content = "Werkzeuge" },
                 new NavigationViewItem          { Content = "Charakter erstellen/bearbeiten",   Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(CharakterCreation) } },

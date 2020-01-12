@@ -9,7 +9,7 @@
     xmlns:itempages="using:DSAProject.Layout.Pages.ItemPages"
     mc:Ignorable="d"
     Background="Transparent">
-    
+
     <Grid RowSpacing="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -76,6 +76,32 @@
                 <views:AttributPage Mode="AttributeTrait" Trait="{x:Bind viewModel.Trait}" TextColor="{x:Bind TextColor}"/>
                 <views:AttributPage Mode="ValueTrait" Trait="{x:Bind viewModel.Trait}" TextColor="{x:Bind TextColor}"/>
                 <views:AttributPage Mode="ResourceTrait" Trait="{x:Bind viewModel.Trait}" TextColor="{x:Bind TextColor}"/>
+                <Grid RowSpacing="1" ColumnSpacing="1" Visibility="{x:Bind viewModel.APVisibility, Mode=TwoWay}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Border BorderBrush="Gray" Grid.Row="0" Grid.Column="0">
+                        <TextBlock Margin="0,0,0,0" Text="AP Verdient" Foreground="{x:Bind TextColor}" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="24"/>
+                    </Border>
+                    <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="0" Grid.Column="1" Width="80">
+                        <TextBlock Text="{x:Bind viewModel.APEarned, Mode=TwoWay}" Foreground="{x:Bind TextColor}" Margin="0,0,0,0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center" FontFamily="Segoe UI"/>
+                    </Border>
+                    <itempages:PlusButton x:Name="XAML_CurrentAPAdd" Grid.Row="0" Grid.Column="2" Clicked="XAML_CurrentAPAdd_Clicked" HorizontalAlignment="Center" TextColor="White"></itempages:PlusButton>
+
+                    <Border BorderBrush="Gray" Grid.Row="1" Grid.Column="0">
+                        <TextBlock Margin="0,0,0,0" Text="AP Investiert" Foreground="{x:Bind TextColor}" TextAlignment="Center"  VerticalAlignment="Center"  HorizontalAlignment="Left" FontFamily="French Script MT" FontSize="24"/>
+                    </Border>
+                    <Border BorderBrush="Gray" Grid.Row="1" Grid.Column="1" BorderThickness="1" Width="80">
+                        <TextBlock Text="{x:Bind viewModel.APInvested, Mode=TwoWay}" Foreground="{x:Bind TextColor}" Margin="0,0,0,0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center" FontFamily="Segoe UI"/>
+                    </Border>
+                    <itempages:PlusButton x:Name="XAML_CurrentAPInvest" Grid.Row="1" Grid.Column="2" Clicked="XAML_CurrentAPInvest_Clicked" HorizontalAlignment="Center" TextColor="White"></itempages:PlusButton>
+                </Grid>
             </StackPanel>
         </StackPanel>
         <Grid Grid.Row="3" ColumnSpacing="20">
