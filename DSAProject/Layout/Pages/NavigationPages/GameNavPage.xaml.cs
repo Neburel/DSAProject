@@ -79,7 +79,9 @@ namespace DSAProject.Layout.Pages.NavigationPages
                 new NavigationViewItem          { Content = "Charakter erstellen/bearbeiten",   Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(CharakterCreation) } },
                 new NavigationViewItem          { Content = "Speichern",                        Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(SavePage) } },
                 new NavigationViewItem          { Content = "Laden",                            Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(LoadPage) } },
-                new NavigationViewItem          { Content = "Info",                             Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(InfoPage) } }
+                new NavigationViewItem          { Content = "Info",                             Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(InfoPage) } },
+
+                new NavigationViewItem          { Content = "TalentTextPage",                   Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage2) } }
             };
             NavigationViewItem = NavItems.Where(x => x.Tag != null).ToList();
             Game.NavRequested += Game_NavRequested;

@@ -17,7 +17,9 @@
                 <ColumnDefinition Width="Auto" MaxWidth="26"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock TextWrapping="Wrap" Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{x:Bind viewModel.TAW, Mode=TwoWay}"></TextBlock>
+            <TextBlock x:Name="XAML_TextBlock" TextWrapping="Wrap" Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{x:Bind viewModel.TAW, Mode=TwoWay}">
+            </TextBlock>
+
             <itempages:PlusButton x:Name="XAML_PlusButton"  Grid.Column="1" Clicked="XAML_PlusButton_Clicked"></itempages:PlusButton>
             <itempages:PlusButton x:Name="XAML_MinusButton" Grid.Column="2" Clicked="XAML_MinusButton_Clicked" IsInversed="True"></itempages:PlusButton>
         </Grid>

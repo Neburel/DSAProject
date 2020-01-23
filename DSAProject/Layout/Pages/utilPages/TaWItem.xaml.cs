@@ -15,13 +15,23 @@ namespace DSAProject.Layout.Pages.utilPages
         private TawItem_ViewModel viewModel = new TawItem_ViewModel();
         #endregion
         #region Dependency
-        public static readonly DependencyProperty TAWProperty = DependencyProperty.Register(nameof(TAW), typeof(int), typeof(TaWItem), new PropertyMetadata(null, new PropertyChangedCallback(OnAKTValueChanged)));
+        public static readonly DependencyProperty TAWProperty       = DependencyProperty.Register(nameof(TAW), typeof(int), typeof(TaWItem), new PropertyMetadata(null, new PropertyChangedCallback(OnAKTValueChanged)));
+        public static readonly DependencyProperty TAW2Property      = DependencyProperty.Register(nameof(TAW2), typeof(string), typeof(TaWItem), new PropertyMetadata(null, new PropertyChangedCallback(OnToolTipValueChanged)));
         #endregion
         #region Dependency Properties
         public int TAW
         {
             get => (int)GetValue(TAWProperty);
             set => SetValue(TAWProperty, value);
+        }
+        public string TAW2
+        {
+            get => (string)GetValue(TAW2Property);
+            set
+            {
+                SetValue(TAW2Property, value);
+                SetTooltip(value);
+            }
         }
         #endregion
         public TaWItem()
@@ -43,6 +53,13 @@ namespace DSAProject.Layout.Pages.utilPages
                 ((TaWItem)d).viewModel.TAW = (int)e.NewValue;
             }
         }
+        private static void OnToolTipValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue != e.OldValue)
+            {
+                ((TaWItem)d).viewModel.ToolTip = (string)e.NewValue;                
+            }
+        }
         #endregion
         #region Events
         private void XAML_PlusButton_Clicked(object sender, object e)
@@ -55,22 +72,25 @@ namespace DSAProject.Layout.Pages.utilPages
         }
         #endregion
 
+        public void SetTooltip(string toolTipText)
+        {
+            ToolTip toolTip = new ToolTip();
+            toolTip.Content = toolTipText;
+            ToolTipService.SetToolTip(XAML_TextBlock, toolTip);
+        }
+
         private class TawItem_ViewModel : AbstractPropertyChanged
         {
-            private int taw = 0;
-
-            public int TAW 
+            public int TAW
             {
-                get => taw;
-                set
-                {
-                    if(taw != value)
-                    {
-                        taw = value;
-                        OnPropertyChanged(nameof(TAW));
-                    }
-                }
-            } 
+                get => Get<int>();
+                set => Set(value);
+            }
+            public string ToolTip
+            {
+                get => Get<string>();
+                set => Set(value);
+            }
         }
     }
 }

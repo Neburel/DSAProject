@@ -1,0 +1,123 @@
+﻿<Page
+    x:Class="DSAProject.Layout.Pages.MainPages.TalentPage2"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DSAProject.Layout.Pages.MainPages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:wrapper="using:DSAProject.Layout.Wrapper"
+    xmlns:utilpages="using:DSAProject.Layout.Pages.utilPages"
+    mc:Ignorable="d"
+    Background="Transparent">
+    
+    <Page.Resources>
+        <Style x:Name="StyleA" TargetType="TextBlock">
+        </Style>
+        
+        <GridLength x:Key="TalentRowWidth">3*</GridLength>
+        <GridLength x:Key="Probe1RowWidth">50</GridLength>
+        <GridLength x:Key="Probe2RowWidth">120</GridLength>
+        <GridLength x:Key="ProbeTaWRowWidth">100</GridLength>
+        <GridLength x:Key="ProbeATPARowWidth">200</GridLength>
+        <GridLength x:Key="ProbeBERowWidth">40</GridLength>
+        <GridLength x:Key="ProbeSpezialisierungRowWidth">2*</GridLength>
+        <GridLength x:Key="ProbeAnforderungRowWidth">2*</GridLength>
+        <GridLength x:Key="ProbeAbleitungRowWidth">2*</GridLength>
+        
+        
+        <DataTemplate x:Key="TalentHeaderTemplate" x:DataType="local:TalentPageHeader">            
+            <Grid RowSpacing="0" ColumnSpacing="0" Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{StaticResource TalentRowWidth}"/>
+                    <ColumnDefinition Width="{StaticResource Probe1RowWidth}"/>
+                    <ColumnDefinition Width="{StaticResource Probe2RowWidth}"/>
+                    <ColumnDefinition Width="{StaticResource ProbeTaWRowWidth}"/>
+                    <ColumnDefinition Width="{StaticResource ProbeATPARowWidth}"/>
+                    <ColumnDefinition Width="{StaticResource ProbeBERowWidth}"/>
+                    <ColumnDefinition Width="{StaticResource ProbeSpezialisierungRowWidth}"/>
+                    <ColumnDefinition Width="{StaticResource ProbeAnforderungRowWidth}"/>
+                    <ColumnDefinition Width="{StaticResource ProbeAbleitungRowWidth}"/>
+                </Grid.ColumnDefinitions>
+
+                <!--<ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="Auto" MaxWidth="80"/>
+                <ColumnDefinition Width="2*" MaxWidth="100"/>
+                <ColumnDefinition Width="Auto" MaxWidth="200"/>
+                <ColumnDefinition Width="2*" MaxWidth="40"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>-->
+
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="0" Text="Talent"></utilpages:TextBorderBlock>
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="1" Text="Probe"></utilpages:TextBorderBlock>
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="2" Text="Probe"></utilpages:TextBorderBlock>
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="3" Text="TAW"></utilpages:TextBorderBlock>
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="4" Text="AT/PA"></utilpages:TextBorderBlock>
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="5" Text="BE"></utilpages:TextBorderBlock>
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="6" Text="Spezialisierung(+2/+2)"></utilpages:TextBorderBlock>
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="7" Text="Anforderungen"></utilpages:TextBorderBlock>
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="8" Text="Ableiten(+10)"></utilpages:TextBorderBlock>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="TalentItemTemplate" x:DataType="wrapper:TalentWrapper">
+            <Grid Margin="0, 0, 0, 0" Padding="0, 0, 0, 0" RowSpacing="0" ColumnSpacing="0" BorderThickness="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{StaticResource TalentRowWidth}"/>
+                    <ColumnDefinition Width="{StaticResource Probe1RowWidth}"/>
+                    <ColumnDefinition Width="{StaticResource Probe2RowWidth}"/>
+                    <ColumnDefinition Width="{StaticResource ProbeTaWRowWidth}"/>
+                    <ColumnDefinition Width="{StaticResource ProbeATPARowWidth}"/>
+                    <ColumnDefinition Width="{StaticResource ProbeBERowWidth}"/>
+                    <ColumnDefinition Width="{StaticResource ProbeSpezialisierungRowWidth}"/>
+                    <ColumnDefinition Width="{StaticResource ProbeAnforderungRowWidth}"/>
+                    <ColumnDefinition Width="{StaticResource ProbeAbleitungRowWidth}"/>
+                </Grid.ColumnDefinitions>
+
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="0" Text="{x:Bind Talent.Name }"/>
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind Probe }"/>
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="2" Text="{x:Bind ProbeText }"/>
+                <utilpages:TaWItem Grid.Row="0" Grid.Column="3" TAW="{x:Bind TaW, Mode=TwoWay}" TAW2="{x:Bind TaWToolTipText, Mode=TwoWay}"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="XAML_TitleRow" Grid.Row="0"></Grid>
+        <AutoSuggestBox Grid.Row="1" QueryIcon="Find"></AutoSuggestBox>
+        <ListView
+            Grid.Row="2"
+            Margin="0" 
+            Padding="0" 
+            Header="{x:Bind viewModel.Header}"
+            HeaderTemplate="{StaticResource TalentHeaderTemplate}"/>
+        <ListView
+            x:Name="TalentListView"
+            Grid.Row="3"
+            Margin="0" 
+            Padding="0" 
+            SelectionMode="None"
+            ItemsSource="{x:Bind viewModel.TalentList}"
+            ItemTemplate="{StaticResource TalentItemTemplate}">
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+                    <Setter Property="VerticalAlignment" Value="Stretch"></Setter>
+                    <Setter Property="HorizontalContentAlignment"  Value="Stretch"></Setter>
+                    <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+                    <Setter Property="Padding" Value="0"></Setter>
+                    <Setter Property="Margin" Value="0"></Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+    </Grid>
+</Page>

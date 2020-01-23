@@ -28,7 +28,7 @@
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+    <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -117,6 +117,9 @@
     <Compile Include="Layout\Pages\BasePages\AdventurePointPage.xaml.cs">
       <DependentUpon>AdventurePointPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Layout\Pages\MainPages\TalentPage2.xaml.cs">
+      <DependentUpon>TalentPage2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Layout\Pages\NavigationPages\GameNavPage.xaml.cs">
       <DependentUpon>GameNavPage.xaml</DependentUpon>
     </Compile>
@@ -177,9 +180,13 @@
     <Compile Include="Layout\Pages\utilPages\TaWItem.xaml.cs">
       <DependentUpon>TaWItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Layout\Pages\utilPages\TextBorderBlock.xaml.cs">
+      <DependentUpon>TextBorderBlock.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Layout\ViewModels\CharakterCreationViewModel.cs" />
     <Compile Include="Layout\ViewModels\CreateTalentViewModel.cs" />
     <Compile Include="Layout\ViewModels\Talent_ItemPageViewModel.cs" />
+    <Compile Include="Layout\Wrapper\TalentWrapper.cs" />
     <Compile Include="Layout\Wrapper\TraitWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="util\Enum.cs" />
@@ -223,6 +230,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Layout\Pages\BasePages\AdventurePointPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Layout\Pages\MainPages\TalentPage2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -306,6 +317,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Layout\Pages\utilPages\TextBorderBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
@@ -318,7 +333,9 @@
       <Name>DSALib</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Layout\zOldIdeas\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

@@ -2,6 +2,7 @@
 using DSALib.Exceptions;
 using DSAProject.Classes;
 using DSAProject.Classes.Game;
+using DSAProject.Layout.Pages.MainPages;
 using DSAProject.Layout.Pages.NavigationPages;
 using DSAProject.util.ErrrorManagment;
 
@@ -86,6 +87,7 @@ namespace DSAProject
                     // übergeben werden
                     //rootFrame.Navigate(typeof(GamePage), e.Arguments);
                     rootFrame.Navigate(typeof(GameNavPage), e.Arguments);
+                    //rootFrame.Navigate(typeof(TalentPage2), e.Arguments);
                 }
                 // Sicherstellen, dass das aktuelle Fenster aktiv ist
                 Window.Current.Activate();
