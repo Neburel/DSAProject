@@ -1,11 +1,9 @@
 ﻿using DSALib;
 using DSALib.Charakter.Other;
 using DSALib.Utils;
-using DSAProject.Classes.Charakter.Talente;
 using DSAProject.Classes.Charakter.Talente.TalentFighting;
 using DSAProject.Classes.Charakter.Talente.TalentGeneral;
 using DSAProject.Classes.Game;
-using DSAProject.Converter;
 using DSAProject.Layout.MessageDialoge;
 using DSAProject.Layout.Pages.BasePages;
 using DSAProject.Layout.Pages.MainPages;
@@ -34,7 +32,7 @@ namespace DSAProject.Layout.Pages.NavigationPages
 
         public GameNavPage()
         {
-            var standartSize = new Size(1400, 1000);
+            var standartSize = new Size(1500, 1000);
 
             ApplicationView.PreferredLaunchViewSize = standartSize;
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
@@ -47,18 +45,16 @@ namespace DSAProject.Layout.Pages.NavigationPages
                 new NavigationViewItem          { Content = "Sprachenbrief",                Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(LanguagePage) } },
 
                 new NavigationViewItemHeader    { Content = "Kampf Talente" },
-                new NavigationViewItem          { Content = "Waffenlose Kampftechniken",    Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage), Parameter = typeof(TalentWeaponless) } },
-                new NavigationViewItem          { Content = "Nahkampf Kampftechniken",      Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage), Parameter = typeof(TalentClose) } },
-                new NavigationViewItem          { Content = "Fehrnkampf Kampftechniken",    Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage), Parameter = typeof(TalentRange) } },
+                new NavigationViewItem          { Content = "Waffenlose Kampftechniken",    Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage2), Parameter = typeof(TalentWeaponless) } },
+                new NavigationViewItem          { Content = "Nahkampf Kampftechniken",      Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage2), Parameter = typeof(TalentClose) } },
+                new NavigationViewItem          { Content = "Fernkampf Kampftechniken",     Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage2), Parameter = typeof(TalentRange) } },
 
                 new NavigationViewItemHeader    { Content = "Allgemeine Talente" },
-                new NavigationViewItem          { Content = "Körperliche Talente",          Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage), Parameter = typeof(TalentPhysical) } },
-                new NavigationViewItem          { Content = "Körperliche Talente XX",       Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage2), Parameter = typeof(TalentPhysical)} },
-                new NavigationViewItem          { Content = "Gesellschaftliche Talente",    Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage), Parameter = typeof(TalentSocial) } },
-                new NavigationViewItem          { Content = "Natur Talente",                Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage), Parameter = typeof(TalentNature) } },
-                new NavigationViewItem          { Content = "Wissenstalente",               Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage), Parameter = typeof(TalentKnowldage) } },
-                new NavigationViewItem          { Content = "Handwerkstalente",             Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage), Parameter = typeof(TalentCrafting) } },
-                new NavigationViewItem          { Content = "Handwerkstalente XX",          Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage2), Parameter = typeof(TalentCrafting) } },
+                new NavigationViewItem          { Content = "Körperliche Talente",          Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage2), Parameter = typeof(TalentPhysical)} },
+                new NavigationViewItem          { Content = "Gesellschaftliche Talente",    Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage2), Parameter = typeof(TalentSocial) } },
+                new NavigationViewItem          { Content = "Natur Talente",                Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage2), Parameter = typeof(TalentNature) } },
+                new NavigationViewItem          { Content = "Wissenstalente",               Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage2), Parameter = typeof(TalentKnowldage) } },
+                new NavigationViewItem          { Content = "Handwerkstalente",             Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage2), Parameter = typeof(TalentCrafting) } },
 
                 new NavigationViewItemHeader    { Content = "Eigenschaften" },
                 new NavigationViewItem          { Content = "Vorteile",                     Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Vorteil } },
@@ -149,25 +145,7 @@ namespace DSAProject.Layout.Pages.NavigationPages
                 {
                     var page            = (TalentPage2)XAML_ContentFrame.Content;
                     var selectionType   = (Type)((DSANavItem)navItem.Tag).Parameter;
-                    var talents         = Game.GetTalentForCurrentCharakter().Where(x => x.GetType() == selectionType).ToList();
-
-                    page.SetTalents(talents);
-                }
-                else if (e.SourcePageType == typeof(TalentPage))
-                {
-                    var page            = (TalentPage)XAML_ContentFrame.Content;
-                    var selectionType   = (Type)((DSANavItem)navItem.Tag).Parameter;
-                    var talents         = Game.GetTalentForCurrentCharakter().Where(x => x.GetType() == selectionType).ToList();
-
-                    if (talents.Count() == 0)
-                    {
-                        page.SetTalents(talents);
-                    }
-                    else
-                    {
-                        page.SetTalents(talents);
-                    }
-
+                    page.SetTalentType(selectionType);
                 }
                 else if (e.SourcePageType == typeof(CreateTrait))
                 {

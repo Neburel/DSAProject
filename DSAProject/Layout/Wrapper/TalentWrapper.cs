@@ -1,10 +1,10 @@
 ﻿using DSAProject.Classes.Charakter.Talente;
 using DSAProject.Classes.Charakter.Talente.TalentDeductions;
+using DSAProject.Classes.Charakter.Talente.TalentFighting;
 using DSAProject.Classes.Charakter.Talente.TalentRequirement;
 using DSAProject.Classes.Game;
 using DSAProject.Classes.Interfaces;
 using DSAProject.util;
-using System.Linq;
 
 namespace DSAProject.Layout.Wrapper
 {
@@ -30,12 +30,22 @@ namespace DSAProject.Layout.Wrapper
             get => Get<bool>();
             set => Set(value);
         }
+        public bool ProbeTextVisibility
+        {
+            get => Get<bool>();
+            set => Set(value);
+        }
         public string ProbeText
         {
             get => Get<string>();
             set => Set(value);
         }
         public string ProbeValue
+        {
+            get => Get<string>();
+            set => Set(value);
+        }
+        public string DiceResult
         {
             get => Get<string>();
             set => Set(value);
@@ -80,8 +90,36 @@ namespace DSAProject.Layout.Wrapper
             get => Get<ITalent>();
             set => Set(value);
         }
-        public TalentWrapper()
+        public TalentWrapper(DiceChanger helper)
         {
+            helper.PropertyChanged += (sender, args) =>
+            {
+                var value = helper.DiceResult;
+
+                if (typeof(AbstractTalentGeneral).IsAssignableFrom(Talent.GetType()))
+                {
+                    var atg         = (AbstractTalentGeneral)Talent;
+                    var probeValue  = Game.Charakter.Talente.GetProbeValue(atg);
+                    DiceResult      = (probeValue - value).ToString();
+                }
+                if (typeof(AbstractTalentFighting).IsAssignableFrom(Talent.GetType()))
+                {
+                    var atf = (AbstractTalentFighting)Talent;
+                    var probeValue  = (Game.Charakter.Talente.GetATValue(atf) - value).ToString();
+                    var probeValue2 = (Game.Charakter.Talente.GetPAValue(atf) - value).ToString();
+
+                    if (typeof(TalentRange).IsAssignableFrom(Talent.GetType()))
+                    {
+                        DiceResult = probeValue;
+                    }
+                    else 
+                    {
+                        DiceResult = probeValue + "/" + probeValue2;
+                    }
+                }
+
+            };
+
             PropertyChanged += (sender, args) =>
             {
                 var talent = Talent;
@@ -143,6 +181,7 @@ namespace DSAProject.Layout.Wrapper
                         RequirementStringRest = restString;
                         #endregion
                         ATPAVisibility = false;
+                        ProbeTextVisibility = true;
                     }
                     else if (typeof(AbstractTalentFighting).IsAssignableFrom(talenttype))
                     {
@@ -151,6 +190,7 @@ namespace DSAProject.Layout.Wrapper
                         PA = Game.Charakter.Talente.GetMaxPA(atf);
 
                         ATPAVisibility = true;
+                        ProbeTextVisibility = false;
                     }
                 }
                 else if (args.PropertyName == nameof(TaW))
@@ -277,6 +317,14 @@ namespace DSAProject.Layout.Wrapper
             {
                 return currentText.Trim() + ", " + newValue.Trim();
             }
+        }
+    }
+    public class DiceChanger : AbstractPropertyChanged
+    {
+        public int DiceResult
+        {
+            get => Get<int>();
+            set => Set(value);
         }
     }
 }

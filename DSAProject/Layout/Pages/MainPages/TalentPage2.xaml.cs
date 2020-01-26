@@ -45,45 +45,63 @@ namespace DSAProject.Layout.Pages.MainPages
                 counter++;
             }
         }
+        public void SetTalentType(Type type)
+        {
+            viewModel.IsLoading     = true;
+            viewModel.DiceChanger   = new DiceChanger();
 
-        public void SetTalents(List<ITalent> list)
+            new Task(() =>
+            {
+                var talentList = Game.GetTalentForCurrentCharakter().Where(x => x.GetType() == type).ToList();
+                GenerateTalentListAsync(talentList);
+            }).Start();
+        }
+        public void SetTalentListAsync(List<ITalent> list)
         {
             viewModel.IsLoading = true;
-            var task = new Task(async () =>
+            viewModel.DiceChanger = new DiceChanger();
+
+            new Task(() =>
             {
-                if (list == null || list.Count == 0) return;
+                GenerateTalentListAsync(list);
+            }).Start();
+        }
+        private async void GenerateTalentListAsync(List<ITalent> list)
+        {
+            if (list == null || list.Count == 0) return;
 
-                list = list.OrderBy(x => x.ToString()).ToList();
-                talentList = new List<TalentWrapper>();
-                var obList = new ObservableCollection<TalentWrapper>();
+            DiceChanger helper = viewModel.DiceChanger;
+            list = list.OrderBy(x => x.ToString()).ToList();
+            talentList = new List<TalentWrapper>();
+            var obList = new ObservableCollection<TalentWrapper>();
 
-                //Dieser Code ist verbesserbar, aktuell nur funktional wenn die liste nur einen typen enthält
-                if (typeof(AbstractTalentFighting).IsAssignableFrom(list[0].GetType()))
-                {
-                    viewModel.Header.ATPAVisibility = true;
-                }
-                if (typeof(AbstractTalentGeneral).IsAssignableFrom(list[0].GetType()))
-                {
-                    viewModel.Header.ATPAVisibility = false;
-                }
+            //Dieser Code ist verbesserbar, aktuell nur funktional wenn die liste nur einen typen enthält
+            if (typeof(AbstractTalentFighting).IsAssignableFrom(list[0].GetType()))
+            {
+                viewModel.Header.ATPAVisibility = true;
+                viewModel.Header.ProbeTextVisibility = false;
+            }
+            if (typeof(AbstractTalentGeneral).IsAssignableFrom(list[0].GetType()))
+            {
+                viewModel.Header.ATPAVisibility = false;
+                viewModel.Header.ProbeTextVisibility = true;
+            }
 
-                foreach (var item in list)
+            foreach (var item in list)
+            {
+                var innerItem = new TalentWrapper(helper)
                 {
-                    var innerItem = new TalentWrapper
-                    {
-                        Talent = item
-                    };
-                    talentList.Add(innerItem);
-                    obList.Add(innerItem);
-                }
+                    Talent = item
+                };
+                talentList.Add(innerItem);
+                obList.Add(innerItem);
+            }
 
-                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    viewModel.TalentList = obList;
-                    viewModel.IsLoading = false;
-                });
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                viewModel.TalentList = obList;
+                viewModel.IsLoading = false;
             });
-            task.Start();
         }
         #region PageHandler
         private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -98,12 +116,30 @@ namespace DSAProject.Layout.Pages.MainPages
                 viewModel.TalentList.Add(item);
             }
         }
-        #endregion
+        private void TextBox_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
+        {
+            args.Cancel = args.NewText.Any(c => !char.IsDigit(c));
+        }
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var text = ((TextBox)sender).Text;
+            viewModel.DiceText = text;
 
+            if(Int32.TryParse(text, out int value))
+            {
+                viewModel.DiceChanger.DiceResult = value;
+            }
+        }
+        #endregion
     }
     internal class TalentPageHeader : AbstractPropertyChanged
     {
         public bool ATPAVisibility 
+        {
+            get => Get<bool>();
+            set => Set(value);
+        }
+        public bool ProbeTextVisibility
         {
             get => Get<bool>();
             set => Set(value);
@@ -116,9 +152,19 @@ namespace DSAProject.Layout.Pages.MainPages
             get => Get<bool>();
             set => Set(value);
         }
+        public string DiceText
+        {
+            get => Get<string>();
+            set => Set(value);
+        }
         public TalentPageHeader Header
         {
             get => Get<TalentPageHeader>();
+            set => Set(value);
+        }
+        public DiceChanger DiceChanger
+        {
+            get => Get<DiceChanger>();
             set => Set(value);
         }
         public ObservableCollection<TalentWrapper> TalentList
@@ -126,10 +172,10 @@ namespace DSAProject.Layout.Pages.MainPages
             get => Get<ObservableCollection<TalentWrapper>>();
             set => Set(value);
         }
-
         public TalentPageViewModel()
         {
             Header = new TalentPageHeader();
+
         }
     }
 }

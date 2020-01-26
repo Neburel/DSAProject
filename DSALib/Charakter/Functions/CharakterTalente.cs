@@ -213,7 +213,39 @@ namespace DSAProject.Classes.Charakter
             return MotherDicionary.TryGetValue(talent, out bool value);
         }
 
+        public int GetProbeValue(AbstractTalentGeneral talent)
+        {
+            if (talent == null) return 0;
 
+            var value = 0;
+            foreach (var item in talent.Attributs)
+            {
+                value += charakter.Attribute.GetAttributMAXValue(item);
+            }
+            return value;
+        }
+        public int GetATValue(AbstractTalentFighting talent)
+        {
+            if (talent == null) return 0;
+
+            var type = typeof(BaseAttack);
+            if (typeof(TalentRange).IsAssignableFrom(talent.GetType()))
+            {
+                type = typeof(BaseRange);
+            }
+            var baseAttack = charakter.Values.UsedValues.Where(x => x.GetType() == type).ToList()[0];
+            var at = charakter.Values.GetMAXValue(baseAttack, out DSAError error) + GetMaxAT(talent);
+
+            return at;
+        }
+        public int GetPAValue(AbstractTalentFighting talent)
+        {
+            if (talent == null) return 0;
+            var baseParade  = charakter.Values.UsedValues.Where(x => x.GetType() == typeof(BaseParade)).ToList()[0];
+            var pa          = charakter.Values.GetMAXValue(baseParade, out DSAError error) + GetMaxPA(talent);
+
+            return pa;
+        }
         /// <summary>
         /// Sollte auf dauer Überarbeitet und entfernt werden
         /// </summary>
@@ -228,38 +260,27 @@ namespace DSAProject.Classes.Charakter
             if (talent == null) throw new ArgumentNullException(nameof(talent));
 
             var talentType  = talent.GetType();
-            DSAError error     = null;
             string probe    = string.Empty;
-
 
             if (typeof(TalentClose).IsAssignableFrom(talentType) || typeof(TalentWeaponless).IsAssignableFrom(talentType))
             {
                 var innertalent = (AbstractTalentFighting)talent;
-                var baseAttack  = charakter.Values.UsedValues.Where(x => x.GetType() == typeof(BaseAttack)).ToList()[0];
-                var baseParade  = charakter.Values.UsedValues.Where(x => x.GetType() == typeof(BaseParade)).ToList()[0];
+                var paValue     = GetPAValue(innertalent);
+                var atValue     = GetATValue(innertalent);
 
-                var at = charakter.Values.GetMAXValue(baseAttack, out error) + GetAT(innertalent) + bonusAT;
-                var pa = charakter.Values.GetMAXValue(baseParade, out error) + GetPA(innertalent) + bonusPA;
-                
-                probe = (at).ToString(Helper.CultureInfo) + "/" + (pa).ToString(Helper.CultureInfo);
+                probe = (atValue).ToString(Helper.CultureInfo) + "/" + (paValue).ToString(Helper.CultureInfo);
             } 
             else if (typeof(TalentRange).IsAssignableFrom(talentType))
             {
                 var innertalent = (AbstractTalentFighting)talent;
-                var baseAttack  = charakter.Values.UsedValues.Where(x => x.GetType() == typeof(BaseRange)).ToList()[0];
-                var at          = charakter.Values.GetMAXValue(baseAttack, out error) + GetAT(innertalent) + bonusAT;
-
-                probe           = (at).ToString(Helper.CultureInfo);
+                var atValue     = GetATValue(innertalent);
+                probe           = (atValue).ToString(Helper.CultureInfo);
             }
             else if (typeof(AbstractTalentGeneral).IsAssignableFrom(talentType))
             {
                 var innerTalent = (AbstractTalentGeneral)talent;
-                var value = 0;
-                foreach(var item in innerTalent.Attributs)
-                {
-                    value = value +charakter.Attribute.GetAttributMAXValue(item);
-                }
-                probe = (value).ToString(Helper.CultureInfo);
+                var probeValue  = GetProbeValue(innerTalent);
+                probe = (probeValue).ToString(Helper.CultureInfo);
             }
             else if (typeof(AbstractTalentLanguage).IsAssignableFrom(talentType))
             {
