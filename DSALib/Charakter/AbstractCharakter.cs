@@ -272,6 +272,71 @@ namespace DSAProject.Classes.Charakter
             #region Resources Laden
             //kein Laden notwendig
             #endregion
+            #region Traits Laden
+            if (jsonCharakter.Traits != null)
+            {
+                foreach (var item in jsonCharakter.Traits)
+                {
+                    var trait = new Trait
+                    {
+                        TraitType = item.TraitType,
+                        Description = item.Description,
+                        GP = item.GP,
+                        Title = item.Title,
+                        Value = item.Value,
+                        APEarned = item.APEarned,
+                        APInvest = item.APInvest
+                    };
+                    foreach (var innerItems in item.AttributeValues)
+                    {
+                        trait.SetValue(innerItems.Key, innerItems.Value);
+                    }
+                    foreach (var innerItems in item.ValueValues)
+                    {
+                        var value = GetValue(innerItems.Key);
+                        if (value != null)
+                        {
+                            trait.SetValue(value, innerItems.Value);
+                        }
+                    }
+                    foreach (var innerItems in item.ResourceValues)
+                    {
+                        var res = GetResource(innerItems.Key);
+                        if (res != null)
+                        {
+                            trait.SetValue(res, innerItems.Value);
+                        }
+                    }
+
+                    foreach (var innerItems in item.TawBonus)
+                    {
+                        var talent = talents.Where(x => x.ID == innerItems.Key).FirstOrDefault();
+                        if (talent != null)
+                        {
+                            trait.SetTaWBonus(talent, innerItems.Value);
+                        }
+                    }
+                    foreach (var innerItems in item.AtBonus)
+                    {
+                        var talent = talents.Where(x => x.ID == innerItems.Key).FirstOrDefault();
+                        if (talent != null && typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
+                        {
+                            trait.SetATBonus((AbstractTalentFighting)talent, innerItems.Value);
+                        }
+                    }
+                    foreach (var innerItems in item.PaBonus)
+                    {
+                        var talent = talents.Where(x => x.ID == innerItems.Key).FirstOrDefault();
+                        if (talent != null && typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
+                        {
+                            trait.SetPABonus((AbstractTalentFighting)talent, innerItems.Value);
+                        }
+                    }
+
+                    Traits.AddTrait(trait);
+                }
+            }
+            #endregion
             #region Talente Laden
             foreach (var item in jsonCharakter.TalentTAW)
             {
@@ -324,71 +389,6 @@ namespace DSAProject.Classes.Charakter
                     DescriptionText = item.DescriptionText,
                     DescriptionTitle = item.DescriptionTitle
                 });
-            }
-            #endregion
-            #region Traits Laden
-            if (jsonCharakter.Traits != null)
-            {
-                foreach (var item in jsonCharakter.Traits)
-                {
-                    var trait = new Trait
-                    {
-                        TraitType   = item.TraitType,
-                        Description = item.Description,
-                        GP          = item.GP,
-                        Title       = item.Title,
-                        Value       = item.Value,
-                        APEarned    = item.APEarned,
-                        APInvest    = item.APInvest
-                    };
-                    foreach (var innerItems in item.AttributeValues)
-                    {
-                        trait.SetValue(innerItems.Key, innerItems.Value);
-                    }
-                    foreach (var innerItems in item.ValueValues)
-                    {
-                        var value = GetValue(innerItems.Key);
-                        if (value != null)
-                        {
-                            trait.SetValue(value, innerItems.Value);
-                        }
-                    }
-                    foreach (var innerItems in item.ResourceValues)
-                    {
-                        var res = GetResource(innerItems.Key);
-                        if (res != null)
-                        {
-                            trait.SetValue(res, innerItems.Value);
-                        }
-                    }
-
-                    foreach (var innerItems in item.TawBonus)
-                    {
-                        var talent = talents.Where(x => x.ID == innerItems.Key).FirstOrDefault();
-                        if (talent != null)
-                        {
-                            trait.SetTaWBonus(talent, innerItems.Value);
-                        }
-                    }
-                    foreach (var innerItems in item.AtBonus)
-                    {
-                        var talent = talents.Where(x => x.ID == innerItems.Key).FirstOrDefault();
-                        if (talent != null && typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
-                        {
-                            trait.SetATBonus((AbstractTalentFighting)talent, innerItems.Value);
-                        }
-                    }
-                    foreach (var innerItems in item.PaBonus)
-                    {
-                        var talent = talents.Where(x => x.ID == innerItems.Key).FirstOrDefault();
-                        if (talent != null && typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
-                        {
-                            trait.SetPABonus((AbstractTalentFighting)talent, innerItems.Value);
-                        }
-                    }
-
-                    Traits.AddTrait(trait);
-                }
             }
             #endregion
             #region Anderes Laden

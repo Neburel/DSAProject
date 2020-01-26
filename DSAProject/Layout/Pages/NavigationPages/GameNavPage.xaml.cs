@@ -53,10 +53,12 @@ namespace DSAProject.Layout.Pages.NavigationPages
 
                 new NavigationViewItemHeader    { Content = "Allgemeine Talente" },
                 new NavigationViewItem          { Content = "Körperliche Talente",          Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage), Parameter = typeof(TalentPhysical) } },
+                new NavigationViewItem          { Content = "Körperliche Talente XX",       Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage2), Parameter = typeof(TalentPhysical)} },
                 new NavigationViewItem          { Content = "Gesellschaftliche Talente",    Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage), Parameter = typeof(TalentSocial) } },
                 new NavigationViewItem          { Content = "Natur Talente",                Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage), Parameter = typeof(TalentNature) } },
                 new NavigationViewItem          { Content = "Wissenstalente",               Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage), Parameter = typeof(TalentKnowldage) } },
                 new NavigationViewItem          { Content = "Handwerkstalente",             Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage), Parameter = typeof(TalentCrafting) } },
+                new NavigationViewItem          { Content = "Handwerkstalente XX",          Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage2), Parameter = typeof(TalentCrafting) } },
 
                 new NavigationViewItemHeader    { Content = "Eigenschaften" },
                 new NavigationViewItem          { Content = "Vorteile",                     Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Vorteil } },
@@ -143,7 +145,15 @@ namespace DSAProject.Layout.Pages.NavigationPages
             }
             else if (parameter != null)
             {
-                if (e.SourcePageType == typeof(TalentPage))
+                if (e.SourcePageType == typeof(TalentPage2))
+                {
+                    var page            = (TalentPage2)XAML_ContentFrame.Content;
+                    var selectionType   = (Type)((DSANavItem)navItem.Tag).Parameter;
+                    var talents         = Game.GetTalentForCurrentCharakter().Where(x => x.GetType() == selectionType).ToList();
+
+                    page.SetTalents(talents);
+                }
+                else if (e.SourcePageType == typeof(TalentPage))
                 {
                     var page            = (TalentPage)XAML_ContentFrame.Content;
                     var selectionType   = (Type)((DSANavItem)navItem.Tag).Parameter;

@@ -10,7 +10,6 @@ using DSAProject.Classes.Charakter.Talente.TalentRequirement;
 using DSAProject.Classes.Game;
 using DSAProject.Classes.Interfaces;
 using DSAProject.Layout.ViewModels;
-using DSAProject.util.ErrrorManagment;
 
 using System;
 using System.Collections.ObjectModel;
@@ -55,7 +54,6 @@ namespace DSAProject.Layout.Pages.ToolPages
         {
             this.InitializeComponent();
             //wir Starten mit DSA
-
             //Davon ausgehen das Weaponless gechekt ist
             ViewModel.DeductionValue = 5;
             ViewModel.IsProbeSelectionVisibile = Visibility.Collapsed;

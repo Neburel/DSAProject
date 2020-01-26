@@ -166,7 +166,7 @@ namespace DSAProject.Classes.Charakter
         public int GetMaxTaw(ITalent talent)
         {
             var taw = GetTAW(talent);
-            var bonusTaw = charakter.Traits.GetTawBonus(talent);
+            var bonusTaw = GetModTaW(talent);
 
             return taw + bonusTaw;
         }
@@ -178,6 +178,17 @@ namespace DSAProject.Classes.Charakter
             }
             return 0;
         }
+        public int GetModAT(AbstractTalentFighting talent)
+        {
+            return charakter.Traits.GetATBonus(talent);
+        }
+        public int GetMaxAT(AbstractTalentFighting talent)
+        {
+            var taw         = GetAT(talent);
+            var bonusTaw    = GetModAT(talent);
+
+            return taw + bonusTaw;
+        }
         public int GetPA(AbstractTalentFighting talent)
         {
             if (PADictionary.TryGetValue(talent, out int innerTAW))
@@ -185,6 +196,17 @@ namespace DSAProject.Classes.Charakter
                 return innerTAW;
             }
             return 0;
+        }
+        public int GetModPA(AbstractTalentFighting talent)
+        {
+            return charakter.Traits.GetPABonus(talent);
+        }
+        public int GetMaxPA(AbstractTalentFighting talent)
+        {
+            var taw = GetPA(talent);
+            var bonusTaw = GetModPA(talent);
+
+            return taw + bonusTaw;
         }
         public bool GetMother(TalentSpeaking talent)
         {

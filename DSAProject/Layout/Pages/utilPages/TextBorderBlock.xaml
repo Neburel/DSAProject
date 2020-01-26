@@ -8,6 +8,13 @@
     Background="Transparent">
 
     <Border BorderBrush="Gray" BorderThickness="1, 1, 1, 1">
-        <TextBlock Foreground="White" TextAlignment="Center" HorizontalTextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" FontFamily="French Script MT" FontSize="20" Text="{x:Bind viewModel.Text, Mode=TwoWay}"></TextBlock>
+        <TextBlock
+            Foreground="White" 
+            TextAlignment="Center"
+            HorizontalTextAlignment="Center"
+            VerticalAlignment="Center" 
+            TextWrapping="Wrap" 
+            HorizontalAlignment="Center" 
+            Text="{x:Bind viewModel.Text, Mode=TwoWay}"/>
     </Border>
 </Page>

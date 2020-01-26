@@ -1,4 +1,5 @@
 ﻿using DSAProject.util;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
 
@@ -12,17 +13,28 @@ namespace DSAProject.Layout.Pages.utilPages
         #region Variables
         private TextBorderBlockViewModel viewModel = new TextBorderBlockViewModel();
         #endregion
-        #region Properties
+        #region Dependency
+        public static readonly DependencyProperty TextProperty      = DependencyProperty.Register(nameof(Text), typeof(string), typeof(TextBorderBlock), new PropertyMetadata(null, new PropertyChangedCallback(OnTextValueChanged)));
+        #endregion
+        #region Dependency Properties
         public string Text
         {
-            get => viewModel.Text;
+            get => (string)GetValue(TextProperty);
             set
             {
-                viewModel.Text = value;
+                SetValue(TextProperty, value);
             }
         }
         #endregion
-
+        #region Propertie Event 
+        private static void OnTextValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue != e.OldValue)
+            {
+                ((TextBorderBlock)d).viewModel.Text = (string)e.NewValue;
+            }
+        }
+        #endregion
         public TextBorderBlock()
         {
             this.InitializeComponent();

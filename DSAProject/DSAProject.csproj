@@ -180,6 +180,9 @@
     <Compile Include="Layout\Pages\utilPages\TaWItem.xaml.cs">
       <DependentUpon>TaWItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Layout\Pages\utilPages\TextBorderBlockWarning.xaml.cs">
+      <DependentUpon>TextBorderBlockWarning.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Layout\Pages\utilPages\TextBorderBlock.xaml.cs">
       <DependentUpon>TextBorderBlock.xaml</DependentUpon>
     </Compile>
@@ -314,6 +317,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Layout\Pages\utilPages\TaWItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Layout\Pages\utilPages\TextBorderBlockWarning.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
