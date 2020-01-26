@@ -7,12 +7,16 @@
     xmlns:wrapper="using:DSAProject.Layout.Wrapper"
     xmlns:utilpages="using:DSAProject.Layout.Pages.utilPages"
     xmlns:mainpages="using:DSAProject.Layout.Pages.MainPages"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="Transparent">
 
     <Page.Resources>
         <Style x:Name="PageMinorText" TargetType="Page">
             <Setter Property="FontSize" Value="8"/>
+        </Style>
+        <Style x:Name="PageNormalMinorText" TargetType="Page">
+            <Setter Property="FontSize" Value="14"/>
         </Style>
         <Style x:Name="PageNormalText" TargetType="Page">
             <Setter Property="FontSize" Value="16"/>
@@ -21,10 +25,10 @@
 
         <GridLength x:Key="TalentRowWidth">3*</GridLength>
         <GridLength x:Key="Probe1RowWidth">50</GridLength>
-        <GridLength x:Key="Probe2RowWidth">120</GridLength>
+        <GridLength x:Key="Probe2RowWidth">80</GridLength>
         <GridLength x:Key="ProbeTaWRowWidth">100</GridLength>
         <GridLength x:Key="ProbeATPARowWidth">200</GridLength>
-        <GridLength x:Key="ProbeBERowWidth">50</GridLength>
+        <GridLength x:Key="ProbeBERowWidth">30</GridLength>
         <GridLength x:Key="ProbeSpezialisierungRowWidth">2*</GridLength>
         <GridLength x:Key="ProbeAnforderungRowWidth">2*</GridLength>
         <GridLength x:Key="ProbeAbleitungRowWidth">2*</GridLength>
@@ -82,11 +86,11 @@
                     <ColumnDefinition Width="{StaticResource ProbeAbleitungRowWidth}"/>
                 </Grid.ColumnDefinitions>
 
-                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="0" Text="{x:Bind Talent.Name }"            Style="{StaticResource PageNormalText}"/>
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="0" Text="{x:Bind Talent }"                 Style="{StaticResource PageNormalText}"/>
                 <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind ProbeValue, Mode=TwoWay}" Style="{StaticResource PageNormalText}"/>
-                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="2" Text="{x:Bind ProbeText}"               Style="{StaticResource PageNormalText}"/>
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="2" Text="{x:Bind ProbeText}"               Style="{StaticResource PageNormalMinorText}"/>
                 <utilpages:TaWItem Grid.Row="0" Grid.Column="3" TAW="{x:Bind TaW, Mode=TwoWay}" TAW2="{x:Bind TaWToolTipText, Mode=TwoWay}" Style="{StaticResource PageNormalText}"/>
-                <Grid Grid.Row="0" Grid.Column="4" Visibility="{x:Bind ATPAVisibility}"> 
+                <Grid Grid.Row="0" Grid.Column="4" Visibility="{x:Bind ATPAVisibility}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="{StaticResource ProbeATPARowWidth}"/>
@@ -102,14 +106,13 @@
                         </Grid>
                     </Grid>
                 </Grid>
-                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="5" Text="{x:Bind Talent.BE}" Style="{StaticResource PageNormalText}"/>
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="5" Text="{x:Bind Talent.BE}" Style="{StaticResource PageMinorText}"/>
                 <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="6"/>
-                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="7" WarningText="{x:Bind RequirementStringFreeText}" Text="{x:Bind RequirementStringRest}"   Style="{StaticResource PageMinorText}" />
-                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="8" WarningText="{x:Bind DeductionStringFreeText}" Text="{x:Bind DeductionStringTalent}"     Style="{StaticResource PageMinorText}"/>
+                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="7" WarningText="{x:Bind RequirementStringFreeText}" Text="{x:Bind RequirementStringRest}" Style="{StaticResource PageMinorText}" />
+                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="8" WarningText="{x:Bind DeductionStringFreeText}"   Text="{x:Bind DeductionStringTalent}" Style="{StaticResource PageMinorText}"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -117,6 +120,13 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <controls:Loading HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.RowSpan="10" IsLoading="{x:Bind viewModel.IsLoading, Mode=TwoWay}">
+            <StackPanel Orientation="Horizontal" Padding="12">
+                <Grid Margin="0,0,0,0">
+                    <ProgressRing IsActive="True" Foreground="Red" Width="150" Height="150"/>
+                </Grid>
+            </StackPanel>
+        </controls:Loading>
         <Grid x:Name="XAML_TitleRow" Grid.Row="0"></Grid>
         <AutoSuggestBox Grid.Row="1" QueryIcon="Find" TextChanged="AutoSuggestBox_TextChanged"></AutoSuggestBox>
         <ListView
@@ -125,6 +135,7 @@
             Padding="0" 
             Header="{x:Bind viewModel.Header}"
             HeaderTemplate="{StaticResource TalentHeaderTemplate}"/>
+
         <ListView
             x:Name="TalentListView"
             Grid.Row="3"

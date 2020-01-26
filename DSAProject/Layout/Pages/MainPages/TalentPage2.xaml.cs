@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -42,38 +44,46 @@ namespace DSAProject.Layout.Pages.MainPages
                 Grid.SetColumn(textBloc, counter);
                 counter++;
             }
-
-            SetTalents(Game.TalentList);
         }
 
         public void SetTalents(List<ITalent> list)
         {
-            if (list == null || list.Count == 0) return;
-
-            talentList = new List<TalentWrapper>();
-            var obList = new ObservableCollection<TalentWrapper>();
-
-            foreach (var item in list)
+            viewModel.IsLoading = true;
+            var task = new Task(async () =>
             {
-                var innerItem = new TalentWrapper
+                if (list == null || list.Count == 0) return;
+
+                list = list.OrderBy(x => x.ToString()).ToList();
+                talentList = new List<TalentWrapper>();
+                var obList = new ObservableCollection<TalentWrapper>();
+
+                //Dieser Code ist verbesserbar, aktuell nur funktional wenn die liste nur einen typen enthält
+                if (typeof(AbstractTalentFighting).IsAssignableFrom(list[0].GetType()))
                 {
-                    Talent = item
-                };
-                talentList.Add(innerItem);
-                obList.Add(innerItem);
-            }
+                    viewModel.Header.ATPAVisibility = true;
+                }
+                if (typeof(AbstractTalentGeneral).IsAssignableFrom(list[0].GetType()))
+                {
+                    viewModel.Header.ATPAVisibility = false;
+                }
 
-            //Dieser Code ist verbesserbar, aktuell nur funktional wenn die liste nur einen typen enthält
-            if (typeof(AbstractTalentFighting).IsAssignableFrom(list[0].GetType()))
-            {
-                viewModel.Header.ATPAVisibility = true;
-            }
-            if (typeof(AbstractTalentGeneral).IsAssignableFrom(list[0].GetType()))
-            {
-                viewModel.Header.ATPAVisibility = false;
-            }
+                foreach (var item in list)
+                {
+                    var innerItem = new TalentWrapper
+                    {
+                        Talent = item
+                    };
+                    talentList.Add(innerItem);
+                    obList.Add(innerItem);
+                }
 
-            viewModel.TalentList = obList;
+                await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    viewModel.TalentList = obList;
+                    viewModel.IsLoading = false;
+                });
+            });
+            task.Start();
         }
         #region PageHandler
         private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
@@ -101,6 +111,11 @@ namespace DSAProject.Layout.Pages.MainPages
     }
     internal class TalentPageViewModel : AbstractPropertyChanged
     {
+        public bool IsLoading
+        {
+            get => Get<bool>();
+            set => Set(value);
+        }
         public TalentPageHeader Header
         {
             get => Get<TalentPageHeader>();

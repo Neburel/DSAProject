@@ -4,9 +4,21 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:utilpages="using:DSAProject.Layout.Pages.utilPages"
     mc:Ignorable="d"
     Background="Transparent">
-    
+    <Page.Resources>
+        <Style x:Name="PageMinorText" TargetType="Page">
+            <Setter Property="FontSize" Value="8"/>
+        </Style>
+        <Style x:Name="PageMinorNormalText" TargetType="Page">
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style x:Name="PageNormalText" TargetType="Page">
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+    </Page.Resources>
+
     <Grid Margin="0, 0, 0, 0" Padding="0, 0, 0, 0" RowSpacing="0" ColumnSpacing="0" BorderThickness="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -14,7 +26,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="50"/>
-            <ColumnDefinition Width="Auto" MaxWidth="80"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="2*" MaxWidth="100"/>
             <ColumnDefinition Width="Auto" MaxWidth="200"/>
             <ColumnDefinition Width="2*" MaxWidth="40"/>
@@ -23,17 +35,10 @@
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
-
-        <Border BorderBrush="LightSlateGray" Grid.Row="0" Grid.Column="0" BorderThickness="1">
-            <TextBlock x:Name="XAML_Title" TextWrapping="Wrap" Text="{x:Bind ViewModel.TalentName }" TextAlignment="Center" HorizontalTextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-        </Border>
-        <Border BorderBrush="LightSlateGray" Grid.Row="1" Grid.Column="1" BorderThickness="1">
-            <TextBlock x:Name="XAML_ProbeValue" TextWrapping="Wrap" Text="{x:Bind ViewModel.Probe, Mode=TwoWay}" TextAlignment="Center" HorizontalTextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-        </Border>
-        <Border BorderBrush="LightSlateGray" Grid.Row="1" Grid.Column="2" BorderThickness="1" Visibility="{x:Bind ViewModel.IsProbeTextVisibility, Mode=TwoWay}" Width="80">
-            <TextBlock x:Name="XAML_ProbeText" TextWrapping="Wrap" Text="{x:Bind ViewModel.ProbeText, Mode=TwoWay}" TextAlignment="Center" HorizontalTextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-        </Border>
-        
+        <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="0" Text="{x:Bind ViewModel.TalentName}"                                                                     Style="{StaticResource PageNormalText}"></utilpages:TextBorderBlockWarning>
+        <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="1" Text="{x:Bind ViewModel.Probe, Mode=TwoWay}"                                                             Style="{StaticResource PageNormalText}"></utilpages:TextBorderBlockWarning>
+        <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="2" Text="{x:Bind ViewModel.ProbeText, Mode=TwoWay}" Visibility="{x:Bind ViewModel.IsProbeTextVisibility}"   Style="{StaticResource PageMinorNormalText}" Width="80"></utilpages:TextBorderBlockWarning>
+                
         <Border BorderBrush="LightSlateGray" Grid.Row="2" Grid.Column="3" BorderThickness="1">
             <Grid ColumnSpacing="1" Padding="1,1,1,1">
                 <Grid.ColumnDefinitions>
@@ -55,7 +60,6 @@
                 </Border>
             </Grid>
         </Border>
-
         <Border BorderBrush="LightSlateGray" Grid.Row="3" Grid.Column="4" BorderThickness="1" Visibility="{x:Bind ViewModel.IsATPAVisibility, Mode=TwoWay}" Width="200">
             <Grid ColumnSpacing="1" Padding="1,1,1,1">
                 <Grid.ColumnDefinitions>
@@ -92,40 +96,9 @@
                 </Border>
             </Grid>
         </Border>
-
-        <Border BorderBrush="LightSlateGray" Grid.Row="4" Grid.Column="5" BorderThickness="1">
-            <TextBlock x:Name="XAML_BE" TextWrapping="Wrap" Text="{x:Bind ViewModel.BE }" TextAlignment="Center" HorizontalTextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" ></TextBlock>
-        </Border>
-
-        <Border BorderBrush="LightSlateGray" Grid.Row="0" Grid.Column="6" BorderThickness="1">
-            <TextBlock x:Name="Spezialisierung" TextWrapping="Wrap"></TextBlock>
-        </Border>
-
-        <Border BorderBrush="LightSlateGray" Grid.Row="0" Grid.Column="7" BorderThickness="1">
-            <TextBlock 
-                x:Name="XANL_Requirements" 
-                TextWrapping="Wrap" 
-                VerticalAlignment="Center" 
-                HorizontalAlignment="Center" 
-                TextAlignment="Center" FontFamily="Segoe UI"> 
-                
-                <Run Foreground="Red" Text="{x:Bind ViewModel.RequirementStringFreeText}" FontSize="10"/>
-                <Run Foreground="White" Text="{x:Bind ViewModel.RequirementStringRest}" FontSize="10"/>
-            </TextBlock>
-        </Border>
-
-        <Border BorderBrush="LightSlateGray" Grid.Row="0" Grid.Column="8" BorderThickness="1">
-            <TextBlock
-                x:Name="XAML_DeductionString"
-                TextWrapping="Wrap" 
-                VerticalAlignment="Center" 
-                HorizontalAlignment="Center" 
-                TextAlignment="Center">
-                
-                <Run Foreground="Red"   Text="{x:Bind ViewModel.DeductionStringFreeText}"   FontSize="10"></Run>
-                <Run Foreground="White" Text="{x:Bind ViewModel.DeductionStringTalent}"     FontSize="10"></Run>
-            </TextBlock>
-        </Border>
-
+        
+        <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="5" Text="{x:Bind ViewModel.BE}" Style="{StaticResource PageNormalText}"></utilpages:TextBorderBlockWarning>
+        <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="7" Text="{x:Bind ViewModel.RequirementStringRest}" WarningText="{x:Bind ViewModel.RequirementStringFreeText}"   Style="{StaticResource PageMinorText}"></utilpages:TextBorderBlockWarning>
+        <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="8" Text="{x:Bind ViewModel.DeductionStringTalent}" WarningText="{x:Bind ViewModel.DeductionStringFreeText}"     Style="{StaticResource PageMinorText}"></utilpages:TextBorderBlockWarning>
     </Grid>
 </Page>

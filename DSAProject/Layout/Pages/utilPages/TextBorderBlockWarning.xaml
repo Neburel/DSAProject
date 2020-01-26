@@ -9,13 +9,13 @@
 
     <Border BorderBrush="Gray" BorderThickness="1">
         <TextBlock
-                TextWrapping="Wrap" 
-                VerticalAlignment="Center" 
-                HorizontalAlignment="Center" 
-                TextAlignment="Center">
-                
-                <Run Foreground="Red"   Text="{x:Bind viewModel.TextWarning, Mode=OneWay}"/>
-                <Run Foreground="White" Text="{x:Bind viewModel.Text, Mode=OneWay}"/>
+            TextWrapping="Wrap" 
+            TextAlignment="Center"
+            HorizontalTextAlignment="Center"
+            VerticalAlignment="Center" 
+            HorizontalAlignment="Center">
+            <Run Foreground="Red"   Text="{x:Bind viewModel.TextWarning, Mode=OneWay}"/>
+            <Run Foreground="White" Text="{x:Bind viewModel.Text, Mode=OneWay}"/>
         </TextBlock>
     </Border>
 </Page>
