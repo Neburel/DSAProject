@@ -1,7 +1,7 @@
 ﻿using DSALib;
 using DSALib.Charakter.Other;
 using DSAProject.Classes.Game;
-using DSAProject.Layout.Wrapper;
+using DSAProject.Layout.ViewModels;
 using DSAProject.util;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,7 +24,7 @@ namespace DSAProject.Layout.Pages
 
         #region Variables
         private readonly TraitPageViewModel viewModel = new TraitPageViewModel();
-        private readonly TraitWrapper createNewTrait = new TraitWrapper() { Trait = new Trait { Description = "CreateNew" } };
+        private readonly TraitViewModel createNewTrait = new TraitViewModel() { Trait = new Trait { Description = "CreateNew" } };
         private TraitType? trailFilter = null;
         #endregion
         #region Properties
@@ -84,11 +84,11 @@ namespace DSAProject.Layout.Pages
         }
         private void CreateNewItemList(List<Trait> traits)
         {
-            var list = new List<TraitWrapper>();
+            var list = new List<TraitViewModel>();
 
             foreach (var item in traits)
             {
-                var newWrapper = new TraitWrapper
+                var newWrapper = new TraitViewModel
                 {
                     TextColor = viewModel.Header.TextColor,
                     Trait = item
@@ -96,7 +96,7 @@ namespace DSAProject.Layout.Pages
                 list.Add(newWrapper);
             }
 
-            viewModel.Traits = new ObservableCollection<TraitWrapper>(list)
+            viewModel.Traits = new ObservableCollection<TraitViewModel>(list)
             {
                 createNewTrait
             };
@@ -109,7 +109,7 @@ namespace DSAProject.Layout.Pages
             }
             else
             {
-                var traitwrapper = (TraitWrapper)e.ClickedItem;
+                var traitwrapper = (TraitViewModel)e.ClickedItem;
                 Game.RequestNav(new EventNavRequest { Side = NavEnum.CreateTraitPage, Parameter = traitwrapper.Trait });
             }
         }
@@ -121,8 +121,8 @@ namespace DSAProject.Layout.Pages
                 set;
             } = new TraitPageHeader();
 
-            private ObservableCollection<TraitWrapper> traits;
-            public ObservableCollection<TraitWrapper> Traits
+            private ObservableCollection<TraitViewModel> traits;
+            public ObservableCollection<TraitViewModel> Traits
             {
                 get => traits;
                 set

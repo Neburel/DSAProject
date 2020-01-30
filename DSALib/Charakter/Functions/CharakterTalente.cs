@@ -165,6 +165,8 @@ namespace DSAProject.Classes.Charakter
         /// <returns></returns>
         public int GetMaxTaw(ITalent talent)
         {
+            if (talent == null) return 0;
+
             var taw = GetTAW(talent);
             var bonusTaw = GetModTaW(talent);
 
@@ -172,6 +174,8 @@ namespace DSAProject.Classes.Charakter
         }
         public int GetAT(AbstractTalentFighting talent)
         {
+            if (talent == null) return 0;
+
             if (ATDictionary.TryGetValue(talent, out int innerTAW))
             {
                 return innerTAW;
@@ -180,6 +184,8 @@ namespace DSAProject.Classes.Charakter
         }
         public int GetModAT(AbstractTalentFighting talent)
         {
+            if (talent == null) return 0;
+
             return charakter.Traits.GetATBonus(talent);
         }
         public int GetMaxAT(AbstractTalentFighting talent)

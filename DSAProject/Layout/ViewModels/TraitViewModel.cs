@@ -2,9 +2,9 @@
 using DSAProject.util;
 using Windows.UI.Xaml.Media;
 
-namespace DSAProject.Layout.Wrapper
+namespace DSAProject.Layout.ViewModels
 {
-    public class TraitWrapper : AbstractPropertyChanged
+    public class TraitViewModel : AbstractPropertyChanged
     {
         private Trait trait;
         private SolidColorBrush textColor = new SolidColorBrush(Windows.UI.Colors.Black);

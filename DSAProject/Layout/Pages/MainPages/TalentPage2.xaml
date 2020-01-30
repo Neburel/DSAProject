@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:wrapper="using:DSAProject.Layout.Wrapper"
+    xmlns:wrapper="using:DSAProject.Layout.ViewModels"
     xmlns:utilpages="using:DSAProject.Layout.Pages.utilPages"
     xmlns:mainpages="using:DSAProject.Layout.Pages.MainPages"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
@@ -79,7 +79,7 @@
                 <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="9" Text=""              Style="{StaticResource PageNormalMinorText}"/>
             </Grid>
         </DataTemplate>
-        <DataTemplate x:Key="TalentItemTemplate" x:DataType="wrapper:TalentWrapper">
+        <DataTemplate x:Key="TalentItemTemplate" x:DataType="wrapper:TalentViewModel">
             <Grid Margin="0, 0, 0, 0" Padding="0, 0, 0, 0" RowSpacing="0" ColumnSpacing="0" BorderThickness="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>

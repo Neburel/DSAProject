@@ -79,7 +79,7 @@ namespace DSAProject.Layout.Pages.NavigationPages
                 new NavigationViewItem          { Content = "Laden",                            Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(LoadPage) } },
                 new NavigationViewItem          { Content = "Info",                             Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(InfoPage) } },
 
-                new NavigationViewItem          { Content = "TalentTextPage",                   Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage2) } }
+                new NavigationViewItem          { Content = "TestPage",                         Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(LanguageFamilyPage) } }
             };
             NavigationViewItem = NavItems.Where(x => x.Tag != null).ToList();
             Game.NavRequested += Game_NavRequested;

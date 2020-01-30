@@ -6,9 +6,9 @@ using DSAProject.Classes.Game;
 using DSAProject.Classes.Interfaces;
 using DSAProject.util;
 
-namespace DSAProject.Layout.Wrapper
+namespace DSAProject.Layout.ViewModels
 {
-    public class TalentWrapper : AbstractPropertyChanged
+    public class TalentViewModel : AbstractPropertyChanged
     {
         public int TaW
         {
@@ -90,7 +90,7 @@ namespace DSAProject.Layout.Wrapper
             get => Get<ITalent>();
             set => Set(value);
         }
-        public TalentWrapper(DiceChanger helper)
+        public TalentViewModel(DiceChanger helper)
         {
             helper.PropertyChanged += (sender, args) =>
             {

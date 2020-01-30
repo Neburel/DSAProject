@@ -2,6 +2,7 @@
 using DSAProject.Classes.Charakter.Talente;
 using DSAProject.Classes.Charakter.Talente.TalentLanguage;
 using DSAProject.Classes.Game;
+using DSAProject.Layout.ViewModels;
 using DSAProject.util;
 using Windows.UI.Xaml.Controls;
 
@@ -14,7 +15,7 @@ namespace DSAProject.Layout.Pages.ItemPages
     /// </summary>
     public sealed partial class Language_ItemPage : Page
     {
-        private Language_ItemPageViewModel ViewModel { get; set; } = new Language_ItemPageViewModel();
+        private LanguageViewModel ViewModel { get; set; } = new LanguageViewModel();
 
         public Language_ItemPage()
         {
@@ -47,121 +48,121 @@ namespace DSAProject.Layout.Pages.ItemPages
             Game.Charakter.Talente.SetMother(ViewModel.LanguageTalent, value);
         }
 
-        private class Language_ItemPageViewModel : AbstractPropertyChanged
-        {
-            #region Variables
-            private bool languageTalentBorderVisible    = false;
-            private bool writingTalentBorderVisible     = false;
-            private bool motherLanguage                 = false;
-            private int languageTaw                     = 0;
-            private int writingTaW                      = 0;
-            private string languageProbeString          = string.Empty;
-            private string writingProbeString           = string.Empty;
-            private TalentSpeaking languageTalent;
-            private AbstractTalent writingTalent;
-            #endregion
-            public TalentSpeaking LanguageTalent
-            {
-                get => languageTalent;
-                set
-                {
-                    languageTalent  = value;
-                    LanguageTalentBorderVisible = true;
-                    LanguageTAW     = Game.Charakter.Talente.GetMaxTaw(LanguageTalent);
-                    LanguageProbe   = Game.Charakter.Talente.GetProbeString(LanguageTalent);
-                    LanguageM       = Game.Charakter.Talente.GetMother(LanguageTalent);
-                    OnPropertyChanged(nameof(LanguageTalent));
-                }
-            }
-            public AbstractTalent WritingTalent 
-            {
-                get => writingTalent;
-                set
-                {
-                    writingTalent = value;
-                    WritingTalentBorderVisible = true;
-                    WritingTAW      = Game.Charakter.Talente.GetMaxTaw(WritingTalent);
-                    WritingProbe    = Game.Charakter.Talente.GetProbeString(WritingTalent);
-                    OnPropertyChanged(nameof(WritingTalent));
-                }
-            }
+        //private class Language_ItemPageViewModel : AbstractPropertyChanged
+        //{
+        //    #region Variables
+        //    private bool languageTalentBorderVisible    = false;
+        //    private bool writingTalentBorderVisible     = false;
+        //    private bool motherLanguage                 = false;
+        //    private int languageTaw                     = 0;
+        //    private int writingTaW                      = 0;
+        //    private string languageProbeString          = string.Empty;
+        //    private string writingProbeString           = string.Empty;
+        //    private TalentSpeaking languageTalent;
+        //    private AbstractTalent writingTalent;
+        //    #endregion
+        //    public TalentSpeaking LanguageTalent
+        //    {
+        //        get => languageTalent;
+        //        set
+        //        {
+        //            languageTalent  = value;
+        //            LanguageTalentBorderVisible = true;
+        //            LanguageTAW     = Game.Charakter.Talente.GetMaxTaw(LanguageTalent);
+        //            LanguageProbe   = Game.Charakter.Talente.GetProbeString(LanguageTalent);
+        //            LanguageM       = Game.Charakter.Talente.GetMother(LanguageTalent);
+        //            OnPropertyChanged(nameof(LanguageTalent));
+        //        }
+        //    }
+        //    public AbstractTalent WritingTalent 
+        //    {
+        //        get => writingTalent;
+        //        set
+        //        {
+        //            writingTalent = value;
+        //            WritingTalentBorderVisible = true;
+        //            WritingTAW      = Game.Charakter.Talente.GetMaxTaw(WritingTalent);
+        //            WritingProbe    = Game.Charakter.Talente.GetProbeString(WritingTalent);
+        //            OnPropertyChanged(nameof(WritingTalent));
+        //        }
+        //    }
 
-            public bool LanguageTalentBorderVisible
-            {
-                get
-                {
-                    return languageTalentBorderVisible;
-                }
-                set
-                {
-                    languageTalentBorderVisible = value;
-                    OnPropertyChanged(nameof(LanguageTalentBorderVisible));
-                }
-            }
-            public int LanguageTAW
-            {
-                get => languageTaw;
-                set 
-                {
-                    languageTaw = value;
-                    var talent = LanguageTalent;
-                    var newTaW = value - Game.Charakter.Talente.GetModTaW(talent);
-                    Game.Charakter.Talente.SetTAW(talent, newTaW);
-                    OnPropertyChanged(nameof(LanguageTAW));
-                }
-            }
-            public string LanguageProbe
-            {
-                get => languageProbeString;
-                set
-                {
-                    languageProbeString = value;
-                    OnPropertyChanged(nameof(LanguageProbe));
-                }
-            }
-            public bool LanguageM
-            {
-                get => motherLanguage;
-                set
-                {
-                    motherLanguage = value;
-                    OnPropertyChanged(nameof(LanguageM));
-                }
-            }
+        //    public bool LanguageTalentBorderVisible
+        //    {
+        //        get
+        //        {
+        //            return languageTalentBorderVisible;
+        //        }
+        //        set
+        //        {
+        //            languageTalentBorderVisible = value;
+        //            OnPropertyChanged(nameof(LanguageTalentBorderVisible));
+        //        }
+        //    }
+        //    public int LanguageTAW
+        //    {
+        //        get => languageTaw;
+        //        set 
+        //        {
+        //            languageTaw = value;
+        //            var talent = LanguageTalent;
+        //            var newTaW = value - Game.Charakter.Talente.GetModTaW(talent);
+        //            Game.Charakter.Talente.SetTAW(talent, newTaW);
+        //            OnPropertyChanged(nameof(LanguageTAW));
+        //        }
+        //    }
+        //    public string LanguageProbe
+        //    {
+        //        get => languageProbeString;
+        //        set
+        //        {
+        //            languageProbeString = value;
+        //            OnPropertyChanged(nameof(LanguageProbe));
+        //        }
+        //    }
+        //    public bool LanguageM
+        //    {
+        //        get => motherLanguage;
+        //        set
+        //        {
+        //            motherLanguage = value;
+        //            OnPropertyChanged(nameof(LanguageM));
+        //        }
+        //    }
 
-            public bool WritingTalentBorderVisible
-            {
-                get
-                {
-                    return writingTalentBorderVisible;
-                }
-                set
-                {
-                    writingTalentBorderVisible = value;
-                    OnPropertyChanged(nameof(WritingTalentBorderVisible));
-                }
-            }
-            public int WritingTAW
-            {
-                get => writingTaW;
-                set
-                {
-                    writingTaW = value;
-                    var talent = WritingTalent;
-                    var newTaW = value - Game.Charakter.Talente.GetModTaW(talent);
-                    Game.Charakter.Talente.SetTAW(talent, newTaW);
-                    OnPropertyChanged(nameof(WritingTAW));
-                }
-            }
-            public string WritingProbe 
-            {
-                get => writingProbeString;
-                set
-                {
-                    writingProbeString = value;
-                    OnPropertyChanged(nameof(WritingProbe));
-                }
-            }
-        }
+        //    public bool WritingTalentBorderVisible
+        //    {
+        //        get
+        //        {
+        //            return writingTalentBorderVisible;
+        //        }
+        //        set
+        //        {
+        //            writingTalentBorderVisible = value;
+        //            OnPropertyChanged(nameof(WritingTalentBorderVisible));
+        //        }
+        //    }
+        //    public int WritingTAW
+        //    {
+        //        get => writingTaW;
+        //        set
+        //        {
+        //            writingTaW = value;
+        //            var talent = WritingTalent;
+        //            var newTaW = value - Game.Charakter.Talente.GetModTaW(talent);
+        //            Game.Charakter.Talente.SetTAW(talent, newTaW);
+        //            OnPropertyChanged(nameof(WritingTAW));
+        //        }
+        //    }
+        //    public string WritingProbe 
+        //    {
+        //        get => writingProbeString;
+        //        set
+        //        {
+        //            writingProbeString = value;
+        //            OnPropertyChanged(nameof(WritingProbe));
+        //        }
+        //    }
+        //}
     }
 }

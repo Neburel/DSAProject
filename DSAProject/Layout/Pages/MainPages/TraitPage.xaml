@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pages="using:DSAProject.Layout.Pages"
-    xmlns:wrapper="using:DSAProject.Layout.Wrapper"
+    xmlns:wrapper="using:DSAProject.Layout.ViewModels"
     mc:Ignorable="d"
     Background="Transparent">
     <Page.Resources>
@@ -31,7 +31,7 @@
                 </Border>
             </Grid>
         </DataTemplate>
-        <DataTemplate x:Key="DataTemplateItemMin" x:DataType="wrapper:TraitWrapper">
+        <DataTemplate x:Key="DataTemplateItemMin" x:DataType="wrapper:TraitViewModel">
             <Grid Margin="0" Padding="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150" />
@@ -78,7 +78,7 @@
                 </Border>
             </Grid>
         </DataTemplate>
-        <DataTemplate x:Key="DataTemplateItemMax" x:DataType="wrapper:TraitWrapper">
+        <DataTemplate x:Key="DataTemplateItemMax" x:DataType="wrapper:TraitViewModel">
             <Grid Margin="0" Padding="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />

@@ -1,7 +1,7 @@
 ﻿using DSAProject.Classes.Charakter.Talente;
 using DSAProject.Classes.Game;
 using DSAProject.Classes.Interfaces;
-using DSAProject.Layout.Wrapper;
+using DSAProject.Layout.ViewModels;
 using DSAProject.util;
 using System;
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ namespace DSAProject.Layout.Pages.MainPages
     {
         #region Variables
         private TalentPageViewModel viewModel = new TalentPageViewModel();
-        private List<TalentWrapper> talentList;
+        private List<TalentViewModel> talentList;
         #endregion
         public TalentPage2()
         {
@@ -72,8 +72,8 @@ namespace DSAProject.Layout.Pages.MainPages
 
             DiceChanger helper = viewModel.DiceChanger;
             list = list.OrderBy(x => x.ToString()).ToList();
-            talentList = new List<TalentWrapper>();
-            var obList = new ObservableCollection<TalentWrapper>();
+            talentList = new List<TalentViewModel>();
+            var obList = new ObservableCollection<TalentViewModel>();
 
             //Dieser Code ist verbesserbar, aktuell nur funktional wenn die liste nur einen typen enthält
             if (typeof(AbstractTalentFighting).IsAssignableFrom(list[0].GetType()))
@@ -89,7 +89,7 @@ namespace DSAProject.Layout.Pages.MainPages
 
             foreach (var item in list)
             {
-                var innerItem = new TalentWrapper(helper)
+                var innerItem = new TalentViewModel(helper)
                 {
                     Talent = item
                 };
@@ -167,9 +167,9 @@ namespace DSAProject.Layout.Pages.MainPages
             get => Get<DiceChanger>();
             set => Set(value);
         }
-        public ObservableCollection<TalentWrapper> TalentList
+        public ObservableCollection<TalentViewModel> TalentList
         {
-            get => Get<ObservableCollection<TalentWrapper>>();
+            get => Get<ObservableCollection<TalentViewModel>>();
             set => Set(value);
         }
         public TalentPageViewModel()
