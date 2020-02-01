@@ -42,7 +42,7 @@ namespace DSAProject.Layout.Pages.NavigationPages
             {
                 new NavigationViewItemHeader    { Content = "Briefe" },
                 startItem,
-                new NavigationViewItem          { Content = "Sprachenbrief",                Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(LanguagePage) } },
+                new NavigationViewItem          { Content = "Sprachenbrief",                Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(LanguagePage2) } },
 
                 new NavigationViewItemHeader    { Content = "Kampf Talente" },
                 new NavigationViewItem          { Content = "Waffenlose Kampftechniken",    Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage2), Parameter = typeof(TalentWeaponless) } },
@@ -79,7 +79,7 @@ namespace DSAProject.Layout.Pages.NavigationPages
                 new NavigationViewItem          { Content = "Laden",                            Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(LoadPage) } },
                 new NavigationViewItem          { Content = "Info",                             Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(InfoPage) } },
 
-                new NavigationViewItem          { Content = "TestPage",                         Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(LanguageFamilyPage) } }
+               
             };
             NavigationViewItem = NavItems.Where(x => x.Tag != null).ToList();
             Game.NavRequested += Game_NavRequested;

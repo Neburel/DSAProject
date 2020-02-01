@@ -23,7 +23,7 @@ namespace DSAProject.Layout.Pages.ItemPages
 
             Game.Charakter.Talente.TaWChanged += (sender, args) =>
             {
-                if(args == ViewModel.LanguageTalent)
+                if(args == ViewModel.SpeakingTalent)
                 {
                     ViewModel.LanguageTAW = Game.Charakter.Talente.GetMaxTaw(args);
                 }
@@ -35,7 +35,7 @@ namespace DSAProject.Layout.Pages.ItemPages
         }
         public void SetLanguageTalent(TalentSpeaking item)
         {
-            ViewModel.LanguageTalent = item;
+            ViewModel.SpeakingTalent = item;
         }
         public void SetWritingTalent(TalentWriting item)
         {
@@ -45,7 +45,7 @@ namespace DSAProject.Layout.Pages.ItemPages
         {
             var box = (CheckBox)sender;
             var value = (bool)box.IsChecked;
-            Game.Charakter.Talente.SetMother(ViewModel.LanguageTalent, value);
+            Game.Charakter.Talente.SetMother(ViewModel.SpeakingTalent, value);
         }
 
         //private class Language_ItemPageViewModel : AbstractPropertyChanged

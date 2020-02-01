@@ -2,7 +2,6 @@
     x:Class="DSAProject.Layout.Pages.MainPages.LanguagePage2"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:DSAProject.Layout.Pages.MainPages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:utilpages="using:DSAProject.Layout.Pages.utilPages"
@@ -24,6 +23,7 @@
         <Style x:Name="PageHeaderText" TargetType="Page">
             <Setter Property="FontSize" Value="16"/>
         </Style>
+    
 
         <GridLength x:Key="SpracheSchriftRowWidth">2*</GridLength>
         <GridLength x:Key="MKProbeRowWidth">50</GridLength>
@@ -51,6 +51,7 @@
                     <ColumnDefinition Width="{StaticResource MKProbeRowWidth}"/>
                     <ColumnDefinition Width="{StaticResource TAWRowWidth}"/>
                     <ColumnDefinition Width="{StaticResource MKProbeRowWidth}"/>
+                    <ColumnDefinition Width="{StaticResource ProbeTest}"/>
                 </Grid.ColumnDefinitions>
 
                 <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="0" Text="Sprache" Style="{StaticResource PageHeaderText}"/>
@@ -79,23 +80,34 @@
                     <ColumnDefinition Width="{StaticResource MKProbeRowWidth}"/>
                     <ColumnDefinition Width="{StaticResource TAWRowWidth}"/>
                     <ColumnDefinition Width="{StaticResource MKProbeRowWidth}"/>
+                    <ColumnDefinition Width="{StaticResource ProbeTest}"/>
                 </Grid.ColumnDefinitions>
 
-                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="0" Text="{x:Bind LanguageTalent.Name}" Visibility="{x:Bind LanguageTalentBorderVisible}" Style="{StaticResource PageHeaderText}"/>
-                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind LanguageM}"           Visibility="{x:Bind LanguageTalentBorderVisible}" Style="{StaticResource PageHeaderText}"/>
-                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="2" Text="{x:Bind LanguageTalent.BE}"   Visibility="{x:Bind LanguageTalentBorderVisible}" Style="{StaticResource PageHeaderText}"/>
-                <utilpages:TaWItem Grid.Row="0" Grid.Column="3" TAW="{x:Bind LanguageTAW, Mode=TwoWay}"     Visibility="{x:Bind LanguageTalentBorderVisible}"></utilpages:TaWItem>
-                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="4" Text="{x:Bind LanguageProbe}"       Visibility="{x:Bind LanguageTalentBorderVisible}" Style="{StaticResource PageHeaderText}"/>
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="0" Text="{x:Bind LanguageFamilyName}"  Visibility="{x:Bind FamilyNameVisible}"             Style="{StaticResource PageHeaderText}" Grid.ColumnSpan="10"/>                
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="0" Text="{x:Bind LanguageTalentName}"  Visibility="{x:Bind LanguageTalentBorderVisible}"   Style="{StaticResource PageHeaderText}"/>
 
-                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="5" Text="{x:Bind WritingTalent.Name}"  Visibility="{x:Bind WritingTalentBorderVisible}" Style="{StaticResource PageHeaderText}"/>
-                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="6" Text="{x:Bind WritingTalent.BE}"    Visibility="{x:Bind WritingTalentBorderVisible}" Style="{StaticResource PageHeaderText}"/>
-                <utilpages:TaWItem Grid.Column="7" TAW="{x:Bind WritingTAW, Mode=TwoWay}"                   Visibility="{x:Bind WritingTalentBorderVisible}"></utilpages:TaWItem>
-                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="8" Text="{x:Bind WritingProbe}"        Visibility="{x:Bind WritingTalentBorderVisible}" Style="{StaticResource PageHeaderText}"/>
+                <Border Grid.Column="1" BorderThickness="1" Visibility="{x:Bind LanguageTalentBorderVisible}" Style="{StaticResource PageHeaderText}" BorderBrush="Gray">
+                    <CheckBox Margin="14, 0,0,0" IsChecked="{x:Bind LanguageM, Mode=TwoWay}" Style="{StaticResource PageHeaderText}"/>
+                </Border>
+
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="2" Text="{x:Bind LanguageTalentBE}"    Visibility="{x:Bind LanguageTalentBorderVisible}"   Style="{StaticResource PageNormalMinorText}"/>
+                <utilpages:TaWItem Grid.Row="0" Grid.Column="3" TAW="{x:Bind LanguageTAW, Mode=TwoWay}"     Visibility="{x:Bind LanguageTalentBorderVisible}"   Style="{StaticResource PageHeaderText}"/>
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="4" Text="{x:Bind LanguageProbe}"       Visibility="{x:Bind LanguageTalentBorderVisible}"   Style="{StaticResource PageHeaderText}"/>
+
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="5" Text="{x:Bind WritingTalentName}"   Visibility="{x:Bind WritingTalentBorderVisible}"    Style="{StaticResource PageHeaderText}"/>
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="6" Text="{x:Bind WritingTalentBE}"     Visibility="{x:Bind WritingTalentBorderVisible}"    Style="{StaticResource PageNormalMinorText}"/>
+                <utilpages:TaWItem Grid.Column="7" TAW="{x:Bind WritingTAW, Mode=TwoWay}"                   Visibility="{x:Bind WritingTalentBorderVisible}"    Style="{StaticResource PageHeaderText}"/>
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="8" Text="{x:Bind WritingProbe}"        Visibility="{x:Bind WritingTalentBorderVisible}"    Style="{StaticResource PageHeaderText}"/>
+
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="9" Text="{x:Bind DiceResult, Mode=TwoWay}" Visibility="{x:Bind LanguageVisible}"           Style="{StaticResource PageNormalMinorText}"/>
             </Grid>
         </DataTemplate>
+        
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -106,9 +118,20 @@
                 </Grid>
             </StackPanel>
         </controls:Loading>
-        <ListView Grid.Row="0" HeaderTemplate="{StaticResource LanguageHeaderTemplate}"/>
+        <utilpages:AttributHeader Grid.Row="0"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="{StaticResource ProbeTest}"/>
+            </Grid.ColumnDefinitions>
+            <AutoSuggestBox Grid.Row="0" Grid.Column="0" QueryIcon="Find" TextChanged="AutoSuggestBox_TextChanged"></AutoSuggestBox>
+            <TextBox Grid.Row="0" Grid.Column="1" BeforeTextChanging="TextBox_BeforeTextChanging" TextChanged="TextBox_TextChanged" Text="{x:Bind viewModel.DiceText}"></TextBox>
+        </Grid>
+        <ListView 
+            Grid.Row="2" 
+            HeaderTemplate="{StaticResource LanguageHeaderTemplate}"/>
         <ListView
-            Grid.Row="1"
+            Grid.Row="3"
             Margin="0" 
             Padding="0" 
             SelectionMode="None"

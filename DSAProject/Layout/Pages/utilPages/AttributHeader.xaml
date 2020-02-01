@@ -1,17 +1,11 @@
 ﻿<Page
-    x:Class="DSAProject.Layout.Pages.MainPages.LanguageFamilyPage"
+    x:Class="DSAProject.Layout.Pages.utilPages.AttributHeader"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:DSAProject.Layout.Pages.MainPages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="Transparent">
 
-    <ListView
-        ItemsSource="{x:Bind viewModel.List, Mode=TwoWay}"></ListView>
-    
-    <!--<ScrollViewer>
-        <Grid x:Name="XAML_MainGrid"></Grid>
-    </ScrollViewer>-->
+    <Grid x:Name="XAML_TitleRow" Grid.Row="0"></Grid>
 </Page>

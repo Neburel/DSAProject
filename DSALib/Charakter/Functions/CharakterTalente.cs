@@ -252,6 +252,16 @@ namespace DSAProject.Classes.Charakter
 
             return pa;
         }
+        public int GetProbeValue(AbstractTalentLanguage talent)
+        {
+            if (talent == null) return 0;
+            var value = 0;
+            foreach (var item in talent.AttributList)
+            {
+                value += charakter.Attribute.GetAttributMAXValue(item);
+            }
+            return value;
+        }
         /// <summary>
         /// Sollte auf dauer Überarbeitet und entfernt werden
         /// </summary>
@@ -291,14 +301,7 @@ namespace DSAProject.Classes.Charakter
             else if (typeof(AbstractTalentLanguage).IsAssignableFrom(talentType))
             {
                 var innerTalent = (AbstractTalentLanguage)talent;
-                var value = 0;
-                foreach (var item in innerTalent.Attributs)
-                {
-                    value = value + charakter.Attribute.GetAttributMAXValue(item);
-                }
-
-                //probe = (value + bonusTaW).ToString();
-                probe = (value).ToString(Helper.CultureInfo);
+                probe = (GetProbeValue(innerTalent).ToString(Helper.CultureInfo));
             }
             else
             {

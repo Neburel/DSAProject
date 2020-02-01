@@ -146,7 +146,7 @@
                 </Grid>
             </StackPanel>
         </controls:Loading>
-        <Grid x:Name="XAML_TitleRow" Grid.Row="0"></Grid>
+        <utilpages:AttributHeader Grid.Row="0"></utilpages:AttributHeader>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>

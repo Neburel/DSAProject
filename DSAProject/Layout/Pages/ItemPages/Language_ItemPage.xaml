@@ -25,13 +25,13 @@
         </Grid.ColumnDefinitions>
 
         <Border BorderBrush="LightSlateGray" Grid.Column="0" BorderThickness="1" Visibility="{x:Bind ViewModel.LanguageTalentBorderVisible}">
-            <TextBlock TextWrapping="Wrap" Text="{x:Bind ViewModel.LanguageTalent.Name }" TextAlignment="Center" HorizontalTextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            <TextBlock TextWrapping="Wrap" Text="{x:Bind ViewModel.SpeakingTalent.Name }" TextAlignment="Center" HorizontalTextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         </Border>
         <Border BorderBrush="LightSlateGray" Grid.Column="1" BorderThickness="1" Visibility="{x:Bind ViewModel.LanguageTalentBorderVisible}">
             <CheckBox Margin="14, 0,0,0" IsChecked="{x:Bind ViewModel.LanguageM }" Checked="CheckBox_Checked"/>
         </Border>
         <Border BorderBrush="LightSlateGray" Grid.Column="2" BorderThickness="1" Visibility="{x:Bind ViewModel.LanguageTalentBorderVisible}">
-            <TextBlock TextWrapping="Wrap" Text="{x:Bind ViewModel.LanguageTalent.BE, Mode=TwoWay}" TextAlignment="Center" HorizontalTextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            <TextBlock TextWrapping="Wrap" Text="{x:Bind ViewModel.SpeakingTalent.BE, Mode=TwoWay}" TextAlignment="Center" HorizontalTextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         </Border>
         <utilpages:TaWItem Grid.Column="3" TAW="{x:Bind ViewModel.LanguageTAW, Mode=TwoWay}" Visibility="{x:Bind ViewModel.LanguageTalentBorderVisible}"></utilpages:TaWItem>
         <Border BorderBrush="LightSlateGray" Grid.Column="4" BorderThickness="1" Visibility="{x:Bind ViewModel.LanguageTalentBorderVisible}">

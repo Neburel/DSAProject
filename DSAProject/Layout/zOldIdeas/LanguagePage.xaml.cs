@@ -21,7 +21,7 @@ namespace DSAProject.Layout.Pages.MainPages
         {
             this.InitializeComponent();
 
-            foreach (var family in Game.LanguageFamilies)
+            foreach (var family in Game.LanguageFamilyList)
             {
                 XAML_Grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(0, GridUnitType.Auto) });
 

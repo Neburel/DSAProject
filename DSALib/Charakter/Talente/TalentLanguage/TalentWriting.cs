@@ -7,7 +7,7 @@ namespace DSALib.Charakter.Talente.TalentLanguage
     {
         public TalentWriting(Guid id) : base(id) 
         {
-            Attributs = new System.Collections.Generic.List<DSALib.CharakterAttribut>
+            AttributList = new System.Collections.Generic.List<DSALib.CharakterAttribut>
             {
                 DSALib.CharakterAttribut.Klugheit,
                 DSALib.CharakterAttribut.Klugheit,

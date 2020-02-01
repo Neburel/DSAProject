@@ -71,7 +71,7 @@ namespace DSAProject.Classes.Game
         public static string CharakterSaveFolder { get; } = Path.Combine("Save", "Data");
         public static string CurrentYearDSA { get; } = "? nach Bosporos Fall";
         public static List<ITalent> TalentList { get; private set; } = new List<ITalent>();
-        public static List<LanguageFamily> LanguageFamilies = new List<LanguageFamily>();
+        public static List<LanguageFamily> LanguageFamilyList = new List<LanguageFamily>();
         #endregion
         #region Funktion
         public static void RequestNav(EventNavRequest nav)
@@ -143,7 +143,7 @@ namespace DSAProject.Classes.Game
             var jSON_talentAssests = JSONTalentSaveFile.DeSerializeJson(jstringAssests, out string serrorAssest);
 
             TalentList = TalentHelper.LoadTalent(jSON_talentAssests.Talente);
-            LanguageFamilies = TalentHelper.LoadLanguageFamily(jSON_talentAssests.Families, TalentList);
+            LanguageFamilyList = TalentHelper.LoadLanguageFamily(jSON_talentAssests.Families, TalentList);
         }
         public static Guid GenerateNextCharakterGUID()
         {

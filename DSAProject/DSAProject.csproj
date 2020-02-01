@@ -117,9 +117,6 @@
     <Compile Include="Layout\Pages\BasePages\AdventurePointPage.xaml.cs">
       <DependentUpon>AdventurePointPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Layout\Pages\MainPages\LanguageFamilyPage.xaml.cs">
-      <DependentUpon>LanguageFamilyPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Layout\Pages\MainPages\LanguagePage2.xaml.cs">
       <DependentUpon>LanguagePage2.xaml</DependentUpon>
     </Compile>
@@ -138,13 +135,16 @@
     <Compile Include="Layout\Pages\ItemPages\Language_ItemPage.xaml.cs">
       <DependentUpon>Language_ItemPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Layout\Pages\utilPages\AttributHeader.xaml.cs">
+      <DependentUpon>AttributHeader.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Layout\Pages\utilPages\PlusButton.xaml.cs">
       <DependentUpon>PlusButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\Pages\ItemPages\TraitTalentBonusSelectionPage.xaml.cs">
       <DependentUpon>TraitTalentBonusSelectionPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Layout\Pages\MainPages\LanguagePage.xaml.cs">
+    <Compile Include="Layout\zOldIdeas\LanguagePage.xaml.cs">
       <DependentUpon>LanguagePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\Pages\ToolPages\CreateCharakter.xaml.cs">
@@ -195,7 +195,7 @@
     </Compile>
     <Compile Include="Layout\ViewModels\CharakterCreationViewModel.cs" />
     <Compile Include="Layout\ViewModels\CreateTalentViewModel.cs" />
-    <Compile Include="Layout\ViewModels\Talent_ItemPageViewModel.cs" />
+    <Compile Include="Layout\zOldIdeas\Talent_ItemPageViewModel.cs" />
     <Compile Include="Layout\ViewModels\TalentViewModel.cs" />
     <Compile Include="Layout\ViewModels\TraitViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -243,10 +243,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Layout\Pages\MainPages\LanguageFamilyPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Layout\Pages\MainPages\LanguagePage2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -271,6 +267,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Layout\Pages\utilPages\AttributHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Layout\Pages\utilPages\PlusButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -279,7 +279,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Layout\Pages\MainPages\LanguagePage.xaml">
+    <Page Include="Layout\zOldIdeas\LanguagePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

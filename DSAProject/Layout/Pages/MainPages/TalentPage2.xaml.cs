@@ -9,7 +9,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Core;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
@@ -28,22 +27,6 @@ namespace DSAProject.Layout.Pages.MainPages
         public TalentPage2()
         {
             this.InitializeComponent();
-
-            int counter = 0;
-            foreach (var item in Game.Charakter.Attribute.UsedAttributs)
-            {
-                var textBloc = new TextBlock();
-                var attribut = DSALib.Utils.Helper.GetShort(item);
-                var value = Game.Charakter.Attribute.GetAttributMAXValue(item);
-                textBloc.Text = attribut + " " + value;
-                textBloc.HorizontalAlignment = HorizontalAlignment.Center;
-                textBloc.VerticalAlignment = VerticalAlignment.Center;
-
-                XAML_TitleRow.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                XAML_TitleRow.Children.Add(textBloc);
-                Grid.SetColumn(textBloc, counter);
-                counter++;
-            }
         }
         public void SetTalentType(Type type)
         {
@@ -107,8 +90,6 @@ namespace DSAProject.Layout.Pages.MainPages
         private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             var newList = talentList.Where(x => x.Talent.Name.ToLower().Contains(sender.Text.ToLower())).ToList();
-
-
 
             viewModel.TalentList.Clear();
             foreach(var item in newList)
