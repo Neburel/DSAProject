@@ -195,7 +195,6 @@ namespace DSAProject.Layout.MessageDialoge
         {
             Add = true;
         }
-
         private void XAML_CheckedRemove_Checked(object sender, RoutedEventArgs e)
         {
             Add = false;

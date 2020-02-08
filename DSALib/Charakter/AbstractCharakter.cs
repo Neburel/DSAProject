@@ -30,6 +30,7 @@ namespace DSAProject.Classes.Charakter
         public CharakterDescription Descriptions { get; private set; }
         public CharakterTraits Traits { get; private set; }
         public CharakterOther Other { get; private set; }
+        public Money Money { get; private set; }
         #endregion
         public AbstractCharakter(Guid id)
         {
@@ -40,13 +41,14 @@ namespace DSAProject.Classes.Charakter
         private void CreateNew(Guid id)
         {
             ID = id;
-            Traits = new CharakterTraits();
-            Talente = new CharakterTalente(this);
-            Descriptions = new CharakterDescription();
-            Other = new CharakterOther();
-            Attribute = CreateAttribute();
-            Resources = CreateResources();
-            Values = CreateValues();
+            Money           = new Money();
+            Traits          = new CharakterTraits();
+            Talente         = new CharakterTalente(this);
+            Descriptions    = new CharakterDescription();
+            Other           = new CharakterOther();
+            Attribute       = CreateAttribute();
+            Resources       = CreateResources();
+            Values          = CreateValues();
 
             if (Attribute == null)
             {
@@ -235,6 +237,9 @@ namespace DSAProject.Classes.Charakter
                 charakter.Traits.Add(jTrait);
             }
             #endregion
+            #region Money
+            charakter.Money = new JSONMoney(Money);
+            #endregion
             #region Anderes Laden
             charakter.AktAP = Other.APEarned;
             charakter.InvestAP = Other.APInvested;
@@ -390,6 +395,19 @@ namespace DSAProject.Classes.Charakter
                     DescriptionTitle = item.DescriptionTitle
                 });
             }
+            #endregion
+            #region Money
+            #region Money
+            if(jsonCharakter.Money != null)
+            {
+                var money = jsonCharakter.Money;
+                Money.Bank = money.Bank;
+                Money.D = money.D;
+                Money.H = money.H;
+                Money.K = money.K;
+                Money.S = money.S;
+            }
+            #endregion
             #endregion
             #region Anderes Laden
             Other.APEarned = jsonCharakter.AktAP;

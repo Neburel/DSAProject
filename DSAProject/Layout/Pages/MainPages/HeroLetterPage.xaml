@@ -15,6 +15,7 @@
         </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -26,14 +27,24 @@
             <views:ChracterDescriptionView Grid.Row="0" VerticalAlignment="Top" Margin="0,0,0,0" HorizontalAlignment="Stretch"/>
         </Border>
 
-        <StackPanel Grid.Row="1">
-            <StackPanel Orientation="Horizontal" Spacing="10">
-                <views:AttributPage TextColor="Black"/>
-                <views:AttributPage Mode="ValueStandart" VerticalAlignment="Top" TextColor="Black"/>
-                <views:AttributPage Mode="ResourceStandart" VerticalAlignment="Top" TextColor="Black"/>
-                <views2:AdventurePointPage Margin="0,12,0,0" VerticalAlignment="Top"></views2:AdventurePointPage>
-            </StackPanel>
-        </StackPanel>
+        <Grid Grid.Row="1" ColumnSpacing="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <views:AttributPage Grid.Column="0" Grid.RowSpan="2" TextColor="Black"/>
+            <views:AttributPage Grid.Column="1" Grid.RowSpan="2" Mode="ValueStandart" VerticalAlignment="Top" TextColor="Black"/>
+            <views:AttributPage Grid.Column="2" Grid.RowSpan="1" Mode="ResourceStandart" VerticalAlignment="Top" TextColor="Black"/>
+            <views2:AdventurePointPage Grid.Column="3" VerticalAlignment="Top"/>
+            <views2:MoneyPage Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"/>
+        </Grid>
         <Grid Grid.Row="2" ColumnSpacing="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>

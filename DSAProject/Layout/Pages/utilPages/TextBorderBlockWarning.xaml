@@ -15,7 +15,7 @@
             VerticalAlignment="Center" 
             HorizontalAlignment="Center">
             <Run Foreground="Red"   Text="{x:Bind viewModel.TextWarning, Mode=OneWay}"/>
-            <Run Foreground="White" Text="{x:Bind viewModel.Text, Mode=OneWay}"/>
+            <Run                    Text="{x:Bind viewModel.Text, Mode=OneWay}"/>
         </TextBlock>
     </Border>
 </Page>

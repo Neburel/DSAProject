@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DSALib.Charakter.Functions
 {
@@ -91,7 +89,7 @@ namespace DSALib.Charakter.Functions
         {
             get => APEarnedMax - APInvestedMax;
         }        
-
+        
         public CharakterOther()
         {
             ChangedEarnedAP += (sender, arg) =>

@@ -110,12 +110,18 @@
     <Compile Include="Game.cs" />
     <Compile Include="Layout\MessageDialoge\CreateTraitDialog.cs" />
     <Compile Include="Layout\MessageDialoge\DeleteCharakterDialog.cs" />
+    <Compile Include="Layout\MessageDialoge\AddMoneyDialog.xaml.cs">
+      <DependentUpon>AddMoneyDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Layout\MessageDialoge\InvestAPDialog.xaml.cs">
       <DependentUpon>InvestAPDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\MessageDialoge\SaveDialog.cs" />
     <Compile Include="Layout\Pages\BasePages\AdventurePointPage.xaml.cs">
       <DependentUpon>AdventurePointPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Layout\Pages\BasePages\MoneyPage.xaml.cs">
+      <DependentUpon>MoneyPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\Pages\MainPages\LanguagePage2.xaml.cs">
       <DependentUpon>LanguagePage2.xaml</DependentUpon>
@@ -132,7 +138,7 @@
     <Compile Include="Layout\Pages\MainPages\InfoPage.xaml.cs">
       <DependentUpon>InfoPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Layout\Pages\ItemPages\Language_ItemPage.xaml.cs">
+    <Compile Include="Layout\zOldIdeas\Language_ItemPage.xaml.cs">
       <DependentUpon>Language_ItemPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\Pages\utilPages\AttributHeader.xaml.cs">
@@ -235,11 +241,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Layout\MessageDialoge\AddMoneyDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Layout\MessageDialoge\InvestAPDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Layout\Pages\BasePages\AdventurePointPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Layout\Pages\BasePages\MoneyPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -263,7 +277,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Layout\Pages\ItemPages\Language_ItemPage.xaml">
+    <Page Include="Layout\zOldIdeas\Language_ItemPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

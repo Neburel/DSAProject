@@ -14,7 +14,8 @@ namespace DSAProject.Layout.Pages.utilPages
         private TextBorderBlockViewModel viewModel = new TextBorderBlockViewModel();
         #endregion
         #region Dependency
-        public static readonly DependencyProperty TextProperty      = DependencyProperty.Register(nameof(Text), typeof(string), typeof(TextBorderBlock), new PropertyMetadata(null, new PropertyChangedCallback(OnTextValueChanged)));
+        public static readonly DependencyProperty TextProperty          = DependencyProperty.Register(nameof(Text), typeof(string), typeof(TextBorderBlock), new PropertyMetadata(null, new PropertyChangedCallback(OnTextValueChanged)));
+        public static readonly DependencyProperty TextAlignmentProperty = DependencyProperty.Register(nameof(TextAlignment), typeof(TextAlignment), typeof(TextBorderBlock), new PropertyMetadata(null, new PropertyChangedCallback(OnTextAlignmentValueChanged)));
         #endregion
         #region Dependency Properties
         public string Text
@@ -23,6 +24,14 @@ namespace DSAProject.Layout.Pages.utilPages
             set
             {
                 SetValue(TextProperty, value);
+            }
+        }
+        public TextAlignment TextAlignment
+        {
+            get => (TextAlignment)GetValue(TextAlignmentProperty);
+            set
+            {
+                SetValue(TextAlignmentProperty, value);
             }
         }
         #endregion
@@ -34,6 +43,13 @@ namespace DSAProject.Layout.Pages.utilPages
                 ((TextBorderBlock)d).viewModel.Text = (string)e.NewValue;
             }
         }
+        private static void OnTextAlignmentValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue != e.OldValue)
+            {
+                ((TextBorderBlock)d).viewModel.TextAlignment = (TextAlignment)e.NewValue;
+            }
+        }
         #endregion
         public TextBorderBlock()
         {
@@ -41,18 +57,15 @@ namespace DSAProject.Layout.Pages.utilPages
         }
         private class TextBorderBlockViewModel : AbstractPropertyChanged
         {
-            private string text = string.Empty;
             public string Text
             {
-                get => text;
-                set
-                {
-                    if(text != value)
-                    {
-                        text = value;
-                        OnPropertyChanged(nameof(Text));
-                    }
-                }
+                get => Get<string>();
+                set => Set(value);
+            }
+            public TextAlignment TextAlignment
+            {
+                get => Get<TextAlignment>();
+                set => Set(value);
             }
         }
     }

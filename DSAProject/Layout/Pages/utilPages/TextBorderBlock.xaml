@@ -7,14 +7,19 @@
     mc:Ignorable="d"
     Background="Transparent">
 
-    <Border BorderBrush="Gray" BorderThickness="1, 1, 1, 1">
+    <Border 
+        BorderBrush="Gray"
+        BorderThickness="1, 1, 1, 1" 
+        Padding="2, 0, 2, 0"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch">
+        
         <TextBlock
-            Foreground="White" 
-            TextAlignment="Center"
-            HorizontalTextAlignment="Center"
-            VerticalAlignment="Center" 
             TextWrapping="Wrap" 
-            HorizontalAlignment="Center" 
+            TextAlignment="{x:Bind viewModel.TextAlignment, Mode=TwoWay}"
+            VerticalAlignment="Center" 
+            HorizontalAlignment="Stretch" 
+            HorizontalTextAlignment="Center"
             Text="{x:Bind viewModel.Text, Mode=TwoWay}"/>
     </Border>
 </Page>

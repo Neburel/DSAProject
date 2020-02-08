@@ -1,0 +1,88 @@
+﻿<ContentDialog
+    x:Class="DSAProject.Layout.MessageDialoge.AddMoneyDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="{x:Bind viewModel.Title}"
+    PrimaryButtonText="Abbrechen"
+    SecondaryButtonText="Bestätigen"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+    <ContentDialog.Resources>
+        <Style x:Name="BaseTextBlockStyle" TargetType="TextBlock">
+            <Style.Setters>
+                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            </Style.Setters>
+        </Style>
+        <Style x:Name="SideTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+        <Style x:Name="BaseTextBoxStyle" TargetType="TextBox">
+            <Style.Setters>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="TextAlignment" Value="Center"/>
+            </Style.Setters>
+        </Style>
+    </ContentDialog.Resources>
+    
+    
+    <Grid RowSpacing="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="Aktuell"  Style="{StaticResource BaseTextBlockStyle}"></TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="2" Text="Plus"     Style="{StaticResource BaseTextBlockStyle}"></TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="3" Text="Minus"    Style="{StaticResource BaseTextBlockStyle}"></TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="4" Text="Ergebnis" Style="{StaticResource BaseTextBlockStyle}"></TextBlock>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="K"        Style="{StaticResource SideTextBlockStyle}"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="H"        Style="{StaticResource SideTextBlockStyle}"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="S"        Style="{StaticResource SideTextBlockStyle}"/>
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="D"        Style="{StaticResource SideTextBlockStyle}"/>
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Bank"     Style="{StaticResource SideTextBlockStyle}"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind viewModel.KCurrent, Mode=TwoWay}"  Style="{StaticResource BaseTextBlockStyle}"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" Text="{x:Bind viewModel.HCurrent, Mode=TwoWay}"  Style="{StaticResource BaseTextBlockStyle}"/>
+        <TextBlock Grid.Row="3" Grid.Column="1" Text="{x:Bind viewModel.SCurrent, Mode=TwoWay}"  Style="{StaticResource BaseTextBlockStyle}"/>
+        <TextBlock Grid.Row="4" Grid.Column="1" Text="{x:Bind viewModel.DCurrent, Mode=TwoWay}"  Style="{StaticResource BaseTextBlockStyle}"/>
+        <TextBlock Grid.Row="5" Grid.Column="1" Text="{x:Bind viewModel.BankCurrent, Mode=TwoWay}" Style="{StaticResource BaseTextBlockStyle}"/>
+
+        <TextBox Grid.Row="1" Grid.Column="2" Text="{x:Bind viewModel.KPlus, Mode=TwoWay}"      TextChanging="TextBox_TextChanging" Style="{StaticResource BaseTextBoxStyle}"/>
+        <TextBox Grid.Row="2" Grid.Column="2" Text="{x:Bind viewModel.HPlus, Mode=TwoWay}"      Style="{StaticResource BaseTextBoxStyle}"/>
+        <TextBox Grid.Row="3" Grid.Column="2" Text="{x:Bind viewModel.SPlus, Mode=TwoWay}"      Style="{StaticResource BaseTextBoxStyle}"/>
+        <TextBox Grid.Row="4" Grid.Column="2" Text="{x:Bind viewModel.DPlus, Mode=TwoWay}"      Style="{StaticResource BaseTextBoxStyle}"/>
+        <TextBox Grid.Row="5" Grid.Column="2" Text="{x:Bind viewModel.BankPlus, Mode=TwoWay}"   Style="{StaticResource BaseTextBoxStyle}"/>
+
+        <TextBox Grid.Row="1" Grid.Column="3" Text="{x:Bind viewModel.KMinus, Mode=TwoWay}" TextChanging="TextBox_TextChanging" Style="{StaticResource BaseTextBoxStyle}"/>
+        <TextBox Grid.Row="2" Grid.Column="3" Text="{x:Bind viewModel.HMinus, Mode=TwoWay}" TextChanging="TextBox_TextChanging" Style="{StaticResource BaseTextBoxStyle}"/>
+        <TextBox Grid.Row="3" Grid.Column="3" Text="{x:Bind viewModel.SMinus, Mode=TwoWay}" TextChanging="TextBox_TextChanging" Style="{StaticResource BaseTextBoxStyle}"/>
+        <TextBox Grid.Row="4" Grid.Column="3" Text="{x:Bind viewModel.DMinus, Mode=TwoWay}" TextChanging="TextBox_TextChanging" Style="{StaticResource BaseTextBoxStyle}"/>
+        <TextBox Grid.Row="5" Grid.Column="3" Text="{x:Bind viewModel.BankMinus, Mode=TwoWay}" TextChanging="TextBox_TextChanging" Style="{StaticResource BaseTextBoxStyle}"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="5" Text="{x:Bind viewModel.KResukt, Mode=TwoWay}" HorizontalAlignment="Center"/>
+        <TextBlock Grid.Row="2" Grid.Column="5" Text="{x:Bind viewModel.HResult, Mode=TwoWay}" HorizontalAlignment="Center"/>
+        <TextBlock Grid.Row="3" Grid.Column="5" Text="{x:Bind viewModel.SResult, Mode=TwoWay}" HorizontalAlignment="Center"/>
+        <TextBlock Grid.Row="4" Grid.Column="5" Text="{x:Bind viewModel.DResult, Mode=TwoWay}" HorizontalAlignment="Center"/>
+        <TextBlock Grid.Row="5" Grid.Column="5" Text="{x:Bind viewModel.BankResult, Mode=TwoWay}" HorizontalAlignment="Center"/>
+
+
+    </Grid>
+</ContentDialog>

@@ -1,9 +1,7 @@
 ﻿using DSALib.Charakter.Talente.TalentLanguage;
-using DSAProject.Classes.Charakter.Talente;
 using DSAProject.Classes.Charakter.Talente.TalentLanguage;
 using DSAProject.Classes.Game;
 using DSAProject.Layout.ViewModels;
-using DSAProject.util;
 using Windows.UI.Xaml.Controls;
 
 // Die Elementvorlage "Leere Seite" wird unter https://go.microsoft.com/fwlink/?LinkId=234238 dokumentiert.
