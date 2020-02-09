@@ -58,7 +58,7 @@ namespace DSAProject.Classes.Game
                 }
                 else
                 {
-                    charakter = new CharakterDSA(GenerateNextCharakterGUID());
+                    Charakter = new CharakterDSA(GenerateNextCharakterGUID(), TalentList);
                     return charakter;
                 }
             }

@@ -32,18 +32,18 @@ namespace DSAProject.Classes.Charakter
         public CharakterOther Other { get; private set; }
         public Money Money { get; private set; }
         #endregion
-        public AbstractCharakter(Guid id)
+        public AbstractCharakter(Guid id, List<ITalent> talentListe)
         {
-            CreateNew(id);
+            CreateNew(id, talentListe);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Literale nicht als lokalisierte Parameter übergeben", Justification = "<Ausstehend>")]
-        private void CreateNew(Guid id)
+        private void CreateNew(Guid id, List<ITalent> talentListe)
         {
             ID = id;
             Money           = new Money();
             Traits          = new CharakterTraits();
-            Talente         = new CharakterTalente(this);
+            Talente         = new CharakterTalente(this, talentListe);
             Descriptions    = new CharakterDescription();
             Other           = new CharakterOther();
             Attribute       = CreateAttribute();
@@ -246,14 +246,14 @@ namespace DSAProject.Classes.Charakter
             #endregion
             return charakter;
         }
-        public void Load(JSONCharakter jsonCharakter, List<ITalent> talents)
+        public void Load(JSONCharakter jsonCharakter, List<ITalent> talentListe)
         {
             #region Nullprüfungen
             if (jsonCharakter == null) throw new ArgumentNullException(nameof(jsonCharakter));
-            else if (talents == null) throw new ArgumentNullException(nameof(talents));
+            else if (talentListe == null) throw new ArgumentNullException(nameof(talentListe));
             else if (jsonCharakter.MotherLanguages == null) jsonCharakter.MotherLanguages = new Dictionary<Guid, bool>();
             #endregion
-            CreateNew(jsonCharakter.ID);
+            CreateNew(jsonCharakter.ID, talentListe);
             Name = jsonCharakter.Name;
             #region Attribute Laden
             foreach (var item in jsonCharakter.AttributeBaseValue.Keys)
@@ -315,7 +315,7 @@ namespace DSAProject.Classes.Charakter
 
                     foreach (var innerItems in item.TawBonus)
                     {
-                        var talent = talents.Where(x => x.ID == innerItems.Key).FirstOrDefault();
+                        var talent = talentListe.Where(x => x.ID == innerItems.Key).FirstOrDefault();
                         if (talent != null)
                         {
                             trait.SetTaWBonus(talent, innerItems.Value);
@@ -323,7 +323,7 @@ namespace DSAProject.Classes.Charakter
                     }
                     foreach (var innerItems in item.AtBonus)
                     {
-                        var talent = talents.Where(x => x.ID == innerItems.Key).FirstOrDefault();
+                        var talent = talentListe.Where(x => x.ID == innerItems.Key).FirstOrDefault();
                         if (talent != null && typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
                         {
                             trait.SetATBonus((AbstractTalentFighting)talent, innerItems.Value);
@@ -331,7 +331,7 @@ namespace DSAProject.Classes.Charakter
                     }
                     foreach (var innerItems in item.PaBonus)
                     {
-                        var talent = talents.Where(x => x.ID == innerItems.Key).FirstOrDefault();
+                        var talent = talentListe.Where(x => x.ID == innerItems.Key).FirstOrDefault();
                         if (talent != null && typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
                         {
                             trait.SetPABonus((AbstractTalentFighting)talent, innerItems.Value);
@@ -345,7 +345,7 @@ namespace DSAProject.Classes.Charakter
             #region Talente Laden
             foreach (var item in jsonCharakter.TalentTAW)
             {
-                var talent = talents.Where(x => x.ID == item.Key).FirstOrDefault();
+                var talent = talentListe.Where(x => x.ID == item.Key).FirstOrDefault();
                 if (talent != null)
                 {
                     Talente.SetTAW(talent, item.Value);
@@ -357,7 +357,7 @@ namespace DSAProject.Classes.Charakter
             }
             foreach (var item in jsonCharakter.TalentAT)
             {
-                var talent = talents.Where(x => x.ID == item.Key).FirstOrDefault();
+                var talent = talentListe.Where(x => x.ID == item.Key).FirstOrDefault();
                 if (talent != null && typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
                 {
                     Talente.SetAT((AbstractTalentFighting)talent, item.Value);
@@ -369,7 +369,7 @@ namespace DSAProject.Classes.Charakter
             }
             foreach (var item in jsonCharakter.TalentPA)
             {
-                var talent = talents.Where(x => x.ID == item.Key).FirstOrDefault();
+                var talent = talentListe.Where(x => x.ID == item.Key).FirstOrDefault();
                 if (talent != null && typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
                 {
                     Talente.SetPA((AbstractTalentFighting)talent, item.Value);
@@ -381,7 +381,7 @@ namespace DSAProject.Classes.Charakter
             }
             foreach (var item in jsonCharakter.MotherLanguages)
             {
-                var talent = talents.Where(x => x.ID == item.Key).FirstOrDefault();
+                var talent = talentListe.Where(x => x.ID == item.Key).FirstOrDefault();
                 Talente.SetMother((TalentSpeaking)talent, item.Value);
             }
             #endregion

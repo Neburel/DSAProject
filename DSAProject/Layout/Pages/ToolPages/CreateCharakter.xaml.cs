@@ -209,7 +209,7 @@ namespace DSAProject.Layout.Pages
         #region Buttons
         private void XAML_ButtonCreate_Click(object sender, RoutedEventArgs e)
         {
-            Game.Charakter = new CharakterDSA(Game.GenerateNextCharakterGUID());
+            Game.Charakter = new CharakterDSA(Game.GenerateNextCharakterGUID(), Game.TalentList);
             #region setDSALayout
             ViewModel.CurrentDate.DescriptionText = Game.CurrentYearDSA;
             ViewModel.Culture.DescriptionTitle = DSA_CultureName;

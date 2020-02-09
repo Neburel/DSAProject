@@ -202,6 +202,7 @@ namespace DSAProject.Layout.ViewModels
 
                     if (maxValue != value)
                     {
+                        #region Funktion beim Ändern von TaW über die Seite
                         var aktValue = Game.Charakter.Talente.GetTAW(talent);
                         var modValue = Game.Charakter.Talente.GetModTaW(talent);
                         var changeValue = value - maxValue;
@@ -213,14 +214,12 @@ namespace DSAProject.Layout.ViewModels
                         {
                             TaW = maxValue;
                         }
-                        TaWToolTipText = newValue + "(" + modValue + ")";
+                        SetTaWToolTipText(newValue, modValue);
+                        #endregion
                     }
                     else
                     {
-                        var aktValue = Game.Charakter.Talente.GetTAW(talent);
-                        var modValue = Game.Charakter.Talente.GetModTaW(talent);
-
-                        TaWToolTipText = aktValue + "(" + modValue + ")";
+                        SetTaWToolTipText();
                     }
 
                     ProbeValue = Game.Charakter.Talente.GetProbeString(talent, 0, 0);
@@ -302,6 +301,18 @@ namespace DSAProject.Layout.ViewModels
                     ProbeValue = Game.Charakter.Talente.GetProbeString(talent, 0, 0);
                 }
             };
+            Game.Charakter.Talente.TaWChanged += (sender, args) =>
+            {
+                if (args == Talent)
+                {
+                    var maxValue = Game.Charakter.Talente.GetMaxTaw(args);
+                    if(maxValue != TaW)
+                    {
+                        TaW = maxValue;
+                        SetTaWToolTipText();
+                    }
+                }
+            };
         }
         private string GetString(string newValue, string currentText, string secondControll = null)
         {
@@ -317,6 +328,17 @@ namespace DSAProject.Layout.ViewModels
             {
                 return currentText.Trim() + ", " + newValue.Trim();
             }
+        }
+        private void SetTaWToolTipText()
+        {
+            int aktValue = Game.Charakter.Talente.GetTAW(Talent);
+            int modValue = Game.Charakter.Talente.GetModTaW(Talent);
+
+            SetTaWToolTipText(aktValue, modValue);
+        }
+        private void SetTaWToolTipText(int aktValue, int modValue)
+        {
+            TaWToolTipText = aktValue + "(" + modValue + ")";
         }
     }
     public class DiceChanger : AbstractPropertyChanged

@@ -39,16 +39,6 @@ namespace DSAProject.Layout.Pages.MainPages
                 GenerateTalentListAsync(talentList);
             }).Start();
         }
-        public void SetTalentListAsync(List<ITalent> list)
-        {
-            viewModel.IsLoading = true;
-            viewModel.DiceChanger = new DiceChanger();
-
-            new Task(() =>
-            {
-                GenerateTalentListAsync(list);
-            }).Start();
-        }
         private async void GenerateTalentListAsync(List<ITalent> list)
         {
             if (list == null || list.Count == 0) return;

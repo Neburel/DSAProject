@@ -63,6 +63,6 @@ namespace DSAProject.Classes.Charakter
             return new CharakterResources(list);
         }
 
-        public CharakterDSA(Guid id) : base(id) { }
+        public CharakterDSA(Guid id, List<ITalent> talentListe) : base(id, talentListe) { }
     }
 }

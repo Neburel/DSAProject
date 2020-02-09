@@ -1,6 +1,7 @@
 ﻿using DSALib;
 using DSALib.Utils;
 using DSAProject.Classes.Charakter.Talente;
+using DSAProject.Classes.Charakter.Talente.TalentDeductions;
 using DSAProject.Classes.Charakter.Talente.TalentFighting;
 using DSAProject.Classes.Charakter.Talente.TalentLanguage;
 using DSAProject.Classes.Charakter.Values.Attribute;
@@ -14,19 +15,91 @@ namespace DSAProject.Classes.Charakter
 {
     public class CharakterTalente
     {
+        #region Events#
         public event EventHandler<ITalent> TaWChanged;
         public event EventHandler<ITalent> ATChanged;
         public event EventHandler<ITalent> PAChanged;
-
-        private ICharakter charakter;
-
-        internal Dictionary<ITalent, int> TAWDictionary = new Dictionary<ITalent, int>();
-        internal Dictionary<AbstractTalentFighting, int> ATDictionary   = new Dictionary<AbstractTalentFighting, int>();
-        internal Dictionary<AbstractTalentFighting, int> PADictionary   = new Dictionary<AbstractTalentFighting, int>();
-        internal Dictionary<TalentSpeaking, bool> MotherDicionary       = new Dictionary<TalentSpeaking, bool>();
-        public CharakterTalente(ICharakter charakter)
+        #endregion
+        #region Variables
+        private readonly ICharakter charakter;
+        #endregion
+        #region Properties
+        internal Dictionary<ITalent, int> TAWDictionary { get; set; } = new Dictionary<ITalent, int>();
+        internal Dictionary<AbstractTalentFighting, int> ATDictionary { get; set; } = new Dictionary<AbstractTalentFighting, int>();
+        internal Dictionary<AbstractTalentFighting, int> PADictionary { get; set; } = new Dictionary<AbstractTalentFighting, int>();
+        internal Dictionary<TalentSpeaking, bool> MotherDicionary { get; set; } = new Dictionary<TalentSpeaking, bool>();
+        #endregion
+        #region Variables
+        private List<TalentDeductionTalent> aktivDeductionList  = new List<TalentDeductionTalent>();
+        private Dictionary<ITalent, int> deductionDictionary    = new Dictionary<ITalent, int>();
+        #endregion
+        /// <summary>
+        /// Die TalentListe wird für die Ableitungen benötigt
+        /// Ansonsten kann sie auch mit allen Talenten umgehen die anderweitig gesetzt werden
+        /// </summary>
+        /// <param name="charakter"></param>
+        /// <param name="talentList"></param>
+        public CharakterTalente(ICharakter charakter, List<ITalent> talentList)
         {
-            this.charakter = charakter;
+            Dictionary<ITalent, List<ITalent>> deductionListDictionary  = new Dictionary<ITalent, List<ITalent>>();
+
+            this.charakter              = charakter;
+            var talentWithDeductionList = talentList.Where(x => x.Deductions != null && x.Deductions.Where(y => y.GetType() == typeof(TalentDeductionTalent)).Any()).ToList();
+
+            #region Erstelle ein zuordnungs Dicionary von einem Talent zu einer Liste von Talenten die einen wert bekommen
+            foreach (var talent in talentWithDeductionList)
+            {
+                var talentDeductionList = talent.Deductions.Where(x => x.GetType() == typeof(TalentDeductionTalent)).ToList();
+
+                foreach (TalentDeductionTalent talentDeduction in talentDeductionList)
+                {
+                    var innertalent = talentDeduction.Talent;
+                    if (deductionListDictionary.TryGetValue(innertalent, out List<ITalent> deductioninnerList))
+                    {
+                        deductioninnerList.Add(talent);
+                    }
+                    else
+                    {
+                        var newList = new List<ITalent>
+                        {
+                            talent
+                        };
+                        deductionListDictionary.Add(innertalent, newList);
+                    }
+                }
+            }
+            #endregion
+            TaWChanged += (sender, args) =>
+            {
+                var maxTaw = GetMaxTaw(args);
+                if (!deductionListDictionary.TryGetValue(args, out List<ITalent> list)) return;
+
+                foreach (var itemTalent in list)
+                {
+                    var talentDeductionList = itemTalent.Deductions.Where(x => x.GetType() == typeof(TalentDeductionTalent) && ((TalentDeductionTalent)x).Talent == args).ToList();
+                    foreach(TalentDeductionTalent deduction in talentDeductionList)
+                    {
+                        var modValue = 0;
+
+                        if(deduction.Value == maxTaw && !aktivDeductionList.Contains(deduction))
+                        {
+                            modValue = 1;
+                            aktivDeductionList.Add(deduction);
+                        }
+                        else if(deduction.Value > maxTaw && aktivDeductionList.Contains(deduction))
+                        {
+                            modValue = -1;
+                            aktivDeductionList.Remove(deduction);
+                        }
+                        if(modValue != 0)
+                        {
+                            var currentValue = GetDeductionValue(itemTalent);
+                            SetDeductionValue(itemTalent, currentValue + modValue);
+                            TaWChanged(this, itemTalent);
+                        }
+                    }
+                }
+            };
         }
 
         public void SetTAW(ITalent talent, int taw)
@@ -126,6 +199,14 @@ namespace DSAProject.Classes.Charakter
                 MotherDicionary.Add(talent, value);
             }
         }
+        private void SetDeductionValue(ITalent talent, int value)
+        {
+            if (deductionDictionary.ContainsKey(talent))
+            {
+                deductionDictionary.Remove(talent);
+            }
+            deductionDictionary.Add(talent, value);
+        }
 
         /// <summary>
         /// Ruft die manuell gesetzen TaW ab
@@ -156,7 +237,10 @@ namespace DSAProject.Classes.Charakter
         /// <returns></returns>
         public int GetModTaW(ITalent talent)
         {
-            return charakter.Traits.GetTawBonus(talent);
+            var traitValue = charakter.Traits.GetTawBonus(talent);
+            deductionDictionary.TryGetValue(talent, out int deductionValue);
+
+            return traitValue + deductionValue;
         }
         /// <summary>
         /// Ruft die Summe von Manuellen und Bonus TaW ab
@@ -213,6 +297,11 @@ namespace DSAProject.Classes.Charakter
             var bonusTaw = GetModPA(talent);
 
             return taw + bonusTaw;
+        }
+        private int GetDeductionValue(ITalent talent)
+        {
+            deductionDictionary.TryGetValue(talent, out int value);
+            return value;
         }
         public bool GetMother(TalentSpeaking talent)
         {
@@ -309,21 +398,6 @@ namespace DSAProject.Classes.Charakter
             }
 
             return probe;
-        }
-        private string GetString(string ret, string newValue)
-        {
-            string retu;
-            if (string.IsNullOrEmpty(ret))
-            {
-                retu = newValue;
-            }
-            else
-            {
-                retu = ret + ", " + newValue;
-            }
-
-
-            return retu;
         }
     }
 }
