@@ -317,6 +317,7 @@ namespace DSAProject.Classes.Charakter
             {
                 value += charakter.Attribute.GetAttributMAXValue(item);
             }
+            value += GetMaxTaw(talent) / 5;
             return value;
         }
         public int GetATValue(AbstractTalentFighting talent)
@@ -349,6 +350,7 @@ namespace DSAProject.Classes.Charakter
             {
                 value += charakter.Attribute.GetAttributMAXValue(item);
             }
+            value += GetMaxTaw(talent);
             return value;
         }
         /// <summary>
