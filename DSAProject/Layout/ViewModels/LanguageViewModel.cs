@@ -107,8 +107,18 @@ namespace DSAProject.Layout.ViewModels
                     var speakingValue = Game.Charakter.Talente.GetProbeValue(SpeakingTalent) - value;
                     var writingVlaue = Game.Charakter.Talente.GetProbeValue(WritingTalent) - value;
 
-
-                    DiceResult = speakingValue.ToString() + "/" + writingVlaue.ToString();
+                    if(SpeakingTalent != null && WritingTalent != null)
+                    {
+                        DiceResult = speakingValue.ToString() + "/" + writingVlaue.ToString();
+                    }
+                    else if (SpeakingTalent == null && WritingTalent != null)
+                    {
+                        DiceResult = writingVlaue.ToString();
+                    }
+                    else if (SpeakingTalent != null && WritingTalent == null)
+                    {
+                        DiceResult = speakingValue.ToString();
+                    }
                 };
             }
             this.PropertyChanged += (sender, args) =>
