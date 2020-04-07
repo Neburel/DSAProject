@@ -62,7 +62,6 @@ namespace DSAProject.Classes.Charakter
             {
                 error = new DSAError { ErrorCode = ErrorCode.InvalidValue, Message = "Das Gewählte Attribut exestiert bei diesem Charakter nicht" };
             }
-
             return ret;
         }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Literale nicht als lokalisierte Parameter übergeben", Justification = "<Ausstehend>")]

@@ -53,9 +53,8 @@ namespace DSAProject.Classes.Charakter
             {
                 new AstralEnergy(Attribute),
                 new Endurance(Attribute),
-                new KarmaEnergyPlus(Attribute),
-                new KarmaEnergyMinus(Attribute),
                 new KarmaEnergy(Attribute),
+                new KarmaEnergyNeutral(Attribute),
                 new MagicResistance(Attribute),
                 new Vitality(Attribute),
             };

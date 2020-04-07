@@ -5,7 +5,7 @@ namespace DSALib.Charakter.Resources
 {
     class KarmaEnergy : AbstractAttributeResources
     {
-        public override string Name => "Karma Neutral";
+        public override string Name => "Karma";
         public KarmaEnergy(CharakterAttribute attribute) : base(attribute) { }
         internal override List<CharakterAttribut> attributeList => new List<CharakterAttribut>()
         {

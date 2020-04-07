@@ -86,8 +86,8 @@
                 <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="0" Text="{x:Bind LanguageFamilyName}"  Visibility="{x:Bind FamilyNameVisible}"             Style="{StaticResource PageHeaderText}" Grid.ColumnSpan="10"/>                
                 <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="0" Text="{x:Bind LanguageTalentName}"  Visibility="{x:Bind LanguageTalentBorderVisible}"   Style="{StaticResource PageHeaderText}"/>
 
-                <Border Grid.Column="1" BorderThickness="1" Visibility="{x:Bind LanguageTalentBorderVisible}" Style="{StaticResource PageHeaderText}" BorderBrush="Gray">
-                    <CheckBox Margin="14, 0,0,0" IsChecked="{x:Bind LanguageM, Mode=TwoWay}" Style="{StaticResource PageHeaderText}"/>
+                <Border Grid.Column="1" BorderThickness="1" Visibility="{x:Bind LanguageTalentBorderVisible}" BorderBrush="Gray">
+                    <CheckBox Margin="14, 0,0,0" IsChecked="{x:Bind LanguageM, Mode=TwoWay}"/>
                 </Border>
 
                 <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="2" Text="{x:Bind LanguageTalentBE}"    Visibility="{x:Bind LanguageTalentBorderVisible}"   Style="{StaticResource PageNormalMinorText}"/>

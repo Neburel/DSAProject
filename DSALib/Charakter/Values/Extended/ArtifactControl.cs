@@ -7,11 +7,14 @@ using System.Linq;
 
 namespace DSALib.Charakter.Values
 {
-    public class ArtifactControl : IValue
+    public class ArtifactControl : AbstractChangeHandlerValue
     {
+        public override event EventHandler ValueChanged;
         protected CharakterResources Res { get; private set; }
         protected CharakterAttribute Attribute { get; private set; }
 
+        private int value;
+        public override int Value { get => value; }
 
         public ArtifactControl(CharakterResources res, CharakterAttribute attribut)
         {
@@ -29,26 +32,21 @@ namespace DSALib.Charakter.Values
             {
                 ChangedValue();
             };
-            Value = (int)Math.Ceiling(Calculate());
+            value = (int)Math.Ceiling(Calculate());
         }
-        public string Name => DSALib.Resources.ArtifactControl;
-
         private void ChangedValue()
         {
             var oldValue = this.Value;
             var calculateV = this.Calculate();
-            Value = (int)global::System.Math.Ceiling(calculateV); ;
+            value = (int)global::System.Math.Ceiling(calculateV); ;
             if (this.Value != oldValue)
             {
                 ValueChanged?.Invoke(this, null);
             }
         }
+        public override string Name => DSALib.Resources.ArtifactControl;
+        public override string InfoText => "MR + IN";
 
-        //public event EventHandler ValueChanged;
-        public int Value { get; private set; }
-        public string InfoText => "IN + MR";
-
-        public event EventHandler ValueChanged;
 
         protected double Calculate()
         {

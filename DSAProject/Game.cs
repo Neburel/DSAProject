@@ -157,7 +157,7 @@ namespace DSAProject.Classes.Game
 
                 if (Guid.TryParse(stringguid, out Guid result))
                 {
-                    list.Add(Guid.Parse(stringguid));
+                    list.Add(result);
                 }
             }
 

@@ -122,7 +122,7 @@ namespace DSALib.Utils
             {
                 ret = "AU";
             }
-            else if (typeof(KarmaEnergy) == value.GetType())
+            else if (typeof(KarmaEnergyNeutral) == value.GetType())
             {
                 ret = "KE";
             }

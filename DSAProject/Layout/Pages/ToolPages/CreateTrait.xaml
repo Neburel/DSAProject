@@ -8,7 +8,7 @@
     xmlns:views1="using:DSAProject.Layout.Views"
     xmlns:itempages="using:DSAProject.Layout.Pages.ItemPages"
     mc:Ignorable="d"
-    Background="Transparent">
+    Background="Black">
 
     <Grid RowSpacing="0">
         <Grid.RowDefinitions>

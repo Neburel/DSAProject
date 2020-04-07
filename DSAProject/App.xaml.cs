@@ -4,6 +4,7 @@ using DSAProject.Classes;
 using DSAProject.Classes.Game;
 using DSAProject.Layout.Pages.MainPages;
 using DSAProject.Layout.Pages.NavigationPages;
+using DSAProject.Layout.Pages.utilPages;
 using DSAProject.util.ErrrorManagment;
 
 using System;
@@ -21,6 +22,7 @@ namespace DSAProject
     /// </summary>
     sealed partial class App : Application
     {
+        private Type startpage;
         /// <summary>
         /// Initialisiert das Singletonanwendungsobjekt. Dies ist die erste Zeile von erstelltem Code
         /// 
@@ -36,20 +38,39 @@ namespace DSAProject
 
             try
             {
+                startpage = typeof(GameNavPage);
+
                 Logger.ListenLibLogger();
                 Game.LoadTalente();
-
                 this.InitializeComponent();
+                this.UnhandledException += App_UnhandledException;   
             }
             catch (AbstractDSAException dsaEX)
             {
+                Logger.Log(LogLevel.ErrorLog, dsaEX.Message + " " + dsaEX.StackTrace);
                 throw new Exception("", dsaEX);
             }
             catch(Exception ex)
             {
+                Logger.Log(LogLevel.ErrorLog, ex.Message + " " + ex.StackTrace);
                 throw new Exception("", ex);
             }
             this.Suspending += OnSuspending;
+        }
+
+        private void App_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
+            Logger.Log(LogLevel.ErrorLog, sender.ToString() + " " + sender.GetType() + " " + e.Message + " " + e.Exception.Message + " " + e.Exception.StackTrace);
+            throw new NotImplementedException();
+        }
+
+        public static string GetAppVersion()
+        {
+            Package package = Package.Current;
+            PackageId packageId = package.Id;
+            PackageVersion version = packageId.Version;
+
+            return string.Format("{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
         }
 
         /// <summary>
@@ -86,7 +107,7 @@ namespace DSAProject
                     // und die neue Seite konfigurieren, indem die erforderlichen Informationen als Navigationsparameter
                     // übergeben werden
                     //rootFrame.Navigate(typeof(GamePage), e.Arguments);
-                    rootFrame.Navigate(typeof(GameNavPage), e.Arguments);
+                    rootFrame.Navigate(startpage, e.Arguments);
                     //rootFrame.Navigate(typeof(TalentPage2), e.Arguments);
                 }
                 // Sicherstellen, dass das aktuelle Fenster aktiv ist

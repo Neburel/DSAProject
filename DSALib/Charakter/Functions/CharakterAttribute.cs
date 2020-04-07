@@ -3,6 +3,7 @@ using DSALib.Exceptions;
 using DSALib.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace DSAProject.Classes.Charakter
@@ -125,6 +126,8 @@ namespace DSAProject.Classes.Charakter
         {
             var akt = GetAttributAKTValue(attribut);
             var mod = GetAttributMODValue(attribut);
+
+            Debug.WriteLine(attribut.ToString() + akt.ToString() + " " + mod.ToString());
             return akt + mod;
         }
         #endregion
