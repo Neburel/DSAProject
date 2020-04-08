@@ -480,7 +480,6 @@ namespace DSAProject.Classes
                     }
                     else if (excelRowType == ExcleRowType.ValidTalent)
                     {
-                        var k = excelTalent.Talent;
                         excelTalent.Title = currentTitle;
                         excelTalents.Add(excelTalent);
                     }
@@ -508,6 +507,7 @@ namespace DSAProject.Classes
                     {
                         name = excelTalent.Talent;
                     }
+
                     ITalent newTalent = null;
                     if (!string.IsNullOrEmpty(name))
                     {
@@ -522,7 +522,6 @@ namespace DSAProject.Classes
                                 nameExtension: nameExtension);
                         }
                     }
-
                     if (talentGroup.Key == nameof(TalentSpeaking))
                     {
                         TalentSpeaking talentLanguage = null;

@@ -67,7 +67,7 @@ namespace ConsoleApp1
             //Set Guid
             counter = 0;
             foreach (var item in exelTalente)
-            {     
+            {
                 var doppleTalent = jSON_talentLocal.Talente.Where(x => x.Name.Trim() == item.Name.Trim()).FirstOrDefault();
                 if (doppleTalent != null)
                 {
@@ -92,16 +92,16 @@ namespace ConsoleApp1
             {
                 Console.WriteLine("Neues Talent: " + item.Name + " " + item.ID);
             }
-
+            Console.WriteLine("------------------------------------------------------------");
             foreach (var item in exelTalente)
             {
                 var jsonTalent = TalentHelper.CreateJSON(
                     talent: item);
-
-
                 jSON_talentLocal.Talente.Add(jsonTalent);
+                Console.WriteLine("Hinzugefügtes Talent: " + item.Name + " " + item.ID);
             }
-            foreach(var item in families)
+            Console.WriteLine("------------------------------------------------------------");
+            foreach (var item in families)
             {
                 var famile = new JSONTalentLanguageFamily
                 {
@@ -117,6 +117,7 @@ namespace ConsoleApp1
                     famile.Writings.Add(inneritem.Key, inneritem.Value.ID);
                 }
                 jSON_talentLocal.Families.Add(famile);
+                Console.WriteLine("Hinzugefügtes Familie: " + item.Name);
             }
 
             File.WriteAllText(saveFile, jSON_talentLocal.JSONContent);
