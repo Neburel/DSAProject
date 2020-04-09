@@ -28,9 +28,9 @@ namespace ConsoleApp1
 
             if (File.Exists(talentFile))
             {
-                jsonString = File.ReadAllText(talentFile);
-                var json = JSONTalentSaveFile.DeSerializeJson(jsonString, out string serrorAssest);
-                talenteCurrent = TalentHelper.LoadTalent(json.Talente);
+                jsonString      = File.ReadAllText(talentFile);
+                var json        = JSONTalentSaveFile.DeSerializeJson(jsonString, out string serrorAssest);
+                talenteCurrent  = TalentHelper.LoadTalent(json.Talente);
             }
 
             var jSON_talentLocal = new JSONTalentSaveFile

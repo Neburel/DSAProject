@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DSALib.JSON;
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
@@ -23,6 +24,8 @@ namespace DSALib.Classes.JSON
         public Guid ID { get; set; }
         [DataMember(Name = "Deductions")]
         public Dictionary<Guid, int> DeductionTalents { get; set; } = new Dictionary<Guid, int>();
+        [DataMember(Name = "DeductionTalentList")]
+        public List<JSONTalentDeduction> DeductionTalentList { get; } = new List<JSONTalentDeduction>();
         [DataMember(Name = "DeductionString")]
         public List<string> DeductionStrings { get; set; } = new List<string>();
         [DataMember]

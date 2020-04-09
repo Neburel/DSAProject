@@ -191,8 +191,21 @@ namespace DSAProject.Classes
                         {
                             jsonTalent.DeductionTalents.Remove(deduction.Talent.ID);
                         }
-
                         jsonTalent.DeductionTalents.Add(deduction.Talent.ID, deduction.Value);
+
+
+                        var existingItem = jsonTalent.DeductionTalentList.Where(x => x.ID == deduction.Talent.ID).FirstOrDefault();
+                        if(existingItem != null)
+                        {
+                            jsonTalent.DeductionTalentList.Remove(existingItem);
+                        }
+
+                        jsonTalent.DeductionTalentList.Add(new JSONTalentDeduction
+                        {
+                            ID = deduction.Talent.ID,
+                            Value = deduction.Value,
+                            Description = deduction.Description
+                        });
                     }
                     else if (typeof(TalentDeductionFreeText).IsAssignableFrom(item.GetType()))
                     {
@@ -274,11 +287,6 @@ namespace DSAProject.Classes
                             nameExtension: item.NameExtension,
                             orginalPos: item.OrginalPos);
 
-                        if (talent.Name.Contains("Stimmen"))
-                        {
-
-                        }
-
                         if (talent != null)
                         {
                             if (item.DeductionTalents.Any() || item.DeductionStrings.Any())
@@ -309,6 +317,22 @@ namespace DSAProject.Classes
                                 {
                                     throw new Exception();
                                     //Logger.Log(LogLevel.ErrorLog, "Deuction not found: " + deduction.Key, nameof(Game), nameof(LoadTalent));
+                                }
+                                else
+                                {
+                                    item.Key.Deductions.Add(new TalentDeductionTalent(items[0], deduction.Value, item.Key.BaseDeduction));
+                                }
+
+                            }
+                        }
+                        if (item.Value.DeductionTalentList != null)
+                        {
+                            foreach (var deduction in item.Value.DeductionTalentList)
+                            {
+                                var items = list.Where(x => x.ID == deduction.ID).ToList();
+                                if (items.Count != 1)
+                                {
+                                    throw new Exception("Deuction not found: " + deduction.ID + " " + nameof(LoadTalent));
                                 }
                                 else
                                 {
@@ -442,8 +466,8 @@ namespace DSAProject.Classes
                 foreach (var row in rowList)
                 {
                     var excelTalent = new ExcelTalent();
-                    var celllist = row.Descendants<Cell>().ToList();
-                    var counter = 0;
+                    var celllist    = row.Descendants<Cell>().ToList();
+                    var counter     = 0;
                     excelTalent.OrginalPosition = orginalPosition++;
 
                     foreach (var cell in celllist)
@@ -562,12 +586,11 @@ namespace DSAProject.Classes
                 var deductionTalentStrings = talentwithDeduction.Value.GetSplitDeduction();
                 foreach (var deductionString in deductionTalentStrings)
                 {
-                    var value       = deductionString;
-                    var valueint    = -1;
-                    var mainReqg    = new Regex("[(][+][0-9]?[0-9][)]");
-                    var innerReqg   = new Regex("[0-9]?[0-9]");
-                    var fatherReqg  = new Regex("[(][A-Za-z]{1,}[)]");
-                    var descriptionReqg = new Regex("[(][A-Za-z]?[(]");
+                    var value               = deductionString;
+                    var valueint            = -1;
+                    var mainReqg            = new Regex("[(][+][0-9]?[0-9][)]");
+                    var innerReqg           = new Regex("[0-9]?[0-9]");
+                    var stringTalentReqg    = new Regex("[(][A-Za-z]{1,}[)]");
 
                     if (mainReqg.IsMatch(deductionString))
                     {
@@ -584,10 +607,28 @@ namespace DSAProject.Classes
                     }
                     else
                     {
-                        value               = mainReqg.Split(deductionString)[0].Trim();
-                        var convertResult   = Int32.TryParse(innerReqg.Match(deductionString).ToString(), out valueint);
-                        var valueFather     = fatherReqg.Split(deductionString)[0].Trim();
-                        deduction           = new TalentDeductionFreeText(deductionString);
+                        var stringTalent    = stringTalentReqg.Split(deductionString)[0].Trim();
+                        var innerTalent     = ret.Where(x => x.Name == stringTalent).FirstOrDefault();
+                        
+                        if(innerTalent != null)
+                        {
+                            value = mainReqg.Split(deductionString)[0].Trim();
+                            var convertResult = Int32.TryParse(innerReqg.Match(deductionString).ToString(), out valueint);
+
+                            if (stringTalentReqg.IsMatch(value))
+                            {
+                                var description = stringTalentReqg.Match(value);
+                                deduction = new TalentDeductionTalent(innerTalent, valueint, talentwithDeduction.Key.BaseDeduction, description.Value);
+                            }
+                            else
+                            {
+                                deduction = new TalentDeductionFreeText(deductionString);
+                            }
+                        }
+                        else
+                        {
+                            deduction = new TalentDeductionFreeText(deductionString);
+                        }
                     }
                     talentwithDeduction.Key.Deductions.Add(deduction);
 
