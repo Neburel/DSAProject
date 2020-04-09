@@ -72,31 +72,34 @@ namespace DSAProject.Classes.Charakter
             TaWChanged += (sender, args) =>
             {
                 var maxTaw = GetMaxTaw(args);
-                if (!deductionListDictionary.TryGetValue(args, out List<ITalent> list)) return;
 
-                foreach (var itemTalent in list)
+                var talentDeductionList = args.Deductions.Where(x => x.GetType() == typeof(TalentDeductionTalent)).ToList();
+                foreach(TalentDeductionTalent deduction in talentDeductionList)
                 {
-                    var talentDeductionList = itemTalent.Deductions.Where(x => x.GetType() == typeof(TalentDeductionTalent) && ((TalentDeductionTalent)x).Talent == args).ToList();
-                    foreach(TalentDeductionTalent deduction in talentDeductionList)
-                    {
-                        var modValue = 0;
+                    var modValue = 0;
+                    var itemTalent = deduction.Talent;
 
-                        if(deduction.Value == maxTaw && !aktivDeductionList.Contains(deduction))
+                    if (deduction.Value <= maxTaw)
+                    {
+                        if (!aktivDeductionList.Contains(deduction))
                         {
                             modValue = 1;
                             aktivDeductionList.Add(deduction);
                         }
-                        else if(deduction.Value > maxTaw && aktivDeductionList.Contains(deduction))
+                    }
+                    else
+                    {
+                        if (aktivDeductionList.Contains(deduction))
                         {
                             modValue = -1;
                             aktivDeductionList.Remove(deduction);
                         }
-                        if(modValue != 0)
-                        {
-                            var currentValue = GetDeductionValue(itemTalent);
-                            SetDeductionValue(itemTalent, currentValue + modValue);
-                            TaWChanged(this, itemTalent);
-                        }
+                    }
+                    if (modValue != 0)
+                    {
+                        var currentValue = GetDeductionValue(deduction.Talent);
+                        SetDeductionValue(itemTalent, currentValue + modValue);
+                        TaWChanged(itemTalent, itemTalent);
                     }
                 }
             };
@@ -134,9 +137,8 @@ namespace DSAProject.Classes.Charakter
             var taw = GetMaxTaw(talent);
             var pa  = GetPA(talent);
             var maxAT = taw - pa;
-            var newAT = 0;
-
-            if(AT <= maxAT)
+            int newAT;
+            if (AT <= maxAT)
             {
                 newAT = AT;
             } 
@@ -148,7 +150,7 @@ namespace DSAProject.Classes.Charakter
             {
                 ATDictionary.Remove(talent);
             }
-            ATDictionary.Add(talent, newAT);
+            ATDictionary.Add(talent, 0);
 
             if(innerAT != AT)
             {
