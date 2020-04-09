@@ -220,6 +220,7 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\Talente_.json" />
     <Content Include="Assets\Talente_28112019.json" />
+    <Content Include="Assets\Talente_08042020.json" />
     <Content Include="Assets\Talente.json" />
     <None Include="DSAProject_TemporaryKey.pfx" />
     <PRIResource Include="Strings\en\Resources.resw" />

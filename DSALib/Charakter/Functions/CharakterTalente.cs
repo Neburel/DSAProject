@@ -110,16 +110,7 @@ namespace DSAProject.Classes.Charakter
             {
                 TAWDictionary.Remove(talent);
             }
-            if (typeof(AbstractTalentGeneral).IsAssignableFrom(talent.GetType()))
-            {
-                var x = (AbstractTalentGeneral)talent;
-                if (x.FatherTalent != null)
-                {
-                    var fatherTAW = GetTAW(x.FatherTalent);
-                    taw = taw - fatherTAW;
-                }
-            }
-            else if (typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
+            if (typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
             {
                 var fightTalent = (AbstractTalentFighting)talent;
                 var minTaw = GetPA(fightTalent) + GetAT(fightTalent);
@@ -219,15 +210,6 @@ namespace DSAProject.Classes.Charakter
 
             int innerTAW;
             TAWDictionary.TryGetValue(talent, out innerTAW);
-            if (typeof(AbstractTalentGeneral).IsAssignableFrom(talent.GetType()))
-            {
-                var x = (AbstractTalentGeneral)talent;
-                if(x.FatherTalent != null)
-                {
-                    var fatherTAW = GetTAW(x.FatherTalent);
-                    innerTAW += fatherTAW;
-                }
-            }
             return innerTAW;
         }
         /// <summary>

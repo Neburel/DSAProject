@@ -45,6 +45,7 @@ namespace DSAProject.Layout.Pages.MainPages
 
             DiceChanger helper = viewModel.DiceChanger;
             list = list.OrderBy(x => x.ToString()).ToList();
+            list = list.OrderBy(x => x.OrginalPosition).ToList();
             talentList = new List<TalentViewModel>();
             var obList = new ObservableCollection<TalentViewModel>();
 

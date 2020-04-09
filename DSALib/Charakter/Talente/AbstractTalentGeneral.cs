@@ -13,7 +13,6 @@ namespace DSAProject.Classes.Charakter.Talente
         public override int BaseDeduction => 10;
         #endregion
         #region Properties
-        public ITalent FatherTalent { get; set; }
         public List<CharakterAttribut> Attributs { get; private set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Sammlungseigenschaften müssen schreibgeschützt sein", Justification = "<Ausstehend>")]
@@ -55,23 +54,12 @@ namespace DSAProject.Classes.Charakter.Talente
         }
         public override string ToString()
         {
-            var ret = string.Empty;
-
-            if (FatherTalent != null)
-            {
-                ret = FatherTalent.ToString() + "(";
-            }
-            ret = ret + Name;
+            var ret = Name;
 
             if (!string.IsNullOrEmpty(NameExtension))
             {
                 ret = ret + "(" + NameExtension.ToUpper(Helper.CultureInfo) + ")";
-            }
-            if (FatherTalent != null)
-            {
-                ret = ret + ")";
-            }
-
+            }            
             return ret;
         }
     }

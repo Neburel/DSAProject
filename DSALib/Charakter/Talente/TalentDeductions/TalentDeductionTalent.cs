@@ -1,9 +1,4 @@
 ﻿using DSAProject.Classes.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DSAProject.Classes.Charakter.Talente.TalentDeductions
 {
@@ -12,8 +7,9 @@ namespace DSAProject.Classes.Charakter.Talente.TalentDeductions
         public bool IgnoreValue { get; set; }
         public int Value { get; private set; }
         public ITalent Talent { get; private set; }
+        public string Description { get; private set; }
         
-        public TalentDeductionTalent(ITalent talent, int value, int deductionBaseValue)
+        public TalentDeductionTalent(ITalent talent, int value, int deductionBaseValue, string description = "")
         {
             Value = value;
             Talent = talent;
@@ -26,6 +22,7 @@ namespace DSAProject.Classes.Charakter.Talente.TalentDeductions
             {
                 IgnoreValue = false;
             }
+            Description = description;
         }
 
         public string GetDeductionString()
@@ -38,6 +35,10 @@ namespace DSAProject.Classes.Charakter.Talente.TalentDeductions
             else
             {
                 ret = Talent.ToString();
+            }
+            if (!string.IsNullOrEmpty(Description))
+            {
+                ret = ret + " " + "(" + Description + ")";
             }
 
             if (!IgnoreValue)

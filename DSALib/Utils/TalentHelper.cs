@@ -48,7 +48,7 @@ namespace DSAProject.Classes
             return CreateTalent(contentType).GetType();
         }
         #region Creator
-        public static ITalent EditTalent(ITalent talent, List<ITalentDeduction> deductions = null, List<ITalentRequirement> requirements = null, AbstractTalentGeneral fatherTalent = null)
+        public static ITalent EditTalent(ITalent talent, List<ITalentDeduction> deductions = null, List<ITalentRequirement> requirements = null)
         {
             if (talent == null) throw new ArgumentNullException(nameof(talent));
             else if (deductions == null) throw new ArgumentNullException(nameof(deductions));
@@ -58,13 +58,12 @@ namespace DSAProject.Classes
             {
                 talent.Deductions.Add(deduction);
             }
-            if (requirements != null || fatherTalent != null)
+            if (requirements != null)
             {
                 if (typeof(AbstractTalentGeneral).IsAssignableFrom(talent.GetType()))
                 {
                     var abstractTalentGeneral = (AbstractTalentGeneral)talent;
                     abstractTalentGeneral.Requirements = requirements;
-                    abstractTalentGeneral.FatherTalent = fatherTalent;
                 }
                 else
                 {
@@ -77,12 +76,13 @@ namespace DSAProject.Classes
 
             return talent;
         }
-        public static ITalent CreateTalent(string contentType, List<CharakterAttribut> probe, string be, string name, string nameExtension, Guid talentGuid = new Guid())
+        public static ITalent CreateTalent(string contentType, List<CharakterAttribut> probe, string be, string name, string nameExtension, Guid talentGuid = new Guid(), int orginalPos = -1)
         {
             ITalent talent = CreateTalent(
                 contentType: contentType,
                 guid: talentGuid,
-                probe: probe);
+                probe: probe,
+                orginalPos: orginalPos);
             if (string.IsNullOrEmpty(name))
             {
                 throw new TalentException(
@@ -98,7 +98,7 @@ namespace DSAProject.Classes
 
             return talent;
         }
-        private static ITalent CreateTalent(string contentType, Guid guid = new Guid(), List<CharakterAttribut> probe = null)
+        private static ITalent CreateTalent(string contentType, Guid guid = new Guid(), List<CharakterAttribut> probe = null, int orginalPos = -1)
         {
             ITalent talent = null;
             contentType = contentType.Trim();
@@ -156,6 +156,7 @@ namespace DSAProject.Classes
                     error: ErrorCode.Error,
                     message: Resources.ErrorUnknownTalentType);
             }
+            talent.OrginalPosition = orginalPos;
             return talent;
         }
         public static JSONTalent CreateJSON(ITalent talent)
@@ -178,7 +179,8 @@ namespace DSAProject.Classes
                     Name = talent.Name,
                     NameExtension = talent.NameExtension,
                     ContentType = talenttype,
-                    SaveTime = DateTime.Now
+                    SaveTime = DateTime.Now,
+                    OrginalPos = talent.OrginalPosition,
                 };
                 foreach (var item in talent.Deductions)
                 {
@@ -240,10 +242,6 @@ namespace DSAProject.Classes
                             throw new Exception(Resources.ErrorTalentUnknwonRequirement);
                         }
                     }
-                    if (abstractTalentGeneral.FatherTalent != null)
-                    {
-                        jsonTalent.FatherTalent = abstractTalentGeneral.FatherTalent.ID;
-                    }
                 }
             }
             else
@@ -259,7 +257,6 @@ namespace DSAProject.Classes
             var list = new List<ITalent>();
             Dictionary<ITalent, JSONTalent> talentwithDedcut = new Dictionary<ITalent, JSONTalent>();
             Dictionary<AbstractTalentGeneral, JSONTalent> talentWithRequirement = new Dictionary<AbstractTalentGeneral, JSONTalent>();
-            Dictionary<AbstractTalentGeneral, JSONTalent> talentWithFather = new Dictionary<AbstractTalentGeneral, JSONTalent>();
 
             if (talents != null)
             {
@@ -274,27 +271,25 @@ namespace DSAProject.Classes
                             probe: item.Probe,
                             be: item.BE,
                             name: item.Name,
-                            nameExtension: item.NameExtension);
+                            nameExtension: item.NameExtension,
+                            orginalPos: item.OrginalPos);
+
+                        if (talent.Name.Contains("Stimmen"))
+                        {
+
+                        }
 
                         if (talent != null)
                         {
-                            if ((item.DeductionTalents != null && item.DeductionTalents.Count > 0) || (item.DeductionStrings != null && item.DeductionTalents.Count > 0))
+                            if (item.DeductionTalents.Any() || item.DeductionStrings.Any())
                             {
-                                if (item.DeductionTalents.Keys.Count > 0)
-                                {
-                                    talentwithDedcut.Add(talent, item);
-                                }
+                                talentwithDedcut.Add(talent, item);
                             }
                             #region AbstractTalentGeneral
                             if (typeof(AbstractTalentGeneral).IsAssignableFrom(talent.GetType()))
                             {
                                 var abstractTalentGeneral = (AbstractTalentGeneral)talent;
                                 talentWithRequirement.Add(abstractTalentGeneral, item);
-
-                                if (item.FatherTalent != Guid.Empty)
-                                {
-                                    talentWithFather.Add(abstractTalentGeneral, item);
-                                }
                             }
                             #endregion
                             list.Add(talent);
@@ -371,23 +366,6 @@ namespace DSAProject.Classes
                         }
                     }
                     #endregion
-                    #region Father Talent
-                    foreach (var item in talentWithFather)
-                    {
-                        var talent = item.Key;
-                        var jobject = item.Value;
-                        var fatherTalent = list.Where(x => x.ID == jobject.FatherTalent).FirstOrDefault();
-                        if (fatherTalent == null || !(typeof(AbstractTalentGeneral).IsAssignableFrom(fatherTalent.GetType())))
-                        {
-                            //Logger.Log(LogLevel.ErrorLog, "Das Vater Talent mit der folgenden Id ist fehlerhaft: " + jobject.FatherTalent.ToString(), nameof(Game), nameof(LoadTalent));
-                        }
-                        else
-                        {
-                            talent.FatherTalent = (AbstractTalentGeneral)fatherTalent;
-                        }
-
-                    }
-                    #endregion
                 }
                 catch (Exception ex)
                 {
@@ -443,16 +421,17 @@ namespace DSAProject.Classes
             SpreadsheetDocument document = SpreadsheetDocument.Open(importFile, false);
             WorkbookPart wbPart = document.WorkbookPart;
             List<Sheet> sheets = wbPart.Workbook.Descendants<Sheet>().ToList();
-
+        
             foreach (var sheet in sheets)
             {
-                var contentType = sheet.Name;
-                var currentTitle = string.Empty;
-                var excelTalents = new List<ExcelTalent>();
-                WorksheetPart wsPart = (WorksheetPart)(wbPart.GetPartById(sheet.Id));
-                var rowList = wsPart.Worksheet.GetFirstChild<SheetData>().Elements<Row>().ToList();
-                var titleRowHeaders = new List<string>();
-                var titleRow = rowList[0];
+                var orginalPosition     = 0;
+                var contentType         = sheet.Name;
+                var currentTitle        = string.Empty;
+                var excelTalents        = new List<ExcelTalent>();
+                WorksheetPart wsPart    = (WorksheetPart)(wbPart.GetPartById(sheet.Id));
+                var rowList             = wsPart.Worksheet.GetFirstChild<SheetData>().Elements<Row>().ToList();
+                var titleRowHeaders     = new List<string>();
+                var titleRow            = rowList[0];
                 rowList.RemoveAt(0);    //Titel Leiste Entfernen
 
                 foreach (var cell in titleRow.Descendants<Cell>().ToList())
@@ -465,6 +444,7 @@ namespace DSAProject.Classes
                     var excelTalent = new ExcelTalent();
                     var celllist = row.Descendants<Cell>().ToList();
                     var counter = 0;
+                    excelTalent.OrginalPosition = orginalPosition++;
 
                     foreach (var cell in celllist)
                     {
@@ -519,9 +499,11 @@ namespace DSAProject.Classes
                                 probe: excelTalent.GetConvertAttribute(),
                                 be: excelTalent.BE,
                                 name: name,
-                                nameExtension: nameExtension);
+                                nameExtension: nameExtension,
+                                orginalPos: excelTalent.OrginalPosition);
                         }
                     }
+                    #region Sprache
                     if (talentGroup.Key == nameof(TalentSpeaking))
                     {
                         TalentSpeaking talentLanguage = null;
@@ -563,7 +545,7 @@ namespace DSAProject.Classes
                             ret.Add(talentWriting);
                         }
                     }
-
+                    #endregion
                     if (excelTalent.IsValidVerwanteFertigkeit()) { talentsWithDeduction.Add(newTalent, excelTalent); }
                     if (excelTalent.IsValidAnforderung()) { talentWithRequirements.Add(newTalent, excelTalent); }
 
@@ -580,11 +562,12 @@ namespace DSAProject.Classes
                 var deductionTalentStrings = talentwithDeduction.Value.GetSplitDeduction();
                 foreach (var deductionString in deductionTalentStrings)
                 {
-                    var value = deductionString;
-                    var valueint = -1;
-                    var mainReqg = new Regex("[(][+][0-9]?[0-9][)]");
-                    var innerReqg = new Regex("[0-9]?[0-9]");
-                    var fatherReqg = new Regex("[(][A-Za-z]{1,}[)]");
+                    var value       = deductionString;
+                    var valueint    = -1;
+                    var mainReqg    = new Regex("[(][+][0-9]?[0-9][)]");
+                    var innerReqg   = new Regex("[0-9]?[0-9]");
+                    var fatherReqg  = new Regex("[(][A-Za-z]{1,}[)]");
+                    var descriptionReqg = new Regex("[(][A-Za-z]?[(]");
 
                     if (mainReqg.IsMatch(deductionString))
                     {
@@ -601,67 +584,10 @@ namespace DSAProject.Classes
                     }
                     else
                     {
-                        var createdNew = false;
-
-                        value = mainReqg.Split(deductionString)[0].Trim();
-                        var convertResult = Int32.TryParse(innerReqg.Match(deductionString).ToString(), out valueint);
-
-
-                        var valueFather = fatherReqg.Split(deductionString)[0].Trim();
-                        var fatherTalent = ret.Where(x => x.Name == valueFather).FirstOrDefault();
-
-                        if (fatherTalent != null)
-                        {
-                            foreach (var item in excelTalentDic)
-                            {
-                                ITalent innerDeductionTalent = null;
-                                var fatherTalentExcel = item.Value.Where(x => x.Talent == valueFather).FirstOrDefault();
-                                if (fatherTalentExcel != null)
-                                {
-                                    var talentExist = false;
-                                    var valueNewName = deductionString.Split('(', ')')[1];
-                                    var talentExit = ret.Where(x => x.Name == valueNewName).FirstOrDefault();
-                                    if (talentExit != null && typeof(AbstractTalentGeneral).IsAssignableFrom(talentExit.GetType()))
-                                    {
-                                        var talentExistAbstract = (AbstractTalentGeneral)talentExit;
-                                        if (talentExistAbstract.FatherTalent.Name == fatherTalentExcel.Talent)
-                                        {
-                                            innerDeductionTalent = talentExit;
-                                            talentExist = true;
-                                        }
-                                    }
-                                    if (!talentExist)
-                                    {
-                                        innerDeductionTalent = CreateTalent(
-                                            contentType: item.Key,
-                                            probe: fatherTalentExcel.GetConvertAttribute(),
-                                            be: "",
-                                            name: valueNewName,
-                                            nameExtension: "");
-
-                                        if (typeof(AbstractTalentGeneral).IsAssignableFrom(innerDeductionTalent.GetType()))
-                                        {
-                                            var t = (AbstractTalentGeneral)innerDeductionTalent;
-                                            t.FatherTalent = fatherTalent;
-                                        }
-                                    }
-                                    if (innerDeductionTalent != null)
-                                    {
-                                        if (!ret.Contains(innerDeductionTalent))
-                                        {
-                                            ret.Add(innerDeductionTalent);
-                                        }
-                                        createdNew = true;
-                                        deduction = new TalentDeductionTalent(fatherTalent, valueint, talentwithDeduction.Key.BaseDeduction);
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        if (!createdNew)
-                        {
-                            deduction = new TalentDeductionFreeText(deductionString);
-                        }
+                        value               = mainReqg.Split(deductionString)[0].Trim();
+                        var convertResult   = Int32.TryParse(innerReqg.Match(deductionString).ToString(), out valueint);
+                        var valueFather     = fatherReqg.Split(deductionString)[0].Trim();
+                        deduction           = new TalentDeductionFreeText(deductionString);
                     }
                     talentwithDeduction.Key.Deductions.Add(deduction);
 
@@ -745,7 +671,8 @@ namespace DSAProject.Classes
         private class ExcelTalent
         {
             private bool komplex1Found = false;
-
+            
+            public int OrginalPosition { get; set; }
             public string Talent { get; set; }
             public string Title { get; set; }
             public string Probe { get; set; }
@@ -883,6 +810,11 @@ namespace DSAProject.Classes
             {
                 value = value.Split('*')[0];
                 return value;
+            }
+
+            public override string ToString()
+            {
+                return Talent;
             }
         }
         #endregion

@@ -29,7 +29,6 @@ namespace DSAProject.Layout.ViewModels
         private Visibility isRequirementSelectionVisible            = Visibility.Visible;
         private Visibility isFatherTalentsVisible                   = Visibility.Visible;
         private ObservableCollection<ITalent> talents               = new ObservableCollection<ITalent>();
-        private ObservableCollection<ITalent> fathertalents         = new ObservableCollection<ITalent>();
         private ObservableCollection<ITalentRequirement> req        = new ObservableCollection<ITalentRequirement>();
         private ObservableCollection<CharakterAttribut> probe       = new ObservableCollection<CharakterAttribut>();
         private ObservableCollection<ITalentDeduction> deductions   = new ObservableCollection<ITalentDeduction>();
@@ -200,15 +199,6 @@ namespace DSAProject.Layout.ViewModels
                 OnPropertyChanged(nameof(Probes));
             }
             get => probe;
-        }
-        public ObservableCollection<ITalent> FatherTalents
-        {
-            get => fathertalents;
-            set
-            {
-                fathertalents = value;
-                OnPropertyChanged(nameof(fathertalents));
-            }
         }
         public ObservableCollection<ITalentDeduction> Deductions
         {

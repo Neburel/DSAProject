@@ -109,10 +109,6 @@ namespace DSAProject.Layout.Pages.ItemPages
                     {
                         SetValue(TraitTalentBonusSelectionPage_Mode.All, 0);
                     }
-                    else if(args == atg.FatherTalent)
-                    {
-                        SetValue(TraitTalentBonusSelectionPage_Mode.All, 0);
-                    }
                 };
                 ViewModel.IsProbeTextVisibility = Visibility.Visible;
             }

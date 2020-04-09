@@ -1,9 +1,4 @@
 ﻿using DSAProject.Classes.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DSAProject.Classes.Charakter.Talente.TalentDeductions
 {
@@ -19,6 +14,10 @@ namespace DSAProject.Classes.Charakter.Talente.TalentDeductions
         public string GetDeductionString()
         {
             return Text;
+        }
+        public override string ToString()
+        {
+            return GetDeductionString();
         }
     }
 }

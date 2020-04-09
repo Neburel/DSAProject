@@ -8,6 +8,8 @@ namespace DSALib.Classes.JSON
     public class JSONTalent : AbstractJSONSerializable<JSONTalent>
     {
         [DataMember]
+        public int OrginalPos { get; set; }
+        [DataMember]
         public string BE { get; set; }
         [DataMember]
         public string Name { get; set; }
@@ -19,8 +21,6 @@ namespace DSALib.Classes.JSON
         public string LastEditDateAsString { get; set; }
         [DataMember]
         public Guid ID { get; set; }
-        [DataMember]
-        public Guid FatherTalent { get; set; }
         [DataMember(Name = "Deductions")]
         public Dictionary<Guid, int> DeductionTalents { get; set; } = new Dictionary<Guid, int>();
         [DataMember(Name = "DeductionString")]
@@ -46,5 +46,10 @@ namespace DSALib.Classes.JSON
                 LastEditDateAsString = value.ToLongTimeString();
             }
         }
+        public override string ToString()
+        {
+            return Name;
+        }
+
     }
 }

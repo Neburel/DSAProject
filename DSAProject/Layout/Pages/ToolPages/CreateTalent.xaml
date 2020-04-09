@@ -384,7 +384,6 @@
 
                         <TextBlock Grid.Row="0" Grid.Column="0"     Text="Übergeordnetes Talent" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" HorizontalAlignment="Left" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                         <TextBlock  Grid.Row="1" Grid.Column="0"    Text="Talente:" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" HorizontalAlignment="Left" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                        <ComboBox   Grid.Row="1" Grid.Column="1" x:Name="XAML_ComboBoxFatherTalent"    Width="200" ItemsSource="{x:Bind ViewModel.FatherTalents, Mode=TwoWay}" IsTextSearchEnabled="True"></ComboBox>
                     </Grid>
                 </Grid>
             </Border>

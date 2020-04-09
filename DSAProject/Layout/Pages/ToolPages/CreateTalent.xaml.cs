@@ -154,15 +154,9 @@ namespace DSAProject.Layout.Pages.ToolPages
             gameType = GameType.DSA;
 
             ViewModel.Talents = new ObservableCollection<ITalent>(Game.TalentList);
-            ViewModel.FatherTalents = new ObservableCollection<ITalent>(Game.TalentList.Where(x => (typeof(AbstractTalentGeneral).IsAssignableFrom(x.GetType()))).ToList());
         }
         private void XAML_RadioButtonGameTypValuePNP_Checked(object sender, RoutedEventArgs e)
         {
-            //ViewModel.Talents = new ObservableCollection<ITalent>(Game.TalentePNP.OrderBy(x => x.Name).ToList());
-            //gameType = GameType.PNP;
-
-            //ViewModel.Talents = new ObservableCollection<ITalent>(Game.TalentePNP);
-            //ViewModel.FatherTalents = new ObservableCollection<ITalent>(Game.TalentePNP.Where(x => (typeof(AbstractTalentGeneral).IsAssignableFrom(x.GetType()))).ToList());
         }
         private void RadioButton_TalentChoice_Checked(object sender, RoutedEventArgs e)
         {
@@ -211,8 +205,6 @@ namespace DSAProject.Layout.Pages.ToolPages
             }
 
             XAML_ComboBoxRequirementTalent.SelectedValue    = null;
-            XAML_ComboBoxFatherTalent.SelectedValue         = null;
-
 
             ViewModel.ProbeString = string.Empty;
             ViewModel.Probes.Clear();
@@ -337,8 +329,7 @@ namespace DSAProject.Layout.Pages.ToolPages
             currentTalent = TalentHelper.EditTalent(
                 talent: currentTalent,
                 deductions: ViewModel.Deductions.ToList(),
-                requirements: ViewModel.Req.ToList(),
-                fatherTalent: (AbstractTalentGeneral)XAML_ComboBoxFatherTalent.SelectedValue);
+                requirements: ViewModel.Req.ToList());
 
             #region Save
             if (ViewModel.TalentName != null && ViewModel.TalentName != string.Empty)

@@ -86,6 +86,8 @@ namespace ConsoleApp1
             {
                 Console.WriteLine(counter++ + " Nicht Doppeltes Altes Talent: " + item.Name + " " + item.ID);
             }
+            //Entferne die Alten Talente
+            jSON_talentLocal.Talente = new List<JSONTalent>();
             Console.WriteLine("------------------------------------------------------------");
 
             foreach (var item in neueTalente)
