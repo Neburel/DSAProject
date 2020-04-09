@@ -187,13 +187,6 @@ namespace DSAProject.Classes
                     if (typeof(TalentDeductionTalent).IsAssignableFrom(item.GetType()))
                     {
                         var deduction = (TalentDeductionTalent)item;
-                        if (jsonTalent.DeductionTalents.ContainsKey(deduction.Talent.ID))
-                        {
-                            jsonTalent.DeductionTalents.Remove(deduction.Talent.ID);
-                        }
-                        jsonTalent.DeductionTalents.Add(deduction.Talent.ID, deduction.Value);
-
-
                         var existingItem = jsonTalent.DeductionTalentList.Where(x => x.ID == deduction.Talent.ID).FirstOrDefault();
                         if(existingItem != null)
                         {
@@ -289,7 +282,7 @@ namespace DSAProject.Classes
 
                         if (talent != null)
                         {
-                            if (item.DeductionTalents.Any() || item.DeductionStrings.Any())
+                            if (item.DeductionTalentList.Any() || item.DeductionStrings.Any())
                             {
                                 talentwithDedcut.Add(talent, item);
                             }
@@ -308,23 +301,6 @@ namespace DSAProject.Classes
                     #region Deductions
                     foreach (var item in talentwithDedcut)
                     {
-                        if (item.Value.DeductionTalents != null)
-                        {
-                            foreach (var deduction in item.Value.DeductionTalents)
-                            {
-                                var items = list.Where(x => x.ID == deduction.Key).ToList();
-                                if (items.Count != 1)
-                                {
-                                    throw new Exception();
-                                    //Logger.Log(LogLevel.ErrorLog, "Deuction not found: " + deduction.Key, nameof(Game), nameof(LoadTalent));
-                                }
-                                else
-                                {
-                                    item.Key.Deductions.Add(new TalentDeductionTalent(items[0], deduction.Value, item.Key.BaseDeduction));
-                                }
-
-                            }
-                        }
                         if (item.Value.DeductionTalentList != null)
                         {
                             foreach (var deduction in item.Value.DeductionTalentList)
@@ -332,11 +308,12 @@ namespace DSAProject.Classes
                                 var items = list.Where(x => x.ID == deduction.ID).ToList();
                                 if (items.Count != 1)
                                 {
-                                    throw new Exception("Deuction not found: " + deduction.ID + " " + nameof(LoadTalent));
+                                    throw new Exception();
+                                    //Logger.Log(LogLevel.ErrorLog, "Deuction not found: " + deduction.Key, nameof(Game), nameof(LoadTalent));
                                 }
                                 else
                                 {
-                                    item.Key.Deductions.Add(new TalentDeductionTalent(items[0], deduction.Value, item.Key.BaseDeduction));
+                                    item.Key.Deductions.Add(new TalentDeductionTalent(items[0], deduction.Value, item.Key.BaseDeduction, deduction.Description));
                                 }
 
                             }
@@ -595,7 +572,10 @@ namespace DSAProject.Classes
                     if (mainReqg.IsMatch(deductionString))
                     {
                         value = mainReqg.Split(deductionString)[0].Trim();
-                        valueint = int.Parse(innerReqg.Match(deductionString).ToString(), Helper.CultureInfo);
+                        if(!int.TryParse(innerReqg.Match(deductionString).ToString(),  out valueint))
+                        {
+                            valueint = -1;
+                        }
                     }
                     if (valueint == -1) { valueint = talentwithDeduction.Key.BaseDeduction; }
 
@@ -613,12 +593,12 @@ namespace DSAProject.Classes
                         if(innerTalent != null)
                         {
                             value = mainReqg.Split(deductionString)[0].Trim();
-                            var convertResult = Int32.TryParse(innerReqg.Match(deductionString).ToString(), out valueint);
 
                             if (stringTalentReqg.IsMatch(value))
                             {
-                                var description = stringTalentReqg.Match(value);
-                                deduction = new TalentDeductionTalent(innerTalent, valueint, talentwithDeduction.Key.BaseDeduction, description.Value);
+                                var description = stringTalentReqg.Match(value).Value;
+                                description = description.Replace("(", "").Replace(")", "");
+                                deduction = new TalentDeductionTalent(innerTalent, valueint, talentwithDeduction.Key.BaseDeduction, description);
                             }
                             else
                             {

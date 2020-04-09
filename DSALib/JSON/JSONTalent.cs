@@ -22,10 +22,10 @@ namespace DSALib.Classes.JSON
         public string LastEditDateAsString { get; set; }
         [DataMember]
         public Guid ID { get; set; }
-        [DataMember(Name = "Deductions")]
-        public Dictionary<Guid, int> DeductionTalents { get; set; } = new Dictionary<Guid, int>();
+        //[DataMember(Name = "Deductions")]
+        //public Dictionary<Guid, int> DeductionTalents { get; set; } = new Dictionary<Guid, int>();
         [DataMember(Name = "DeductionTalentList")]
-        public List<JSONTalentDeduction> DeductionTalentList { get; } = new List<JSONTalentDeduction>();
+        public List<JSONTalentDeduction> DeductionTalentList { get; set; } = new List<JSONTalentDeduction>();
         [DataMember(Name = "DeductionString")]
         public List<string> DeductionStrings { get; set; } = new List<string>();
         [DataMember]

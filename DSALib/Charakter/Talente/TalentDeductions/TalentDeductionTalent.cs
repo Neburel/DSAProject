@@ -47,5 +47,9 @@ namespace DSAProject.Classes.Charakter.Talente.TalentDeductions
             }
             return ret;
         }
+        public override string ToString()
+        {
+            return GetDeductionString();
+        }
     }
 }
