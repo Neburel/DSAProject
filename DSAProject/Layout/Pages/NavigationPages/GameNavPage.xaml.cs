@@ -33,7 +33,6 @@ namespace DSAProject.Layout.Pages.NavigationPages
         public GameNavPage()
         {
             var standartSize = new Size(1500, 1000);
-
             ApplicationView.PreferredLaunchViewSize = standartSize;
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
             ApplicationView.GetForCurrentView().SetPreferredMinSize(standartSize);
@@ -77,16 +76,12 @@ namespace DSAProject.Layout.Pages.NavigationPages
                 new NavigationViewItem          { Content = "Charakter erstellen/bearbeiten",   Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(CharakterCreation) } },
                 new NavigationViewItem          { Content = "Speichern",                        Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(SavePage) } },
                 new NavigationViewItem          { Content = "Laden",                            Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(LoadPage) } },
-                new NavigationViewItem          { Content = "Info",                             Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(InfoPage) } },
-
-               
             };
+
             NavigationViewItem = NavItems.Where(x => x.Tag != null).ToList();
             Game.NavRequested += Game_NavRequested;
 
             this.InitializeComponent();
-            XAML_ContentFrame.NavigationStopped += Frame_NavigationStopped;
-            XAML_ContentFrame.Navigated         += ContentFrame_Navigated;
 
             XAML_NavigationView.SelectedItem = startItem;
             Game.RequestNav(new util.EventNavRequest { Side = NavEnum.StartPage });
@@ -178,24 +173,30 @@ namespace DSAProject.Layout.Pages.NavigationPages
         }
         private void XAML_NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
-
-            var navItem = (DSANavItem)((NavigationViewItem)sender.SelectedItem).Tag;
-            var lastItem = navHistory.LastOrDefault();
-
-            if (navItem.NavType == typeof(SavePage))
+            if (args.IsSettingsInvoked)
             {
-                Game.CharakterSave(out DSAError error);
-                SaveDialog.ShowDialog(error);
-                XAML_NavigationView.SelectedItem = startItem;
-
-                if (lastItem.NavType != typeof(HeroLetterPage))
-                {
-                    XAML_ContentFrame.Navigate(typeof(HeroLetterPage));
-                }
+                XAML_ContentFrame.Navigate(typeof(SettingsPage), null);
             }
-            else if (lastItem.NavType != navItem.NavType || lastItem.Parameter != navItem.Parameter)
+            else
             {
-                XAML_ContentFrame.Navigate(navItem.NavType, navItem.Parameter);
+                var navItem = (DSANavItem)((NavigationViewItem)sender.SelectedItem).Tag;
+                var lastItem = navHistory.LastOrDefault();
+
+                if (navItem.NavType == typeof(SavePage))
+                {
+                    Game.CharakterSave(out DSAError error);
+                    SaveDialog.ShowDialog(error);
+                    XAML_NavigationView.SelectedItem = startItem;
+
+                    if (lastItem.NavType != typeof(HeroLetterPage))
+                    {
+                        XAML_ContentFrame.Navigate(typeof(HeroLetterPage));
+                    }
+                }
+                else if (lastItem.NavType != navItem.NavType || lastItem.Parameter != navItem.Parameter)
+                {
+                    XAML_ContentFrame.Navigate(navItem.NavType, navItem.Parameter);
+                }
             }
         }
         #endregion
@@ -210,5 +211,10 @@ namespace DSAProject.Layout.Pages.NavigationPages
 
         }
         #endregion
+
+        private void XAML_NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+
+        }
     }
 }

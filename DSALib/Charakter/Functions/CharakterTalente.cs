@@ -30,8 +30,8 @@ namespace DSAProject.Classes.Charakter
         internal Dictionary<TalentSpeaking, bool> MotherDicionary { get; set; } = new Dictionary<TalentSpeaking, bool>();
         #endregion
         #region Variables
-        private List<TalentDeductionTalent> aktivDeductionList  = new List<TalentDeductionTalent>();
-        private Dictionary<ITalent, int> deductionDictionary    = new Dictionary<ITalent, int>();
+        private readonly List<TalentDeductionTalent> aktivDeductionList  = new List<TalentDeductionTalent>();
+        private readonly Dictionary<ITalent, int> deductionDictionary    = new Dictionary<ITalent, int>();
         #endregion
         /// <summary>
         /// Die TalentListe wird für die Ableitungen benötigt
@@ -39,70 +39,48 @@ namespace DSAProject.Classes.Charakter
         /// </summary>
         /// <param name="charakter"></param>
         /// <param name="talentList"></param>
-        public CharakterTalente(ICharakter charakter, List<ITalent> talentList)
+        public CharakterTalente(ICharakter charakter)
         {
-            Dictionary<ITalent, List<ITalent>> deductionListDictionary  = new Dictionary<ITalent, List<ITalent>>();
-
             this.charakter              = charakter;
-            var talentWithDeductionList = talentList.Where(x => x.Deductions != null && x.Deductions.Where(y => y.GetType() == typeof(TalentDeductionTalent)).Any()).ToList();
 
-            #region Erstelle ein zuordnungs Dicionary von einem Talent zu einer Liste von Talenten die einen wert bekommen
-            foreach (var talent in talentWithDeductionList)
-            {
-                var talentDeductionList = talent.Deductions.Where(x => x.GetType() == typeof(TalentDeductionTalent)).ToList();
-
-                foreach (TalentDeductionTalent talentDeduction in talentDeductionList)
-                {
-                    var innertalent = talentDeduction.Talent;
-                    if (deductionListDictionary.TryGetValue(innertalent, out List<ITalent> deductioninnerList))
-                    {
-                        deductioninnerList.Add(talent);
-                    }
-                    else
-                    {
-                        var newList = new List<ITalent>
-                        {
-                            talent
-                        };
-                        deductionListDictionary.Add(innertalent, newList);
-                    }
-                }
-            }
-            #endregion
             TaWChanged += (sender, args) =>
             {
-                var maxTaw = GetMaxTaw(args);
+                CalculateDeductions(args);
+            };
+        }
+        private void CalculateDeductions(ITalent talent)
+        {
+            if (!Settings.AutoDeduction) return;
+            var maxTaw = GetMaxTaw(talent);
+            var talentDeductionList = talent.Deductions.Where(x => x.GetType() == typeof(TalentDeductionTalent)).ToList();
+            foreach (TalentDeductionTalent deduction in talentDeductionList)
+            {
+                var modValue = 0;
+                var itemTalent = deduction.Talent;
 
-                var talentDeductionList = args.Deductions.Where(x => x.GetType() == typeof(TalentDeductionTalent)).ToList();
-                foreach(TalentDeductionTalent deduction in talentDeductionList)
+                if (deduction.Value <= maxTaw)
                 {
-                    var modValue = 0;
-                    var itemTalent = deduction.Talent;
-
-                    if (deduction.Value <= maxTaw)
+                    if (!aktivDeductionList.Contains(deduction))
                     {
-                        if (!aktivDeductionList.Contains(deduction))
-                        {
-                            modValue = 1;
-                            aktivDeductionList.Add(deduction);
-                        }
-                    }
-                    else
-                    {
-                        if (aktivDeductionList.Contains(deduction))
-                        {
-                            modValue = -1;
-                            aktivDeductionList.Remove(deduction);
-                        }
-                    }
-                    if (modValue != 0)
-                    {
-                        var currentValue = GetDeductionValue(deduction.Talent);
-                        SetDeductionValue(itemTalent, currentValue + modValue);
-                        TaWChanged(itemTalent, itemTalent);
+                        modValue = 1;
+                        aktivDeductionList.Add(deduction);
                     }
                 }
-            };
+                else
+                {
+                    if (aktivDeductionList.Contains(deduction))
+                    {
+                        modValue = -1;
+                        aktivDeductionList.Remove(deduction);
+                    }
+                }
+                if (modValue != 0)
+                {
+                    var currentValue = GetDeductionValue(deduction.Talent);
+                    SetDeductionValue(itemTalent, currentValue + modValue);
+                    TaWChanged(itemTalent, itemTalent);
+                }
+            }
         }
 
         public void SetTAW(ITalent talent, int taw)
@@ -162,8 +140,7 @@ namespace DSAProject.Classes.Charakter
             var taw     = GetMaxTaw(talent);
             var at      = GetAT(talent);
             var maxPA   = taw - at;
-            var newPA   = 0;
-
+            int newPA;
             if (PA <= maxPA)
             {
                 newPA = PA;
@@ -210,8 +187,7 @@ namespace DSAProject.Classes.Charakter
         {
             if (talent == null) throw new ArgumentNullException(nameof(talent));
 
-            int innerTAW;
-            TAWDictionary.TryGetValue(talent, out innerTAW);
+            TAWDictionary.TryGetValue(talent, out int innerTAW);
             return innerTAW;
         }
         /// <summary>
@@ -289,7 +265,8 @@ namespace DSAProject.Classes.Charakter
         }
         public bool GetMother(TalentSpeaking talent)
         {
-            return MotherDicionary.TryGetValue(talent, out bool value);
+            MotherDicionary.TryGetValue(talent, out bool value);
+            return value;
         }
 
         public int GetProbeValue(AbstractTalentGeneral talent)
@@ -351,8 +328,7 @@ namespace DSAProject.Classes.Charakter
             if (talent == null) throw new ArgumentNullException(nameof(talent));
 
             var talentType  = talent.GetType();
-            string probe    = string.Empty;
-
+            string probe;
             if (typeof(TalentClose).IsAssignableFrom(talentType) || typeof(TalentWeaponless).IsAssignableFrom(talentType))
             {
                 var innertalent = (AbstractTalentFighting)talent;

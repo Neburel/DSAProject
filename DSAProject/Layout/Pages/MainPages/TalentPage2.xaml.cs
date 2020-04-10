@@ -42,10 +42,16 @@ namespace DSAProject.Layout.Pages.MainPages
         private async void GenerateTalentListAsync(List<ITalent> list)
         {
             if (list == null || list.Count == 0) return;
+            if (Game.Settings.OrderTalentAlphabetic)
+            {
+                list = list.OrderBy(x => x.ToString()).ToList();
+            }
+            else
+            {
+                list = list.OrderBy(x => x.OrginalPosition).ToList();
+            }
 
             DiceChanger helper = viewModel.DiceChanger;
-            list = list.OrderBy(x => x.ToString()).ToList();
-            list = list.OrderBy(x => x.OrginalPosition).ToList();
             talentList = new List<TalentViewModel>();
             var obList = new ObservableCollection<TalentViewModel>();
 

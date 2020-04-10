@@ -32,18 +32,18 @@ namespace DSAProject.Classes.Charakter
         public CharakterOther Other { get; private set; }
         public Money Money { get; private set; }
         #endregion
-        public AbstractCharakter(Guid id, List<ITalent> talentListe)
+        public AbstractCharakter(Guid id)
         {
-            CreateNew(id, talentListe);
+            CreateNew(id);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Literale nicht als lokalisierte Parameter übergeben", Justification = "<Ausstehend>")]
-        private void CreateNew(Guid id, List<ITalent> talentListe)
+        private void CreateNew(Guid id)
         {
             ID = id;
             Money           = new Money();
             Traits          = new CharakterTraits();
-            Talente         = new CharakterTalente(this, talentListe);
+            Talente         = new CharakterTalente(this);
             Descriptions    = new CharakterDescription();
             Other           = new CharakterOther();
             Attribute       = CreateAttribute();
@@ -253,7 +253,7 @@ namespace DSAProject.Classes.Charakter
             else if (talentListe == null) throw new ArgumentNullException(nameof(talentListe));
             else if (jsonCharakter.MotherLanguages == null) jsonCharakter.MotherLanguages = new Dictionary<Guid, bool>();
             #endregion
-            CreateNew(jsonCharakter.ID, talentListe);
+            CreateNew(jsonCharakter.ID);
             Name = jsonCharakter.Name;
             #region Attribute Laden
             foreach (var item in jsonCharakter.AttributeBaseValue.Keys)

@@ -48,6 +48,7 @@ namespace DSAProject.Classes.Game
         private static JSONTalentSaveFile jSON_talentLocal = new JSONTalentSaveFile();
         #endregion
         #region Properties
+        public static Settings Settings { get; private set; } = new Settings();
         public static ICharakter Charakter
         {
             get
@@ -58,7 +59,7 @@ namespace DSAProject.Classes.Game
                 }
                 else
                 {
-                    Charakter = new CharakterDSA(GenerateNextCharakterGUID(), TalentList);
+                    Charakter = new CharakterDSA(GenerateNextCharakterGUID());
                     return charakter;
                 }
             }

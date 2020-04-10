@@ -117,10 +117,10 @@
       <DependentUpon>InvestAPDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\MessageDialoge\SaveDialog.cs" />
-    <Compile Include="Layout\Pages\BasePages\AdventurePointPage.xaml.cs">
+    <Compile Include="Layout\Pages\MainPages\AdventurePointPage.xaml.cs">
       <DependentUpon>AdventurePointPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Layout\Pages\BasePages\MoneyPage.xaml.cs">
+    <Compile Include="Layout\Pages\MainPages\MoneyPage.xaml.cs">
       <DependentUpon>MoneyPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\Pages\MainPages\LanguagePage2.xaml.cs">
@@ -135,8 +135,8 @@
     <Compile Include="Layout\Pages\ToolPages\CreateTrait.xaml.cs">
       <DependentUpon>CreateTrait.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Layout\Pages\MainPages\InfoPage.xaml.cs">
-      <DependentUpon>InfoPage.xaml</DependentUpon>
+    <Compile Include="Layout\Pages\MainPages\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\zOldIdeas\Language_ItemPage.xaml.cs">
       <DependentUpon>Language_ItemPage.xaml</DependentUpon>
@@ -169,10 +169,10 @@
     <Compile Include="Layout\Pages\ItemPages\AKT_MOD_MAX_ItemPage.xaml.cs">
       <DependentUpon>AKT_MOD_MAX_ItemPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Layout\Pages\BasePages\AttributPage.xaml.cs">
+    <Compile Include="Layout\Pages\MainPages\AttributPage.xaml.cs">
       <DependentUpon>AttributPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Layout\Pages\BasePages\DescriptionPage.xaml.cs">
+    <Compile Include="Layout\Pages\MainPages\DescriptionPage.xaml.cs">
       <DependentUpon>DescriptionPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\zOldIdeas\Talent_ItemPage.xaml.cs">
@@ -205,6 +205,7 @@
     <Compile Include="Layout\ViewModels\TalentViewModel.cs" />
     <Compile Include="Layout\ViewModels\TraitViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="util\Enum.cs" />
     <Compile Include="util\EventNavRequest.cs" />
     <Compile Include="util\Hilfsklassen.cs" />
@@ -250,11 +251,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Layout\Pages\BasePages\AdventurePointPage.xaml">
+    <Page Include="Layout\Pages\MainPages\AdventurePointPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Layout\Pages\BasePages\MoneyPage.xaml">
+    <Page Include="Layout\Pages\MainPages\MoneyPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -274,7 +275,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Layout\Pages\MainPages\InfoPage.xaml">
+    <Page Include="Layout\Pages\MainPages\SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -318,11 +319,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Layout\Pages\BasePages\AttributPage.xaml">
+    <Page Include="Layout\Pages\MainPages\AttributPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Layout\Pages\BasePages\DescriptionPage.xaml">
+    <Page Include="Layout\Pages\MainPages\DescriptionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -28,10 +28,9 @@ namespace DSAProject
     public sealed partial class GamePage : Page
     {
         #region Pages
-        private string currentPage = string.Empty;
         private GameContentItem currentItem;
         #endregion
-        private GamePageViewModel viewModel = new GamePageViewModel();
+        private readonly GamePageViewModel viewModel = new GamePageViewModel();
         public GamePage()
         {
             this.InitializeComponent();
@@ -40,8 +39,7 @@ namespace DSAProject
             ApplicationView.PreferredLaunchViewSize = standartSize;
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
             ApplicationView.GetForCurrentView().SetPreferredMinSize(standartSize);
-            
-            currentPage = "HeroLetter";
+
             //ContentFrame.Navigate(typeof(HeroLetterPage));
             ContentFrame.NavigationStopped += Frame_NavigationStopped;
             
@@ -178,7 +176,7 @@ namespace DSAProject
             public GameContentItem Load { get; private set; } = new GameContentItem { Content = "Charakter Laden", Type = typeof(LoadPage) };
             public GameContentItem CreateCharkter { get; private set; } = new GameContentItem { Content = "Charakter erstellen/editieren", Type = typeof(CharakterCreation) };
             public GameContentItem CreateTrait { get; private set; } = new GameContentItem { Content = "Create Trait", Type = typeof(CreateTrait) };
-            public GameContentItem InfoPage { get; private set; } = new GameContentItem { Content = "Info", Type = typeof(InfoPage) };
+            public GameContentItem InfoPage { get; private set; } = new GameContentItem { Content = "Info", Type = typeof(SettingsPage) };
             public GameContentItem LanguagePage { get; private set; } = new GameContentItem { Content = "Sprachen", Type = typeof(LanguagePage) };
         }
         private class GameContentItem

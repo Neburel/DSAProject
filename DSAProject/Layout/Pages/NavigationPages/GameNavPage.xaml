@@ -6,23 +6,25 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    
+
     <NavigationView
         x:Name="XAML_NavigationView"
-        IsSettingsVisible="False"
+        IsSettingsVisible="True"
         ItemInvoked="XAML_NavigationView_ItemInvoked"
+        SelectionChanged="XAML_NavigationView_SelectionChanged"
         MenuItemsSource="{x:Bind NavItems}">
         <Frame 
             x:Name="XAML_ContentFrame" 
             Margin="0,-60,0,0"  
             HorizontalAlignment="Stretch"  
-            VerticalAlignment="Stretch">
+            VerticalAlignment="Stretch"
+            NavigationStopped="Frame_NavigationStopped"
+            Navigated="ContentFrame_Navigated">
             <Frame.ContentTransitions>
                 <TransitionCollection>
                     <NavigationThemeTransition/>
                 </TransitionCollection>
             </Frame.ContentTransitions>
-        </Frame>
-
+        </Frame>        
     </NavigationView>
 </Page>
