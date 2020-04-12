@@ -488,7 +488,7 @@ namespace DSAProject.Classes
                     {
                         name = excelTalent.Talent;
                     }
-
+                    
                     ITalent newTalent = null;
                     if (!string.IsNullOrEmpty(name))
                     {
@@ -560,6 +560,11 @@ namespace DSAProject.Classes
             ret = new List<ITalent>(ret.OrderBy(x => x.Name));
             foreach (var talentwithDeduction in talentsWithDeduction)
             {
+                if (talentwithDeduction.Key.Name == "Alchimie")
+                {
+
+                }
+
                 var deductionTalentStrings = talentwithDeduction.Value.GetSplitDeduction();
                 foreach (var deductionString in deductionTalentStrings)
                 {
@@ -567,7 +572,7 @@ namespace DSAProject.Classes
                     var valueint            = -1;
                     var mainReqg            = new Regex("[(][+][0-9]?[0-9][)]");
                     var innerReqg           = new Regex("[0-9]?[0-9]");
-                    var stringTalentReqg    = new Regex("[(][A-Za-z]{1,}[)]");
+                    var stringTalentReqg    = new Regex("[(][A-Za-zäü]{1,}[ ]?[A-Za-zäü]{1,}[)]");
 
                     if (mainReqg.IsMatch(deductionString))
                     {

@@ -128,7 +128,7 @@ namespace DSAProject.Classes.Charakter
             {
                 ATDictionary.Remove(talent);
             }
-            ATDictionary.Add(talent, 0);
+            ATDictionary.Add(talent, newAT);
 
             if(innerAT != AT)
             {
