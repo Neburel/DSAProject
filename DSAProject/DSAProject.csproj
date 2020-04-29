@@ -20,7 +20,7 @@
     <PackageCertificateKeyFile>D:\04_Projekte\DSAProject\DSAProject\DSAProject_TemporaryKey.pfx</PackageCertificateKeyFile>
     <PackageCertificateThumbprint>1D5E882123C520E42AC288461CE9085474DA9D62</PackageCertificateThumbprint>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
-    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x64</AppxBundlePlatforms>
     <AppInstallerUpdateFrequency>0</AppInstallerUpdateFrequency>

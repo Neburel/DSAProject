@@ -31,7 +31,8 @@ namespace DSAProject
             {
                 try
                 {
-                    return (bool)localSettings.Values[nameof(AutoDeduction)];
+                    //return (bool)localSettings.Values[nameof(AutoDeduction)];
+                    return false;
                 }
                 catch(Exception)
                 {

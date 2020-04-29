@@ -23,7 +23,7 @@
         </Grid.ColumnDefinitions>
 
         <ToggleSwitch x:Name="TalentSortSwitch"     Grid.Row="0" IsOn="{x:Bind viewModel.SortAlpabetical, Mode=TwoWay}" Header="Talente Alphabetisch"/>
-        <ToggleSwitch x:Name="AbleitungenSwitch"    Grid.Row="1" IsOn="{x:Bind viewModel.AutoDeduction, Mode=TwoWay}" Header="Talente Automatisch Ableiten. Erfordert einen neustart des Programmes"/>
+        <!--<ToggleSwitch x:Name="AbleitungenSwitch"    Grid.Row="1" IsOn="{x:Bind viewModel.AutoDeduction, Mode=TwoWay}" Header="Talente Automatisch Ableiten. Erfordert einen neustart des Programmes"/>-->
         
         <TextBlock Text="AppPath: " Grid.Row="2" Grid.Column="0"></TextBlock> 
         <TextBlock Text="{x:Bind AppPAth}" Grid.Row="2" Grid.Column="1"></TextBlock>
