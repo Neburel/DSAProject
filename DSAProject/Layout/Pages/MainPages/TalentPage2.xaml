@@ -32,6 +32,7 @@
         <GridLength x:Key="ProbeSpezialisierungRowWidth">*</GridLength>
         <GridLength x:Key="ProbeAnforderungRowWidth">2*</GridLength>
         <GridLength x:Key="ProbeAbleitungRowWidth">2*</GridLength>
+        <GridLength x:Key="ProbeAbleitungChoise">2*</GridLength>
         <GridLength x:Key="ProbeTest">60</GridLength>
 
         <DataTemplate x:Key="TalentHeaderTemplate" x:DataType="mainpages:TalentPageHeader">
@@ -54,6 +55,7 @@
                     <ColumnDefinition Width="{StaticResource ProbeSpezialisierungRowWidth}"/>
                     <ColumnDefinition Width="{StaticResource ProbeAnforderungRowWidth}"/>
                     <ColumnDefinition Width="{StaticResource ProbeAbleitungRowWidth}"/>
+                    <ColumnDefinition Width="{StaticResource ProbeAbleitungChoise}"/>
                     <ColumnDefinition Width="{StaticResource ProbeTest}"/>
                 </Grid.ColumnDefinitions>
 
@@ -74,9 +76,10 @@
                 </Grid>
                 <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="5" Text="BE"        Style="{StaticResource PageNormalInnerText}"/>
                 <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="6" Text="Spezialisierung(+2/+2)"    Style="{StaticResource PageMinorText}"/>
-                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="7" Text="Anforderungen" Style="{StaticResource PageNormalInnerText}"/>
-                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="8" Text="Ableiten(+10)" Style="{StaticResource PageNormalInnerText}"/>
-                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="9" Text=""              Style="{StaticResource PageNormalMinorText}"/>
+                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="7" Text="Anforderungen"     Style="{StaticResource PageNormalInnerText}"/>
+                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="8" Text="Ableiten(+10)"     Style="{StaticResource PageNormalInnerText}"/>
+                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="9" Text="Ableiten(Auswahl)" Style="{StaticResource PageNormalInnerText}"/>
+                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="10" Text=""                 Style="{StaticResource PageNormalMinorText}"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="TalentItemTemplate" x:DataType="wrapper:TalentViewModel">
@@ -94,6 +97,7 @@
                     <ColumnDefinition Width="{StaticResource ProbeSpezialisierungRowWidth}"/>
                     <ColumnDefinition Width="{StaticResource ProbeAnforderungRowWidth}"/>
                     <ColumnDefinition Width="{StaticResource ProbeAbleitungRowWidth}"/>
+                    <ColumnDefinition Width="{StaticResource ProbeAbleitungChoise}"/>
                     <ColumnDefinition Width="{StaticResource ProbeTest}"/>
                 </Grid.ColumnDefinitions>
 
@@ -128,7 +132,28 @@
                 <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="6"/>
                 <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="7" WarningText="{x:Bind RequirementStringFreeText}" Text="{x:Bind RequirementStringRest}" Style="{StaticResource PageMinorText}" />
                 <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="8" WarningText="{x:Bind DeductionStringFreeText}"   Text="{x:Bind DeductionStringTalent}" Style="{StaticResource PageMinorText}"/>
-                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="9" Text="{x:Bind DiceResult, Mode=TwoWay}" Style="{StaticResource PageNormalMinorText}"/>
+
+                <Border 
+                    Grid.Row="0" 
+                    Grid.Column="9"
+                    BorderBrush="Gray"
+                    BorderThickness="1, 1, 1, 1" 
+                    Padding="2, 0, 2, 0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch">
+
+                    <ComboBox 
+                        Visibility="{x:Bind DeductionChooserVisibility}"
+                        SelectedValue="{x:Bind ChoosedDeduction, Mode=TwoWay}"
+                        PlaceholderText="Wähle Ableitung"
+                        BorderBrush="Transparent" 
+                        HorizontalContentAlignment="Stretch" 
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        VerticalContentAlignment="Center" FontSize="10" ItemsSource="{x:Bind TalentDeductionList}"/>
+                </Border>
+
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="10" Text="{x:Bind DiceResult, Mode=TwoWay}" Style="{StaticResource PageNormalMinorText}"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>

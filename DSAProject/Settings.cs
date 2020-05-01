@@ -17,6 +17,7 @@ namespace DSAProject
                 }
                 catch (Exception)
                 {
+                    OrderTalentAlphabetic = false;
                     return false;
                 }
             }

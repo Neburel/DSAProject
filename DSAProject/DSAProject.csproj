@@ -138,6 +138,9 @@
     <Compile Include="Layout\Pages\MainPages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Layout\Pages\ToolPages\WikiPage.xaml.cs">
+      <DependentUpon>WikiPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Layout\zOldIdeas\Language_ItemPage.xaml.cs">
       <DependentUpon>Language_ItemPage.xaml</DependentUpon>
     </Compile>
@@ -222,8 +225,10 @@
     <Content Include="Assets\Talente_.json" />
     <Content Include="Assets\Talente_28112019.json" />
     <Content Include="Assets\Talente_08042020.json" />
+    <EmbeddedResource Include="Assets\Talente_01052020.json" />
     <Content Include="Assets\Talente.json" />
     <None Include="DSAProject_TemporaryKey.pfx" />
+    <None Include="Talente.json" />
     <PRIResource Include="Strings\en\Resources.resw" />
     <PRIResource Include="Strings\de-DE\Resources.resw" />
   </ItemGroup>
@@ -276,6 +281,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Layout\Pages\MainPages\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Layout\Pages\ToolPages\WikiPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

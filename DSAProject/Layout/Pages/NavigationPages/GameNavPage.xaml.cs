@@ -7,6 +7,7 @@ using DSAProject.Classes.Game;
 using DSAProject.Layout.MessageDialoge;
 using DSAProject.Layout.Pages.BasePages;
 using DSAProject.Layout.Pages.MainPages;
+using DSAProject.Layout.Pages.ToolPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,6 +77,7 @@ namespace DSAProject.Layout.Pages.NavigationPages
                 new NavigationViewItem          { Content = "Charakter erstellen/bearbeiten",   Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(CharakterCreation) } },
                 new NavigationViewItem          { Content = "Speichern",                        Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(SavePage) } },
                 new NavigationViewItem          { Content = "Laden",                            Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(LoadPage) } },
+                new NavigationViewItem          { Content = "Wiki",                             Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(WikiPage) } },
             };
 
             NavigationViewItem = NavItems.Where(x => x.Tag != null).ToList();

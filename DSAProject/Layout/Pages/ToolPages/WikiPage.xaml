@@ -1,0 +1,12 @@
+﻿<Page
+    x:Class="DSAProject.Layout.Pages.ToolPages.WikiPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DSAProject.Layout.Pages.ToolPages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <WebView x:Name="webView1" Source="http://www.dsa-zeitenfall.de/zeitenfall/index.php/Hauptseite"/>
+</Page>

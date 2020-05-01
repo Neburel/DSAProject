@@ -5,6 +5,8 @@ using DSAProject.Classes.Charakter.Talente.TalentRequirement;
 using DSAProject.Classes.Game;
 using DSAProject.Classes.Interfaces;
 using DSAProject.util;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DSAProject.Layout.ViewModels
 {
@@ -31,6 +33,11 @@ namespace DSAProject.Layout.ViewModels
             set => Set(value);
         }
         public bool ProbeTextVisibility
+        {
+            get => Get<bool>();
+            set => Set(value);
+        }
+        public bool DeductionChooserVisibility
         {
             get => Get<bool>();
             set => Set(value);
@@ -88,6 +95,16 @@ namespace DSAProject.Layout.ViewModels
         public ITalent Talent
         {
             get => Get<ITalent>();
+            set => Set(value);
+        }
+        public TalentDeductionTalent ChoosedDeduction
+        {
+            get => Get<TalentDeductionTalent>();
+            set => Set(value);
+        }
+        public List<TalentDeductionTalent> TalentDeductionList
+        {
+            get => Get<List<TalentDeductionTalent>>();
             set => Set(value);
         }
         public TalentViewModel(DiceChanger helper)
@@ -151,6 +168,17 @@ namespace DSAProject.Layout.ViewModels
                     }
                     DeductionStringFreeText = freeText;
                     DeductionStringTalent = restString;
+
+                    TalentDeductionList = talent.Deductions.Where(x => x.GetType().IsAssignableFrom(typeof(TalentDeductionTalent))).Cast<TalentDeductionTalent>().ToList();
+                    if (!TalentDeductionList.Any())
+                    {
+                        DeductionChooserVisibility = false;
+                    }
+                    else
+                    {
+                        DeductionChooserVisibility = true;
+                        ChoosedDeduction = TalentDeductionList.First();
+                    }
                     #endregion
 
                     if (typeof(AbstractTalentGeneral).IsAssignableFrom(talent.GetType()))

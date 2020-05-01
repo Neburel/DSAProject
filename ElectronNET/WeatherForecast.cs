@@ -1,6 +1,6 @@
 using System;
 
-namespace ElectronNET
+namespace ElectronNet
 {
     public class WeatherForecast
     {

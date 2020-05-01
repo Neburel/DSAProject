@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;
 
-namespace ElectronNET
+namespace ElectronNet
 {
     public class Startup
     {
@@ -67,14 +67,14 @@ namespace ElectronNET
 
                 spa.Options.SourcePath = "ClientApp";
 
-                if (env.IsDevelopment())
-                {
-                    spa.UseAngularCliServer(npmScript: "start");
-                }
+                //if (env.IsDevelopment())
+                //{
+                //    spa.UseAngularCliServer(npmScript: "start");
+                //}
             });
 
+            // Open the Electron-Window here
             Task.Run(async () => await Electron.WindowManager.CreateWindowAsync());
         }
     }
-
 }

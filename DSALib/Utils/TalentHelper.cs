@@ -560,11 +560,6 @@ namespace DSAProject.Classes
             ret = new List<ITalent>(ret.OrderBy(x => x.Name));
             foreach (var talentwithDeduction in talentsWithDeduction)
             {
-                if (talentwithDeduction.Key.Name == "Alchimie")
-                {
-
-                }
-
                 var deductionTalentStrings = talentwithDeduction.Value.GetSplitDeduction();
                 foreach (var deductionString in deductionTalentStrings)
                 {
@@ -572,7 +567,7 @@ namespace DSAProject.Classes
                     var valueint            = -1;
                     var mainReqg            = new Regex("[(][+][0-9]?[0-9][)]");
                     var innerReqg           = new Regex("[0-9]?[0-9]");
-                    var stringTalentReqg    = new Regex("[(][A-Za-zäü]{1,}[ ]?[A-Za-zäü]{1,}[)]");
+                    var stringTalentReqg    = new Regex("[(][A-Za-zäüß]{1,}[ ]?[A-Za-zäüß]{1,}[)]");
 
                     if (mainReqg.IsMatch(deductionString))
                     {
@@ -622,6 +617,8 @@ namespace DSAProject.Classes
             foreach (var talentWithRequirement in talentWithRequirements)
             {
                 var splitRequirement = talentWithRequirement.Value.GetSplitRequirement();
+
+
                 foreach (var requirementString in splitRequirement)
                 {
                     ITalentRequirement requirement;
