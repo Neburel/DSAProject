@@ -28,11 +28,11 @@ namespace DSAProject.Classes.Charakter.Talente.TalentDeductions
         public string GetDeductionString()
         {
             var ret = string.Empty;
-            if (typeof(AbstractTalentFighting).IsAssignableFrom(Talent.GetType()))
+            if (Talent != null && typeof(AbstractTalentFighting).IsAssignableFrom(Talent.GetType()))
             {
                 ret = Talent.Name;
-            }
-            else
+            }           
+            else if(Talent != null)
             {
                 ret = Talent.ToString();
             }

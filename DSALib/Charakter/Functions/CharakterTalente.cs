@@ -1,4 +1,5 @@
 ﻿using DSALib;
+using DSALib.Exceptions;
 using DSALib.Utils;
 using DSAProject.Classes.Charakter.Talente;
 using DSAProject.Classes.Charakter.Talente.TalentDeductions;
@@ -15,7 +16,7 @@ namespace DSAProject.Classes.Charakter
 {
     public class CharakterTalente
     {
-        #region Events#
+        #region Events
         public event EventHandler<ITalent> TaWChanged;
         public event EventHandler<ITalent> ATChanged;
         public event EventHandler<ITalent> PAChanged;
@@ -28,6 +29,10 @@ namespace DSAProject.Classes.Charakter
         internal Dictionary<AbstractTalentFighting, int> ATDictionary { get; set; } = new Dictionary<AbstractTalentFighting, int>();
         internal Dictionary<AbstractTalentFighting, int> PADictionary { get; set; } = new Dictionary<AbstractTalentFighting, int>();
         internal Dictionary<TalentSpeaking, bool> MotherDicionary { get; set; } = new Dictionary<TalentSpeaking, bool>();
+        /// <summary>
+        /// Beschreibt die zuordnung welches Talent welche Deduction ausgewählt hat
+        /// </summary>
+        internal Dictionary<ITalent, TalentDeductionTalent> DeductionTalent { get; set; } = new Dictionary<ITalent, TalentDeductionTalent>();
         #endregion
         #region Variables
         private readonly List<TalentDeductionTalent> aktivDeductionList  = new List<TalentDeductionTalent>();
@@ -42,47 +47,7 @@ namespace DSAProject.Classes.Charakter
         public CharakterTalente(ICharakter charakter)
         {
             this.charakter              = charakter;
-
-            TaWChanged += (sender, args) =>
-            {
-                CalculateDeductions(args);
-            };
         }
-        private void CalculateDeductions(ITalent talent)
-        {
-            if (!Settings.AutoDeduction) return;
-            var maxTaw = GetMaxTaw(talent);
-            var talentDeductionList = talent.Deductions.Where(x => x.GetType() == typeof(TalentDeductionTalent)).ToList();
-            foreach (TalentDeductionTalent deduction in talentDeductionList)
-            {
-                var modValue = 0;
-                var itemTalent = deduction.Talent;
-
-                if (deduction.Value <= maxTaw)
-                {
-                    if (!aktivDeductionList.Contains(deduction))
-                    {
-                        modValue = 1;
-                        aktivDeductionList.Add(deduction);
-                    }
-                }
-                else
-                {
-                    if (aktivDeductionList.Contains(deduction))
-                    {
-                        modValue = -1;
-                        aktivDeductionList.Remove(deduction);
-                    }
-                }
-                if (modValue != 0)
-                {
-                    var currentValue = GetDeductionValue(deduction.Talent);
-                    SetDeductionValue(itemTalent, currentValue + modValue);
-                    TaWChanged(itemTalent, itemTalent);
-                }
-            }
-        }
-
         public void SetTAW(ITalent talent, int taw)
         {
             if (talent == null) throw new ArgumentNullException(nameof(talent));
@@ -169,15 +134,38 @@ namespace DSAProject.Classes.Charakter
                 MotherDicionary.Add(talent, value);
             }
         }
-        private void SetDeductionValue(ITalent talent, int value)
+        public void SetDeduction(ITalent talent, TalentDeductionTalent deduction)
         {
+            if (talent == null) throw new TalentException(ErrorCode.InvalidValue, "");
+            if (deduction != null && !talent.Deductions.Contains(deduction)) throw new TalentException(ErrorCode.InvalidValue, deduction.GetDeductionString() + " ist keine Deduction vom Talent: " + talent.Name);
+            if (DeductionTalent.TryGetValue(talent, out TalentDeductionTalent currentDeduction))
+            {
+                SetDeductionValue(currentDeduction, false);
+                DeductionTalent.Remove(talent);
+            }
+            if(deduction != null)
+            {
+                SetDeductionValue(deduction, true);
+                DeductionTalent.Add(talent, deduction);
+            }
+        }
+        private void SetDeductionValue(TalentDeductionTalent deduction, bool add)
+        {
+            var value = -1;
+            if (add) value = 1;
+
+            var talent = deduction.Talent;
+            var currentValue = GetDeductionValue(deduction.Talent) + value;
+
             if (deductionDictionary.ContainsKey(talent))
             {
                 deductionDictionary.Remove(talent);
             }
-            deductionDictionary.Add(talent, value);
-        }
+            deductionDictionary.Add(talent, currentValue);
 
+           
+            TaWChanged(this, talent);
+        }
         /// <summary>
         /// Ruft die manuell gesetzen TaW ab
         /// </summary>
@@ -198,8 +186,7 @@ namespace DSAProject.Classes.Charakter
         public int GetModTaW(ITalent talent)
         {
             var traitValue = charakter.Traits.GetTawBonus(talent);
-            deductionDictionary.TryGetValue(talent, out int deductionValue);
-
+            var deductionValue = GetDeductionValue(talent);
             return traitValue + deductionValue;
         }
         /// <summary>
@@ -257,6 +244,15 @@ namespace DSAProject.Classes.Charakter
             var bonusTaw = GetModPA(talent);
 
             return taw + bonusTaw;
+        }
+        public TalentDeductionTalent GetDeduction(ITalent talent)
+        {
+            if(talent == null) throw new TalentException(ErrorCode.InvalidValue, "");
+            if(DeductionTalent.TryGetValue(talent, out TalentDeductionTalent deduction))
+            {
+                return deduction;
+            }
+            return null;
         }
         private int GetDeductionValue(ITalent talent)
         {

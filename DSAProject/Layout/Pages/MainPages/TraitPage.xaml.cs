@@ -3,9 +3,11 @@ using DSALib.Charakter.Other;
 using DSAProject.Classes.Game;
 using DSAProject.Layout.ViewModels;
 using DSAProject.util;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
@@ -23,6 +25,8 @@ namespace DSAProject.Layout.Pages
         }
 
         #region Variables
+        private string filterText = "";
+        private List<Trait> traitList = new List<Trait>();
         private readonly TraitPageViewModel viewModel = new TraitPageViewModel();
         private readonly TraitViewModel createNewTrait = new TraitViewModel() { Trait = new Trait { Description = "CreateNew" } };
         private TraitType? trailFilter = null;
@@ -45,11 +49,13 @@ namespace DSAProject.Layout.Pages
                 object item_Template = null;
                 if (value == TraitStyleEn.Min)
                 {
+                    viewModel.IsSeachVisible = Visibility.Collapsed;
                     Resources.TryGetValue("DataTemplateHeaderMin", out header_Template);
                     Resources.TryGetValue("DataTemplateItemMin", out item_Template);
                 }
                 else if(value == TraitStyleEn.Max)
                 {
+                    viewModel.IsSeachVisible = Visibility.Visible;
                     Resources.TryGetValue("DataTemplateHeaderMax", out header_Template);
                     Resources.TryGetValue("DataTemplateItemMax", out item_Template);
                 }
@@ -58,35 +64,50 @@ namespace DSAProject.Layout.Pages
                 XAML_TraitPageListView.ItemTemplate = (Windows.UI.Xaml.DataTemplate)item_Template;
             }
         }
-        #endregion
-
+        private List<TraitType> SelectionList { get; set; } = new List<TraitType>();
         public TraitType TraitFilter
         {
             set
             {
                 trailFilter = value;
-                List<Trait> traits;
                 if (value != TraitType.Keiner)
                 {
-                    traits = Game.Charakter.Traits.GetTraits().Where(x => x.TraitType == value).ToList();
+                    traitList = Game.Charakter.Traits.GetTraits().Where(x => x.TraitType == value).ToList();
                 }
                 else
                 {
-                    traits = Game.Charakter.Traits.GetTraits();
+                    traitList = Game.Charakter.Traits.GetTraits();
                 }
-                CreateNewItemList(traits);
+                CreateNewItemList(traitList);
                 trailFilter = value;
             }
         }
+        #endregion
         public TraitPage()
         {
             this.InitializeComponent();
+            foreach (TraitType traitType in (TraitType[])Enum.GetValues(typeof(TraitType))) 
+            {
+                SelectionList.Add(traitType);
+            }
         }
+        #region PageHandler
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TraitFilter = (TraitType) ((ComboBox)sender).SelectedItem;
+        }
+        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            filterText = sender.Text.ToLower();
+            CreateNewItemList(traitList);
+        }
+        #endregion
         private void CreateNewItemList(List<Trait> traits)
         {
             var list = new List<TraitViewModel>();
+            var textFilterTraitList = traits.Where(x => x.Title.ToLower().Contains(filterText.ToLower())).ToList();
 
-            foreach (var item in traits)
+            foreach (var item in textFilterTraitList)
             {
                 var newWrapper = new TraitViewModel
                 {
@@ -95,7 +116,7 @@ namespace DSAProject.Layout.Pages
                 };
                 list.Add(newWrapper);
             }
-
+            
             viewModel.Traits = new ObservableCollection<TraitViewModel>(list)
             {
                 createNewTrait
@@ -121,15 +142,15 @@ namespace DSAProject.Layout.Pages
                 set;
             } = new TraitPageHeader();
 
-            private ObservableCollection<TraitViewModel> traits;
+            public Visibility IsSeachVisible
+            {
+                get => Get<Visibility>();
+                set => Set(value);
+            }          
             public ObservableCollection<TraitViewModel> Traits
             {
-                get => traits;
-                set
-                {
-                    traits = value;
-                    OnPropertyChanged(nameof(Traits));
-                }
+                get => Get<ObservableCollection<TraitViewModel>>();
+                set => Set(value);
             }
         }
     }

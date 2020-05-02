@@ -199,8 +199,6 @@ namespace DSAProject.Layout.Pages
             else
             {
                 var charakter = Game.Charakter;
-                System.Console.WriteLine(Game.Charakter);
-
                 charakter.Descriptions.AddDescripton(siteDescriptor);
                 ret = siteDescriptor;
             }

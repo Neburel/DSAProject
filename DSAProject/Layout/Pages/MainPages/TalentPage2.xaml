@@ -143,14 +143,17 @@
                     VerticalAlignment="Stretch">
 
                     <ComboBox 
-                        Visibility="{x:Bind DeductionChooserVisibility}"
-                        SelectedValue="{x:Bind ChoosedDeduction, Mode=TwoWay}"
+                        Visibility="{x:Bind DeductionChooserVisibility}"     
                         PlaceholderText="Wähle Ableitung"
                         BorderBrush="Transparent" 
                         HorizontalContentAlignment="Stretch" 
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
-                        VerticalContentAlignment="Center" FontSize="10" ItemsSource="{x:Bind TalentDeductionList}"/>
+                        VerticalContentAlignment="Center" FontSize="10" 
+                        ItemsSource="{x:Bind TalentDeductionList }"
+                        SelectedIndex="{x:Bind SelectedIndex, Mode=TwoWay}"
+                        SelectedItem="{x:Bind DeductionSelectedItem, Mode=TwoWay}"
+                        SelectedValue="{x:Bind DeductionSelectedValue, Mode=OneWay}"/>
                 </Border>
 
                 <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="10" Text="{x:Bind DiceResult, Mode=TwoWay}" Style="{StaticResource PageNormalMinorText}"/>
