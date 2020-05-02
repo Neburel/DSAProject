@@ -9,6 +9,7 @@ using DSALib.JSON;
 using DSALib.Utils;
 using DSAProject.Classes.Charakter.Description;
 using DSAProject.Classes.Charakter.Talente;
+using DSAProject.Classes.Charakter.Talente.TalentDeductions;
 using DSAProject.Classes.Charakter.Talente.TalentLanguage;
 using DSAProject.Classes.Interfaces;
 
@@ -135,6 +136,7 @@ namespace DSAProject.Classes.Charakter
             charakter.TalentTAW = new Dictionary<Guid, int>();
             charakter.TalentAT = new Dictionary<Guid, int>();
             charakter.TalentPA = new Dictionary<Guid, int>();
+            charakter.DeductionTalent = new Dictionary<Guid, Guid>();
             charakter.MotherLanguages = new Dictionary<Guid, bool>();
 
 
@@ -162,6 +164,10 @@ namespace DSAProject.Classes.Charakter
             foreach (var item in Talente.MotherDicionary)
             {
                 charakter.MotherLanguages.Add(item.Key.ID, item.Value);
+            }
+            foreach (var item in Talente.DeductionTalent)
+            {
+                charakter.DeductionTalent.Add(item.Key.ID, item.Value.Talent.ID);
             }
 
             var allTalents = new List<ITalent>(Talente.TAWDictionary.Keys);
@@ -251,7 +257,8 @@ namespace DSAProject.Classes.Charakter
             #region Nullprüfungen
             if (jsonCharakter == null) throw new ArgumentNullException(nameof(jsonCharakter));
             else if (talentListe == null) throw new ArgumentNullException(nameof(talentListe));
-            else if (jsonCharakter.MotherLanguages == null) jsonCharakter.MotherLanguages = new Dictionary<Guid, bool>();
+            if (jsonCharakter.MotherLanguages == null) jsonCharakter.MotherLanguages = new Dictionary<Guid, bool>();
+            if (jsonCharakter.DeductionTalent == null) jsonCharakter.DeductionTalent = new Dictionary<Guid, Guid>();
             #endregion
             CreateNew(jsonCharakter.ID);
             Name = jsonCharakter.Name;
@@ -383,6 +390,20 @@ namespace DSAProject.Classes.Charakter
             {
                 var talent = talentListe.Where(x => x.ID == item.Key).FirstOrDefault();
                 Talente.SetMother((TalentSpeaking)talent, item.Value);
+            }
+            foreach (var item in jsonCharakter.DeductionTalent)
+            {
+                try
+                {
+                    var talent = talentListe.Where(x => x.ID == item.Key).FirstOrDefault();
+                    var talentDeductions = talent.Deductions.Where(x => x.GetType().IsAssignableFrom(typeof(TalentDeductionTalent))).Cast<TalentDeductionTalent>().ToList();
+                    var deduction = talentDeductions.Where(x => x.Talent.ID == item.Value).FirstOrDefault();
+                    Talente.SetDeduction(talent, deduction);
+                }
+                catch (Exception ex)
+                {
+                    LogStrings.LogString(LogLevel.ErrorLog, "Fehler beim Laden einer Deduction: " + item.Key + " " + item.Value);
+                }
             }
             #endregion
             #region Descriptoren Laden

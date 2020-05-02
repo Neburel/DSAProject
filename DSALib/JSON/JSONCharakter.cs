@@ -51,5 +51,7 @@ namespace DSALib.Classes.JSON
         public List<JSONTrait> Traits { get; set; }
         [DataMember]
         public JSONMoney Money { get; set; }
+        [DataMember]
+        public Dictionary<Guid, Guid> DeductionTalent { get; set; }
     }
 }

@@ -162,9 +162,9 @@ namespace DSAProject.Classes.Charakter
                 deductionDictionary.Remove(talent);
             }
             deductionDictionary.Add(talent, currentValue);
-
+            
            
-            TaWChanged(this, talent);
+            TaWChanged?.Invoke(this, talent);
         }
         /// <summary>
         /// Ruft die manuell gesetzen TaW ab
