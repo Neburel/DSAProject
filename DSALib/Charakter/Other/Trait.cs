@@ -17,6 +17,7 @@ namespace DSALib.Charakter.Other
         public event EventHandler<ITalent> TaWChanged;
         public event EventHandler<AbstractTalentFighting> ATChanged;
         public event EventHandler<AbstractTalentFighting> PAChanged;
+        public event EventHandler<AbstractTalentFighting> BLChanged;
         public event EventHandler<int> APEarnedChanged;
         public event EventHandler<int> APInvestChanged;
         #endregion
@@ -29,6 +30,7 @@ namespace DSALib.Charakter.Other
         private Dictionary<ITalent, int> tawBonus;
         private Dictionary<AbstractTalentFighting, int> atBonus;
         private Dictionary<AbstractTalentFighting, int> paBonus;
+        private Dictionary<AbstractTalentFighting, int> blBonus;
         #endregion
         #region Properties
         public int APEarned 
@@ -66,6 +68,7 @@ namespace DSALib.Charakter.Other
             tawBonus = new Dictionary<ITalent, int>();
             atBonus = new Dictionary<AbstractTalentFighting, int>();
             paBonus = new Dictionary<AbstractTalentFighting, int>();
+            blBonus = new Dictionary<AbstractTalentFighting, int>();
         }
 
         internal List<CharakterAttribut> UsedAttributs()
@@ -136,6 +139,15 @@ namespace DSALib.Charakter.Other
                 PAChanged?.Invoke(this, item);
             }
         }
+        public void SetBLBonus(AbstractTalentFighting item, int value)
+        {
+            if (item != null)
+            {
+                blBonus.Remove(item);
+                blBonus.Add(item, value);
+                BLChanged?.Invoke(this, item);
+            }
+        }
 
         public int GetValue(CharakterAttribut item)
         {
@@ -192,6 +204,10 @@ namespace DSALib.Charakter.Other
         {
             return new Dictionary<AbstractTalentFighting, int>(paBonus);
         }
+        public Dictionary<AbstractTalentFighting, int> GetBLBonus()
+        {
+            return new Dictionary<AbstractTalentFighting, int>(blBonus);
+        }
 
         public int GetTawBonus(ITalent item)
         {
@@ -218,6 +234,17 @@ namespace DSALib.Charakter.Other
         public int GetPABonus(AbstractTalentFighting item)
         {
             if (paBonus.TryGetValue(item, out int value))
+            {
+                return value;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        public int GetBLBonus(AbstractTalentFighting item)
+        {
+            if (blBonus.TryGetValue(item, out int value))
             {
                 return value;
             }

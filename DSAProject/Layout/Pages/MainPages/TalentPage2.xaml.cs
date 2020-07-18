@@ -1,4 +1,5 @@
 ﻿using DSAProject.Classes.Charakter.Talente;
+using DSAProject.Classes.Charakter.Talente.TalentFighting;
 using DSAProject.Classes.Game;
 using DSAProject.Classes.Interfaces;
 using DSAProject.Layout.ViewModels;
@@ -58,12 +59,19 @@ namespace DSAProject.Layout.Pages.MainPages
             //Dieser Code ist verbesserbar, aktuell nur funktional wenn die liste nur einen typen enthält
             if (typeof(AbstractTalentFighting).IsAssignableFrom(list[0].GetType()))
             {
-                viewModel.Header.ATPAVisibility = true;
+                viewModel.Header.ATVisibility = true;
+                viewModel.Header.PABLVisibility = true;
                 viewModel.Header.ProbeTextVisibility = false;
+
+                if (typeof(TalentRange).IsAssignableFrom(list[0].GetType()))
+                {
+                    viewModel.Header.PABLVisibility = false;
+                }
             }
             if (typeof(AbstractTalentGeneral).IsAssignableFrom(list[0].GetType()))
             {
-                viewModel.Header.ATPAVisibility = false;
+                viewModel.Header.ATVisibility = false;
+                viewModel.Header.PABLVisibility = false;
                 viewModel.Header.ProbeTextVisibility = true;
             }
 
@@ -112,7 +120,12 @@ namespace DSAProject.Layout.Pages.MainPages
     }
     internal class TalentPageHeader : AbstractPropertyChanged
     {
-        public bool ATPAVisibility 
+        public bool ATVisibility 
+        {
+            get => Get<bool>();
+            set => Set(value);
+        }
+        public bool PABLVisibility
         {
             get => Get<bool>();
             set => Set(value);

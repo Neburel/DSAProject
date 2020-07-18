@@ -13,6 +13,7 @@ namespace DSAProject.Classes.Interfaces
     {
         Guid ID { get; }
         string Name { get; set; }
+        CharakterSpellBook CharakterSpellBook { get; }
         CharakterValues Values { get; }
         CharakterAttribute Attribute { get; }
         CharakterResources Resources { get;}

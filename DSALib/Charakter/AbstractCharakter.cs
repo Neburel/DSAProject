@@ -32,6 +32,7 @@ namespace DSAProject.Classes.Charakter
         public CharakterTraits Traits { get; private set; }
         public CharakterOther Other { get; private set; }
         public Money Money { get; private set; }
+        public CharakterSpellBook CharakterSpellBook { get; private set; }
         #endregion
         public AbstractCharakter(Guid id)
         {
@@ -42,14 +43,15 @@ namespace DSAProject.Classes.Charakter
         private void CreateNew(Guid id)
         {
             ID = id;
-            Money           = new Money();
-            Traits          = new CharakterTraits();
-            Talente         = new CharakterTalente(this);
-            Descriptions    = new CharakterDescription();
-            Other           = new CharakterOther();
-            Attribute       = CreateAttribute();
-            Resources       = CreateResources();
-            Values          = CreateValues();
+            Money               = new Money();
+            Traits              = new CharakterTraits();
+            Talente             = new CharakterTalente(this);
+            Descriptions        = new CharakterDescription();
+            CharakterSpellBook  = new CharakterSpellBook();
+            Other               = new CharakterOther();
+            Attribute           = CreateAttribute();
+            Resources           = CreateResources();
+            Values              = CreateValues();
 
             if (Attribute == null)
             {
@@ -136,6 +138,7 @@ namespace DSAProject.Classes.Charakter
             charakter.TalentTAW = new Dictionary<Guid, int>();
             charakter.TalentAT = new Dictionary<Guid, int>();
             charakter.TalentPA = new Dictionary<Guid, int>();
+            charakter.TalentBL = new Dictionary<Guid, int>();
             charakter.DeductionTalent = new Dictionary<Guid, Guid>();
             charakter.MotherLanguages = new Dictionary<Guid, bool>();
 
@@ -147,19 +150,28 @@ namespace DSAProject.Classes.Charakter
                     charakter.TalentTAW.Add(item.Key.ID, item.Value);
                 }
             }
-            foreach (var item in Talente.ATDictionary)
+
+            var allTalents = new List<ITalent>(Talente.TAWDictionary.Keys);
+            foreach (var fightingDictionaryList in Talente.FightingValueDictionary)
             {
-                if (item.Value > 0)
+                Dictionary<AbstractTalentFighting, int> fightingDictioary = fightingDictionaryList.Value;
+                foreach (var item in fightingDictioary)
                 {
-                    charakter.TalentAT.Add(item.Key.ID, item.Value);
+                    if(fightingDictionaryList.Key == FightingValue.Attacke)
+                    {
+                        charakter.TalentAT.Add(item.Key.ID, item.Value);
+                    }
+                    else if(fightingDictionaryList.Key == FightingValue.Blocken)
+                    {
+                        charakter.TalentPA.Add(item.Key.ID, item.Value);
+                    }
+                    else
+                    {
+                        charakter.TalentBL.Add(item.Key.ID, item.Value);
+                    }
                 }
-            }
-            foreach (var item in Talente.PADictionary)
-            {
-                if (item.Value > 0)
-                {
-                    charakter.TalentPA.Add(item.Key.ID, item.Value);
-                }
+                allTalents.AddRange(fightingDictioary.Keys);
+               
             }
             foreach (var item in Talente.MotherDicionary)
             {
@@ -170,9 +182,6 @@ namespace DSAProject.Classes.Charakter
                 charakter.DeductionTalent.Add(item.Key.ID, item.Value.Talent.ID);
             }
 
-            var allTalents = new List<ITalent>(Talente.TAWDictionary.Keys);
-            allTalents.AddRange(Talente.ATDictionary.Keys);
-            allTalents.AddRange(Talente.PADictionary.Keys);
 
             charakter.TalentGuidsNames = new Dictionary<Guid, string>();
             foreach (var item in allTalents)
@@ -213,8 +222,8 @@ namespace DSAProject.Classes.Charakter
                     ValueValues     = new Dictionary<string, int>(),
                     TawBonus        = new Dictionary<Guid, int>(),
                     AtBonus         = new Dictionary<Guid, int>(),
-                    PaBonus         = new Dictionary<Guid, int>()
-
+                    PaBonus         = new Dictionary<Guid, int>(),
+                    BLBonus         = new Dictionary<Guid, int>()                    
                 };
                 foreach (var innerItem in item.UsedAttributs())
                 {
@@ -239,6 +248,10 @@ namespace DSAProject.Classes.Charakter
                 foreach (var innerItem in item.GetPABonus())
                 {
                     jTrait.PaBonus.Add(innerItem.Key.ID, innerItem.Value);
+                }
+                foreach (var innerItem in item.GetBLBonus())
+                {
+                    jTrait.BLBonus.Add(innerItem.Key.ID, innerItem.Value);
                 }
                 charakter.Traits.Add(jTrait);
             }
@@ -344,6 +357,17 @@ namespace DSAProject.Classes.Charakter
                             trait.SetPABonus((AbstractTalentFighting)talent, innerItems.Value);
                         }
                     }
+                    if (item.BLBonus != null)
+                    {
+                        foreach (var innerItems in item.BLBonus)
+                        {
+                            var talent = talentListe.Where(x => x.ID == innerItems.Key).FirstOrDefault();
+                            if (talent != null && typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
+                            {
+                                trait.SetBLBonus((AbstractTalentFighting)talent, innerItems.Value);
+                            }
+                        }
+                    }
 
                     Traits.AddTrait(trait);
                 }
@@ -384,6 +408,21 @@ namespace DSAProject.Classes.Charakter
                 else
                 {
                     TalentMissing(jsonCharakter, item.Key);
+                }
+            }
+            if (jsonCharakter.TalentBL != null)
+            {
+                foreach (var item in jsonCharakter.TalentBL)
+                {
+                    var talent = talentListe.Where(x => x.ID == item.Key).FirstOrDefault();
+                    if (talent != null && typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
+                    {
+                        Talente.SetBL((AbstractTalentFighting)talent, item.Value);
+                    }
+                    else
+                    {
+                        TalentMissing(jsonCharakter, item.Key);
+                    }
                 }
             }
             foreach (var item in jsonCharakter.MotherLanguages)

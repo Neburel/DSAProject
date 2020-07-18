@@ -89,7 +89,6 @@ namespace DSALib.Charakter.Functions
         {
             get => APEarnedMax - APInvestedMax;
         }        
-        
         public CharakterOther()
         {
             ChangedEarnedAP += (sender, arg) =>
@@ -98,13 +97,11 @@ namespace DSALib.Charakter.Functions
                 LevelChanged?.Invoke(this, Level);
             };
         }
-
         private int CalculateLevel()
         {
             var maxAP = APEarnedMax;
-            var result = 0;
-
-            if(maxAP > 1000)
+            int result;
+            if (maxAP > 1000)
             {
                 result = maxAP / 1000 + 4;
             }
@@ -115,7 +112,6 @@ namespace DSALib.Charakter.Functions
 
             return 1 + result;
         }
-
         #region EventHelper
         private void ChangedAPEarned()
         {

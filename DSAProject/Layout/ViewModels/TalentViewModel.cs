@@ -28,7 +28,18 @@ namespace DSAProject.Layout.ViewModels
             get => Get<int>();
             set => Set(value);
         }
-        public bool ATPAVisibility
+        public int BL
+        {
+            get => Get<int>();
+            set => Set(value);
+        }
+
+        public bool ATVisibility
+        {
+            get => Get<bool>();
+            set => Set(value);
+        }
+        public bool PABLVisibility
         {
             get => Get<bool>();
             set => Set(value);
@@ -69,6 +80,11 @@ namespace DSAProject.Layout.ViewModels
             set => Set(value);
         }
         public string PAToolTipText
+        {
+            get => Get<string>();
+            set => Set(value);
+        }
+        public string BLToolTipText
         {
             get => Get<string>();
             set => Set(value);
@@ -141,79 +157,24 @@ namespace DSAProject.Layout.ViewModels
                 }
                 else if (args.PropertyName == nameof(PA))
                 {
-                    if (!typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
-                    {
-                        PA = 0;
-                        return;
-                    }
-
                     var atf = (AbstractTalentFighting)talent;
-                    var value = PA;
-                    var maxValue = Game.Charakter.Talente.GetMaxPA(atf);
-
-                    if (maxValue != value)
-                    {
-                        var aktValue = Game.Charakter.Talente.GetPA(atf);
-                        var modValue = Game.Charakter.Talente.GetModPA(atf);
-                        var changeValue = value - maxValue;
-                        var newValue = aktValue + changeValue;
-
-                        Game.Charakter.Talente.SetPA(atf, newValue);
-
-                        if (Game.Charakter.Talente.GetMaxPA(atf) != value)
-                        {
-                            //Wert kann nicht gesetzen werden da z.B. der TaW zu klein ist
-                            PA = maxValue;
-                        }
-                        PAToolTipText = newValue + "(" + modValue + ")";
-                    }
-                    else
-                    {
-                        var aktValue = Game.Charakter.Talente.GetPA(atf);
-                        var modValue = Game.Charakter.Talente.GetModTaW(atf);
-
-                        PAToolTipText = aktValue + "(" + modValue + ")";
-                    }
-
-                    ProbeValue = Game.Charakter.Talente.GetProbeString(talent, 0, 0);
+                    PA = CalculateFightingValue(DSALib.FightingValue.Parade, atf, PA);
+                    PAToolTipText = GetTooltip(DSALib.FightingValue.Parade,  atf);
+                    ProbeValue = Game.Charakter.Talente.GetProbeString(talent);
                 }
                 else if (args.PropertyName == nameof(AT))
                 {
-                    if (!typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
-                    {
-                        AT = 0;
-                        return;
-                    }
-
                     var atf = (AbstractTalentFighting)talent;
-                    var value = AT;
-                    var maxValue = Game.Charakter.Talente.GetMaxAT(atf);
-
-                    if (maxValue != value)
-                    {
-                        var aktValue = Game.Charakter.Talente.GetAT(atf);
-                        var modValue = Game.Charakter.Talente.GetModAT(atf);
-                        var changeValue = value - maxValue;
-                        var newValue = aktValue + changeValue;
-
-                        Game.Charakter.Talente.SetAT(atf, newValue);
-
-                        if (Game.Charakter.Talente.GetMaxAT(atf) != value)
-                        {
-                            //Wert kann nicht gesetzen werden da z.B. der TaW zu klein ist
-                            AT = maxValue;
-                        }
-                        ATToolTipText = newValue + "(" + modValue + ")";
-                    }
-                    else
-                    {
-                        var aktValue = Game.Charakter.Talente.GetAT(atf);
-                        var modValue = Game.Charakter.Talente.GetModAT(atf);
-
-                        ATToolTipText = aktValue + "(" + modValue + ")";
-                    }
-
-                    ProbeValue = Game.Charakter.Talente.GetProbeString(talent, 0, 0);
+                    AT = CalculateFightingValue(DSALib.FightingValue.Attacke, atf, AT);
+                    PAToolTipText = GetTooltip(DSALib.FightingValue.Attacke, atf);
+                    ProbeValue = Game.Charakter.Talente.GetProbeString(talent);
+                }
+                else if (args.PropertyName == nameof(BL))
+                {
+                    var atf = (AbstractTalentFighting)talent;
+                    BL = CalculateFightingValue(DSALib.FightingValue.Blocken, atf, BL) ;
+                    BLToolTipText = GetTooltip(DSALib.FightingValue.Blocken, atf);
+                    ProbeValue = Game.Charakter.Talente.GetProbeString(talent);
                 }
                 else if (args.PropertyName == nameof(DeductionSelectedItem))
                 {
@@ -245,7 +206,7 @@ namespace DSAProject.Layout.ViewModels
         private void TalentChanged(ITalent talent)
         {
             var talenttype = talent.GetType();
-            ProbeValue = Game.Charakter.Talente.GetProbeString(talent, 0, 0);
+            ProbeValue = Game.Charakter.Talente.GetProbeString(talent);
             TaW = Game.Charakter.Talente.GetMaxTaw(talent); //TAW wird beidseitig gesetzt, aufgrund dessen wird die Propertie genutzt um eine änderung festzusstellen und weiterzugeben
 
             var freeText = string.Empty;
@@ -311,7 +272,7 @@ namespace DSAProject.Layout.ViewModels
                 RequirementStringFreeText = freeText;
                 RequirementStringRest = restString;
                 #endregion
-                ATPAVisibility = false;
+                ATVisibility = false;
                 ProbeTextVisibility = true;
             }
             else if (typeof(AbstractTalentFighting).IsAssignableFrom(talenttype))
@@ -319,9 +280,17 @@ namespace DSAProject.Layout.ViewModels
                 var atf = (AbstractTalentFighting)talent;
                 AT = Game.Charakter.Talente.GetMaxAT(atf);
                 PA = Game.Charakter.Talente.GetMaxPA(atf);
+                BL = Game.Charakter.Talente.GetMaxBL(atf);
 
-                ATPAVisibility = true;
+                ATVisibility = true;
+                PABLVisibility = true;
                 ProbeTextVisibility = false;
+
+                if (typeof(TalentRange).IsAssignableFrom(talenttype))
+                {
+                    PABLVisibility = false;
+                }
+
             }
         }
         private void DiceChanged(int diceResult)
@@ -376,7 +345,7 @@ namespace DSAProject.Layout.ViewModels
                 SetTaWToolTipText();
             }
 
-            ProbeValue = Game.Charakter.Talente.GetProbeString(talent, 0, 0);
+            ProbeValue = Game.Charakter.Talente.GetProbeString(talent);
         }
 
         private string GetString(string newValue, string currentText, string secondControll = null)
@@ -404,6 +373,39 @@ namespace DSAProject.Layout.ViewModels
         private void SetTaWToolTipText(int aktValue, int modValue)
         {
             TaWToolTipText = aktValue + "(" + modValue + ")";
+        }
+        private int CalculateFightingValue(DSALib.FightingValue fightingvalue, AbstractTalentFighting talent, int value)
+        {
+            if (typeof(TalentRange).IsAssignableFrom(talent.GetType()) && fightingvalue != DSALib.FightingValue.Attacke)
+            {
+                return value;
+            }
+                       
+            var maxValue = Game.Charakter.Talente.GetMaxFightingValue(fightingvalue, talent);
+
+            if (maxValue != value)
+            {
+                var aktValue = Game.Charakter.Talente.GetFightingValue(fightingvalue, talent);
+                var changeValue = value - maxValue;
+                var newValue = aktValue + changeValue;
+
+                Game.Charakter.Talente.SetFightingValue(fightingvalue, talent, newValue);
+
+                if (Game.Charakter.Talente.GetMaxFightingValue(fightingvalue, talent) != value)
+                {
+                    //Wert kann nicht gesetzen werden da z.B. der TaW zu klein ist
+                    return maxValue;
+                }
+            }
+
+            return value;
+        }
+        private string GetTooltip(DSALib.FightingValue fightingvalue, AbstractTalentFighting talent)
+        {
+            var aktValue = Game.Charakter.Talente.GetFightingValue(fightingvalue, talent);
+            var modValue = Game.Charakter.Talente.GetModFightingValue(fightingvalue, talent);
+
+            return aktValue + "(" + modValue + ")";
         }
     }
     public class DiceChanger : AbstractPropertyChanged

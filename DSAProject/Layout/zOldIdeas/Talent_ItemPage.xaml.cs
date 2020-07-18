@@ -69,17 +69,11 @@ namespace DSAProject.Layout.Pages.ItemPages
 
                 ViewModel.IsATPAVisibility = Visibility.Visible;
 
-                Game.Charakter.Talente.PAChanged += (sender, args) =>
+                Game.Charakter.Talente.FightingValueChanged += (sender, args) =>
                 {
-                    if (args == talent)
+                    if(args == talent)
                     {
                         SetValue(TraitTalentBonusSelectionPage_Mode.PA, 0);
-                    }
-                };
-                Game.Charakter.Talente.ATChanged += (sender, args) =>
-                {
-                    if (args == talent)
-                    {
                         SetValue(TraitTalentBonusSelectionPage_Mode.AT, 0);
                     }
                 };
@@ -165,7 +159,7 @@ namespace DSAProject.Layout.Pages.ItemPages
                 }
 
                 ViewModel.TAW = (Game.Charakter.Talente.GetTAW(Talent) + bonusTAW).ToString();
-                ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent, bonusAT, bonusPA);
+                ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent);
 
                 view = XAML_TaW;
             }
@@ -182,7 +176,7 @@ namespace DSAProject.Layout.Pages.ItemPages
                 }
 
                 ViewModel.AT = (Game.Charakter.Talente.GetAT(talent) + bonusAT).ToString();
-                ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent, bonusAT, bonusPA);
+                ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent);
 
                 view = XAML_AT;
             }
@@ -199,7 +193,7 @@ namespace DSAProject.Layout.Pages.ItemPages
                 }
 
                 ViewModel.PA = (Game.Charakter.Talente.GetPA(talent) + bonusPA).ToString();
-                ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent, bonusAT, bonusPA);
+                ViewModel.Probe = Game.Charakter.Talente.GetProbeString(Talent);
 
                 view = XAML_PA;
             }

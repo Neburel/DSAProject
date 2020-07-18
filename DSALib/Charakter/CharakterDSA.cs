@@ -42,8 +42,8 @@ namespace DSAProject.Classes.Charakter
                 new ArtifactControl(Resources, Attribute),
                 new WoundSwell(Attribute),
                 new Rapture(),
-
-                new SpeedLand()
+                new SpeedLand(),
+                new Repute(),
             };
             return new CharakterValues(list);
         }

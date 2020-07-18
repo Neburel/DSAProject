@@ -10,7 +10,7 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
         internal override List<CharakterAttribut> attributeList => new List<CharakterAttribut>()
         {
             CharakterAttribut.Konstitution,
-            CharakterAttribut.Fingerfertigkeit,
+            CharakterAttribut.Körperkraft,
             CharakterAttribut.Intuition,
         };
         internal override int CalculateValue => 5;

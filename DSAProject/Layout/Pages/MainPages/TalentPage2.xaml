@@ -24,10 +24,11 @@
         <Style x:Name="TextStyle" TargetType="Page" BasedOn="{StaticResource PageMinorText}"/>
 
         <GridLength x:Key="TalentRowWidth">3*</GridLength>
-        <GridLength x:Key="Probe1RowWidth">50</GridLength>
+        <GridLength x:Key="Probe1RowWidth">80</GridLength>
         <GridLength x:Key="Probe2RowWidth">80</GridLength>
         <GridLength x:Key="ProbeTaWRowWidth">100</GridLength>
-        <GridLength x:Key="ProbeATPARowWidth">200</GridLength>
+        <GridLength x:Key="ProbeATPARowWidth">300</GridLength>
+        <GridLength x:Key="ATPABLWidth">100</GridLength>
         <GridLength x:Key="ProbeBERowWidth">30</GridLength>
         <GridLength x:Key="ProbeSpezialisierungRowWidth">*</GridLength>
         <GridLength x:Key="ProbeAnforderungRowWidth">2*</GridLength>
@@ -51,6 +52,8 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="{StaticResource ProbeTaWRowWidth}"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="{StaticResource ProbeBERowWidth}"/>
                     <ColumnDefinition Width="{StaticResource ProbeSpezialisierungRowWidth}"/>
                     <ColumnDefinition Width="{StaticResource ProbeAnforderungRowWidth}"/>
@@ -68,18 +71,33 @@
                     <utilpages:TextBorderBlockWarning Text="Probe"     Style="{StaticResource PageNormalInnerText}"/>
                 </Grid>
                 <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="3" Text="TAW"       Style="{StaticResource PageNormalInnerText}"/>
-                <Grid Visibility="{x:Bind ATPAVisibility}" Grid.Row="0" Grid.Column="4">
+                <Grid Visibility="{x:Bind ATVisibility}" Grid.Row="0" Grid.Column="4">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="{StaticResource ProbeATPARowWidth}"/>
+                        <ColumnDefinition Width="{StaticResource ATPABLWidth}"/>
                     </Grid.ColumnDefinitions>
-                    <utilpages:TextBorderBlockWarning Text="AT/PA"     Style="{StaticResource PageNormalInnerText}"/>
+                    <utilpages:TextBorderBlockWarning Text="AT"     Style="{StaticResource PageNormalInnerText}"/>
                 </Grid>
-                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="5" Text="BE"        Style="{StaticResource PageNormalInnerText}"/>
-                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="6" Text="Spezialisierung(+2/+2)"    Style="{StaticResource PageMinorText}"/>
-                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="7" Text="Anforderungen"     Style="{StaticResource PageNormalInnerText}"/>
-                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="8" Text="Ableiten(+10)"     Style="{StaticResource PageNormalInnerText}"/>
-                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="9" Text="Ableiten(Auswahl)" Style="{StaticResource PageNormalInnerText}"/>
-                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="10" Text=""                 Style="{StaticResource PageNormalMinorText}"/>
+                <Grid Visibility="{x:Bind PABLVisibility }" Grid.Row="0" Grid.Column="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{StaticResource ATPABLWidth}"/>
+                    </Grid.ColumnDefinitions>
+                    <utilpages:TextBorderBlockWarning Text="PA"     Style="{StaticResource PageNormalInnerText}"/>
+                </Grid>
+                <Grid Visibility="{x:Bind PABLVisibility}" Grid.Row="0" Grid.Column="6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="{StaticResource ATPABLWidth}"/>
+                    </Grid.ColumnDefinitions>
+                    <utilpages:TextBorderBlockWarning Text="BL"     Style="{StaticResource PageNormalInnerText}"/>
+                </Grid>
+                
+                
+                
+                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="7" Text="BE"                        Style="{StaticResource PageNormalInnerText}"/>
+                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="8" Text="Spezialisierung(+2/+2)"    Style="{StaticResource PageMinorText}"/>
+                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="9" Text="Anforderungen"             Style="{StaticResource PageNormalInnerText}"/>
+                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="10" Text="Ableiten(+10)"            Style="{StaticResource PageNormalInnerText}"/>
+                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="11" Text="Ableiten(Auswahl)"        Style="{StaticResource PageNormalInnerText}"/>
+                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="12" Text=""                         Style="{StaticResource PageNormalMinorText}"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="TalentItemTemplate" x:DataType="wrapper:TalentViewModel">
@@ -92,6 +110,8 @@
                     <ColumnDefinition Width="{StaticResource Probe1RowWidth}"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="{StaticResource ProbeTaWRowWidth}"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="{StaticResource ProbeBERowWidth}"/>
                     <ColumnDefinition Width="{StaticResource ProbeSpezialisierungRowWidth}"/>
@@ -112,30 +132,55 @@
                     </Grid>
                 </Grid>
                 <utilpages:TaWItem Grid.Row="0" Grid.Column="3" TAW="{x:Bind TaW, Mode=TwoWay}" TAW2="{x:Bind TaWToolTipText, Mode=TwoWay}" Style="{StaticResource PageNormalText}"/>
-                <Grid Grid.Row="0" Grid.Column="4" Visibility="{x:Bind ATPAVisibility}">
+                <Grid Grid.Row="0" Grid.Column="4" Visibility="{x:Bind ATVisibility}">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="{StaticResource ProbeATPARowWidth}"/>
+                            <ColumnDefinition Width="{StaticResource ATPABLWidth}"/>
                         </Grid.ColumnDefinitions>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
                             <utilpages:TaWItem Grid.Row="0" Grid.Column="0" TAW="{x:Bind AT, Mode=TwoWay}" TAW2="{x:Bind ATToolTipText, Mode=TwoWay}" Style="{StaticResource PageNormalText}"/>
-                            <utilpages:TaWItem Grid.Row="0" Grid.Column="1" TAW="{x:Bind PA, Mode=TwoWay}" TAW2="{x:Bind PAToolTipText, Mode=TwoWay}" Style="{StaticResource PageNormalText}"/>
                         </Grid>
                     </Grid>
                 </Grid>
-                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="5" Text="{x:Bind Talent.BE}" Style="{StaticResource PageMinorText}"/>
-                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="6"/>
-                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="7" WarningText="{x:Bind RequirementStringFreeText}" Text="{x:Bind RequirementStringRest}" Style="{StaticResource PageMinorText}" />
-                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="8" WarningText="{x:Bind DeductionStringFreeText}"   Text="{x:Bind DeductionStringTalent}" Style="{StaticResource PageMinorText}"/>
+                <Grid Grid.Row="0" Grid.Column="5" Visibility="{x:Bind PABLVisibility}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="{StaticResource ATPABLWidth}"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <utilpages:TaWItem Grid.Row="0" Grid.Column="1" TAW="{x:Bind PA, Mode=TwoWay}" TAW2="{x:Bind PAToolTipText, Mode=TwoWay}" Style="{StaticResource PageNormalText}"/>
+                         </Grid>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="6" Visibility="{x:Bind PABLVisibility}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="{StaticResource ATPABLWidth}"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                             <utilpages:TaWItem Grid.Row="0" Grid.Column="2" TAW="{x:Bind BL, Mode=TwoWay}" TAW2="{x:Bind BLToolTipText, Mode=TwoWay}" Style="{StaticResource PageNormalText}"/>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="7" Text="{x:Bind Talent.BE}" Style="{StaticResource PageMinorText}"/>
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="8"/>
+                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="9" WarningText="{x:Bind RequirementStringFreeText}" Text="{x:Bind RequirementStringRest}" Style="{StaticResource PageMinorText}" />
+                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="10" WarningText="{x:Bind DeductionStringFreeText}"   Text="{x:Bind DeductionStringTalent}" Style="{StaticResource PageMinorText}"/>
 
                 <Border 
                     Grid.Row="0" 
-                    Grid.Column="9"
+                    Grid.Column="11"
                     BorderBrush="Gray"
                     BorderThickness="1, 1, 1, 1" 
                     Padding="2, 0, 2, 0"
@@ -156,7 +201,7 @@
                         SelectedValue="{x:Bind DeductionSelectedValue, Mode=OneWay}"/>
                 </Border>
 
-                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="10" Text="{x:Bind DiceResult, Mode=TwoWay}" Style="{StaticResource PageNormalMinorText}"/>
+                <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="12" Text="{x:Bind DiceResult, Mode=TwoWay}" Style="{StaticResource PageNormalMinorText}"/>
             </Grid>
         </DataTemplate>
     </Page.Resources>

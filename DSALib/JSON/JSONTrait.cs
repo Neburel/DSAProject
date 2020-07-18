@@ -37,6 +37,8 @@ namespace DSALib.JSON
         public Dictionary<Guid, int> AtBonus { get; set; }
         [DataMember]
         public Dictionary<Guid, int> PaBonus { get; set; }
+        [DataMember]
+        public Dictionary<Guid, int> BLBonus { get; set; }
 
         [IgnoreDataMember]
         public TraitType TraitType

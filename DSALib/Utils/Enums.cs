@@ -33,6 +33,12 @@
         ActionLog,
         DebugInfo
     }
+    public enum FightingValue
+    {
+        Attacke,
+        Parade,
+        Blocken
+    }
     public enum TraitType
     {
         Keiner = 1,

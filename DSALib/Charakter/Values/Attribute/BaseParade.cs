@@ -1,5 +1,4 @@
 ﻿using DSALib;
-using DSAProject.Classes.Interfaces;
 using System.Collections.Generic;
 
 namespace DSAProject.Classes.Charakter.Values.Attribute
@@ -12,7 +11,7 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
         {
             CharakterAttribut.Intuition,
             CharakterAttribut.Gewandheit,
-            CharakterAttribut.Körperkraft,
+            CharakterAttribut.Fingerfertigkeit,
         };
         internal override int CalculateValue => 5;
     }

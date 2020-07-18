@@ -17,6 +17,7 @@ namespace DSALib.Charakter
         public event EventHandler<ITalent> TaWChanged;
         public event EventHandler<AbstractTalentFighting> ATChanged;
         public event EventHandler<AbstractTalentFighting> PAChanged;
+        public event EventHandler<AbstractTalentFighting> BLChanged;
         public event EventHandler<int> APEarnedChanged;
         public event EventHandler<int> APInvestChanged;
         #endregion
@@ -149,6 +150,15 @@ namespace DSALib.Charakter
             }
             return ret;
         }
+        public int GetBLBonus(AbstractTalentFighting item)
+        {
+            var ret = 0;
+            foreach (var trait in traits)
+            {
+                ret = ret + trait.GetBLBonus(item);
+            }
+            return ret;
+        }
 
         private void CallChangedAll(Trait trait)
         {
@@ -175,6 +185,10 @@ namespace DSALib.Charakter
             foreach (var item in trait.GetPABonus())
             {
                 PAChanged?.Invoke(this, item.Key);
+            }
+            foreach (var item in trait.GetBLBonus())
+            {
+                BLChanged?.Invoke(this, item.Key);
             }
             APInvestChanged?.Invoke(this, GetAPInvested());
             APEarnedChanged?.Invoke(this, GetAPEarned());

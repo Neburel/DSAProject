@@ -126,11 +126,17 @@
     <Compile Include="Layout\Pages\MainPages\LanguagePage2.xaml.cs">
       <DependentUpon>LanguagePage2.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Layout\Pages\MainPages\SpellBookPage.xaml.cs">
+      <DependentUpon>SpellBookPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Layout\Pages\MainPages\TalentPage2.xaml.cs">
       <DependentUpon>TalentPage2.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\Pages\NavigationPages\GameNavPage.xaml.cs">
       <DependentUpon>GameNavPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Layout\Pages\ToolPages\CreateSpell.xaml.cs">
+      <DependentUpon>CreateSpell.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\Pages\ToolPages\CreateTrait.xaml.cs">
       <DependentUpon>CreateTrait.xaml</DependentUpon>
@@ -141,6 +147,10 @@
     <Compile Include="Layout\Pages\ToolPages\WikiPage.xaml.cs">
       <DependentUpon>WikiPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Layout\Pages\utilPages\CounterItem.xaml.cs">
+      <DependentUpon>CounterItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Layout\ViewModels\SpellViewModel.cs" />
     <Compile Include="Layout\zOldIdeas\Language_ItemPage.xaml.cs">
       <DependentUpon>Language_ItemPage.xaml</DependentUpon>
     </Compile>
@@ -268,11 +278,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Layout\Pages\MainPages\SpellBookPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Layout\Pages\MainPages\TalentPage2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Layout\Pages\NavigationPages\GameNavPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Layout\Pages\ToolPages\CreateSpell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -285,6 +303,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Layout\Pages\ToolPages\WikiPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Layout\Pages\utilPages\CounterItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

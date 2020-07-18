@@ -1,0 +1,39 @@
+﻿<Page
+    x:Class="DSAProject.Layout.Pages.utilPages.CounterItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DSAProject.Layout.Pages.utilPages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:itempages="using:DSAProject.Layout.Pages.ItemPages"
+    mc:Ignorable="d"
+    Background="Transparent">
+
+    <Border BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="Gray">
+        <Grid ColumnSpacing="1" Padding="1,1,1,1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="30"/>
+                <ColumnDefinition Width="Auto" MaxWidth="26"/>
+                <ColumnDefinition Width="Auto" MaxWidth="26"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock x:Name="XAML_TextBlock" Text="{x:Bind viewModel.Value, Mode=TwoWay}" TextWrapping="Wrap" Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center">
+            </TextBlock>
+
+            <itempages:PlusButton x:Name="XAML_PlusButton"  Grid.Column="1" Clicked="XAML_PlusButton_Clicked"></itempages:PlusButton>
+            <itempages:PlusButton x:Name="XAML_MinusButton" Grid.Column="2" IsInversed="True" Clicked="XAML_MinusButton_Clicked"></itempages:PlusButton>
+            <Border BorderThickness="1"  Grid.Row="1" Grid.Column="3" Width="Auto" Height="26" HorizontalAlignment="Center">
+                <Button  x:Name="XAML_ValueXButton" HorizontalAlignment="Center" VerticalAlignment="Center" Click="XAML_ValueXButton_Click">
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="X" FontSize="10"></TextBlock>
+                </Button>
+            </Border>
+            <Border BorderThickness="1"  Grid.Row="1" Grid.Column="4" Width="Auto" Height="26" HorizontalAlignment="Center">
+                <Button x:Name="XAML_ValueClearButton" HorizontalAlignment="Center" VerticalAlignment="Center" Click="XAML_ValueClearButton_Click">
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="Clear" FontSize="10"></TextBlock>
+                </Button>
+            </Border>
+        </Grid>
+    </Border>
+</Page>
