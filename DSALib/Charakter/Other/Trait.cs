@@ -321,6 +321,11 @@ namespace DSALib.Charakter.Other
                 var value = pair.Value;
                 ret = GenerateLongDescriptionHelper(value, ret, pair.Key.Name + " AT");
             }
+            foreach(var pair in blBonus)
+            {
+                var value = pair.Value;
+                ret = GenerateLongDescriptionHelper(value, ret, pair.Key.Name + " BL");
+            }
 
             var adventurePointString = "Abenteuerpunkte";
             if(APEarned != 0)
