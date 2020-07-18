@@ -151,9 +151,6 @@
       <DependentUpon>CounterItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\ViewModels\SpellViewModel.cs" />
-    <Compile Include="Layout\zOldIdeas\Language_ItemPage.xaml.cs">
-      <DependentUpon>Language_ItemPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Layout\Pages\utilPages\AttributHeader.xaml.cs">
       <DependentUpon>AttributHeader.xaml</DependentUpon>
     </Compile>
@@ -162,9 +159,6 @@
     </Compile>
     <Compile Include="Layout\Pages\ItemPages\TraitTalentBonusSelectionPage.xaml.cs">
       <DependentUpon>TraitTalentBonusSelectionPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Layout\zOldIdeas\LanguagePage.xaml.cs">
-      <DependentUpon>LanguagePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\Pages\ToolPages\CreateCharakter.xaml.cs">
       <DependentUpon>CreateCharakter.xaml</DependentUpon>
@@ -176,9 +170,6 @@
       <DependentUpon>HeroLetterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\ViewModels\LanguageViewModel.cs" />
-    <Compile Include="Layout\zOldIdeas\GamePage.xaml.cs">
-      <DependentUpon>GamePage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Layout\Pages\ItemPages\AKT_MOD_MAX_ItemPage.xaml.cs">
       <DependentUpon>AKT_MOD_MAX_ItemPage.xaml</DependentUpon>
     </Compile>
@@ -188,14 +179,8 @@
     <Compile Include="Layout\Pages\MainPages\DescriptionPage.xaml.cs">
       <DependentUpon>DescriptionPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Layout\zOldIdeas\Talent_ItemPage.xaml.cs">
-      <DependentUpon>Talent_ItemPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Layout\Pages\ToolPages\LoadPage.xaml.cs">
       <DependentUpon>LoadPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Layout\zOldIdeas\TalentPage.xaml.cs">
-      <DependentUpon>TalentPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Layout\Pages\ToolPages\CreateTalent.xaml.cs">
       <DependentUpon>CreateTalent.xaml</DependentUpon>
@@ -214,7 +199,6 @@
     </Compile>
     <Compile Include="Layout\ViewModels\CharakterCreationViewModel.cs" />
     <Compile Include="Layout\ViewModels\CreateTalentViewModel.cs" />
-    <Compile Include="Layout\zOldIdeas\Talent_ItemPageViewModel.cs" />
     <Compile Include="Layout\ViewModels\TalentViewModel.cs" />
     <Compile Include="Layout\ViewModels\TraitViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -310,10 +294,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Layout\zOldIdeas\Language_ItemPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Layout\Pages\utilPages\AttributHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -323,10 +303,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Layout\Pages\ItemPages\TraitTalentBonusSelectionPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Layout\zOldIdeas\LanguagePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -342,10 +318,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Layout\zOldIdeas\GamePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Layout\Pages\ItemPages\AKT_MOD_MAX_ItemPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -358,15 +330,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Layout\zOldIdeas\Talent_ItemPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Layout\Pages\ToolPages\LoadPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Layout\zOldIdeas\TalentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

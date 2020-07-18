@@ -17,8 +17,7 @@ namespace DSAProject.Classes.Charakter
     public class CharakterTalente
     {
         #region Events
-        public event EventHandler<ITalent> TaWChanged;
-        public event EventHandler<ITalent> FightingValueChanged;
+        public event EventHandler<ITalent> TaWChanged; 
         #endregion
         #region Variables
         private readonly ICharakter charakter;
@@ -50,6 +49,7 @@ namespace DSAProject.Classes.Charakter
                 FightingValueDictionary.Add(value, new Dictionary<AbstractTalentFighting, int>());
             }
         }
+        #region SET
         public void SetTAW(ITalent talent, int taw)
         {
             if (talent == null) throw new ArgumentNullException(nameof(talent));
@@ -58,36 +58,12 @@ namespace DSAProject.Classes.Charakter
             {
                 TAWDictionary.Remove(talent);
             }
-            if (typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
-            {
-                var fightTalent = (AbstractTalentFighting)talent;
-                var minTaw = GetPA(fightTalent) + GetAT(fightTalent);
-
-
-                if(taw < minTaw)
-                {
-                    taw = minTaw;
-                }
-            }
-
             TAWDictionary.Add(talent, taw);
 
             if(innerTAW != taw)
             {
                 TaWChanged?.Invoke(this, talent);
             }
-        }
-        public void SetAT(AbstractTalentFighting talent, int value)
-        {
-            SetFightingValue(FightingValue.Attacke, talent, value);
-        }
-        public void SetPA(AbstractTalentFighting talent, int value)
-        {
-            SetFightingValue(FightingValue.Parade, talent, value);
-        }
-        public void SetBL(AbstractTalentFighting talent, int value)
-        {
-            SetFightingValue(FightingValue.Blocken, talent, value);
         }
         public void SetMother(TalentSpeaking talent, bool value)
         {
@@ -113,6 +89,18 @@ namespace DSAProject.Classes.Charakter
                 DeductionTalent.Add(talent, deduction);
             }
         }
+        public void SetFightingValue(FightingValue fightingValue, AbstractTalentFighting talent, int value)
+        {
+            if (talent == null) return;
+
+            Dictionary<AbstractTalentFighting, int> fightingDictionary;
+            FightingValueDictionary.TryGetValue(fightingValue, out fightingDictionary);
+            if (fightingDictionary.TryGetValue(talent, out int innerValue))
+            {
+                fightingDictionary.Remove(talent);
+            }
+            fightingDictionary.Add(talent, value);
+        }
         private void SetDeductionValue(TalentDeductionTalent deduction, bool add)
         {
             var value = -1;
@@ -126,9 +114,16 @@ namespace DSAProject.Classes.Charakter
                 deductionDictionary.Remove(talent);
             }
             deductionDictionary.Add(talent, currentValue);
-            
-           
+
+
             TaWChanged?.Invoke(this, talent);
+        }
+        #endregion
+        #region GET
+        public bool GetMother(TalentSpeaking talent)
+        {
+            MotherDicionary.TryGetValue(talent, out bool value);
+            return value;
         }
         /// <summary>
         /// Ruft die manuell gesetzen TaW ab
@@ -167,75 +162,11 @@ namespace DSAProject.Classes.Charakter
 
             return taw + bonusTaw;
         }
-        public int GetAT(AbstractTalentFighting talent)
-        {
-            return GetFightingValue(FightingValue.Attacke, talent);
-        }
-        public int GetPA(AbstractTalentFighting talent)
-        {
-            return GetFightingValue(FightingValue.Parade, talent);
-        }
-        public int GetBL(AbstractTalentFighting talent)
-        {
-            return GetFightingValue(FightingValue.Blocken, talent);
-        }
-        public int GetModAT(AbstractTalentFighting talent)
-        {
-            if (talent == null) return 0;
-
-            return charakter.Traits.GetATBonus(talent);
-        }
-        public int GetModPA(AbstractTalentFighting talent)
-        {
-            return charakter.Traits.GetPABonus(talent);
-        }
-        public int GetModBL(AbstractTalentFighting talent)
-        {
-            return charakter.Traits.GetBLBonus(talent);
-        }
-
-        public int GetMaxAT(AbstractTalentFighting talent)
-        {
-            var taw = GetAT(talent);
-            var bonusTaw = GetModAT(talent);
-
-            return taw + bonusTaw;
-        }
-        public int GetMaxPA(AbstractTalentFighting talent)
-        {
-            var taw = GetPA(talent);
-            var bonusTaw = GetModPA(talent);
-
-            return taw + bonusTaw;
-        }
-        public int GetMaxBL(AbstractTalentFighting talent)
-        {
-            var taw = GetBL(talent);
-            var bonusTaw = GetModBL(talent);
-
-            return taw + bonusTaw;
-        }
-
-        public TalentDeductionTalent GetDeduction(ITalent talent)
-        {
-            if (talent == null) throw new TalentException(ErrorCode.InvalidValue, "");
-            if (DeductionTalent.TryGetValue(talent, out TalentDeductionTalent deduction))
-            {
-                return deduction;
-            }
-            return null;
-        }
         private int GetDeductionValue(ITalent talent)
         {
             deductionDictionary.TryGetValue(talent, out int value);
             return value;
         }
-        public bool GetMother(TalentSpeaking talent)
-        {
-            MotherDicionary.TryGetValue(talent, out bool value);
-            return value;
-        }
-
         public int GetProbeValue(AbstractTalentGeneral talent)
         {
             if (talent == null) return 0;
@@ -258,7 +189,7 @@ namespace DSAProject.Classes.Charakter
                 type = typeof(BaseRange);
             }
             var baseAttack = charakter.Values.UsedValues.Where(x => x.GetType() == type).ToList()[0];
-            var at = charakter.Values.GetMAXValue(baseAttack, out DSAError error) + GetMaxAT(talent);
+            var at = charakter.Values.GetMAXValue(baseAttack, out DSAError error) + GetMaxFightingValue(FightingValue.Attacke, talent);
 
             return at;
         }
@@ -266,7 +197,7 @@ namespace DSAProject.Classes.Charakter
         {
             if (talent == null) return 0;
             var baseParade  = charakter.Values.UsedValues.Where(x => x.GetType() == typeof(BaseParade)).ToList()[0];
-            var pa          = charakter.Values.GetMAXValue(baseParade, out DSAError error) + GetMaxPA(talent);
+            var pa          = charakter.Values.GetMAXValue(baseParade, out DSAError error) + GetMaxFightingValue(FightingValue.Parade, talent);
 
             return pa;
         }
@@ -274,7 +205,7 @@ namespace DSAProject.Classes.Charakter
         {
             if (talent == null) return 0;
             var baseBlock = charakter.Values.UsedValues.Where(x => x.GetType() == typeof(BaseBlock)).ToList()[0];
-            var value = charakter.Values.GetMAXValue(baseBlock, out DSAError error) + GetMaxBL(talent);
+            var value = charakter.Values.GetMAXValue(baseBlock, out DSAError error) + GetMaxFightingValue(FightingValue.Blocken, talent);
 
             return value;
         }
@@ -288,6 +219,46 @@ namespace DSAProject.Classes.Charakter
             }
             value += GetMaxTaw(talent);
             return value;
+        }
+        public int GetFightingValue(FightingValue fightingValue, AbstractTalentFighting talent)
+        {
+            if (talent == null) return 0;
+
+            Dictionary<AbstractTalentFighting, int> fightingDictionary;
+            FightingValueDictionary.TryGetValue(fightingValue, out fightingDictionary);
+            if (fightingDictionary.TryGetValue(talent, out int innerValue))
+            {
+                return innerValue;
+            }
+            return 0;
+        }
+        public int GetModFightingValue(FightingValue fightingValue, AbstractTalentFighting talent)
+        {
+            if (talent == null) return 0;
+
+            if (fightingValue == FightingValue.Attacke)
+            {
+                return charakter.Traits.GetATBonus(talent);
+            }
+            else if (fightingValue == FightingValue.Blocken)
+            {
+                return charakter.Traits.GetBLBonus(talent);
+            }
+            else if (fightingValue == FightingValue.Parade)
+            {
+                return charakter.Traits.GetPABonus(talent);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
+        public int GetMaxFightingValue(FightingValue fightingValue, AbstractTalentFighting talent)
+        {
+            var taw = GetFightingValue(fightingValue, talent);
+            var bonusTaw = GetModFightingValue(fightingValue, talent);
+
+            return taw + bonusTaw;
         }
         /// <summary>
         /// Sollte auf dauer Überarbeitet und entfernt werden
@@ -337,61 +308,15 @@ namespace DSAProject.Classes.Charakter
 
             return probe;
         }
-        #region Hilfsfunktionen
-        public void SetFightingValue(FightingValue fightingValue, AbstractTalentFighting talent, int value)
+        public TalentDeductionTalent GetDeduction(ITalent talent)
         {
-            if (talent == null) return;
-
-            Dictionary<AbstractTalentFighting, int> fightingDictionary;
-            FightingValueDictionary.TryGetValue(fightingValue, out fightingDictionary);
-            if (fightingDictionary.TryGetValue(talent, out int innerValue))
+            if (talent == null) throw new TalentException(ErrorCode.InvalidValue, "");
+            if (DeductionTalent.TryGetValue(talent, out TalentDeductionTalent deduction))
             {
-                fightingDictionary.Remove(talent);
+                return deduction;
             }
-            fightingDictionary.Add(talent, value);
-            if (innerValue != value)
-            {
-                FightingValueChanged?.Invoke(this, talent);
-            }
+            return null;
         }
-        public int GetFightingValue(FightingValue fightingValue, AbstractTalentFighting talent)
-        {
-            if (talent == null) return 0;
-
-            Dictionary<AbstractTalentFighting, int> fightingDictionary;
-            FightingValueDictionary.TryGetValue(fightingValue, out fightingDictionary);
-            if (fightingDictionary.TryGetValue(talent, out int innerValue))
-            {
-                return innerValue;
-            }
-            return 0;
-        }
-        public int GetModFightingValue(FightingValue fightingValue, AbstractTalentFighting talent)
-        {
-            if(fightingValue == FightingValue.Attacke)
-            {
-                return GetModAT(talent);
-            }
-            else if(fightingValue == FightingValue.Blocken)
-            {
-                return GetModBL(talent);
-            }
-            else if(fightingValue == FightingValue.Parade)
-            {
-                return GetModPA(talent);
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
-        }
-        public int GetMaxFightingValue(FightingValue fightingValue, AbstractTalentFighting talent)
-        {
-            var taw = GetFightingValue(fightingValue, talent);
-            var bonusTaw = GetModFightingValue(fightingValue, talent);
-
-            return taw + bonusTaw;
-        }
-        #endregion
+        #endregion      
     }
 }

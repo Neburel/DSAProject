@@ -391,7 +391,7 @@ namespace DSAProject.Classes.Charakter
                 var talent = talentListe.Where(x => x.ID == item.Key).FirstOrDefault();
                 if (talent != null && typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
                 {
-                    Talente.SetAT((AbstractTalentFighting)talent, item.Value);
+                    Talente.SetFightingValue(FightingValue.Attacke, (AbstractTalentFighting)talent, item.Value);
                 }
                 else
                 {
@@ -403,7 +403,7 @@ namespace DSAProject.Classes.Charakter
                 var talent = talentListe.Where(x => x.ID == item.Key).FirstOrDefault();
                 if (talent != null && typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
                 {
-                    Talente.SetPA((AbstractTalentFighting)talent, item.Value);
+                    Talente.SetFightingValue(FightingValue.Parade, (AbstractTalentFighting)talent, item.Value);
                 }
                 else
                 {
@@ -417,7 +417,7 @@ namespace DSAProject.Classes.Charakter
                     var talent = talentListe.Where(x => x.ID == item.Key).FirstOrDefault();
                     if (talent != null && typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
                     {
-                        Talente.SetBL((AbstractTalentFighting)talent, item.Value);
+                        Talente.SetFightingValue(FightingValue.Blocken, (AbstractTalentFighting)talent, item.Value);
                     }
                     else
                     {

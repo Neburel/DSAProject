@@ -278,9 +278,9 @@ namespace DSAProject.Layout.ViewModels
             else if (typeof(AbstractTalentFighting).IsAssignableFrom(talenttype))
             {
                 var atf = (AbstractTalentFighting)talent;
-                AT = Game.Charakter.Talente.GetMaxAT(atf);
-                PA = Game.Charakter.Talente.GetMaxPA(atf);
-                BL = Game.Charakter.Talente.GetMaxBL(atf);
+                AT = Game.Charakter.Talente.GetMaxFightingValue(DSALib.FightingValue.Attacke, atf);
+                PA = Game.Charakter.Talente.GetMaxFightingValue(DSALib.FightingValue.Parade, atf);
+                BL = Game.Charakter.Talente.GetMaxFightingValue(DSALib.FightingValue.Blocken, atf);
 
                 ATVisibility = true;
                 PABLVisibility = true;
