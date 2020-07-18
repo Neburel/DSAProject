@@ -130,6 +130,16 @@ namespace DSAProject.Layout.Pages.BasePages
         {
             viewModel.Trait.RemovePABonus((AbstractTalentFighting)e.Talent);
         }
+
+        private void XAML_BLBonus_AddTrait(object sender, Hilfsklassen.TraitTalentBonus e)
+        {
+            viewModel.Trait.SetBLBonus((AbstractTalentFighting)e.Talent, e.Value);
+        }
+
+        private void XAML_BLBonus_RemoveTrait(object sender, Hilfsklassen.TraitTalentBonus e)
+        {
+            viewModel.Trait.RemoveBLBonus((AbstractTalentFighting)e.Talent);
+        }
         private async void XAML_CurrentAPAdd_Clicked(object sender, object e)
         {
             var dialog  = new InvestAPDialog();

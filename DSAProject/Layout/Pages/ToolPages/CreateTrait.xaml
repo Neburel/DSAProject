@@ -109,6 +109,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <itempages:TraitTalentBonusSelectionPage 
@@ -137,6 +138,15 @@
                 VerticalAlignment="Stretch"
                 AddTrait="XAML_PABonus_AddTrait"
                 RemoveTrait="XAML_PABonus_RemoveTrait"
+                TextColor="White"/>
+            <itempages:TraitTalentBonusSelectionPage 
+                x:Name="XAML_BLBonus"
+                Grid.Column="3"
+                Mode="BL" 
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                AddTrait="XAML_BLBonus_AddTrait"
+                RemoveTrait="XAML_BLBonus_RemoveTrait"
                 TextColor="White"/>
         </Grid>
         <Grid Grid.Row="4" HorizontalAlignment="Center">

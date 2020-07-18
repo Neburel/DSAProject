@@ -278,6 +278,14 @@ namespace DSALib.Charakter.Other
                 PAChanged?.Invoke(this, item);
             }
         }
+        public void RemoveBLBonus(AbstractTalentFighting item)
+        {
+            if (item != null)
+            {
+                blBonus.Remove(item);
+                BLChanged?.Invoke(this, item);
+            }
+        }
 
         private string GenerateLongDescription()
         {

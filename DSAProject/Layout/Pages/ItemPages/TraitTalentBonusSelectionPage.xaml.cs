@@ -55,6 +55,10 @@ namespace DSAProject.Layout.Pages.ItemPages
                         viewModel.TalentList = new List<ITalent>(Game.TalentList.Where(x => typeof(AbstractTalentFighting).IsAssignableFrom(x.GetType()) && x.GetType() != typeof(TalentRange)).OrderBy(x => x.Name));
                         viewModel.Title = "Talent PA Bonus";
                         break;
+                    case TraitTalentBonusSelectionPage_Mode.BL:
+                        viewModel.TalentList = new List<ITalent>(Game.TalentList.Where(x => typeof(AbstractTalentFighting).IsAssignableFrom(x.GetType()) && x.GetType() != typeof(TalentRange)).OrderBy(x => x.Name));
+                        viewModel.Title = "Talent BL Bonus";
+                        break;
                 }
             }
             get => mode;
