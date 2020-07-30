@@ -8,6 +8,7 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
     {
         public BaseRange(CharakterAttribute attribute) : base(attribute) { }
         public override string Name => "Fernkampf-Basis";
+        public override string ShortName { get => "FK"; }
 
         internal override List<CharakterAttribut> attributeList => new List<CharakterAttribut>()
         {

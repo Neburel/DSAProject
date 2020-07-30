@@ -7,6 +7,7 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
     {
         public WoundSwell(CharakterAttribute attribute) : base(attribute) { }
         public override string Name => "Wundschwelle";
+        public override string ShortName { get => "WS"; }
         internal override List<CharakterAttribut> attributeList => new List<CharakterAttribut>()
         {
             CharakterAttribut.Konstitution,

@@ -8,7 +8,7 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
     {
         public BaseAttack(CharakterAttribute attribute) : base(attribute) { }
         public override string Name => "Attacke-Basis";
-
+        public override string ShortName { get => "AT"; }
         internal override List<CharakterAttribut> attributeList => new List<CharakterAttribut>()
         {
             CharakterAttribut.Mut,

@@ -2,68 +2,69 @@
     x:Class="DSAProject.Layout.Pages.MainPages.SpellBookPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:DSAProject.Layout.Pages.MainPages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:utilpages="using:DSAProject.Layout.Pages.utilPages"
-    xmlns:viewmodels="using:DSAProject.Layout.ViewModels"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:pages="using:DSAProject.Layout.Pages.MainPages"
+    xmlns:viewmodels ="using:DSAProject.Layout.ViewModels"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Page.Resources>           
-        <!--<DataTemplate x:Key="TalentHeaderTemplate">
-            <Grid Margin="0, 0, 0, 0" Padding="0, 0, 0, 0" RowSpacing="0" ColumnSpacing="0" BorderThickness="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+    <Page.Resources>
+        <Style x:Name="PageMinorText" TargetType="Page">
+            <Setter Property="FontSize" Value="8"/>
+        </Style>
+        <Style x:Name="PageNormalMinorText" TargetType="Page">
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style x:Name="PageNormalText" TargetType="Page">
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+        <Style x:Name="TextStyle" TargetType="Page" BasedOn="{StaticResource PageMinorText}"/>
+
+        <GridLength x:Key="TalentRowWidth">3*</GridLength>
+
+
+        <DataTemplate x:Key="DataTemplateHeader" x:DataType="pages:SpellBookPageHeader">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
-
-                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="0" Text="Talent"                    />
-                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="1" Text="Probe"                     />
-                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="2" Text="TAW"                       />
-                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="3" Text="BE"                        />
-                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="4" Text="Spezialisierung(+2/+2)"    />
-                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="5" Text="Anforderungen"             />
-                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="6" Text="Ableiten(+10)"             />
-                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="7" Text="Ableiten(Auswahl)"         />
-                <utilpages:TextBorderBlockWarning Grid.Row="0" Grid.Column="8" Text=""                          />
+                <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <TextBlock Grid.Column="0" TextAlignment="Center" Text="Title"></TextBlock>
+                </Border>
+                <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1">
+                    <TextBlock Grid.Column="1" TextAlignment="Center" Text="Typ"></TextBlock>
+                </Border>
+                <Border Grid.Column="2" BorderBrush="Gray" BorderThickness="1">
+                    <TextBlock Grid.Column="2" TextAlignment="Center" Text="GP"></TextBlock>
+                </Border>
+                <Border Grid.Column="3" BorderBrush="Gray" BorderThickness="1">
+                    <TextBlock Grid.Column="3" TextAlignment="Center" Text="Value"></TextBlock>
+                </Border>
+                <Border Grid.Column="4" BorderBrush="Gray" BorderThickness="1">
+                    <TextBlock Grid.Column="4" TextAlignment="Center" Text="Beschreibung"></TextBlock>
+                </Border>
             </Grid>
         </DataTemplate>
-        <DataTemplate x:Key="TalentItemTemplate" x:DataType="{StaticResource TalentItemTemplate}">
-            <Grid Margin="0, 0, 0, 0" Padding="0, 0, 0, 0" RowSpacing="0" ColumnSpacing="0" BorderThickness="0">
+        <DataTemplate x:Key="DataTemplateItem" x:DataType="viewmodels:SpellViewModel">
+            <Grid Margin="0" Padding="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="1">
+                    <TextBlock Grid.Column="0" TextAlignment="Center" VerticalAlignment="Center" Text="{x:Bind Name}" TextWrapping="Wrap" FontSize="10"/>
+                </Border>
             </Grid>
-            <utilpages:TextBorderBlock Grid.Row="0" Grid.Column="0"/>
-        </DataTemplate>-->
+        </DataTemplate>
     </Page.Resources>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -71,7 +72,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <controls:Loading HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.RowSpan="10">
+        <controls:Loading HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.RowSpan="10" IsLoading="{x:Bind viewModel.IsLoading, Mode=TwoWay}">
             <StackPanel Orientation="Horizontal" Padding="12">
                 <Grid Margin="0,0,0,0">
                     <ProgressRing IsActive="True" Foreground="Red" Width="150" Height="150"/>
@@ -82,23 +83,33 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="{StaticResource ProbeTest}"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <AutoSuggestBox Grid.Row="0" Grid.Column="0" QueryIcon="Find" TextChanged="AutoSuggestBox_TextChanged"></AutoSuggestBox>
-            <TextBox Grid.Row="0" Grid.Column="1" BeforeTextChanging="TextBox_BeforeTextChanging" TextChanged="TextBox_TextChanged" Text=""></TextBox>
+            <ComboBox 
+                Grid.Row="0" 
+                Grid.Column="1" 
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                VerticalContentAlignment="Stretch">
+            </ComboBox>
         </Grid>
         <ListView
             Grid.Row="2"
             Margin="0" 
-            Padding="0" 
-            Header=""/>
+            Padding="0"/>
         <ListView
-            x:Name="TalentListView"
+            x:Name="SpellListView"
             Grid.Row="3"
             Margin="0" 
             Padding="0" 
             SelectionMode="None"
-            ItemsSource="">
+            ItemClick="SpellListView_ItemClick"
+            IsItemClickEnabled="True" 
+            HeaderTemplate="{StaticResource DataTemplateHeader}"
+            ItemTemplate="{StaticResource DataTemplateItem}"
+            ItemsSource="{x:Bind viewModel.SpellList}">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <VirtualizingStackPanel>
@@ -119,9 +130,7 @@
                     <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
                     <Setter Property="Padding" Value="0"></Setter>
                     <Setter Property="Margin" Value="0"></Setter>
-
                 </Style>
-
             </ListView.ItemContainerStyle>
         </ListView>
     </Grid>

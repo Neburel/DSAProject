@@ -6,6 +6,7 @@ namespace DSALib.Charakter.Resources
     public class Vitality : AbstractAttributeResources
     {
         public override string Name => DSALib.Resources.Vitality;
+        public override string ShortName => "LE";
         public Vitality(CharakterAttribute attribute) : base(attribute) { }
         internal override List<CharakterAttribut> attributeList => new List<CharakterAttribut>()
         {

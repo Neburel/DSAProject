@@ -1,7 +1,5 @@
 ﻿using DSALib.Interfaces;
-using DSALib.Utils;
 using DSAProject.Classes.Charakter;
-using DSAProject.Classes.Interfaces;
 using System;
 using System.Collections.Generic;
 
@@ -14,6 +12,7 @@ namespace DSALib.Charakter.Resources
         #endregion
         public int Value { get; private set; }
         public abstract string Name { get; }
+        public abstract string ShortName { get; }
         protected CharakterAttribute Attribute { get; private set; }
         internal abstract int CalculateValue { get; }
         internal abstract List<CharakterAttribut> attributeList { get; }

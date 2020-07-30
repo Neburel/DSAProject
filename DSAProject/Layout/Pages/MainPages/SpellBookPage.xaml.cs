@@ -34,12 +34,17 @@ namespace DSAProject.Layout.Pages.MainPages
 
             this.InitializeComponent();
 
+            Game.Charakter.CharakterSpellBook.AddSpell(new DSALib.Charakter.Other.Spell("Test", Game.Charakter.Attribute.UsedAttributs) { });
             var spellList = Game.Charakter.CharakterSpellBook.GetSpellList();
             foreach(var item in spellList)
             {
                 var model = new SpellViewModel(item);
                 viewModel.SpellList.Add(model);
             }
+        }
+        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+
         }
         internal class SpellBookPageViewModel : AbstractPropertyChanged
         {
@@ -65,19 +70,13 @@ namespace DSAProject.Layout.Pages.MainPages
             }
         }
 
-        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        private void SpellListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-
+            Game.RequestNav(new EventNavRequest { Side = NavEnum.CreateSpellPage });
         }
+    }
+    public class SpellBookPageHeader
+    {
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void TextBox_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
-        {
-
-        }
     }
 }

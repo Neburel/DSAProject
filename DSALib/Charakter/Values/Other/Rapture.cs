@@ -6,6 +6,7 @@ namespace DSAProject.Classes.Charakter.Values
     {
         public int Value => 0;
         public string Name => "Entrückung";
+        public string ShortName => "ER";
         public string InfoText => "";
     }
 }

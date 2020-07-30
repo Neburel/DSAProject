@@ -6,6 +6,7 @@ namespace DSAProject.Classes.Interfaces
     {   
         int Value { get; }
         string Name { get; }
+        string ShortName { get; }
         string InfoText { get; }
     }
 }

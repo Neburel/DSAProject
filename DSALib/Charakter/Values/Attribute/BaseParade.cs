@@ -7,6 +7,7 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
     {
         public BaseParade(CharakterAttribute attribute) : base(attribute) { }
         public override string Name => "Padrade-Basis";
+        public override string ShortName { get => "PA"; }
         internal override List<CharakterAttribut> attributeList => new List<CharakterAttribut>()
         {
             CharakterAttribut.Intuition,

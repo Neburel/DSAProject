@@ -6,6 +6,7 @@ namespace DSALib.Charakter.Values.Settable
     {
         public abstract int Value { get; }
         public abstract string Name { get; }
+        public abstract string ShortName { get; }
         public abstract string InfoText { get; }
     }
 }

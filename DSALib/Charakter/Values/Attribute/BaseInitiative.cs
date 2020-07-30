@@ -7,6 +7,7 @@ namespace DSAProject.Classes.Charakter.Values.Attribute
     {
         public BaseInitiative(CharakterAttribute attribute) : base(attribute) { }
         public override string Name => "Initiative-Basis";
+        public override string ShortName { get => "INI"; }
         internal override List<CharakterAttribut> attributeList => new List<CharakterAttribut>()
         {
             CharakterAttribut.Mut,

@@ -298,12 +298,12 @@ namespace DSALib.Charakter.Other
             foreach(var pair in valueValues)
             {
                 var value = pair.Value;
-                ret = GenerateLongDescriptionHelper(value, ret, Helper.GetShort(pair.Key));
+                ret = GenerateLongDescriptionHelper(value, ret, pair.Key.ShortName);
             }
             foreach(var pair in resourceValues)
             {
                 var value = pair.Value;
-                ret = GenerateLongDescriptionHelper(value, ret, Helper.GetShort(pair.Key));
+                ret = GenerateLongDescriptionHelper(value, ret, pair.Key.ShortName);
             }
 
             foreach(var pair in tawBonus)

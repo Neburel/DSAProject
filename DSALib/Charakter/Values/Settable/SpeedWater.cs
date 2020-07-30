@@ -6,6 +6,7 @@ namespace DSAProject.Classes.Charakter.Values
     {
         public override int Value { get; }
         public override string Name => "Geschwindigkeit Wasser";
+        public override string ShortName => Name;
         public override string InfoText => "";
     }
 }

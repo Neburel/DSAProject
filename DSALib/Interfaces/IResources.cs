@@ -9,6 +9,7 @@ namespace DSALib.Interfaces
         event EventHandler ValueChanged;
         int Value { get; }
         string Name { get; }
+        string ShortName { get; }
         string InfoText { get; }
     }
 }

@@ -31,11 +31,11 @@ namespace DSAProject.Classes.Game
         Natur(Baum)
         Wissstalente(Buch)
         */
-
     public enum NavEnum
     {
         StartPage = 1,
-        CreateTraitPage = 2
+        CreateTraitPage = 2, 
+            CreateSpellPage = 3
     };
 
     public static class Game

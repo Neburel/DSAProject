@@ -7,6 +7,7 @@ namespace DSALib.Charakter.Resources
     public class AstralEnergy : AbstractAttributeResources
     {
         public override string Name => "Astralenergie";
+        public override string ShortName => "AP";
         public AstralEnergy(CharakterAttribute attribute) : base(attribute) { }
         internal override List<CharakterAttribut> attributeList => new List<CharakterAttribut>()
         {

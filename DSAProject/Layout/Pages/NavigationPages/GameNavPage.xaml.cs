@@ -57,24 +57,7 @@ namespace DSAProject.Layout.Pages.NavigationPages
                 new NavigationViewItem          { Content = "Natur Talente",                Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage2), Parameter = typeof(TalentNature) } },
                 new NavigationViewItem          { Content = "Wissenstalente",               Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage2), Parameter = typeof(TalentKnowldage) } },
                 new NavigationViewItem          { Content = "Handwerkstalente",             Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage2), Parameter = typeof(TalentCrafting) } },
-
-                //new NavigationViewItemHeader    { Content = "Eigenschaften" },
-                //new NavigationViewItem          { Content = "Vorteile",                     Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Vorteil } },
-                //new NavigationViewItem          { Content = "Nachteile",                    Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Nachteil} },
-                
-                //new NavigationViewItemHeader    { Content = "Abenteuer" },
-                //new NavigationViewItem          { Content = "Quest",                        Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Quest } },
-                //new NavigationViewItem          { Content = "Events",                       Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Event} },
-                //new NavigationViewItem          { Content = "Belohnungen",                  Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Belohnung } },
-                //new NavigationViewItem          { Content = "Training",                     Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Training} },
-
-                //new NavigationViewItemHeader    { Content = "Belohnungen" },
-                //new NavigationViewItem          { Content = "Titel",                        Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Title } },
-                //new NavigationViewItem          { Content = "Geburstage",                   Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Geburstag } },
-                //new NavigationViewItem          { Content = "Bücher",                       Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Bücher} },
-                //new NavigationViewItem          { Content = "Errungenschaften",             Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Errungenschaften} },
-                //new NavigationViewItem          { Content = "Alle",                         Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage) } },
-
+           
                 new NavigationViewItemHeader    { Content = "Werkzeuge" },
                 new NavigationViewItem          { Content = "Charakter erstellen/bearbeiten",   Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(CharakterCreation) } },
                 new NavigationViewItem          { Content = "Speichern",                        Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(SavePage) } },
@@ -101,6 +84,9 @@ namespace DSAProject.Layout.Pages.NavigationPages
                     break;
                 case NavEnum.CreateTraitPage:
                     XAML_ContentFrame.Navigate(typeof(CreateTrait), e.Parameter);
+                    break;
+                case NavEnum.CreateSpellPage:
+                    XAML_ContentFrame.Navigate(typeof(CreateSpell), e.Parameter);
                     break;
                 default:
                     throw new System.NotImplementedException();

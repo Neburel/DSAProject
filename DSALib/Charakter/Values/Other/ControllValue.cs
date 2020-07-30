@@ -6,6 +6,7 @@ namespace DSAProject.Classes.Charakter.Values
     {   
         public int Value => 0;
         public string Name => "Beherschungswert";
+        public string ShortName => "BW";
         public string InfoText => "";
     }
 }

@@ -8,6 +8,7 @@ namespace DSALib.Charakter.Values
         public abstract event EventHandler ValueChanged;
         public abstract int Value { get; }
         public abstract string Name { get; }
+        public abstract string ShortName { get; }
         public abstract string InfoText { get; }
     }
 }
