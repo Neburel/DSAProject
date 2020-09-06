@@ -54,7 +54,7 @@ namespace DSALib.Charakter.Other
         public string GP { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1721:Eigenschaftennamen dürfen nicht mit Get-Methoden übereinstimmen", Justification = "<Ausstehend>")]
         public string Value { get; set; }
-        public string Title { get; set; }
+        public string Title { get; set; } 
         public string Description { get; set; }
         public string LongDescription { get => GenerateLongDescription(); }
         public TraitType TraitType { get; set; }
@@ -69,6 +69,8 @@ namespace DSALib.Charakter.Other
             atBonus = new Dictionary<AbstractTalentFighting, int>();
             paBonus = new Dictionary<AbstractTalentFighting, int>();
             blBonus = new Dictionary<AbstractTalentFighting, int>();
+
+            Title = "";
         }
 
         internal List<CharakterAttribut> UsedAttributs()

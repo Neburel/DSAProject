@@ -1,0 +1,400 @@
+﻿<Page
+    x:Class="DSAProject.Layout.Pages.ToolPages.CreateTalent"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DSAProject.Layout.Pages.ToolPages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <ScrollViewer>
+        <Grid x:Name="XAML_Grid" Padding="5,5,5,5" RowSpacing="12">
+            <Grid.Background>
+                <ImageBrush Stretch="Fill" ImageSource="/Assets/Images/Paper.jpg"/>
+            </Grid.Background>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Row="0" BorderThickness="1" BorderBrush="LightGray">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch" >
+                    <TextBlock Text="GameType:" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" HorizontalAlignment="Left" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch" >
+                        <RadioButton Tag="DSA" x:Name="XAML_RadioButtonGameTypValueDSA" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Content="{x:Bind TalentType_DSA}" IsChecked="True"    Checked="XAML_RadioButtonGameTypValueDSA_Checked"/>
+                        <RadioButton Tag="PNP" x:Name="XAML_RadioButtonGameTypValuePNP" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" Content="{x:Bind TalentType_PNP}" IsChecked="False"   Checked="XAML_RadioButtonGameTypValuePNP_Checked"/>
+                        <TextBlock Text="Bestehendes Talent Editieren:" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        <TextBlock Width="20"></TextBlock>
+                        <ComboBox x:Name="XAML_ComboBoxEditTalent" Width="200" ItemsSource="{x:Bind ViewModel.Talents, Mode=TwoWay}" SelectionChanged="XAML_ComboBoxEditTalent_SelectionChanged" IsTextSearchEnabled="True"></ComboBox>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="1" BorderThickness="1" BorderBrush="{x:Bind ViewModel.TalentTypeBorderColor, Mode=TwoWay}">
+
+                <Grid ColumnSpacing="10" Padding="3,3,3,3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" MaxWidth="280"></ColumnDefinition>
+                        <ColumnDefinition Width="*" MaxWidth="280"></ColumnDefinition>
+                        <ColumnDefinition Width="*" MaxWidth="200"></ColumnDefinition>
+                        <ColumnDefinition Width="*" MaxWidth="180"></ColumnDefinition>
+                        <ColumnDefinition Width="*" MaxWidth="180"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0"  Text="Talentart:" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" HorizontalAlignment="Left" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+
+                    <RadioButton x:Name="XAML_RadioButton_Weaponless"   Grid.Row="1" Grid.Column="0" Content="{x:Bind TalentChoice_Weaponless}"     Checked="RadioButton_TalentChoice_Checked" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}"></RadioButton>
+                    <RadioButton x:Name="XAML_RadioButton_Weapon"       Grid.Row="1" Grid.Column="1" Content="{x:Bind TalentChoice_Close}"          Checked="RadioButton_TalentChoice_Checked" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}"></RadioButton>
+                    <RadioButton x:Name="XAML_RadioButton_Range"        Grid.Row="1" Grid.Column="2" Content="{x:Bind TalentChoice_Range}"          Checked="RadioButton_TalentChoice_Checked" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}"></RadioButton>
+
+                    <RadioButton x:Name="XAML_RadioButton_Pysical"      Grid.Row="2" Grid.Column="0" Content="{x:Bind TalentChoice_Physical}"       Checked="RadioButton_TalentChoice_Checked" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}"></RadioButton>
+                    <RadioButton x:Name="XAML_RadioButton_Sozial"       Grid.Row="2" Grid.Column="1" Content="{x:Bind TalentChoice_Social}"         Checked="RadioButton_TalentChoice_Checked" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}"></RadioButton>
+                    <RadioButton x:Name="XAML_RadioButton_Nature"       Grid.Row="2" Grid.Column="2" Content="{x:Bind TalentChoice_Nature}"         Checked="RadioButton_TalentChoice_Checked" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}"></RadioButton>
+                    <RadioButton x:Name="XAML_RadioButton_Knowldage"    Grid.Row="2" Grid.Column="3" Content="{x:Bind TalentChoice_Knwoldage}"      Checked="RadioButton_TalentChoice_Checked" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}"></RadioButton>
+                    <RadioButton x:Name="XAML_RadioButton_Crafting"     Grid.Row="2" Grid.Column="4" Content="{x:Bind TalentChoice_Crafting}"       Checked="RadioButton_TalentChoice_Checked" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}"></RadioButton>
+
+                     <RadioButton x:Name="XAML_RadioButton_Language"     Grid.Row="3" Grid.Column="1" Content="{x:Bind TalentChoice_Language}"       Checked="RadioButton_TalentChoice_Checked" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}"></RadioButton>
+                </Grid>
+            </Border>
+
+            <Border x:Name="XAML_Border_Name" Grid.Row="2" BorderThickness="1" BorderBrush="{x:Bind ViewModel.TalentNameBorderColor, Mode=TwoWay}">
+                <Grid x:Name="XAML_Grid_Name" ColumnSpacing="10" RowSpacing="10" Padding="3,3,3,3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Talent Name:" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" HorizontalAlignment="Left" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBox Grid.Row="1" Grid.Column="1" Width="200" HorizontalAlignment="Left" Text="{x:Bind ViewModel.TalentName, Mode=TwoWay}"></TextBox>
+
+                    <TextBlock Grid.Row="1" Grid.Column="2" Text="Namens Zusatz:" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" HorizontalAlignment="Left" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBox Grid.Row="1" Grid.Column="3" Width="200" HorizontalAlignment="Left" Text="{x:Bind ViewModel.TalentNameExtension, Mode=TwoWay}"></TextBox>
+                </Grid>
+            </Border>
+
+            <Border x:Name="XAML_Border_Probe" Grid.Row="3" BorderThickness="1" BorderBrush="LightGray" Visibility="{x:Bind ViewModel.IsProbeSelectionVisibile, Mode=TwoWay}">
+                <Grid ColumnSpacing="10" RowSpacing="10" Padding="3,3,3,3" Visibility="{x:Bind ViewModel.IsProbeSelectionVisibile, Mode=TwoWay}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" MaxWidth="50"/>
+                        <ColumnDefinition Width="*" MaxWidth="50"/>
+                        <ColumnDefinition Width="*" MaxWidth="50"/>
+                        <ColumnDefinition Width="*" MaxWidth="50"/>
+                        <ColumnDefinition Width="*" MaxWidth="50"/>
+                        <ColumnDefinition Width="*" MaxWidth="50"/>
+                        <ColumnDefinition Width="*" MaxWidth="50"/>
+                        <ColumnDefinition Width="*" MaxWidth="50"/>
+                        <ColumnDefinition Width="*" MaxWidth="100"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="2"    Text="Probe:" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" HorizontalAlignment="Left" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="1"  Grid.ColumnSpan="10"    Text="{x:Bind ViewModel.ProbeString, Mode=TwoWay}" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" HorizontalAlignment="Left" TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" ></TextBlock>
+
+                    <Button x:Name="XAML_ProbeMut" Grid.Row="1" Grid.Column="0" Background="LightGray" BorderBrush="Green" BorderThickness="1" Click="XAML_ProbeMut_Click">
+                        <TextBlock Foreground="Black" FontFamily="French Script MT" FontSize="18">MU</TextBlock>
+                    </Button>
+                    <Button x:Name="XAML_ProbeKlugheit" Grid.Row="1" Grid.Column="1" Background="LightGray" BorderBrush="Green" BorderThickness="1" Click="XAML_ProbeKlugheit_Click">
+                        <TextBlock Foreground="Black" FontFamily="French Script MT" FontSize="18">KL</TextBlock>
+                    </Button>
+                    <Button x:Name="XAML_ProbeIntuition" Grid.Row="1" Grid.Column="2" Background="LightGray" BorderBrush="Green" BorderThickness="1" Click="XAML_ProbeIntuition_Click">
+                        <TextBlock Foreground="Black" FontFamily="French Script MT" FontSize="18">IN</TextBlock>
+                    </Button>
+                    <Button x:Name="XAML_ProbeCharisma" Grid.Row="1" Grid.Column="3" Background="LightGray" BorderBrush="Green" BorderThickness="1" Click="XAML_ProbeCharisma_Click">
+                        <TextBlock Foreground="Black" FontFamily="French Script MT" FontSize="18">CH</TextBlock>
+                    </Button>
+                    <Button x:Name="XAML_ProbeFingerfertigkeit" Grid.Row="1" Grid.Column="4" Background="LightGray" BorderBrush="Green" BorderThickness="1" Click="XAML_ProbeFingerfertigkeit_Click">
+                        <TextBlock Foreground="Black" FontFamily="French Script MT" FontSize="18">FF</TextBlock>
+                    </Button>
+                    <Button x:Name="XAML_ProbeGewandtheit" Grid.Row="2" Grid.Column="5" Background="LightGray" BorderBrush="Green" BorderThickness="1" Click="XAML_ProbeGewandtheit_Click">
+                        <TextBlock Foreground="Black" FontFamily="French Script MT" FontSize="18">GE</TextBlock>
+                    </Button>
+                    <Button x:Name="XAML_ProbeKonstitution" Grid.Row="2" Grid.Column="6" Background="LightGray" BorderBrush="Green" BorderThickness="1" Click="XAML_ProbeKonstitution_Click">
+                        <TextBlock Foreground="Black" FontFamily="French Script MT" FontSize="18">KO</TextBlock>
+                    </Button>
+                    <Button x:Name="XAML_ProbeKörperkraft" Grid.Row="2" Grid.Column="7" Background="LightGray" BorderBrush="Green" BorderThickness="1" Click="XAML_ProbeKörperkraft_Click">
+                        <TextBlock Foreground="Black" FontFamily="French Script MT" FontSize="18">KK</TextBlock>
+                    </Button>
+                    <Button x:Name="XAML_ProbeSozialstatus" Grid.Row="2" Grid.Column="8" Background="LightGray" BorderBrush="Green" BorderThickness="1" Click="XAML_ProbeSozialstatus_Click">
+                        <TextBlock Foreground="Black" FontFamily="French Script MT" FontSize="18">SO</TextBlock>
+                    </Button>
+                    <Button x:Name="XAML_ProbeClear" Grid.Row="2" Grid.Column="9" Background="LightGray" BorderBrush="Red" BorderThickness="1" Click="XAML_ProbeClear_Click">
+                        <TextBlock Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}">Leeren</TextBlock>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <Border x:Name="XAML_Border_BE" Grid.Row="4" BorderThickness="1" BorderBrush="LightGray">
+                <StackPanel Orientation="Horizontal" Padding="3,3,3,3">
+                    <TextBlock Text="BE:" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="XAML_TextBlockCurrentBE" Text="{x:Bind ViewModel.BEString, Mode=OneWay}" Width="100" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <Border BorderBrush="Green" BorderThickness="1" Width="26" Height="26" VerticalAlignment="Center">
+                        <Button x:Name="XAML_ButtonBEPlus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Click="XAML_ButtonBEPlus_Click">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="+" FontSize="8" FontStretch="UltraExpanded" FontWeight="ExtraBold"></TextBlock>
+                        </Button>
+                    </Border>
+                    <TextBlock Width="5"/>
+                    <Border BorderBrush="Red" BorderThickness="1" Width="26" Height="26" VerticalAlignment="Center">
+                        <Button x:Name="XAML_ButtonBEMinus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Click="XAML_ButtonBEMinus_Click">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="-" FontSize="8" FontStretch="UltraExpanded" FontWeight="ExtraBold"></TextBlock>
+                        </Button>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="5" x:Name="XAML_BorderRequirement" BorderThickness="1" BorderBrush="LightGray">
+                <Grid Visibility="{x:Bind ViewModel.IsRequirementSelectionVisible, Mode=TwoWay}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" MaxWidth="120"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Anforderungen"                                        Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" HorizontalAlignment="Left" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind ViewModel.RequirementString, Mode=TwoWay}"    Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" HorizontalAlignment="Left" TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"></TextBlock>
+
+                    <Grid Grid.Row="1" Grid.ColumnSpan="2" ColumnSpacing="10" Padding="3,3,3,3">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" MaxWidth="50"/>
+                            <ColumnDefinition Width="*" MaxWidth="50"/>
+                            <ColumnDefinition Width="*" MaxWidth="50"/>
+                            <ColumnDefinition Width="*" MaxWidth="50"/>
+                            <ColumnDefinition Width="*" MaxWidth="50"/>
+                            <ColumnDefinition Width="*" MaxWidth="50"/>
+                            <ColumnDefinition Width="*" MaxWidth="50"/>
+                            <ColumnDefinition Width="*" MaxWidth="50"/>
+                            <ColumnDefinition Width="*" MaxWidth="100"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="XAML_RequirementMut" Grid.Row="1" Grid.Column="0" Background="LightGray" BorderBrush="Green" BorderThickness="1" Click="XAML_RequirementMut_Click">
+                            <TextBlock Foreground="Black" FontFamily="French Script MT" FontSize="18">MU</TextBlock>
+                        </Button>
+                        <Button x:Name="XAML_RequirementKlugheit" Grid.Row="1" Grid.Column="1" Background="LightGray" BorderBrush="Green" BorderThickness="1" Click="XAML_RequirementKlugheit_Click">
+                            <TextBlock Foreground="Black" FontFamily="French Script MT" FontSize="18">KL</TextBlock>
+                        </Button>
+                        <Button x:Name="XAML_RequirementIntuition" Grid.Row="1" Grid.Column="2" Background="LightGray" BorderBrush="Green" BorderThickness="1" Click="XAML_RequirementIntuition_Click">
+                            <TextBlock Foreground="Black" FontFamily="French Script MT" FontSize="18">IN</TextBlock>
+                        </Button>
+                        <Button x:Name="XAML_RequirementCharisma" Grid.Row="1" Grid.Column="3" Background="LightGray" BorderBrush="Green" BorderThickness="1" Click="XAML_RequirementCharisma_Click">
+                            <TextBlock Foreground="Black" FontFamily="French Script MT" FontSize="18">CH</TextBlock>
+                        </Button>
+                        <Button x:Name="XAML_RequirementFingerfertigkeit" Grid.Row="1" Grid.Column="4" Background="LightGray" BorderBrush="Green" BorderThickness="1" Click="XAML_RequirementFingerfertigkeit_Click">
+                            <TextBlock Foreground="Black" FontFamily="French Script MT" FontSize="18">FF</TextBlock>
+                        </Button>
+                        <Button x:Name="XAML_RequirementGewandtheit" Grid.Row="2" Grid.Column="5" Background="LightGray" BorderBrush="Green" BorderThickness="1" Click="XAML_RequirementGewandtheit_Click">
+                            <TextBlock Foreground="Black" FontFamily="French Script MT" FontSize="18">GE</TextBlock>
+                        </Button>
+                        <Button x:Name="XAML_RequirementKonstitution" Grid.Row="2" Grid.Column="6" Background="LightGray" BorderBrush="Green" BorderThickness="1" Click="XAML_RequirementKonstitution_Click">
+                            <TextBlock Foreground="Black" FontFamily="French Script MT" FontSize="18">KO</TextBlock>
+                        </Button>
+                        <Button x:Name="XAML_RequirementKörperkraft" Grid.Row="2" Grid.Column="7" Background="LightGray" BorderBrush="Green" BorderThickness="1" Click="XAML_RequirementKörperkraft_Click">
+                            <TextBlock Foreground="Black" FontFamily="French Script MT" FontSize="18">KK</TextBlock>
+                        </Button>
+                        <Button x:Name="XAML_RequirementSozialstatus" Grid.Row="2" Grid.Column="8" Background="LightGray" BorderBrush="Green" BorderThickness="1" Click="XAML_RequirementSozialstatus_Click">
+                            <TextBlock Foreground="Black" FontFamily="French Script MT" FontSize="18">SO</TextBlock>
+                        </Button>
+                        <Button x:Name="XAML_RequirementtributeClear" Grid.Row="2" Grid.Column="9" Background="LightGray" BorderBrush="Red" BorderThickness="1" Click="XAML_RequirementtributeClear_Click">
+                            <TextBlock Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}">Leeren</TextBlock>
+                        </Button>
+                    </Grid>
+                    <Grid Grid.Row="2" Grid.ColumnSpan="2" ColumnSpacing="10" RowSpacing="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" MaxWidth="100"/>
+                            <ColumnDefinition Width="*" MaxWidth="200"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*" MaxWidth="30"/>
+                            <ColumnDefinition Width="*" MaxWidth="30"/>
+                            <ColumnDefinition Width="*" MaxWidth="30"/>
+                            <ColumnDefinition Width="*" MaxWidth="30"/>
+                            <ColumnDefinition Width="*" MaxWidth="30"/>
+                            <ColumnDefinition Width="*" MaxWidth="30"/>
+                            <ColumnDefinition Width="*" MaxWidth="30"/>
+                            <ColumnDefinition Width="*" MaxWidth="100"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock  Grid.Row="0" Grid.Column="0"                                            Text="Talent:" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" HorizontalAlignment="Left" TextAlignment="Center" VerticalAlignment="Center"/>
+                        <ComboBox   Grid.Row="0" Grid.Column="1" x:Name="XAML_ComboBoxRequirementTalent"    ItemsSource="{x:Bind ViewModel.Talents, Mode=TwoWay}" IsTextSearchEnabled="True" HorizontalAlignment="Stretch"/>
+                        <TextBlock  Grid.Row="0" Grid.Column="2"                                            Text="Ab:" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" HorizontalAlignment="Left" TextAlignment="Center" VerticalAlignment="Center"/>
+                        <Border     Grid.Row="0" Grid.Column="3" BorderBrush="Gray" BorderThickness="1">
+                            <TextBlock Foreground="Black" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center" Text="{x:Bind ViewModel.RequirementOffValue, Mode=TwoWay}"/>
+                        </Border>
+                        <Border  Grid.Row="0" Grid.Column="4" BorderBrush="Green" BorderThickness="1" Width="26" Height="26" VerticalAlignment="Center">
+                            <Button x:Name="XAML_ButtonRequirementPlus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Click="XAML_ButtonRequirementPlus_Click">
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="+" FontSize="8" FontStretch="UltraExpanded" FontWeight="ExtraBold"></TextBlock>
+                            </Button>
+                        </Border>
+                        <Border  Grid.Row="0" Grid.Column="5" BorderBrush="Red" BorderThickness="1" Width="26" Height="26" VerticalAlignment="Center">
+                            <Button x:Name="XAML_ButtonRequirementMinus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Click="XAML_ButtonRequirementMinus_Click">
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="-" FontSize="8" FontStretch="UltraExpanded" FontWeight="ExtraBold"></TextBlock>
+                            </Button>
+                        </Border>
+
+                        <TextBlock  Grid.Row="0" Grid.Column="6" Text="An:" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" HorizontalAlignment="Left" TextAlignment="Center" VerticalAlignment="Center"/>
+                        <Border     Grid.Row="0" Grid.Column="7" BorderBrush="Gray" BorderThickness="1">
+                            <TextBlock Foreground="Black" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center" Text="{x:Bind ViewModel.RequirementNeedValue, Mode=TwoWay}"/>
+                        </Border>
+                        <Border  Grid.Row="0" Grid.Column="8" BorderBrush="Green" BorderThickness="1" Width="26" Height="26" VerticalAlignment="Center">
+                            <Button x:Name="XAML_ButtonRequirementVonPlus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Click="XAML_ButtonRequirementVonPlus_Click">
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="+" FontSize="8" FontStretch="UltraExpanded" FontWeight="ExtraBold"></TextBlock>
+                            </Button>
+                        </Border>
+                        <Border  Grid.Row="0" Grid.Column="9" BorderBrush="Red" BorderThickness="1" Width="26" Height="26" VerticalAlignment="Center">
+                            <Button x:Name="XAML_ButtonRequirementVonMinus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Click="XAML_ButtonRequirementVonMinus_Click">
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="-" FontSize="8" FontStretch="UltraExpanded" FontWeight="ExtraBold"></TextBlock>
+                            </Button>
+                        </Border>
+
+                        <Button Grid.Row="0" Grid.Column="10" x:Name="XAML_ButtonRequirementTalentAdd" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" BorderBrush="Gray" Click="XAML_ButtonRequirementTalentAdd_Click">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="Hinzufügen" FontSize="20" FontStretch="UltraExpanded" FontWeight="ExtraBold" FontFamily="French Script MT"></TextBlock>
+                        </Button>
+
+                        <TextBlock  Grid.Row="1" Grid.Column="0" Text="Freitext:" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" HorizontalAlignment="Left" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        <TextBox    Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="9" x:Name="XAML_ReqTextFreeText"></TextBox>
+                        <Button     Grid.Row="1" Grid.Column="10" x:Name="XAML_ButtonRequriementStringAdd" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" BorderBrush="Gray" Click="XAML_ButtonRequriementStringAdd_Click">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="Hinzufügen" FontSize="20" FontStretch="UltraExpanded" FontWeight="ExtraBold" FontFamily="French Script MT"></TextBlock>
+                        </Button>
+                    </Grid>
+
+
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="6" BorderThickness="1" x:Name="XAML_BorderDeduction" BorderBrush="LightGray">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" ColumnSpacing="10" RowSpacing="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" MaxWidth="100"/>
+                            <ColumnDefinition Width="*" MaxWidth="200"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*" MaxWidth="30"/>
+                            <ColumnDefinition Width="*" MaxWidth="30"/>
+                            <ColumnDefinition Width="*" MaxWidth="30"/>
+                            <ColumnDefinition Width="*" MaxWidth="100"/>
+                            <ColumnDefinition Width="*" MaxWidth="100"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0"                     Text="Ableitungen"                                      Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" HorizontalAlignment="Left" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="7" Text="{x:Bind ViewModel.DeductionString, Mode=TwoWay}"  Foreground="Black" FontFamily="French Script MT" FontSize="13" HorizontalAlignment="Left" TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"></TextBlock>
+
+                        <TextBlock  Grid.Row="1" Grid.Column="0"                                        Text="Ableitung:" Foreground="Black"    FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" HorizontalAlignment="Left" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        <ComboBox   Grid.Row="1" Grid.Column="1" x:Name="XAML_ComboBoxDeductionChoice"  Width="200" ItemsSource="{x:Bind ViewModel.Talents, Mode=TwoWay}" IsTextSearchEnabled="True"></ComboBox>
+                        <TextBlock  Grid.Row="1" Grid.Column="2"                                        Text="Ab:" Foreground="Black"           FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" HorizontalAlignment="Left" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="1" Grid.Column="3">
+                            <TextBlock x:Name="XML_CurrentValue" Width="30" Foreground="Black" Margin="0,0,0,0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center" Text="{x:Bind ViewModel.DeductionValue, Mode=TwoWay}"/>
+                        </Border>
+                        <Border  Grid.Row="1" Grid.Column="4" BorderBrush="Green" BorderThickness="1" Width="26" Height="26" VerticalAlignment="Center">
+                            <Button x:Name="XAML_ButonDeductionPlus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Click="XAML_ButonDeductionPlus_Click">
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="+" FontSize="8" FontStretch="UltraExpanded" FontWeight="ExtraBold"></TextBlock>
+                            </Button>
+                        </Border>
+                        <Border  Grid.Row="1" Grid.Column="5" BorderBrush="Red" BorderThickness="1" Width="26" Height="26" VerticalAlignment="Center">
+                            <Button x:Name="XAML_ButonDeductionMinus" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" Click="XAML_ButonDeductionMinus_Click">
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="-" FontSize="8" FontStretch="UltraExpanded" FontWeight="ExtraBold"></TextBlock>
+                            </Button>
+                        </Border>
+                        <Button Grid.Row="1" Grid.Column="6" x:Name="XAML_ButtonAddDeduction" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" BorderBrush="Gray" Click="XAML_ButtonAddDeduction_Click">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="Hinzufügen" FontSize="20" FontStretch="UltraExpanded" FontWeight="ExtraBold" FontFamily="French Script MT"></TextBlock>
+                        </Button>
+
+                        <Button Grid.Row="1" Grid.Column="7" x:Name="XAML_ButtonRemoveDeduction" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" BorderBrush="Red" Click="XAML_ButtonRemoveDeduction_Click">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="Leeren" FontSize="20" FontStretch="UltraExpanded" FontWeight="ExtraBold" FontFamily="French Script MT"></TextBlock>
+                        </Button>
+
+                        <TextBlock  Grid.Row="2" Grid.Column="0" Text="Freitext:" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" HorizontalAlignment="Left" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        <TextBox    Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="6" Text="{x:Bind ViewModel.DeductionFreeText, Mode=TwoWay}"></TextBox>
+                        <Button     Grid.Row="2" Grid.Column="10" x:Name="XAML_ButtonDeductioNFreeText" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Black" BorderBrush="Gray" Click="XAML_ButtonDeductioNFreeText_Click">
+                            <TextBlock HorizontalAlignment="Center"  VerticalAlignment="Center"  TextAlignment="Center" Text="Hinzufügen" FontSize="20" FontStretch="UltraExpanded" FontWeight="ExtraBold" FontFamily="French Script MT"></TextBlock>
+                        </Button>
+
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="7" x:Name="XAML_BorderFatherTalent" BorderThickness="1" BorderBrush="LightGray">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" ColumnSpacing="10" RowSpacing="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" MaxWidth="100"/>
+                            <ColumnDefinition Width="*" MaxWidth="200"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*" MaxWidth="30"/>
+                            <ColumnDefinition Width="*" MaxWidth="30"/>
+                            <ColumnDefinition Width="*" MaxWidth="30"/>
+                            <ColumnDefinition Width="*" MaxWidth="100"/>
+                            <ColumnDefinition Width="*" MaxWidth="100"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0"     Text="Übergeordnetes Talent" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" HorizontalAlignment="Left" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        <TextBlock  Grid.Row="1" Grid.Column="0"    Text="Talente:" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" HorizontalAlignment="Left" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="8" x:Name="XAML_BorderButtonCreateTalent" BorderThickness="1" BorderBrush="LightGray">
+                <Grid>
+                    <Button x:Name="XAML_ButtonCreateTalent" BorderBrush="Gray" Click="XAML_ButtonCreateTalent_Click">
+                        <TextBlock Text="Talent Erstellen" Foreground="Black" FontFamily="French Script MT" FontSize="{x:Bind TextFontSize}" FontWeight="ExtraBold" Margin="0,0,0,0" TextAlignment="Center" VerticalAlignment="Center"  HorizontalAlignment="Center"></TextBlock>
+                    </Button>
+                </Grid>
+            </Border>
+        </Grid>
+    </ScrollViewer>
+</Page>

@@ -105,7 +105,7 @@ namespace DSAProject.Layout.Pages
         private void CreateNewItemList(List<Trait> traits)
         {
             var list = new List<TraitViewModel>();
-            var textFilterTraitList = traits.Where(x => x.Title.ToLower().Contains(filterText.ToLower())).ToList();
+            var textFilterTraitList = traits.Where(x => x.Title == null || x.Title.ToLower().Contains(filterText.ToLower())).ToList();
 
             foreach (var item in textFilterTraitList)
             {
