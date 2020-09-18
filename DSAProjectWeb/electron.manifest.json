@@ -1,0 +1,44 @@
+{
+  "executable": "DSAProjectWeb",
+  "splashscreen": {
+    "imageFile": ""
+  },
+  "name": "DSAProjectWeb",
+  "author": "Christoph Spiering",
+  "singleInstance": true,
+  "build": {
+    "appId": "com.DSAProjectWeb.app",
+    "productName": "DSAProjectWeb",
+    "copyright": "Copyright © 2019",
+    "buildVersion": "1.0.3",
+    "compression": "maximum",
+    "directories": {
+      "output": "../../../bin/Desktop"
+    },
+    "extraResources": [
+      {
+        "from": "./bin",
+        "to": "bin",
+        "filter": [ "**/*" ]
+      },
+      {
+        "from": "D:\\04_Projekte\\DSAProject\\DSAProjectWeb\\Resources\\DSADatabaseTemplate.mdf",
+        "to": "bin/Resources/DSADatabaseTemplate.mdf",
+        "filter": [ "**/*" ]
+      },
+      {
+        "from": "D:\\04_Projekte\\DSAProject\\DSAProjectWeb\\Resources\\DSADatabaseTemplate_log.ldf",
+        "to": "bin/Resources/DSADatabaseTemplate_log.ldf",
+        "filter": [ "**/*" ]
+      }
+    ],
+    "files": [
+      {
+        "from": "./ElectronHostHook/node_modules",
+        "to": "ElectronHostHook/node_modules",
+        "filter": [ "**/*" ]
+      },
+      "**/*"
+    ]
+  }
+}

@@ -1,0 +1,64 @@
+<table cdk-table [dataSource]="dataSource" *ngIf="!loading">
+  <ng-container cdkColumnDef="name">
+    <th cdk-header-cell *cdkHeaderCellDef>
+      <p></p>
+    </th>
+    <td cdk-cell *cdkCellDef="let element">
+      <div><span>{{ element.Name }}</span></div>
+    </td>
+  </ng-container>
+
+  <ng-container cdkColumnDef="button">
+    <th cdk-header-cell *cdkHeaderCellDef></th>
+    <td cdk-cell *cdkCellDef="let element">
+      <button mat-mini-fab class="small-icon-button" style="margin-right: 2px" (click)="ClickButton(element, 1)">
+        +
+      </button>
+      <button mat-mini-fab class="small-icon-button" (click)="ClickButton(element, -1)">
+        -
+      </button>
+    </td>
+  </ng-container>
+
+  <ng-container cdkColumnDef="min">
+    <th cdk-header-cell *cdkHeaderCellDef>
+      <p class="attributHeader">min</p>
+    </th>
+    <td cdk-cell *cdkCellDef="let element">
+      <div class='square-box' style="width: 30px">
+        <div class='square-content'>
+          <div><span>{{ element.AKT }}</span></div>
+        </div>
+      </div>
+    </td>
+  </ng-container>
+
+  <ng-container cdkColumnDef="mod">
+    <th cdk-header-cell *cdkHeaderCellDef>
+      <p class="attributHeader">mod</p>
+    </th>
+    <td cdk-cell *cdkCellDef="let element">
+      <div class='square-box' style="width: 30px">
+        <div class='square-content'>
+          <div><span>{{ element.MOD }}</span></div>
+        </div>
+      </div>
+    </td>
+  </ng-container>
+
+  <ng-container cdkColumnDef="max">
+    <th cdk-header-cell *cdkHeaderCellDef>
+      <p class="attributHeader">max</p>
+    </th>
+    <td cdk-cell *cdkCellDef="let element">
+      <div class='square-box' style="width: 30px">
+        <div class='square-content'>
+          <div><span>{{ element.MAX }}</span></div>
+        </div>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
+  <tr cdk-row *cdkRowDef="let row; columns: displayedColumns;"></tr>
+</table>

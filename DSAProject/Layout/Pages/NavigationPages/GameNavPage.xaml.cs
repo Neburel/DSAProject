@@ -44,7 +44,7 @@ namespace DSAProject.Layout.Pages.NavigationPages
                 startItem,
                 new NavigationViewItem          { Content = "Sprachenbrief",                Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(LanguagePage2) } },
                 new NavigationViewItem          { Content = "Eigenschaftsbrief",            Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TraitPage), Parameter = TraitType.Keiner } },
-                new NavigationViewItem          { Content = "MagieBrief",                   Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(SpellBookPage) } },
+                //new NavigationViewItem          { Content = "MagieBrief",                   Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(SpellBookPage) } },
 
                 new NavigationViewItemHeader    { Content = "Kampf Talente" },
                 new NavigationViewItem          { Content = "Waffenlose Kampftechniken",    Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(TalentPage2), Parameter = typeof(TalentWeaponless) } },
@@ -63,7 +63,7 @@ namespace DSAProject.Layout.Pages.NavigationPages
                 new NavigationViewItem          { Content = "Speichern",                        Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(SavePage) } },
                 new NavigationViewItem          { Content = "Laden",                            Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(LoadPage) } },
                 new NavigationViewItem          { Content = "Wiki",                             Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(WikiPage) } },
-                new NavigationViewItem          { Content = "CreateSpell",                      Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(CreateSpell) } },
+                //new NavigationViewItem          { Content = "CreateSpell",                      Icon = new BitmapIcon(), Tag = new DSANavItem { NavType = typeof(CreateSpell) } },
             };
 
             NavigationViewItem = NavItems.Where(x => x.Tag != null).ToList();
