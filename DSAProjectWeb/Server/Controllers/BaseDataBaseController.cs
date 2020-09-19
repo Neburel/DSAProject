@@ -9,11 +9,12 @@ namespace DSAProjectWeb.Server.Controllers
         public ApplicationContext Context { get; set; }
         public BaseDataBaseController(ApplicationContext context, ILogger<BaseDataBaseController> logger) : base(logger) {
             this.Context = context;
+            
         }
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            Context.SaveChanges();
+            //Context.SaveChanges();
             base.OnActionExecuted(filterContext);
         }
     }

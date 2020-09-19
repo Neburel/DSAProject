@@ -1,1 +1,52 @@
-﻿<div style="border: 1px solid red">ValueTabel Component</div>
+﻿<table cdk-table [dataSource]="dataSource" style="border-spacing: 0" *ngIf="!loading">
+    <ng-container cdkColumnDef="name">
+        <th cdk-header-cell *cdkHeaderCellDef>
+            <p class="smallTabelHeader"></p>
+        </th>
+        <td cdk-cell *cdkCellDef="let element">
+            <div><span>{{ element.Name }}</span></div>
+        </td>
+    </ng-container>
+
+    <ng-container cdkColumnDef="min">
+        <th cdk-header-cell *cdkHeaderCellDef>
+            <p class="smallTabelHeader">min</p>
+        </th>
+        <td cdk-cell *cdkCellDef="let element">
+            <div class='square-box' style="width: 30px">
+                <div class='square-content'>
+                    <div><span>{{ element.AKT }}</span></div>
+                </div>
+            </div>
+        </td>
+    </ng-container>
+
+    <ng-container cdkColumnDef="mod">
+        <th cdk-header-cell *cdkHeaderCellDef>
+            <p class="smallTabelHeader">mod</p>
+        </th>
+        <td cdk-cell *cdkCellDef="let element">
+            <div class='square-box' style="width: 30px">
+                <div class='square-content'>
+                    <div><span>{{ element.MOD }}</span></div>
+                </div>
+            </div>
+        </td>
+    </ng-container>
+
+    <ng-container cdkColumnDef="max">
+        <th cdk-header-cell *cdkHeaderCellDef>
+            <p class="smallTabelHeader">max</p>
+        </th>
+        <td cdk-cell *cdkCellDef="let element">
+            <div class='square-box' style="width: 30px">
+                <div class='square-content'>
+                    <div><span>{{ element.MAX }}</span></div>
+                </div>
+            </div>
+        </td>
+    </ng-container>
+
+    <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
+    <tr cdk-row *cdkRowDef="let row; columns: displayedColumns;"></tr>
+</table>

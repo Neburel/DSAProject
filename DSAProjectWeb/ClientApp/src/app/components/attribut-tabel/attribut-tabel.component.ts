@@ -1,6 +1,4 @@
-import { DataSource } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { AttributService } from 'src/app/services/dsa/attribut.service';
 import { Attribut, DSADataSource } from 'src/app/types';
 
@@ -26,10 +24,10 @@ export class AttributTabelComponent implements OnInit {
   constructor(private attributService: AttributService) { }
 
   ngOnInit(): void {
-    this.LOad();
+    this.Load();
   }
 
-  private LOad() {
+  private Load() {
     this.attributService.GetAttributList(1).then(result => {
       console.log(result);
       var dataSource = new DSADataSource<Attribut>();
@@ -43,7 +41,7 @@ export class AttributTabelComponent implements OnInit {
     console.log(element);
     this.attributService.SetAttributAkt(1, element.ID, element.AKT + value).then(result => {
       console.log(result);
-      this.LOad();
+      this.Load();
     });
   }
 }

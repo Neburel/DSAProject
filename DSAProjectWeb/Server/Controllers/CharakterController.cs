@@ -1,4 +1,5 @@
 ﻿using DSALib2.Classes.Charakter;
+using DSALib2.Classes.Charakter.Repository.SQL;
 using DSALib2.SQLDataBase;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -16,8 +17,17 @@ namespace DSAProjectWeb.Server.Controllers
         [HttpPost]
         public string HttpRequest()
         {
-            var charakter   = DSASQLCharakter.CreateDSACharakter(Context, "New Charakter");
+            var repo        = new SQLCharakterRepository(Context);
+            var charakter   = repo.CreateDSACharakter(Context, "New Charakter");
             return CreateResponse(charakter);
+        }
+
+        [Route("GetList")]
+        [HttpPost]
+        public string GetList()
+        {
+            var repo = new SQLCharakterRepository(Context);
+            return CreateResponse(repo.GetList());
         }
     }
 }

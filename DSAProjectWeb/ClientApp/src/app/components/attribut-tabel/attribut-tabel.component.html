@@ -1,7 +1,7 @@
-<table cdk-table [dataSource]="dataSource" *ngIf="!loading">
+<table cdk-table [dataSource]="dataSource" style="border-spacing: 0" *ngIf="!loading">
   <ng-container cdkColumnDef="name">
     <th cdk-header-cell *cdkHeaderCellDef>
-      <p></p>
+      <p class="smallTabelHeader"></p>
     </th>
     <td cdk-cell *cdkCellDef="let element">
       <div><span>{{ element.Name }}</span></div>
@@ -9,7 +9,9 @@
   </ng-container>
 
   <ng-container cdkColumnDef="button">
-    <th cdk-header-cell *cdkHeaderCellDef></th>
+    <th cdk-header-cell *cdkHeaderCellDef>
+      <p class="smallTabelHeader"></p>
+    </th>
     <td cdk-cell *cdkCellDef="let element">
       <button mat-mini-fab class="small-icon-button" style="margin-right: 2px" (click)="ClickButton(element, 1)">
         +
@@ -22,7 +24,7 @@
 
   <ng-container cdkColumnDef="min">
     <th cdk-header-cell *cdkHeaderCellDef>
-      <p class="attributHeader">min</p>
+      <p class="smallTabelHeader">min</p>
     </th>
     <td cdk-cell *cdkCellDef="let element">
       <div class='square-box' style="width: 30px">
@@ -35,7 +37,7 @@
 
   <ng-container cdkColumnDef="mod">
     <th cdk-header-cell *cdkHeaderCellDef>
-      <p class="attributHeader">mod</p>
+      <p class="smallTabelHeader">mod</p>
     </th>
     <td cdk-cell *cdkCellDef="let element">
       <div class='square-box' style="width: 30px">
@@ -48,7 +50,7 @@
 
   <ng-container cdkColumnDef="max">
     <th cdk-header-cell *cdkHeaderCellDef>
-      <p class="attributHeader">max</p>
+      <p class="smallTabelHeader">max</p>
     </th>
     <td cdk-cell *cdkCellDef="let element">
       <div class='square-box' style="width: 30px">

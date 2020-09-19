@@ -10,11 +10,17 @@ export abstract class AKTMODMAX extends Model {
   public Name: string;
 }
 
+export class Charakter extends Model{
+
+}
+
 export class Attribut extends AKTMODMAX {
   public NameShort: string;
 }
 export class Resource extends AKTMODMAX {
-  public NameShort: string;
+}
+export class Value extends AKTMODMAX{
+
 }
 
 export abstract class Message<T extends Model | void> {
@@ -39,6 +45,10 @@ export class CreateCharakterMessage extends Message<void>{
   public Uri: string = 'Charakter/Create';
 }
 
+export class GetCharakterListMesssage extends ListMessage<Charakter>{
+  public Uri: string = 'Charakter/GetList';
+}
+
 export class GetAttributListMessage extends ListMessage<Attribut>{
   public Uri: string = 'Attribut/GetList';
   public ID: Number;
@@ -52,6 +62,10 @@ export class SetAttributAkt extends Message<void>{
 
 export class GetResourceListMessage extends ListMessage<Attribut>{
   public Uri: string = 'Resource/GetList';
+  public ID: Number;
+}
+export class GetValueListMessage extends ListMessage<Value>{
+  public Uri: string = 'Value/GetList';
   public ID: Number;
 }
 

@@ -30,19 +30,19 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
             }            
         }
 
-        private t_Attribute GetAKTInner(CharakterAttribut attribut)
+        private t_Attribute GetAKTInner(CharakterAttribut item)
         {
-            return dbSet.Where(x => x.AttributID == (int)attribut && x.CharakterID == charakterID).FirstOrDefault();
+            return dbSet.Where(x => x.AttributID == (int)item && x.CharakterID == charakterID).FirstOrDefault();
         }
 
-        public int GetMOD(CharakterAttribut attribut)
+        public int GetMOD(CharakterAttribut item)
         {
             return 0;
         }
 
-        public int GetMAX(CharakterAttribut attribut)
+        public int GetMAX(CharakterAttribut item)
         {
-            return GetAKT(attribut) + GetMOD(attribut);
+            return GetAKT(item) + GetMOD(item);
         }
 
         public List<CharakterAttribut> GetAttributList()
@@ -56,9 +56,9 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
             return retList;
         }
         
-        public void SetAKT(CharakterAttribut attribut, int value)
+        public void SetAKT(CharakterAttribut item, int value)
         {
-            var akt = GetAKTInner(attribut);
+            var akt = GetAKTInner(item);
             if (akt != null) 
             {
                 akt.Value = value;

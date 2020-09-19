@@ -9,23 +9,24 @@ import { CdkTableModule } from '@angular/cdk/table'
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AttributTabelComponent } from '../app/components/attribut-tabel/attribut-tabel.component';
-import { DialogService } from './services/base/dialog.service';
 import { MessageDialogComponent } from './dialogs/message-dialog/message-dialog.component';
+import { ResourceTabelComponent } from './components/resource-tabel/resource-tabel.component';
+import { ValueTabelComponent } from './components/value-tabel/value-tabel.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    FetchDataComponent,
 
     MessageDialogComponent,
 
     AttributTabelComponent,
+    ResourceTabelComponent,
+    ValueTabelComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

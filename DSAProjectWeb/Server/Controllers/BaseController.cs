@@ -47,8 +47,7 @@ namespace DSAProjectWeb.Server.Controllers
         }
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            if (!responseCreated) throw new Exception("Falsche verwendung des BaseController");
-
+            //if (!responseCreated) throw new Exception("Falsche verwendung des BaseController");
             base.OnActionExecuted(filterContext);
         }
     }

@@ -1,6 +1,9 @@
 ﻿using DSALib2.Classes.Charakter.Repository.General;
 using DSALib2.Classes.Charakter.Repository.SQL;
 using DSALib2.Classes.Charakter.Resources;
+using DSALib2.Classes.Charakter.Values.Attribute;
+using DSALib2.Classes.Charakter.Values.Extended;
+using DSALib2.Classes.Charakter.Values.Other;
 using DSALib2.Interfaces.Charakter;
 using DSALib2.Interfaces.Charakter.Repository;
 using DSALib2.SQLDataBase;
@@ -52,31 +55,21 @@ namespace DSALib2.Classes.Charakter
 
         protected override IValueRepository GetNewValueRepository()
         {
-            throw new NotImplementedException();
-        }
-
-        public static t_Charakter CreateDSACharakter(ApplicationContext context, string charakterName)
-        {
-            var charakterRepo   = new SQLCharakterRepository(context);
-
-            var charakter       = new t_Charakter() { Name = charakterName };
-            charakterRepo.Insert(charakter);
-            context.SaveChanges();
-
-            var attributRepo = new SQLAttributRepository(context, charakter.Id);
-
-            foreach (var attribut in DSAUtil.getDSAAttributList())
+            var list = new List<IValue>()
             {
-                var newAttribut = new t_Attribute()
-                {
-                    CharakterID = charakter.Id,
-                    AttributID = (int)attribut,
-                    Value = 0
-                };
-                attributRepo.Insert(newAttribut);
-            }
-            context.SaveChanges();
-            return charakter;
+                new BaseAttack(Attribute),
+                new BaseParade(Attribute),
+                new BaseBlock(Attribute),
+                new BaseRange(Attribute),
+                new BaseInitiative(Attribute),
+                new ControllValue(),
+                new ArtifactControl(),
+                new WoundSwell(Attribute),
+                new Rapture(),
+                new Repute(),
+            };
+            return new SQLValueRepository(applicationContext, list);
         }
+
     }
 }

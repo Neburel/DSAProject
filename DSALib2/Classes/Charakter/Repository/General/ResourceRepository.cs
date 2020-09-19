@@ -17,7 +17,7 @@ namespace DSALib2.Classes.Charakter.Repository.General
         #region Getter
         public int GetAKT(IResource value)
         {
-            return 0;
+            return value.Value;
         }
         public int GetMOD(IResource value)
         {

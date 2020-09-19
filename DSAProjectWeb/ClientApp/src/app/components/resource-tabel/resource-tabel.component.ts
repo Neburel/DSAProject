@@ -1,6 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { ResourceService } from 'src/app/services/dsa/resource.service';
 import { Resource, DSADataSource } from 'src/app/types';
+import { AttributService } from 'src/app/services/dsa/attribut.service';
 
 @Component({
     selector: 'app-resource-tabel',
@@ -13,9 +14,13 @@ export class ResourceTabelComponent implements OnInit {
     public loading = true;
     public dataSource;
 
-    constructor(private resourceService: ResourceService) { }
+    constructor(private attributService: AttributService, private resourceService: ResourceService) { }
 
     ngOnInit(): void {
+        this.attributService.subject.subscribe(resolve => {
+            this.Load();
+        });
+
         this.Load();
     }
 

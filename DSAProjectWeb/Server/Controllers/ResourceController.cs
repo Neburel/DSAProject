@@ -6,6 +6,8 @@ using DSALib2.Classes.Charakter;
 
 namespace DSAProjectWeb.Server.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class ResourceController : BaseDataBaseController
     {
         public ResourceController(ApplicationContext context, ILogger<ResourceController> logger) : base(context, logger) { }
@@ -15,8 +17,8 @@ namespace DSAProjectWeb.Server.Controllers
         public string GetList([FromBody]IDRequest charakterID)
         {
             var charakter = new DSASQLCharakter(Context, charakterID.ID);
-            var attributViewList = charakter.Resources.GetViewList();
-            return CreateResponse(attributViewList);
+            var viewList = charakter.Resources.GetViewList();
+            return CreateResponse(viewList);
         }
     }
 }

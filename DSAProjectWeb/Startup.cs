@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using System.IO;
 using System.Data.SqlClient;
 using DSALib2.SQLDataBase;
+using System;
 
 namespace DSAProjectWeb
 {
@@ -37,17 +38,25 @@ namespace DSAProjectWeb
             });
             services.AddSingleton(Configuration);
 
-            var electronUserDataPath = Configuration.GetValue<string>("Path:DebuggingElectronProgramPath");
+            var dbPath = getDBPath();
             var dbName = "DSADatabaseTemplate.mdf";
-            var newDB = Path.Combine(electronUserDataPath, dbName);
+            var newDB = Path.Combine(dbPath, dbName);
 
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
             builder.DataSource = "(localdb)\\MSSQLLocalDB";
             builder.InitialCatalog = dbName;
             builder.IntegratedSecurity = true;
             builder.AttachDBFilename = newDB;
+            builder.MultipleActiveResultSets = true;
+
+            //Richtig wäre nur den Connection String des Builders zu übergeben. Dies führt in Electron aber zu einem Assambly fehler den ich noch nicht verstanden habe.
+            //Daher ist dieses Konstrukt an übergaben und Anpassungen aktuell nötig
+            //Die Connection muss im Context dann angepasst werden, weil sie ansonsten nur einmal erstellt wird
             var connectionString = new SqlConnection(builder.ConnectionString);
 
+            Console.WriteLine("StartUp");
+            Console.WriteLine(connectionString.ConnectionString);
+            //services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(builder.ConnectionString));
             services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(connectionString));
         }
 
@@ -106,18 +115,21 @@ namespace DSAProjectWeb
             });
         }
         
-
-        private void DataBaseConfig()
+        private string getDBPath()
         {
-            string electronUserDataPath;
             if (Electron.App.IsReady)
             {
-                electronUserDataPath = Electron.App.GetPathAsync(PathName.UserData).GetAwaiter().GetResult();
+                return Electron.App.GetPathAsync(PathName.UserData).GetAwaiter().GetResult();
             }
             else
             {
-                electronUserDataPath = Configuration.GetValue<string>("Path:DebuggingElectronProgramPath");
+                return "C:\\Users\\chris\\AppData\\Roaming\\Electron";
             }
+        }
+
+        private void DataBaseConfig()
+        {
+            string electronUserDataPath = getDBPath();
 
             var dbName = "DSADatabaseTemplate.mdf";
             var ldfNmae = "DSADatabaseTemplate_log.ldf";

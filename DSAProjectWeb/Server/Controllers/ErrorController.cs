@@ -1,8 +1,12 @@
 ﻿using DbaWebAPI.Exceptions;
 using DbaWebAPI.JSON;
 using DbaWebAPI.Util;
+using ElectronNET.API;
+using ElectronNET.API.Entities;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using System.Data.SqlClient;
+using System.IO;
 
 namespace DSAProjectWeb.Server.Controllers
 {
@@ -16,6 +20,7 @@ namespace DSAProjectWeb.Server.Controllers
             var exception = context?.Error; // Your exception
             var code = 500; // Internal Server Error by default
 
+
             JSONBaseResponse<JSONEmpty> returnObject;
             if (typeof(AbstractMyException).IsAssignableFrom(exception.GetType()))
             {
@@ -24,7 +29,7 @@ namespace DSAProjectWeb.Server.Controllers
             }
             else
             {
-                returnObject = createReturnObject(exception.Message, RestServiceResultCode.Undefined);
+                returnObject = createReturnObject(exception.Message + " " + exception.InnerException.Message + " " + exception.StackTrace, RestServiceResultCode.Undefined);
             }
 
             string json = returnObject.ToJSON(out string error);

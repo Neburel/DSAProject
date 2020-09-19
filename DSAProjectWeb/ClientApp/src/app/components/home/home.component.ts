@@ -1,4 +1,5 @@
 import { Component, Inject } from '@angular/core';
+import { CharakterService } from 'src/app/services/dsa/charakter.service';
 
 
 @Component({
@@ -6,7 +7,10 @@ import { Component, Inject } from '@angular/core';
   templateUrl: './home.component.html',
 })
 export class HomeComponent {
-  constructor() {
+  constructor(charakterService : CharakterService) {
+    charakterService.GetList().then(result =>{
+      console.log(result);
+    })
   }
 }
 
