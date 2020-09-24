@@ -1,55 +1,32 @@
-﻿using DSALib2.Interfaces.Charakter;
+﻿using DSALib2.Classes.Charakter.Resources;
+using DSALib2.Interfaces.Charakter;
+using DSALib2.Interfaces.Charakter.Repository;
+using System;
 
 namespace DSALib2.Classes.Charakter.Values.Extended
 {
     public class ArtifactControl : IValue
     {
-        private int value;
-
-        //protected CharakterResources Res { get; private set; }
-        //protected CharakterAttribute Attribute { get; private set; }
-
-        public int Value { get => value; }
+        public int Value { get => Calculate(); }
         public string Name => DSALib2.Resources.ArtifactControl;
         public string ShortName { get => Name; }
         public string InfoText => "MR + IN";
 
-        public ArtifactControl()
+        private IAttributeRepository attributeRepository;
+        private IResourcesRepository resourcesRepository;
+        private MagicResistance artifactControl;
+        public ArtifactControl(IAttributeRepository attributeRepository, IResourcesRepository resourcesRepository)
         {
-            //CharakterResources res, CharakterAttribute attribut
-            //if (res == null) throw new ArgumentNullException(nameof(res));
-            //else if (attribut == null) throw new ArgumentNullException(nameof(attribut));
-
-            //Res         = res;
-            //Attribute   = attribut;
-
-        
-            //value = (int)Math.Ceiling(Calculate());
-        }
-        private void ChangedValue()
+            this.attributeRepository = attributeRepository;
+            this.resourcesRepository = resourcesRepository;
+            artifactControl = (MagicResistance)resourcesRepository.GetByType(typeof(MagicResistance));
+            if (artifactControl == null) throw new ArgumentNullException();
+        }   
+        protected int Calculate()
         {
-            var oldValue = this.Value;
-            var calculateV = this.Calculate();
-            value = (int)global::System.Math.Ceiling(calculateV); ;
-        }
-   
-
-
-        protected double Calculate()
-        {
-            //double value    = 0;
-            //var initative   = Attribute.GetAttributMAXValue(CharakterAttribut.Intuition);
-            //var mr          = Res.UsedValues.Where(x => x.GetType() == typeof(MagicResistance)).FirstOrDefault();
-            //var mrValue     = 0;
-
-            //if (mr != null)
-            //{
-            //    mrValue = Res.GetMAXValue(mr, out DSAError error);
-            //}
-            //value = initative + mrValue;
-            //return value;
-
-            return 0;
+            var initiative = attributeRepository.GetMAX(Utils.CharakterAttribut.Intuition);
+            var mr          = resourcesRepository.GetMAX(artifactControl);
+            return initiative + mr;
         }
     }
 }

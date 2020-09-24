@@ -1,0 +1,45 @@
+﻿<div class="content">
+    <div fxFlex fxLayout="column" fxLayoutGap="10px" style="height:100vh">
+        <mat-accordion>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <h2>Test</h2>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <div class="flex-container" fxLayout="row" [routerLink]="'/artikelgruppeMain'">
+                    <div fxFlex="2 1">
+                        <mat-label>
+                            <h3>Test</h3>
+                        </mat-label>
+                    </div>
+                    <div fxFlex><button mat-mini-fab [routerLink]="'/artikelgruppeMain'">
+                            <mat-icon>settings</mat-icon>
+                        </button></div>
+                </div>
+                <div class="flex-container" fxLayout="row" [routerLink]="'/lagerortMain'">
+                    <div fxFlex="2 1">
+                        <mat-label>
+                            <h3>Test
+                            </h3>
+                        </mat-label>
+                    </div>
+                    <div fxFlex><button mat-mini-fab>
+                            <mat-icon>settings</mat-icon>
+                        </button></div>
+                </div>
+                <div class="flex-container" fxLayout="row" [routerLink]="'/einheitMain'">
+                    <div fxFlex="2 1">
+                        <mat-label>
+                            <h3>Test</h3>
+                        </mat-label>
+                    </div>
+                    <div fxFlex><button mat-mini-fab>
+                            <mat-icon>settings</mat-icon>
+                        </button></div>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AttributService } from 'src/app/services/dsa/attribut.service';
 import { Attribut, DSADataSource } from 'src/app/types';
+import { CharakterService } from 'src/app/services/dsa/charakter.service';
 
 export interface PeriodicElement {
   name: string;
@@ -21,15 +22,14 @@ export class AttributTabelComponent implements OnInit {
   public dataSource;
 
   /** AttributTabel ctor */
-  constructor(private attributService: AttributService) { }
+  constructor(private charakterService: CharakterService, private attributService: AttributService) { }
 
   ngOnInit(): void {
     this.Load();
   }
 
   private Load() {
-    this.attributService.GetAttributList(1).then(result => {
-      console.log(result);
+    this.attributService.GetAttributList(this.charakterService.CurrentCharakter).then(result => {
       var dataSource = new DSADataSource<Attribut>();
       dataSource.setData(result);
       this.dataSource = dataSource;
@@ -38,8 +38,13 @@ export class AttributTabelComponent implements OnInit {
   }
 
   public ClickButton(element: Attribut, value: number): void {
+    var newValue = element.AKT + value;
+    
     console.log(element);
-    this.attributService.SetAttributAkt(1, element.ID, element.AKT + value).then(result => {
+    console.log(value);
+    console.log(newValue)
+
+    this.attributService.SetAttributAkt(this.charakterService.CurrentCharakter, element.ID, newValue).then(result => {
       console.log(result);
       this.Load();
     });

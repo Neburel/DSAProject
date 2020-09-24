@@ -1,0 +1,13 @@
+<h2 style="text-align: center;">Auswahl Charakter</h2>
+<div *ngIf="!Loading">
+
+  <ul class="heroes">
+    <li *ngFor="let charakter of CharakterList" (click)="onSelect(charakter)" style="word-wrap: inherit;">
+      <span class="badge">{{charakter.Id}}</span> {{charakter.Name}} Erstellt: {{charakter.Created | date:'mediumDate'}}
+      Letze Verwendung: {{charakter.LastUsed | date:'mediumDate'}}
+    </li>
+    <li (click)="onSelect()">
+      <span class="badge">-</span>Neu erstellen
+    </li>
+  </ul>
+</div>

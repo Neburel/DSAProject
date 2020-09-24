@@ -1,3 +1,12 @@
+@import 'custom-theme.scss';
+
+body{
+  margin: 0px;
+}
+
+.tablePaddingPlacer{
+  padding-right: 3px;
+}
 .small-icon-button {
   width: 24px !important;
   height: 24px !important;
@@ -18,15 +27,11 @@
   }
 }
 
-
-
-
-
 .square-box {
   position: relative;
   width: 50%;
   overflow: hidden;
-  background: #4679BD;
+  background: mat-color($primary, default);
 }
 
 .square-box:before {

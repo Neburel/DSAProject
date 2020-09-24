@@ -1,8 +1,9 @@
 ﻿import { Injectable } from '@angular/core';
-import { GetResourceListMessage, Resource } from 'src/app/types';
+import { Resource, Charakter } from 'src/app/types';
 import { Service } from '../base/service';
 import { WebCommunicationService } from '../base/web-communication.service';
 import { DialogService } from '../base/dialog.service';
+import { GetResourceListMessage } from 'src/app/messages';
 
 @Injectable({
     providedIn: 'root'
@@ -13,9 +14,9 @@ export class ResourceService extends Service {
         super(webCommunicationService, dialog);
     }
 
-    public GetList(characterID: number): Promise<Resource[]> {
+    public GetList(charakter: Charakter): Promise<Resource[]> {
         var message = new GetResourceListMessage();
-        message.ID = characterID;
+        message.CharakterID = charakter.Id;
         return this.sendListMessage<Resource>(message);
     }
 }

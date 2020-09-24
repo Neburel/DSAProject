@@ -1,7 +1,35 @@
-<body>
-  <app-nav-menu></app-nav-menu>
-  <div class="container" *ngIf="!loading">
-    <router-outlet></router-outlet>
-  </div>
+<div *ngIf="loading">
 
-</body>
+</div>
+<div *ngIf="!loading && !charakterChoise">
+  <app-loading (Choosed)="charakterChosed($event)"></app-loading>
+</div>
+<div *ngIf="!loading && charakterChoise">
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <button mat-icon-button>
+        <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+      </button>
+
+      <span class="menu-spacer headline">DSA</span>
+
+      <button mat-icon-button [routerLink]="'/settings'">
+        <mat-icon>settings</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav>
+      <mat-nav-list>
+        <a mat-list-item [routerLink]="'/'"> Charakterbrief </a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <!-- <div *ngIf="login" style="height: 88vh;"> -->
+      <div style="min-height: 88vh;">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

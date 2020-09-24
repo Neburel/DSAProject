@@ -1,0 +1,53 @@
+﻿<table>
+    <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>Stufe</td>
+        <td style="display: flex; justify-content: center;">
+            <div class='square-box' style="width: 30px; height: 30px;">
+                <div class='square-content'>
+                    <div><span>{{AP.Level}}</span></div>
+                </div>
+            </div>
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Abenteuerpunkte</td>
+        <div class='square-box' style="width: 100px; height: 30px;">
+            <div class='square-content'>
+                <div><span>{{ AP.AP }}</span></div>
+            </div>
+        </div>
+        <!-- <td>
+            <button mat-mini-fab class="small-icon-button" style="margin-right: 2px">
+                +
+            </button>
+        </td> -->
+    </tr>
+    <tr>
+        <td>Investierte AP</td>
+        <div class='square-box' style="width: 100px; height: 30px;">
+            <div class='square-content'>
+                <div><span>{{ AP.APInvested }}</span></div>
+            </div>
+        </div>
+        <!-- <td>
+            <button mat-mini-fab class="small-icon-button" style="margin-right: 2px" (click)="InvestApClick()">
+                +
+            </button>
+        </td> -->
+    </tr>
+    <tr>
+        <td>Verbliebene AP</td>
+        <div class='square-box' style="width: 100px; height: 30px;">
+            <div class='square-content'>
+                <div><span>{{ AP.APLeft }}</span></div>
+            </div>
+        </div>
+        <td></td>
+    </tr>
+</table>

@@ -7,10 +7,7 @@ import { CharakterService } from 'src/app/services/dsa/charakter.service';
   templateUrl: './home.component.html',
 })
 export class HomeComponent {
-  constructor(charakterService : CharakterService) {
-    charakterService.GetList().then(result =>{
-      console.log(result);
-    })
+  constructor() {
   }
 }
 

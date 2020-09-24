@@ -4,10 +4,10 @@ using DSALib2.Classes.Charakter.Resources;
 using DSALib2.Classes.Charakter.Values.Attribute;
 using DSALib2.Classes.Charakter.Values.Extended;
 using DSALib2.Classes.Charakter.Values.Other;
+using DSALib2.Classes.Charakter.Values.Settable;
 using DSALib2.Interfaces.Charakter;
 using DSALib2.Interfaces.Charakter.Repository;
 using DSALib2.SQLDataBase;
-using DSALib2.Utils;
 using System;
 using System.Collections.Generic;
 
@@ -63,13 +63,18 @@ namespace DSALib2.Classes.Charakter
                 new BaseRange(Attribute),
                 new BaseInitiative(Attribute),
                 new ControllValue(),
-                new ArtifactControl(),
+                new ArtifactControl(Attribute, Resources),
                 new WoundSwell(Attribute),
                 new Rapture(),
+                new SpeedLand(),
                 new Repute(),
             };
             return new SQLValueRepository(applicationContext, list);
         }
 
+        protected override IAPRepository GetAPRepository()
+        {
+            return new SQLAPRepository(applicationContext, charakterID);
+        }
     }
 }

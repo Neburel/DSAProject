@@ -12,6 +12,7 @@ namespace DSALib2.SQLDataBase
         public DbSet<t_Attribute> t_Attribute { get; set; }
         public DbSet<t_Charakter> t_Charakter { get; set; }
         public DbSet<t_Values> t_Values { get; set; }
+        public DbSet<t_AP> t_AP { get; set; }
 
         public ApplicationContext(DbContextOptions options) : base(options){}
 
@@ -49,26 +50,35 @@ namespace DSALib2.SQLDataBase
             Console.WriteLine(connectionString.ConnectionString);
         }
     }
-    
-    public class t_Attribute
+
+    public abstract class BaseTabel
     {
         public int Id { get; set; }
-        public int AttributID { get; set; }
+    }
+    public abstract class BaseTabelCharakter : BaseTabel
+    {
         public int CharakterID { get; set; }
+    }
+    public class t_Attribute : BaseTabelCharakter
+    {
+        public int AttributID { get; set; }
         public int Value { get; set; }
     }
 
-    public class t_Charakter
+    public class t_Charakter : BaseTabel
     {
-        public int Id { get; set; }
         public string Name { get; set; }
-        public DateTime created { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime LastUsed { get; set; }
     }
-    public class t_Values
+    public class t_Values : BaseTabelCharakter
     {
-        public int Id { get; set; }
         public int Value { get; set; }
-        public int CharakterID { get; set; }
         public string Type { get; set; }
+    }
+    public class t_AP : BaseTabelCharakter
+    {
+        public int AP { get; set; }
+        public int APInvested { get; set; }
     }
 }

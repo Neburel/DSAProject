@@ -1,9 +1,10 @@
-import { Model, Message, ListMessage, TestMessage, Attribut, GetAttributListMessage, SetAttributAkt } from 'src/app/types';
 import { Service } from '../base/service';
 import { WebCommunicationService } from '../base/web-communication.service';
 import { DialogService } from '../base/dialog.service';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { Attribut, Charakter } from 'src/app/types';
+import { GetAttributListMessage, SetAttributAkt } from 'src/app/messages';
 
 @Injectable({
     providedIn: 'root'
@@ -18,17 +19,20 @@ export class AttributService extends Service {
         })
     }
 
-    public GetAttributList(characterID: number): Promise<Attribut[]> {
+    public GetAttributList(charakter: Charakter): Promise<Attribut[]> {
         var message = new GetAttributListMessage();
-        message.ID = characterID;
+        message.CharakterID = charakter.Id;
         return this.sendListMessage<Attribut>(message);
     }
 
-    public SetAttributAkt(characterID: number, attributID: number, value: number): Promise<Number> {
+    public SetAttributAkt(charakter: Charakter, attributID: number, value: number): Promise<Number> {
+        console.log("SET Attribut");
+        console.log(attributID);
+
         return new Promise<Number>((resolve, reject) => {
             var message = new SetAttributAkt();
-            message.ID = attributID;
-            message.CharakterID = characterID;
+            message.AttributID = attributID;
+            message.CharakterID = charakter.Id;
             message.Value = value;
 
             this.sendMessage(message).then((result) => {

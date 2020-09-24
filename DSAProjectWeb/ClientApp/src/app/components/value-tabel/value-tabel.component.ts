@@ -2,6 +2,7 @@
 import { AttributService } from 'src/app/services/dsa/attribut.service';
 import { ValueService } from 'src/app/services/dsa/value.service';
 import { DSADataSource, Value } from 'src/app/types';
+import { CharakterService } from 'src/app/services/dsa/charakter.service';
 
 @Component({
     selector: 'app-value-tabel',
@@ -14,7 +15,10 @@ export class ValueTabelComponent implements OnInit {
     public loading = true;
     public dataSource;
 
-    constructor(private attributService: AttributService, private valueService: ValueService) { }
+    constructor(
+        private charakterService: CharakterService,
+        private attributService: AttributService,
+        private valueService: ValueService) { }
 
     ngOnInit(): void {
         this.attributService.subject.subscribe(resolve => {
@@ -25,8 +29,7 @@ export class ValueTabelComponent implements OnInit {
     }
 
     private Load() {
-        this.valueService.GetList(1).then(result => {
-            console.log(result);
+        this.valueService.GetList(this.charakterService.CurrentCharakter).then(result => {
             var dataSource = new DSADataSource<Value>();
             dataSource.setData(result);
             this.dataSource = dataSource;

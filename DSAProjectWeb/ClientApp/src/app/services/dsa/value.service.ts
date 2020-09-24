@@ -2,7 +2,8 @@
 import { Service } from '../base/service';
 import { WebCommunicationService } from '../base/web-communication.service';
 import { DialogService } from '../base/dialog.service';
-import { Value, GetValueListMessage } from 'src/app/types';
+import { Value, Charakter } from 'src/app/types';
+import { GetValueListMessage } from 'src/app/messages';
 
 @Injectable({
     providedIn: 'root'
@@ -13,9 +14,9 @@ export class ValueService extends Service {
         super(webCommunicationService, dialog);
     }
 
-    public GetList(characterID: number): Promise<Value[]> {
+    public GetList(charakter: Charakter): Promise<Value[]> {
         var message = new GetValueListMessage();
-        message.ID = characterID;
+        message.CharakterID = charakter.Id;
         return this.sendListMessage<Value>(message);
     }
 }

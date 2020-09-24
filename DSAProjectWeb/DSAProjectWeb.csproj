@@ -55,7 +55,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Server\Controllers\BaseController.cs" />
+    <None Include="Server\ControllersBase\BaseController.cs" />
     <None Include="Server\Controllers\AttributController.cs" />
   </ItemGroup>
   <ItemGroup>

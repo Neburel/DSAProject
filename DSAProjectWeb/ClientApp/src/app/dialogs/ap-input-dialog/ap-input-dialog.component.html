@@ -1,0 +1,31 @@
+﻿<h2 mat-dialog-title>{{ Title }}</h2>
+<mat-dialog-content class="mat-typography">
+
+    <form [formGroup]="FormGroup" (ngSubmit)="Save()">
+        <table style="width:100%" style="margin-bottom: 10px;">
+            <tr>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <td>AP:</td>
+                <td>{{data.AP}}</td>
+            </tr>
+            <tr>
+                <td>AP Eigenschaften:</td>
+                <td>{{data.ManuelAP}}</td>
+            </tr>
+        </table>
+        <div>
+            <mat-form-field>
+                <mat-label>Abenteuerpunkte</mat-label>
+                <input matInput formControlName="inputAbenteuerPunkte">
+            </mat-form-field>
+        </div>
+        <div style="text-align: center;">
+            <button mat-raised-button color="primary" style="margin: 5px;" type="submit">Speichern</button>
+            <button mat-raised-button color="primary" style="margin: 5px;" type="reset"
+                (click)="Cancel()">Abbrechen</button>
+        </div>
+    </form>
+</mat-dialog-content>

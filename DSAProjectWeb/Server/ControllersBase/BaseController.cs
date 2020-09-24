@@ -37,7 +37,8 @@ namespace DSAProjectWeb.Server.Controllers
                 Data = data
             };
             this.responseCreated = true;
-            return JsonSerializer.Serialize<StandartResponse<K>>(standardResponse);
+            var ret = JsonSerializer.Serialize(standardResponse);
+            return ret;
         }
         #endregion
 

@@ -81,5 +81,10 @@ namespace DSALib2.SQLDataBase.Repository
             dbSet.Attach(entityToUpdate);
             context.Entry(entityToUpdate).State = EntityState.Modified;
         }
+
+        public virtual void Submit()
+        {
+            this.context.SaveChanges();
+        }
     }
 }

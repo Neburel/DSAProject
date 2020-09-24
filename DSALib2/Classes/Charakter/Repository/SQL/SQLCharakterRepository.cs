@@ -18,9 +18,18 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
             return dbSet.ToList();
         }
 
+        public void SetCharakter(int charakterID)
+        {
+            var charakter = dbSet.Where(x => x.Id == charakterID).FirstOrDefault();
+            if (charakter == null) throw new ArgumentNullException("Charakter Exestiert nicht");
+            charakter.LastUsed = DateTime.Now;
+            Update(charakter);
+            context.SaveChanges();
+        }
+
         public t_Charakter CreateDSACharakter(ApplicationContext context, string charakterName)
         {
-            var charakter = new t_Charakter() { Name = charakterName, created = DateTime.Now };
+            var charakter = new t_Charakter() { Name = charakterName, Created = DateTime.Now, LastUsed = DateTime.Now };
             Insert(charakter);
             context.SaveChanges();
 

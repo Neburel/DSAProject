@@ -47,6 +47,13 @@
         </td>
     </ng-container>
 
+    <ng-container cdkColumnDef="spacer">
+        <th cdk-header-cell *cdkHeaderCellDef>
+        </th>
+        <td style="width: 5px;">
+        </td>
+    </ng-container>
+
     <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
     <tr cdk-row *cdkRowDef="let row; columns: displayedColumns;"></tr>
 </table>

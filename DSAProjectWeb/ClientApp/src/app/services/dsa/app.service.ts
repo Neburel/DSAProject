@@ -18,16 +18,18 @@ export abstract class AppService extends Service {
     }
     public Init(): Observable<void> {
         return new Observable((subscriber) => {
-            var createCharakter = this.charakterService.CreateCharakter();
 
-            forkJoin([createCharakter]).subscribe(result => {
-                subscriber.next();
-                subscriber.complete();
-            }, error => {
-                subscriber.error(error);
-            }, () => {
-                subscriber.complete();
-            });
+            // forkJoin([]).subscribe(result => {
+            //     subscriber.next();
+            //     subscriber.complete();
+            // }, error => {
+            //     subscriber.error(error);
+            // }, () => {
+            //     subscriber.complete();
+            // });
+
+            subscriber.next();
+            subscriber.complete();
         });
     }
 

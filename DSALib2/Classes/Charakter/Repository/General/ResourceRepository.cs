@@ -3,6 +3,7 @@ using DSALib2.Interfaces.Charakter;
 using DSALib2.Interfaces.Charakter.Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DSALib2.Classes.Charakter.Repository.General
 {
@@ -30,6 +31,10 @@ namespace DSALib2.Classes.Charakter.Repository.General
         public List<IResource> GetList()
         {
             return resourceList;
+        }
+        public IResource GetByType(Type type)
+        {
+            return this.GetList().Where(x => x.GetType() == type).FirstOrDefault();
         }
         #endregion
         #region View

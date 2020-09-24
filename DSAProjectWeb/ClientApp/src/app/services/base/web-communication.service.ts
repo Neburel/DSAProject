@@ -4,7 +4,8 @@ import { HttpClient, HttpHeaders, HttpEventType } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { SendMessageService } from './send-message.service';
-import { Model, Message, ListMessage } from 'src/app/types';
+import { Model } from 'src/app/types';
+import { Message, ListMessage } from 'src/app/messages';
 
 
 @Injectable({

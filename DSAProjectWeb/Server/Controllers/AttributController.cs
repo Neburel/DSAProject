@@ -15,18 +15,18 @@ namespace DSAProjectWeb.Server.Controllers
 
         [Route("Set")]
         [HttpPost]
-        public string Set([FromBody] IDValueRequest request)
+        public string Set([FromBody] IDAttributRequest request)
         {
             var charakter = new DSASQLCharakter(Context, request.CharakterID);
-            charakter.Attribute.SetAKT((CharakterAttribut)request.ID, request.Value);
+            charakter.Attribute.SetAKT((CharakterAttribut)request.AttributID, request.Value);
             return CreateResponse();
         }
 
         [Route("GetList")]
         [HttpPost]
-        public string GetList([FromBody]IDRequest charakterID)
+        public string GetList([FromBody]CharakterIDRequest charakterID)
         {
-            var charakter           = new DSASQLCharakter(Context, charakterID.ID);
+            var charakter           = new DSASQLCharakter(Context, charakterID.CharakterID);
             var attributViewList    = charakter.Attribute.GetViewList();
             return CreateResponse(attributViewList);
         }

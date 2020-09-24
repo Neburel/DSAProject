@@ -2,6 +2,7 @@
 import { ResourceService } from 'src/app/services/dsa/resource.service';
 import { Resource, DSADataSource } from 'src/app/types';
 import { AttributService } from 'src/app/services/dsa/attribut.service';
+import { CharakterService } from 'src/app/services/dsa/charakter.service';
 
 @Component({
     selector: 'app-resource-tabel',
@@ -14,18 +15,20 @@ export class ResourceTabelComponent implements OnInit {
     public loading = true;
     public dataSource;
 
-    constructor(private attributService: AttributService, private resourceService: ResourceService) { }
+    constructor(
+        private charakterService: CharakterService,
+        private attributService: AttributService, 
+        private resourceService: ResourceService) { }
 
     ngOnInit(): void {
         this.attributService.subject.subscribe(resolve => {
             this.Load();
         });
-
         this.Load();
     }
 
     private Load() {
-        this.resourceService.GetList(1).then(result => {
+        this.resourceService.GetList(this.charakterService.CurrentCharakter).then(result => {
             console.log(result);
             var dataSource = new DSADataSource<Resource>();
             dataSource.setData(result);

@@ -14,9 +14,9 @@ namespace DSAProjectWeb.Server.Controllers
 
         [Route("GetList")]
         [HttpPost]
-        public string GetList([FromBody]IDRequest charakterID)
+        public string GetList([FromBody]CharakterIDRequest charakterID)
         {
-            var charakter = new DSASQLCharakter(Context, charakterID.ID);
+            var charakter = new DSASQLCharakter(Context, charakterID.CharakterID);
             var viewList = charakter.Resources.GetViewList();
             return CreateResponse(viewList);
         }
