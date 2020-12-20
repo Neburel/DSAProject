@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace DSAProjectWeb.Server.Controllers
+namespace DSAProject2Web.Server.Controllers
 {
     public abstract class BaseDataBaseController : BaseController
     {

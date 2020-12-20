@@ -1,14 +1,10 @@
 ﻿using DbaWebAPI.Exceptions;
 using DbaWebAPI.JSON;
 using DbaWebAPI.Util;
-using ElectronNET.API;
-using ElectronNET.API.Entities;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using System.Data.SqlClient;
-using System.IO;
 
-namespace DSAProjectWeb.Server.Controllers
+namespace DSAProject2Web.Server.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
     public class ErrorController : ControllerBase

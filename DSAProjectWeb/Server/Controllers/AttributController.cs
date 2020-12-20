@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using DSALib2.SQLDataBase;
-using DSAProjectWeb.Server.Entities;
+using DSAProject2Web.Server.Entities;
 using DSALib2.Classes.Charakter;
 using DSALib2.Utils;
 
-namespace DSAProjectWeb.Server.Controllers
+namespace DSAProject2Web.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -17,7 +17,7 @@ namespace DSAProjectWeb.Server.Controllers
         [HttpPost]
         public string Set([FromBody] IDAttributRequest request)
         {
-            var charakter = new DSASQLCharakter(Context, request.CharakterID);
+            var charakter = new DSASQLCharakter(Context, request.CharakterID, "");
             charakter.Attribute.SetAKT((CharakterAttribut)request.AttributID, request.Value);
             return CreateResponse();
         }
@@ -26,7 +26,7 @@ namespace DSAProjectWeb.Server.Controllers
         [HttpPost]
         public string GetList([FromBody]CharakterIDRequest charakterID)
         {
-            var charakter           = new DSASQLCharakter(Context, charakterID.CharakterID);
+            var charakter           = new DSASQLCharakter(Context, charakterID.CharakterID, "");
             var attributViewList    = charakter.Attribute.GetViewList();
             return CreateResponse(attributViewList);
         }

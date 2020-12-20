@@ -1,4 +1,4 @@
-﻿namespace DSAProjectWeb.Server.Entities
+﻿namespace DSAProject2Web.Server.Entities
 {
     public class CharakterIDRequest
     {

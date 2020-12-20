@@ -1,14 +1,14 @@
 {
-  "executable": "DSAProjectWeb",
+  "executable": "DSAProject2Web",
   "splashscreen": {
     "imageFile": ""
   },
-  "name": "DSAProjectWeb",
+  "name": "DSAProject2Web",
   "author": "Christoph Spiering",
   "singleInstance": true,
   "build": {
-    "appId": "com.DSAProjectWeb.app",
-    "productName": "DSAProjectWeb",
+    "appId": "com.DSAProject2Web.app",
+    "productName": "DSAProject2Web",
     "copyright": "Copyright © 2019",
     "buildVersion": "1.0.3",
     "compression": "maximum",
@@ -22,13 +22,18 @@
         "filter": [ "**/*" ]
       },
       {
-        "from": "D:\\04_Projekte\\DSAProject\\DSAProjectWeb\\Resources\\DSADatabaseTemplate.mdf",
+        "from": "D:\\04_Projekte\\DSAProject2\\DSAProject2Web\\Resources\\DSADatabaseTemplate.mdf",
         "to": "bin/Resources/DSADatabaseTemplate.mdf",
         "filter": [ "**/*" ]
       },
       {
-        "from": "D:\\04_Projekte\\DSAProject\\DSAProjectWeb\\Resources\\DSADatabaseTemplate_log.ldf",
+        "from": "D:\\04_Projekte\\DSAProject2\\DSAProject2Web\\Resources\\DSADatabaseTemplate_log.ldf",
         "to": "bin/Resources/DSADatabaseTemplate_log.ldf",
+        "filter": [ "**/*" ]
+      },
+      {
+        "from": "D:\\04_Projekte\\DSAProject2\\DSAProject2Web\\Resources\\Talente_01092019.json",
+        "to": "bin/Resources/Talente.json",
         "filter": [ "**/*" ]
       }
     ],

@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Text.Json;
 
-namespace DSAProjectWeb.Server.Controllers
+namespace DSAProject2Web.Server.Controllers
 {
     public abstract class BaseController : Controller
     {

@@ -65,6 +65,24 @@ export class SetAPInvestedMessage extends MessageCharakterID<void>{
   public Value: Number;
 }
 
+export class ImportTalentMessage extends Message<void>{
+  public Uri: string = 'Talent/Import';
+  public Weaponless : any;
+  public Close : any;
+  public Range : any;
+  public Language : any;
+  public Physical : any;
+  public Social : any;
+  public Nature : any;
+  public Knowldage: any;
+  public Crafting: any;
+}
+
+export class TestMessage extends Message<void>{
+  public Uri: string = 'Talent/Test';
+}
+
+
 export class DSADataSource<T extends Model> {
   /** Stream of data that is provided to the table. */
   data;

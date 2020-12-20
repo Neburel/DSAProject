@@ -2,7 +2,7 @@ using ElectronNET.API;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace DSAProjectWeb
+namespace DSAProject2Web
 {
     public class Program
     {

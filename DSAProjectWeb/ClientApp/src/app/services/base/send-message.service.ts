@@ -15,13 +15,13 @@ export class SendMessageService {
       var contentType = message.ContentType;
       var apiUri = message.apiUri;
 
-      if (!contentType) contentType = 'application/json; charset=utf-8';
+      if (!contentType) contentType = 'application/json;charset=UTF-8';
       delete message.Uri;
       delete message.ContentType;
       delete message.UseToken;
       delete message.apiUri;
 
-      if(!apiUri){
+      if (!apiUri) {
         apiUri = this.baseUrl;
       }
 
@@ -40,7 +40,7 @@ export class SendMessageService {
 
       this.http.post<Response>(completeUri, message, options).subscribe((response: any) => {
         if (!response) reject('empty response');
-        
+
         if (response.ResultCode == 0) {
           resolve(response.Data);
         } else {

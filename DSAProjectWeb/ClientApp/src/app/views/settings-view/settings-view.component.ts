@@ -1,4 +1,5 @@
-﻿import { Component } from '@angular/core';
+﻿import { Component, ViewChild, ElementRef } from '@angular/core';
+import { TalentService } from 'src/app/services/dsa/talent.service';
 
 @Component({
     selector: 'app-settings-view',
@@ -7,8 +8,21 @@
 })
 /** SettingsView component*/
 export class SettingsViewComponent {
-    /** SettingsView ctor */
-    constructor() {
+    @ViewChild('fileChooser') FileChooser: ElementRef;
 
+    constructor(private talentService: TalentService) {
+
+    }
+
+    public talentImportFileChooser() {
+        this.FileChooser.nativeElement.click();
+    }
+
+    public talentImport(event) {
+        var file = event.target.files[0] as File;
+        if (file == null) return;
+        this.FileChooser.nativeElement.value = '';
+
+        this.talentService.Import(file).then();
     }
 }

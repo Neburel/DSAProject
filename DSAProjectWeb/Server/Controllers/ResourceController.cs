@@ -1,10 +1,10 @@
 ﻿using DSALib2.SQLDataBase;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
-using DSAProjectWeb.Server.Entities;
+using DSAProject2Web.Server.Entities;
 using DSALib2.Classes.Charakter;
 
-namespace DSAProjectWeb.Server.Controllers
+namespace DSAProject2Web.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]

@@ -13,10 +13,11 @@ using System.Data.SqlClient;
 using DSALib2.SQLDataBase;
 using System;
 
-namespace DSAProjectWeb
+namespace DSAProject2Web
 {
     public class Startup
     {
+        public const string TALENTJSONFILE = "TalentJsonFile";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -54,10 +55,11 @@ namespace DSAProjectWeb
             //Die Connection muss im Context dann angepasst werden, weil sie ansonsten nur einmal erstellt wird
             var connectionString = new SqlConnection(builder.ConnectionString);
 
-            Console.WriteLine("StartUp");
-            Console.WriteLine(connectionString.ConnectionString);
             //services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(builder.ConnectionString));
             services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(connectionString));
+        
+            //Configuration
+            Configuration.GetSection(TALENTJSONFILE).Value = @"D:\04_Projekte\DSAProject\DSAProjectWeb\Resources\Talente.json";
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
