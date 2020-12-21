@@ -2,7 +2,7 @@
 import { ApService } from 'src/app/services/dsa/ap.service';
 import { CharakterService } from 'src/app/services/dsa/charakter.service';
 import { AP } from 'src/app/types';
-import { MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ApInputDialogComponent, ApInputDialogOptions } from 'src/app/dialogs/ap-input-dialog/ap-input-dialog.component';
 
 @Component({
