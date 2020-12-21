@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 
 namespace DSALib2.Classes.Tools
 {
@@ -69,7 +68,7 @@ namespace DSALib2.Classes.Tools
                 Debug.WriteLine(item);
             }
 
-            return newTalenList();
+            return newTalenList;
             //Nicht Gefundene Talente müssen mit einer ID Belegt werden
         }
         public static void CheckDifferenzTalent(ITalent talent1, ITalent talent2)

@@ -20,7 +20,7 @@ namespace DSAProject2Web.Server.Controllers
         [HttpPost]
         public string GetList([FromBody]CharakterIDRequest charakterID)
         {
-            var charakter = new DSASQLCharakter(Context, charakterID.CharakterID);
+            var charakter = new DSASQLCharakter(Context, charakterID.CharakterID, "");
             var attributViewList = charakter.Values.GetViewList();
             return CreateResponse(attributViewList);
         }
