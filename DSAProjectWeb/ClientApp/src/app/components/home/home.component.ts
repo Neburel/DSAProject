@@ -1,6 +1,4 @@
-import { Component, Inject } from '@angular/core';
-import { CharakterService } from 'src/app/services/dsa/charakter.service';
-
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-home',

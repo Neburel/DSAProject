@@ -1,0 +1,165 @@
+﻿@import '../../../styles/variables.scss';
+
+.m8 {
+  margin: 8px;
+}
+.expanded {
+  height: min-content !important;
+  visibility: visible !important;
+}
+.hidColLength-0 {
+  height: 0px !important;
+  min-height: 0px !important;
+  visibility: hidden !important;
+}
+
+.btnToggleExpand {
+  position: relative;
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+
+  &.active {
+    &:before {
+      content: "-";
+    }
+  }
+
+  &:before {
+    top: 9px;
+    left: 4px;
+    height: 14px;
+    width: 14px;
+    display: block;
+    position: absolute;
+    color: white;
+    border: 2px solid white;
+    border-radius: 14px;
+    box-shadow: 0 0 3px #444;
+    box-sizing: content-box;
+    text-align: center;
+    text-indent: 0 !important;
+    font-family: "Courier New", Courier, monospace;
+    line-height: 14px;
+    content: "+";
+    background-color: mat-color($primary); 
+}
+}
+
+.dbaMatTableHeader {
+  overflow: auto;
+  display: flex;
+  flex-direction: row;
+}
+
+.dbaMatTableTextHeader {
+  display: flex;
+  align-items: center;
+  flex-grow: 0;
+  flex-shrink: 1;
+  margin-right: 10px;
+}
+
+.dbaMatTableButtonHeader {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.filterHeader {
+  display: flex;
+  flex-shrink: 1;
+  flex-grow: 0;
+  align-items: center;
+  padding: 0 24px;
+}
+.filterHeaderMatFormField{
+  min-width: 300px;
+}
+.filterSelectHeader {
+  min-width: 260px;
+  align-items: center;
+}
+.mat-table{
+  
+  overflow-y: scroll;
+  
+}
+
+.mat-header-row {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  background-color: inherit;
+}
+
+.mat-row.hovered {
+  background: mat-color($secondary);
+}
+
+.mat-row.highlighted {
+  background: mat-color($highlight);
+}
+
+.headerButton {
+  margin-right: 10px;
+}
+
+
+
+.mat-header-row,
+.mat-row {
+  min-height: 35px;
+  z-index:1;
+}
+.progress-bar{
+  height:5px;
+}
+.mat-header-cell{
+  font-weight: bolder;
+  font-size: 14px;
+}
+
+.mat-cell, .mat-header-cell{
+  padding: 0px 10px 0px 10px;
+}
+
+
+::ng-deep .select{
+  background-color:mat-color($primary);
+  
+}
+::ng-deep .page{
+  background-color:mat-color($secondary);  
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+th, td {
+  text-align: left;
+  padding-right: 4px;
+}
+
+.contain{
+  object-fit:contain;
+}
+
+.mat-cell{
+  border-left: 2px solid rgba(0, 0, 0, 0.12);
+  }
+
+  ::ng-deep .mat-select-panel.example-long-panel { 
+    max-height: 500px;
+  }
+
+  .title{
+    border-left: 2px solid rgba(0, 0, 0, 0);
+    font-size: larger;
+    font-style: italic;
+  }

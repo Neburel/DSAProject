@@ -27,4 +27,11 @@ namespace DSALib2.Utils
         Errungenschaften = 10,
         Bücher = 11
     }
+    public enum FightingValue
+    {
+        Attacke,
+        Parade,
+        Blocken
+    }
+
 }

@@ -21,7 +21,7 @@ export class ResourceTabelComponent implements OnInit {
         private resourceService: ResourceService) { }
 
     ngOnInit(): void {
-        this.attributService.subject.subscribe(resolve => {
+        this.attributService.AttributChanged.subscribe(resolve => {
             this.Load();
         });
         this.Load();
@@ -29,7 +29,6 @@ export class ResourceTabelComponent implements OnInit {
 
     private Load() {
         this.resourceService.GetList(this.charakterService.CurrentCharakter).then(result => {
-            console.log(result);
             var dataSource = new DSADataSource<Resource>();
             dataSource.setData(result);
             this.dataSource = dataSource;

@@ -53,7 +53,6 @@ export class SendMessageService {
         }
       }
         , error => {
-          console.log(error);
           if (error.error) {
             reject(error.error.Message);
           }

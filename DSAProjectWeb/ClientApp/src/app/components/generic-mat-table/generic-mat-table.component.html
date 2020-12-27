@@ -1,0 +1,166 @@
+﻿<div class="shredTable">
+    <div class="dbaMatTableHeader">
+
+        <div class="dbaMatTableTextHeader">
+            <h2>{{ tableName }}</h2>
+        </div>
+        <div *ngIf=!hideButtons class="dbaMatTableButtonHeader">
+            <button class="headerButton" mat-raised-button color="primary" [matMenuTriggerFor]="personMenu">
+                {{'Spalten ein/ausblenden'}}
+            </button>
+            <button *ngFor="let button of defaultButtonList" class="headerButton" mat-raised-button color="primary"
+                [disabled]="button.disabled" (click)="button.click.emit(currentSelectedList)">{{button.label || "no name
+                found"}}</button>
+            <button *ngFor="let button of buttonsdef" class="headerButton" mat-raised-button color="primary"
+                [disabled]="button.disabled" (click)="button.click.emit(currentSelectedList)">{{button.label || "no name
+                found"}}</button>
+        </div>
+
+        <div class="filterHeader">
+            <mat-icon matPrefix>search</mat-icon>
+            <mat-form-field appearance="legacy" class="filterHeaderMatFormField">
+                <input matInput type="search" placeholder="Filter" class="search-input" (keyup)="applyFilter($event)">
+            </mat-form-field>
+            <div style="width: 10px;"></div>
+            <mat-form-field appearance="legacy">
+                <input matInput type="search" placeholder="Würfel eingabe" class="search-input"
+                    (keyup)="probeValue($event)" type="number">
+            </mat-form-field>
+        </div>
+
+        <mat-form-field class="filterSelectHeader" appearance="fill" *ngIf="matOptionList.length > 0">
+            <mat-label>{{ matOptionTitle }}</mat-label>
+            <mat-select [(value)]="selectedMatOption" (selectionChange)="headerSelectChanged.emit(selectedMatOption)">
+                <mat-option *ngFor="let option of matOptionList" value="{{option.id}}">{{option.label}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+
+        <mat-menu #personMenu="matMenu">
+            <div *ngFor="let column of columnsdef">
+                <mat-checkbox (click)="showColumnClick($event, column)" [checked]="!column.hideColumn"
+                    class="mat-menu-item"> {{ column.label }}
+                </mat-checkbox>
+            </div>
+        </mat-menu>
+    </div>
+
+    <div class="progress-bar">
+        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+    </div>
+
+    <mat-table #dataTable matTableExporter [dataSource]="dataSource" matSort multiTemplateDataRows cdkDropListGroup>
+
+        <!-- Toggle Button Start -->
+        <ng-container matColumnDef="trigger">
+            <mat-header-cell *matHeaderCellDef fxFlex="70px">
+                <mat-icon>menu</mat-icon>
+            </mat-header-cell>
+
+
+            <mat-cell *matCellDef="let row; let i = dataIndex;" fxFlex="70px">
+                <span (click)="clickExpandButton(row)" [ngClass]="[expandedElement[row.recId] ?  'active' : 'inActive']"
+                    class="btnToggleExpand"></span>
+            </mat-cell>
+        </ng-container>
+        <!-- Toggle Button End -->
+
+
+        <ng-container [matColumnDef]="column.id" *ngFor="let column of visibleColumns; let i = index">
+            <!-- Header cell -->
+            <mat-header-cell *matHeaderCellDef [fxFlex]="column.width + 'px'" mat-sort-header>
+                {{ column.label }}
+            </mat-header-cell>
+
+            <!-- Body cell -->
+            <mat-cell *matCellDef="let row" [fxFlex]="column.width + 'px'" (dblclick)="dblClick(row)"
+                [ngClass]="row.IsTitle == true ? 'title': ''">
+                <img *ngIf="column['datatype'] === 'image' && row.IsTitle != true" src="{{row[column.id]}}" alt=" "
+                    width="40" height="40" class="contain">
+                <span *ngIf="column['datatype'] === 'taw'  && row.IsTitle != true && row[column.nullCheckID] != null"
+                    style="width: 100%; display: flex; align-items: center;">
+                    <div style="display: inline; flex: 1 0">
+                        {{ row[column.id] }}
+                    </div>
+                    <div>
+                        <button mat-mini-fab style="margin-right: 2px;" class="small-icon-button"
+                            (click)="column['clickEvent'](row, 1)">
+                            +
+                        </button>
+                        <button mat-mini-fab style="margin-right: 2px;" class="small-icon-button"
+                            (click)="column['clickEvent'](row, -1)">
+                            -
+                        </button>
+                    </div>
+                </span>
+                <span *ngIf="column['datatype'] === 'selection'" style="width: 100%;">
+                    <select #t style="border-color: transparent; width: 100%;"
+                        (change)="column['clickEvent'](row, t.value)">
+                        <option value="">Wähle Ableitung</option>
+                        <option *ngFor="let item of row[column.selectionListID]" [value]="item.ID"
+                            [selected]="row[column.selectedValueID]?.ID === item.ID">{{ item.Name }}
+                        </option>
+                    </select>
+                </span>
+                <span *ngIf="column['datatype'] === 'small'" style="font-size: xx-small;">
+                    {{ row[column.id] }}
+                </span>
+                <span *ngIf="column['datatype'] === 'textfreeText'" style="font-size: xx-small;">
+                    <div *ngIf="row[column.id]">{{ row[column.id].Text }}</div>
+                    <div *ngIf="row[column.id]" style="color: red;">{{ row[column.id].FreeText }}</div>
+                </span>
+                <span *ngIf="column['datatype'] === 'checkbox'  && row.IsTitle != true && row[column.nullCheckID] != null">
+                    <mat-checkbox [checked]="row[column.id]" (change)="column['clickEvent'](row, 0)">
+                    </mat-checkbox>
+                </span>
+                <span *ngIf="!column['datatype']">
+                    {{ row[column.id] }}
+                </span>
+            </mat-cell>
+        </ng-container>
+
+
+        <ng-container matColumnDef="hidden">
+            <mat-cell *matCellDef="let row;let i = dataIndex;" class="matCell" fxLayout="column"
+                fxLayoutAlign="center start">
+                <div style="overflow-x:auto;">
+                    <table>
+                        <tr *ngFor="let hiddenColumn of hiddenColumns" fxLayout="row" class="m8">
+                            <td style="width:150px;">
+                                <strong>
+                                    {{ hiddenColumn.label }}:
+                                </strong>
+                            </td>
+                            <td>
+                                <img *ngIf="hiddenColumn['datatype'] === 'image'" src="{{row[hiddenColumn.id]}}" alt=" "
+                                    width="75" height="75" class="contain">
+                                <span *ngIf="!hiddenColumn['datatype']">
+                                    {{ row[hiddenColumn.id] }}
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="visibleColumnsIds" class="matHeaderRow"></mat-header-row>
+
+        <mat-row *matRowDef="let row; let i = dataIndex; columns: visibleColumnsIds"
+            class="matRowVisible visible-row-{{row.recId}}" (click)="highlight(row)"
+            [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (mouseover)="mouseover(row)"
+            (mouseout)="mouseout(row)"></mat-row>
+
+        <!-- Body row definition for hidden columns -->
+        <mat-row *matRowDef="let row; let i = dataIndex; columns: ['hidden'];"
+            [@detailExpand]="expandedElement.length && expandedElement[row.recId] ? 'expanded' : 'collapsed'"
+            style="overflow: hidden" class="matRowHidden hidden-row-{{row.recId}} hidColLength-{{hiddenColumns.length}}"
+            [ngClass]="expandedElement[row.recId] ? 'expanded' : 'collapsed'"></mat-row>
+
+    </mat-table>
+
+    <mat-paginator style-paginator [length]="length" [pageIndex]="pageIndex" [pageSize]="pageSize"
+        [showFirstLastButtons]="true" [pageSizeOptions]="pageSizeOptions">
+    </mat-paginator>
+</div>

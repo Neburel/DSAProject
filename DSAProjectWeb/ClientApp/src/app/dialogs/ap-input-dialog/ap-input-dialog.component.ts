@@ -25,7 +25,6 @@ export class ApInputDialogComponent implements OnInit {
     });
 
     constructor(public dialogRef: MatDialogRef<ApInputDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: ApInputDialogOptions) {
-        console.log(data);
     }
 
     ngOnInit() {

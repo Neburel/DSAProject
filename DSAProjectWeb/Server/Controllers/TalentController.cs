@@ -5,14 +5,14 @@ using DSAProject2Web.Server.Entities;
 using DSALib2.Classes.Import.Excel;
 using Microsoft.Extensions.Configuration;
 using DSALib2.Classes.JSONSave;
-using System.Collections.Generic;
-using DSALib2.Charakter.Talente;
 using DSALib2.Classes.Tools;
 using DSAProjectWeb.Server.ControllersBase;
-using DSALib2.Classes.Charakter;
-using System;
 using DSALib2.Classes.Charakter.Talente.TalentGeneral;
 using DSALib2.Interfaces.Charakter;
+using DSALib2.Classes.Charakter.View;
+using DSAProjectWeb.Server.Entities;
+using DSAProjectWeb.Server.Util;
+using DSALib2.Classes.Charakter.Talente.TalentFighting;
 
 namespace DSAProject2Web.Server.Controllers
 {
@@ -20,22 +20,83 @@ namespace DSAProject2Web.Server.Controllers
     [Route("[controller]")]
     public class TalentController : CharakterDataBaseController
     {
-        public TalentController(ApplicationContext context, IConfiguration configuration, ILogger<TalentController> logger) : base(context, configuration, logger) {
-        }
+        public TalentController(ApplicationContext context, IConfiguration configuration, ILogger<TalentController> logger) : base(context, configuration, logger) { }
 
+        [Route("GetList")]
+        [HttpPost]
+        public string GetTalentList([FromBody] CharakterTalentRequest request)
+        {   
+            if(request.TalentType == TalentTypeEnum.Close)
+            {
+                return GetTalent<TalentClose>(request);
+            }
+            else if (request.TalentType == TalentTypeEnum.Crafting)
+            {
+                return GetTalent<TalentCrafting>(request);
+            }
+            else if (request.TalentType == TalentTypeEnum.Knowldage)
+            {
+                return GetTalent<TalentKnowldage>(request);
+            }
+            else if (request.TalentType == TalentTypeEnum.Nature)
+            {
+                return GetTalent<TalentNature>(request);
+            }
+            else if (request.TalentType == TalentTypeEnum.Physical)
+            {
+                return GetTalent<TalentPhysical>(request);
+            }
+            else if (request.TalentType == TalentTypeEnum.Range)
+            {
+                return GetTalent<TalentRange>(request);
+            }
+            else if (request.TalentType == TalentTypeEnum.Social)
+            {
+                return GetTalent<TalentSocial>(request);
+            }
+            else if (request.TalentType == TalentTypeEnum.Weaponless)
+            {
+                return GetTalent<TalentWeaponless>(request);
+            }
+            throw new System.Exception("Ungültige ID");
+        }
+        [Route("GetLanguageList")]
+        [HttpPost]
+        public string GetTalentList([FromBody] CharakterIDRequest request)
+        {
+            var charakter = GetDSASQLCharakter(request);
+            var talentRepo = charakter.Talente;
+            var list = talentRepo.GetViewList();
+            return CreateResponse(list);
+        }
         [Route("Set")]
         [HttpPost]
-        public string GetTalentPhysical([FromBody] CharakterValueRequest request)
+        public string SetTalentView([FromBody] CharakterDataRequest<TalentView> request)
         {
-            return GetTalent<TalentPhysical>(request);
+            var charakter   = GetDSASQLCharakter(request);
+            var talentRepo  = charakter.Talente;
+            talentRepo.SetTalentbyView(request.Data);
+
+            var viewItem = talentRepo.GetView(request.Data.ID);
+            return CreateResponse(viewItem);
+        }
+        [Route("SetLanguage")]
+        [HttpPost]
+        public string SetLanguageView([FromBody] CharakterDataRequest<LanguageView> request)
+        {
+            var charakter = GetDSASQLCharakter(request);
+            var talentRepo = charakter.Talente;
+            talentRepo.SetTalentbyView(request.Data);
+
+            var viewItem = talentRepo.GetLanguageView(request.Data.IDSprache, request.Data.IDSchrift);
+            return CreateResponse(viewItem);
         }
 
-
-        private string GetTalent<T>(CharakterValueRequest request) where T : ITalent
+        private string GetTalent<T>(CharakterIDRequest request) where T : ITalent
         {
-            var charakter = new DSASQLCharakter(Context, request.CharakterID, this.JsonTalentFile);
-            var talentRepo = charakter.Talente;
-            var list = talentRepo.GetViewList<T>();
+            var charakter       = GetDSASQLCharakter(request);
+            var talentRepo      = charakter.Talente;
+            var list            = talentRepo.GetViewList<T>();
             return CreateResponse(list);
         }
 
@@ -61,13 +122,6 @@ namespace DSAProject2Web.Server.Controllers
 
             TalentMerger.Test(importResult.TalentList, jsonTalentList, importResult.OldNameDictionary);
 
-            return CreateResponse();
-        }
-               
-        [Route("Test")]
-        [HttpPost]
-        public string Test()
-        {
             return CreateResponse();
         }
     }

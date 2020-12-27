@@ -10,12 +10,12 @@ import { GetAttributListMessage, SetAttributAkt } from 'src/app/messages';
     providedIn: 'root'
 })
 export class AttributService extends Service {
-    public subject = new Subject();
+    public AttributChanged = new Subject();
 
     constructor(webCommunicationService: WebCommunicationService, dialog: DialogService) {
         super(webCommunicationService, dialog);
-        this.subject.subscribe(next => {
-            console.log("NEXT");
+        this.AttributChanged.subscribe(next => {
+            
         })
     }
 
@@ -25,19 +25,16 @@ export class AttributService extends Service {
         return this.sendListMessage<Attribut>(message);
     }
 
-    public SetAttributAkt(charakter: Charakter, attributID: number, value: number): Promise<Number> {
-        console.log("SET Attribut");
-        console.log(attributID);
-
-        return new Promise<Number>((resolve, reject) => {
+    public SetAttributAkt(charakter: Charakter, attributID: number, value: number): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
             var message = new SetAttributAkt();
             message.AttributID = attributID;
             message.CharakterID = charakter.Id;
             message.Value = value;
 
             this.sendMessage(message).then((result) => {
-                this.subject.next();
-                resolve(1);
+                this.AttributChanged.next();
+                resolve();                
             })
         });
     }

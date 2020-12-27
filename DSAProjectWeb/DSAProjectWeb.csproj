@@ -50,6 +50,10 @@
     </ItemGroup>
   </Target>
   <ItemGroup>
+    <Content Include="Resources\wwwroot\debug.log" />
+    <Content Include="Resources\wwwroot\favicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Update="electron.manifest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

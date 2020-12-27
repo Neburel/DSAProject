@@ -18,10 +18,8 @@ export class AppComponent implements OnInit {
   constructor(public appService: AppService, private charakterService: CharakterService) { }
 
   ngOnInit(): void {
-    console.log("AppComponent");
     this.appService.Init().subscribe(subscriber => {
       this.loading = false;
-      console.log("AppComponent loading finished");
     });
   }
 

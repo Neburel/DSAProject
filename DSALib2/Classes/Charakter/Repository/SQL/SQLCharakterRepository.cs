@@ -53,10 +53,12 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
                 {
                     CharakterID = charakter.Id,
                     AttributID = (int)attribut,
-                    Value = 0
+                    Value = 9
                 };
                 attributRepo.Insert(newAttribut);
             }
+            //Standart Start Werte
+
             context.SaveChanges();
             return charakter;
         }

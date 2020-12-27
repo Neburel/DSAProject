@@ -13,10 +13,11 @@
       <p class="smallTabelHeader"></p>
     </th>
     <td cdk-cell *cdkCellDef="let element">
-      <button mat-mini-fab class="small-icon-button" style="margin-right: 2px" (click)="ClickButton(element, 1)">
+      <button *ngIf="!element.nobutton" mat-mini-fab class="small-icon-button" style="margin-right: 2px"
+        (click)="ClickButton(element, 1)">
         +
       </button>
-      <button mat-mini-fab class="small-icon-button" (click)="ClickButton(element, -1)">
+      <button *ngIf="!element.nobutton" mat-mini-fab class="small-icon-button" (click)="ClickButton(element, -1)">
         -
       </button>
     </td>

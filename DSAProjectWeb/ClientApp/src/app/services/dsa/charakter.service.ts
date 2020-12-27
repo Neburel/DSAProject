@@ -21,7 +21,6 @@ export class CharakterService extends Service {
     }
 
     public SetCurrentCharakter(charakter: Charakter): Promise<Charakter> {
-        console.log(charakter);
         this.CurrentCharakter = charakter;
         var message = new SetCharakterMessage();
         message.CharakterID = charakter.Id;

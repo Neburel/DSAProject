@@ -1,5 +1,6 @@
 ﻿using DSALib2.Classes.Charakter.Values.Settable;
 using DSALib2.Classes.Charakter.View;
+using System;
 using System.Collections.Generic;
 
 namespace DSALib2.Interfaces.Charakter.Repository
@@ -12,6 +13,7 @@ namespace DSALib2.Interfaces.Charakter.Repository
 
         void SetAKT(AbstractSettableValue item, int value);
 
+        IValue GetItemByType(Type type);
         List<ValueView> GetViewList();
     }
 }

@@ -3,24 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatStepperModule } from '@angular/material/stepper';
-import { MatTableModule } from '@angular/material/table';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { CdkTableModule } from '@angular/cdk/table'
 
 import { AppComponent } from './app.component';
@@ -38,12 +20,18 @@ import { ApInputDialogComponent } from './dialogs/ap-input-dialog/ap-input-dialo
 import { BankComponent } from './components/bank/bank.component';
 import { SettingsViewComponent } from './views/settings-view/settings-view.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { TalentViewComponent } from './views/talent-view/talent-view.component';
+import { MaterialModule } from './util/material.module';
+import { GenericMatTableComponent } from './components/generic-mat-table/generic-mat-table.component';
+import { config } from 'rxjs';
+import { LanguageViewComponent } from './views/language-view/language-view.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
+    GenericMatTableComponent,
 
     MessageDialogComponent,
     ApInputDialogComponent,
@@ -56,7 +44,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     ValueTabelComponent,
     AdventureTabelComponent,
     BankComponent,
-
+    TalentViewComponent,
+    LanguageViewComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -65,56 +54,27 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     CdkTableModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-
-    MatButtonModule,
-    MatProgressSpinnerModule,
-    MatCardModule,
-    MatTableModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatMenuModule,
-    MatToolbarModule,
-    MatListModule,
-    MatExpansionModule,
-    MatDialogModule,
-    MatDatepickerModule,
-    MatCheckboxModule,
-    MatStepperModule,
-    MatInputModule,
-    MatNativeDateModule,
-    MatSidenavModule,
+    MaterialModule,
 
     RouterModule.forRoot([
       { path: 'settings', component: SettingsViewComponent, pathMatch: 'full' },
+      { path: 'talentletterGeneral/:id', component: TalentViewComponent, pathMatch: 'full' },
+      { path: 'talentletterRange/:id', component: TalentViewComponent, pathMatch: 'full' },
+      { path: 'talentletterFighting/:id', component: TalentViewComponent, pathMatch: 'full' },
+      { path: 'language', component: LanguageViewComponent, pathMatch: 'full' },
       { path: '', component: HomeComponent, pathMatch: 'full' },
-    ]),
+    ], { onSameUrlNavigation: 'reload'}),
     NoopAnimationsModule
   ],
   exports: [
     ReactiveFormsModule,
-    MatButtonModule,
-    MatProgressSpinnerModule,
-    MatCardModule,
-    MatTableModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatMenuModule,
-    MatToolbarModule,
-    MatListModule,
-    MatExpansionModule,
-    MatDialogModule,
-    MatDatepickerModule,
-    MatCheckboxModule,
-    MatStepperModule,
-    MatInputModule,
-    MatNativeDateModule,
-    MatSidenavModule
+    MaterialModule,
+    GenericMatTableComponent
   ],
   entryComponents: [
     MessageDialogComponent,
     ApInputDialogComponent,
+    GenericMatTableComponent
   ],
 
   providers: [],

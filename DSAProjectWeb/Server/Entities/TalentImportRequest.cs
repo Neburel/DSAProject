@@ -1,9 +1,5 @@
 ﻿using DSALib2.Classes.Import;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace DSAProject2Web.Server.Entities
 {
     public class TalentImportRequest

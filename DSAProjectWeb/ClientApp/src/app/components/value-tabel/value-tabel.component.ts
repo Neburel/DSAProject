@@ -21,7 +21,7 @@ export class ValueTabelComponent implements OnInit {
         private valueService: ValueService) { }
 
     ngOnInit(): void {
-        this.attributService.subject.subscribe(resolve => {
+        this.attributService.AttributChanged.subscribe(resolve => {
             this.Load();
         });
 

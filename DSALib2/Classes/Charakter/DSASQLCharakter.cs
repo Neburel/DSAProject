@@ -25,6 +25,7 @@ namespace DSALib2.Classes.Charakter
         {
             this.charakterID = charakterID;
             this.applicationContext = applicationContext;
+            this.jsonTalentPath = jsonTalentPath;
         }
 
         protected override IAttributeRepository GetNewAttributeRepository()
@@ -52,7 +53,7 @@ namespace DSALib2.Classes.Charakter
             var talentList  = TalentJsonLoader.LoadTalent(jsonFile.Talente);
             var families = TalentJsonLoader.LoadLanguageFamily(jsonFile.Families, talentList);
 
-            return new SQLTalentRepository(talentList, families);
+            return new SQLTalentRepository(this.applicationContext, this, this.charakterID, talentList, families);
         }
         protected override ITraitRepository GetNewTraitRepository()
         {

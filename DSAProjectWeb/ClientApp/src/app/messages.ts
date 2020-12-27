@@ -1,5 +1,5 @@
 import { BehaviorSubject, Observable } from "rxjs";
-import { Model, Charakter, Attribut, Value, AP } from "./types";
+import { Model, Charakter, Attribut, Value, AP, Talent, TalentTypeEnum, Language } from "./types";
 
 export abstract class Message<T extends Model | void> {
   public abstract Uri: string;
@@ -65,6 +65,25 @@ export class SetAPInvestedMessage extends MessageCharakterID<void>{
   public Value: Number;
 }
 
+export class GetTalentListMessage extends ListMessage<Talent>{
+  public Uri: string = 'Talent/GetList';
+  public CharakterID: Number;
+  public TalentType: TalentTypeEnum;
+}
+export class GetLanguageListMessage extends ListMessage<Language>{
+  public Uri: string = 'Talent/GetLanguageList';
+  public CharakterID: Number;
+}
+
+export class SetTalentMessage extends DataMessage<Talent>{
+  public Uri: string = 'Talent/Set';
+  public CharakterID: Number;
+}
+export class SetLanguageMessage extends DataMessage<Language>{
+  public Uri: string = 'Talent/SetLanguage';
+  public CharakterID: Number;
+}
+
 export class ImportTalentMessage extends Message<void>{
   public Uri: string = 'Talent/Import';
   public Weaponless : any;
@@ -81,7 +100,6 @@ export class ImportTalentMessage extends Message<void>{
 export class TestMessage extends Message<void>{
   public Uri: string = 'Talent/Test';
 }
-
 
 export class DSADataSource<T extends Model> {
   /** Stream of data that is provided to the table. */

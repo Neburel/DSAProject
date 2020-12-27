@@ -20,6 +20,21 @@
         "from": "./bin",
         "to": "bin",
         "filter": [ "**/*" ]
+      },
+      {
+        "from": "D:\\04_Projekte\\DSAProject\\DSAProjectWeb\\Resources\\DSADatabaseTemplate.mdf",
+        "to": "bin/Resources/DSADatabaseTemplate.mdf",
+        "filter": [ "**/*" ]
+      },
+      {
+        "from": "D:\\04_Projekte\\DSAProject\\DSAProjectWeb\\Resources\\DSADatabaseTemplate_log.ldf",
+        "to": "bin/Resources/DSADatabaseTemplate_log.ldf",
+        "filter": [ "**/*" ]
+      },
+      {
+        "from": "D:\\04_Projekte\\DSAProject\\DSAProjectWeb\\Resources\\Talente_01092019.json",
+        "to": "bin/Resources/Talente.json",
+        "filter": [ "**/*" ]
       }
     ],
     "files": [

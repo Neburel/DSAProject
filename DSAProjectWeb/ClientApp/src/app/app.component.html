@@ -23,6 +23,42 @@
     <mat-sidenav #sidenav>
       <mat-nav-list>
         <a mat-list-item [routerLink]="'/'"> Charakterbrief </a>
+        <a mat-list-item [routerLink]="'/language'"> Sprachenbrief </a>
+        <mat-divider>Kampf Talente</mat-divider>
+        <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
+          <mat-expansion-panel-header>
+            <div style="display: flex; align-items: center;">
+              <a mat-list-item>Kampf Talente</a>
+            </div>
+          </mat-expansion-panel-header>
+          <mat-nav-list>
+            <a mat-list-item [routerLink]="'/talentletterFighting/8'" (click)="sidenav.toggle()"> Waffenlose
+              Kampftechniken
+            </a>
+            <a mat-list-item [routerLink]="'/talentletterFighting/6'" (click)="sidenav.toggle()"> Nahkampf
+              Kampftechniken
+            </a>
+            <a mat-list-item [routerLink]="'/talentletterRange/7'" (click)="sidenav.toggle()"> Fernkampf Kampftechniken
+            </a>
+          </mat-nav-list>
+        </mat-expansion-panel>
+        <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
+          <mat-expansion-panel-header>
+            <div style="display: flex; align-items: center;">
+              <a mat-list-item>Allgemeine Talente</a>
+            </div>
+          </mat-expansion-panel-header>
+          <mat-nav-list>
+            <a mat-list-item [routerLink]="'/talentletterGeneral/4'" (click)="sidenav.toggle()"> Körperliche Talente
+            </a>
+            <a mat-list-item [routerLink]="'/talentletterGeneral/5'" (click)="sidenav.toggle()"> Gesellschaftliche
+              Talente
+            </a>
+            <a mat-list-item [routerLink]="'/talentletterGeneral/3'" (click)="sidenav.toggle()"> Natur Talente</a>
+            <a mat-list-item [routerLink]="'/talentletterGeneral/2'" (click)="sidenav.toggle()"> Wissenstalente </a>
+            <a mat-list-item [routerLink]="'/talentletterGeneral/1'" (click)="sidenav.toggle()"> Handwerkstalente </a>
+          </mat-nav-list>
+        </mat-expansion-panel>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>

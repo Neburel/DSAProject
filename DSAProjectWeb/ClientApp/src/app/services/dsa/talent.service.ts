@@ -3,8 +3,8 @@ import { Service } from '../base/service';
 import { WebCommunicationService } from '../base/web-communication.service';
 import { DialogService } from '../base/dialog.service';
 import * as XLSX from 'xlsx';
-import { ImportTalentMessage } from 'src/app/messages';
-import { promise } from 'protractor';
+import { GetLanguageListMessage, GetTalentListMessage, ImportTalentMessage, SetLanguageMessage, SetTalentMessage } from 'src/app/messages';
+import { Charakter, Language, Talent, TalentTypeEnum } from 'src/app/types';
 
 @Injectable({
     providedIn: 'root'
@@ -24,8 +24,35 @@ export class TalentService extends Service {
         super(webCommunicationService, dialog);
     }
 
+    public GetTalentList(charakter: Charakter, talentType: TalentTypeEnum) : Promise<Talent[]> {
+        var message = new GetTalentListMessage();
+        message.CharakterID = charakter.Id;
+        message.TalentType = talentType;
+        
+        return this.sendMessage(message);
+    }
+    public GetLanguageList(charakter: Charakter) : Promise<Language[]> {
+        var message = new GetLanguageListMessage();
+        message.CharakterID = charakter.Id;
+        
+        return this.sendMessage(message);
+    }
+
+    public SetTalent(charakter: Charakter, talent: Talent) : Promise<Talent>{
+        var message = new SetTalentMessage();
+        message.CharakterID = charakter.Id;
+        message.Data = talent;
+        return this.sendMessage(message);
+    }
+    public SetLanguage(charakter: Charakter, talent: Language) : Promise<Language>{
+        var message = new SetLanguageMessage();
+        message.CharakterID = charakter.Id;
+        message.Data = talent;
+        return this.sendMessage(message);
+    }
+
     public Import(file: File) {
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             var fileReader = new FileReader();
             fileReader.readAsArrayBuffer(file);
 
@@ -59,7 +86,6 @@ export class TalentService extends Service {
                     message.Knowldage = result[7];
                     message.Crafting = result[8];
 
-                    console.log(message);
 
                     this.sendMessage(message).then(result => {
                         resolve();
@@ -77,14 +103,16 @@ export class TalentService extends Service {
             var worksheet = workbook.Sheets[sheetName];
             var arraylist = XLSX.utils.sheet_to_json<any>(worksheet, { raw: true });
             var pos = 0;
-            arraylist = arraylist.map(item =>{
+            arraylist = arraylist.map(item => {
                 item.OrginalPosition = ++pos;
-                if(item.Komplex1) item.Komplex1 = "'" + item.Komplex1 + "'";                
-                if(item.Komplex2) item.Komplex2 = "'" + item.Komplex2 + "'";
+                if (item.Komplex1) item.Komplex1 = "'" + item.Komplex1 + "'";
+                if (item.Komplex2) item.Komplex2 = "'" + item.Komplex2 + "'";
 
                 return item;
             });
             resolve(arraylist);
         });
     }
+
+
 }

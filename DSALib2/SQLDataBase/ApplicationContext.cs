@@ -1,11 +1,10 @@
-﻿using System.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.IO;
-using System.Linq;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
+using System;
+using System.Data.SqlClient;
+using System.IO;
 
-namespace DSALib2.SQLDataBase 
+namespace DSALib2.SQLDataBase
 {
     public class ApplicationContext : DbContext
     {
@@ -13,6 +12,7 @@ namespace DSALib2.SQLDataBase
         public DbSet<t_Charakter> t_Charakter { get; set; }
         public DbSet<t_Values> t_Values { get; set; }
         public DbSet<t_AP> t_AP { get; set; }
+        public DbSet<T_Talente> T_Talente { get; set; }
 
         public ApplicationContext(DbContextOptions options) : base(options){}
 
@@ -80,5 +80,15 @@ namespace DSALib2.SQLDataBase
     {
         public int AP { get; set; }
         public int APInvested { get; set; }
+    }
+    public class T_Talente : BaseTabelCharakter
+    {
+        new public string Id { get; set; }
+        public int TAW { get; set; }
+        public int? AT { get; set; }
+        public int? PA { get; set; }
+        public int? BL { get; set; }
+        public string DeductionID { get; set; }
+        public bool? Mother { get; set; }
     }
 }

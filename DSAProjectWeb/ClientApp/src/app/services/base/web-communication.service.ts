@@ -33,7 +33,6 @@ export class WebCommunicationService {
       this.sendMessageInner(message).then((result) => {
         resolve(result);
       }).catch(error => {
-        console.log(error);
         reject(error);
       });
     });

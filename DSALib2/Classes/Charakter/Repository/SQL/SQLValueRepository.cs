@@ -43,6 +43,10 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
         {
             return valueList;
         }
+        public IValue GetItemByType(Type type)
+        {
+            return GetList().Where(x => x.GetType() == type).FirstOrDefault();
+        }
         #endregion
         #region Setter
         public void SetAKT(AbstractSettableValue item, int value)

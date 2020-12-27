@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using System.IO;
 using System.Data.SqlClient;
 using DSALib2.SQLDataBase;
-using System;
+using System.Text;
 
 namespace DSAProject2Web
 {
@@ -102,15 +102,18 @@ namespace DSAProject2Web
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseAngularCliServer(npmScript: "start");
+                    //spa.UseAngularCliServer(npmScript: "start"); Nutzen von Angular Und C# In Einem
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200"); //Starten von Angular Seperat
                 }
             });
-
-            
             // Open the Electron-Window here
-            var x = new BrowserWindowOptions();
-            x.TitleBarStyle = TitleBarStyle.hidden;
-            
+            var x = new BrowserWindowOptions
+            {
+                TitleBarStyle = TitleBarStyle.hidden,
+                Width = 1000,
+                Height = 1000
+            };
+
             Task.Run(async () => {
                 var window = await Electron.WindowManager.CreateWindowAsync(x);              
                 window.SetMenu(null);    
