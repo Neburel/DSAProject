@@ -11,7 +11,6 @@ import { CharakterService } from './charakter.service';
 export abstract class AppService extends Service {
 
     constructor(
-        private charakterService: CharakterService,
         dialogService: DialogService,
         webCommunicationService: WebCommunicationService) {
         super(webCommunicationService, dialogService)

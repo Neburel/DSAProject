@@ -13,6 +13,7 @@ namespace DSAProject.Classes.Charakter.Talente.TalentLanguage
                 DSALib.CharakterAttribut.Intuition,
                 DSALib.CharakterAttribut.Charisma
             };
+            this.NameExtension = "(Sprache);";
         }
         public override string ToString()
         {

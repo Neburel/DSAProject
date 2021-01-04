@@ -15,6 +15,7 @@ namespace DSALib2.Charakter.Talente.TalentLanguage
                 CharakterAttribut.Klugheit,
                 CharakterAttribut.Fingerfertigkeit
             };
+            this.NameExtension = "Schrift";
         }
         public override string ToString()
         {

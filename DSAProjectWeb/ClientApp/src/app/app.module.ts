@@ -7,7 +7,7 @@ import { CdkTableModule } from '@angular/cdk/table'
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent } from './views/home/home.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AttributTabelComponent } from '../app/components/attribut-tabel/attribut-tabel.component';
@@ -23,8 +23,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { TalentViewComponent } from './views/talent-view/talent-view.component';
 import { MaterialModule } from './util/material.module';
 import { GenericMatTableComponent } from './components/generic-mat-table/generic-mat-table.component';
-import { config } from 'rxjs';
 import { LanguageViewComponent } from './views/language-view/language-view.component';
+import { CreateTraitDialogComponent } from './dialogs/create-trait-dialog/create-trait-dialog.component';
+import { TraitViewComponent } from './views/trait-view/trait-view.component';
+import { IdValueTableComponent } from './components/id-value-table/id-value-table.component';
+import { TraitTalentChoiceComponent } from './components/trait-talent-choice/trait-talent-choice.component';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 @NgModule({
   declarations: [
@@ -32,6 +36,8 @@ import { LanguageViewComponent } from './views/language-view/language-view.compo
     NavMenuComponent,
     HomeComponent,
     GenericMatTableComponent,
+    IdValueTableComponent,
+    TraitTalentChoiceComponent,
 
     MessageDialogComponent,
     ApInputDialogComponent,
@@ -46,6 +52,10 @@ import { LanguageViewComponent } from './views/language-view/language-view.compo
     BankComponent,
     TalentViewComponent,
     LanguageViewComponent,
+    TraitViewComponent,
+
+    TraitTalentChoiceComponent,
+    CreateTraitDialogComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -55,6 +65,7 @@ import { LanguageViewComponent } from './views/language-view/language-view.compo
     ReactiveFormsModule,
     FlexLayoutModule,
     MaterialModule,
+    NgxMatSelectSearchModule,
 
     RouterModule.forRoot([
       { path: 'settings', component: SettingsViewComponent, pathMatch: 'full' },
@@ -62,19 +73,22 @@ import { LanguageViewComponent } from './views/language-view/language-view.compo
       { path: 'talentletterRange/:id', component: TalentViewComponent, pathMatch: 'full' },
       { path: 'talentletterFighting/:id', component: TalentViewComponent, pathMatch: 'full' },
       { path: 'language', component: LanguageViewComponent, pathMatch: 'full' },
+      { path: 'traitpage', component: TraitViewComponent, pathMatch: 'full' },
       { path: '', component: HomeComponent, pathMatch: 'full' },
-    ], { onSameUrlNavigation: 'reload'}),
+    ], { onSameUrlNavigation: 'reload' }),
     NoopAnimationsModule
   ],
   exports: [
     ReactiveFormsModule,
     MaterialModule,
-    GenericMatTableComponent
+    GenericMatTableComponent,
   ],
   entryComponents: [
     MessageDialogComponent,
     ApInputDialogComponent,
-    GenericMatTableComponent
+    GenericMatTableComponent,
+    AttributTabelComponent,
+    IdValueTableComponent
   ],
 
   providers: [],

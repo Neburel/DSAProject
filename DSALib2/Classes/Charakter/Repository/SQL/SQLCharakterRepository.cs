@@ -33,30 +33,6 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
             Insert(charakter);
             context.SaveChanges();
 
-            var attributRepo = new SQLAttributRepository(context, charakter.Id);
-
-            var attributList = new List<CharakterAttribut>
-            {
-                CharakterAttribut.Mut,
-                CharakterAttribut.Klugheit,
-                CharakterAttribut.Intuition,
-                CharakterAttribut.Charisma,
-                CharakterAttribut.Fingerfertigkeit,
-                CharakterAttribut.Gewandheit,
-                CharakterAttribut.Konstitution,
-                CharakterAttribut.Körperkraft,
-                CharakterAttribut.Sozialstatus
-            };
-            foreach (var attribut in attributList)
-            {
-                var newAttribut = new t_Attribute()
-                {
-                    CharakterID = charakter.Id,
-                    AttributID = (int)attribut,
-                    Value = 9
-                };
-                attributRepo.Insert(newAttribut);
-            }
             //Standart Start Werte
 
             context.SaveChanges();

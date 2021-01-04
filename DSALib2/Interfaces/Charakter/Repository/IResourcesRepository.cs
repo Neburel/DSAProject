@@ -9,7 +9,7 @@ namespace DSALib2.Interfaces.Charakter.Repository
         int GetAKT(IResource value);
         int GetMOD(IResource value);
         int GetMAX(IResource value);
-        IResource GetByType(Type type);
+        IResource GetItemByType(Type type);
         List<IResource> GetList();
         List<ResourceView> GetViewList();
     }

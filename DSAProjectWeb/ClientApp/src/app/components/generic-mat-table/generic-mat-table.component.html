@@ -1,5 +1,5 @@
 ﻿<div class="shredTable">
-    <div class="dbaMatTableHeader">
+    <div class="dbaMatTableHeader" *ngIf="showHeader">
 
         <div class="dbaMatTableTextHeader">
             <h2>{{ tableName }}</h2>
@@ -22,7 +22,7 @@
                 <input matInput type="search" placeholder="Filter" class="search-input" (keyup)="applyFilter($event)">
             </mat-form-field>
             <div style="width: 10px;"></div>
-            <mat-form-field appearance="legacy">
+            <mat-form-field appearance="legacy" *ngIf="showWuerfelEingabe">
                 <input matInput type="search" placeholder="Würfel eingabe" class="search-input"
                     (keyup)="probeValue($event)" type="number">
             </mat-form-field>
@@ -84,11 +84,11 @@
                         {{ row[column.id] }}
                     </div>
                     <div>
-                        <button mat-mini-fab style="margin-right: 2px;" class="small-icon-button"
+                        <button mat-mini-fab style="margin-right: 2px;" type="button" class="small-icon-button"
                             (click)="column['clickEvent'](row, 1)">
                             +
                         </button>
-                        <button mat-mini-fab style="margin-right: 2px;" class="small-icon-button"
+                        <button mat-mini-fab style="margin-right: 2px;" type="button" class="small-icon-button"
                             (click)="column['clickEvent'](row, -1)">
                             -
                         </button>
@@ -110,9 +110,15 @@
                     <div *ngIf="row[column.id]">{{ row[column.id].Text }}</div>
                     <div *ngIf="row[column.id]" style="color: red;">{{ row[column.id].FreeText }}</div>
                 </span>
-                <span *ngIf="column['datatype'] === 'checkbox'  && row.IsTitle != true && row[column.nullCheckID] != null">
+                <span
+                    *ngIf="column['datatype'] === 'checkbox'  && row.IsTitle != true && row[column.nullCheckID] != null">
                     <mat-checkbox [checked]="row[column.id]" (change)="column['clickEvent'](row, 0)">
                     </mat-checkbox>
+                </span>
+                <span *ngIf="column['datatype'] === 'xButton'">
+                    <button mat-mini-fab type="button" class="small-icon-button" (click)="column['clickEvent'](row, 0)">
+                        x
+                    </button>
                 </span>
                 <span *ngIf="!column['datatype']">
                     {{ row[column.id] }}
@@ -160,7 +166,7 @@
 
     </mat-table>
 
-    <mat-paginator style-paginator [length]="length" [pageIndex]="pageIndex" [pageSize]="pageSize"
+    <mat-paginator *ngIf="showPaginator" style-paginator [length]="length" [pageIndex]="pageIndex" [pageSize]="pageSize"
         [showFirstLastButtons]="true" [pageSizeOptions]="pageSizeOptions">
     </mat-paginator>
 </div>

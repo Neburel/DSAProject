@@ -13,6 +13,7 @@ using DSALib2.Classes.Charakter.View;
 using DSAProjectWeb.Server.Entities;
 using DSAProjectWeb.Server.Util;
 using DSALib2.Classes.Charakter.Talente.TalentFighting;
+using DSALib2.Classes.Charakter.Talente;
 
 namespace DSAProject2Web.Server.Controllers
 {
@@ -25,8 +26,8 @@ namespace DSAProject2Web.Server.Controllers
         [Route("GetList")]
         [HttpPost]
         public string GetTalentList([FromBody] CharakterTalentRequest request)
-        {   
-            if(request.TalentType == TalentTypeEnum.Close)
+        {
+            if (request.TalentType == TalentTypeEnum.Close)
             {
                 return GetTalent<TalentClose>(request);
             }
@@ -58,11 +59,57 @@ namespace DSAProject2Web.Server.Controllers
             {
                 return GetTalent<TalentWeaponless>(request);
             }
+            else if (request.TalentType == TalentTypeEnum.General)
+            {
+                return GetTalent<AbstractTalentGeneral>(request);
+            }
+            else if(request.TalentType == TalentTypeEnum.Language)
+            {
+                return GetTalent<AbstractTalentLanguage>(request);
+            }
+            throw new System.Exception("Ungültige ID");
+        }
+        [Route("GetViewList")]
+        [HttpPost]
+        public string GetTalentViewList([FromBody] CharakterTalentRequest request)
+        {   
+            if(request.TalentType == TalentTypeEnum.Close)
+            {
+                return GetTalentView<TalentClose>(request);
+            }
+            else if (request.TalentType == TalentTypeEnum.Crafting)
+            {
+                return GetTalentView<TalentCrafting>(request);
+            }
+            else if (request.TalentType == TalentTypeEnum.Knowldage)
+            {
+                return GetTalentView<TalentKnowldage>(request);
+            }
+            else if (request.TalentType == TalentTypeEnum.Nature)
+            {
+                return GetTalentView<TalentNature>(request);
+            }
+            else if (request.TalentType == TalentTypeEnum.Physical)
+            {
+                return GetTalentView<TalentPhysical>(request);
+            }
+            else if (request.TalentType == TalentTypeEnum.Range)
+            {
+                return GetTalentView<TalentRange>(request);
+            }
+            else if (request.TalentType == TalentTypeEnum.Social)
+            {
+                return GetTalentView<TalentSocial>(request);
+            }
+            else if (request.TalentType == TalentTypeEnum.Weaponless)
+            {
+                return GetTalentView<TalentWeaponless>(request);
+            }
             throw new System.Exception("Ungültige ID");
         }
         [Route("GetLanguageList")]
         [HttpPost]
-        public string GetTalentList([FromBody] CharakterIDRequest request)
+        public string GetLanguageList([FromBody] CharakterIDRequest request)
         {
             var charakter = GetDSASQLCharakter(request);
             var talentRepo = charakter.Talente;
@@ -93,6 +140,13 @@ namespace DSAProject2Web.Server.Controllers
         }
 
         private string GetTalent<T>(CharakterIDRequest request) where T : ITalent
+        {
+            var charakter = GetDSASQLCharakter(request);
+            var talentRepo = charakter.Talente;
+            var list = talentRepo.GetList<T>();
+            return CreateResponse(list);
+        }
+        private string GetTalentView<T>(CharakterIDRequest request) where T : ITalent
         {
             var charakter       = GetDSASQLCharakter(request);
             var talentRepo      = charakter.Talente;

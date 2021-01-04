@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DSAProjectWeb.Server.Util
+﻿namespace DSAProjectWeb.Server.Util
 {
     public enum TalentTypeEnum
     {
@@ -15,6 +10,8 @@ namespace DSAProjectWeb.Server.Util
         Close = 6,
         Range = 7,
         Weaponless = 8,
+        General = 9,
+        Language = 10,
     }
 
 }

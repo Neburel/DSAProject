@@ -7,13 +7,15 @@ using System.Linq;
 
 namespace DSALib2.Classes.Charakter.Repository.General
 {
-    public class ResourceRepository : IResourcesRepository
+    public class GeneralResourceRepository : IResourcesRepository
     {
+        private AbstractCharakter charakter;
         private List<IResource> resourceList;
-        public ResourceRepository(List<IResource> valueList)
+        public GeneralResourceRepository(AbstractCharakter charakter, List<IResource> valueList)
         {
             if (valueList == null) throw new ArgumentNullException(nameof(valueList));
             resourceList = valueList;
+            this.charakter = charakter;
         }
         #region Getter
         public int GetAKT(IResource value)
@@ -22,7 +24,7 @@ namespace DSALib2.Classes.Charakter.Repository.General
         }
         public int GetMOD(IResource value)
         {
-            return 0;
+            return this.charakter.Traits.GetResource(value);
         }
         public int GetMAX(IResource value)
         {
@@ -32,7 +34,7 @@ namespace DSALib2.Classes.Charakter.Repository.General
         {
             return resourceList;
         }
-        public IResource GetByType(Type type)
+        public IResource GetItemByType(Type type)
         {
             return this.GetList().Where(x => x.GetType() == type).FirstOrDefault();
         }

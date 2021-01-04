@@ -8,6 +8,8 @@ namespace DSALib2.Interfaces.Charakter.Repository
     {
         TalentView GetView(Guid guid);
         LanguageView GetLanguageView(Guid guidLanguage, Guid guidWriting);
+        ITalent Get(Guid guid);
+        List<ITalent> GetList<T>() where T : ITalent;
         List<TalentView> GetViewList<T>() where T : ITalent;
         List<LanguageView> GetViewList();
 

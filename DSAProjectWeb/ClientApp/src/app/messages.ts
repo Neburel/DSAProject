@@ -70,6 +70,13 @@ export class GetTalentListMessage extends ListMessage<Talent>{
   public CharakterID: Number;
   public TalentType: TalentTypeEnum;
 }
+
+export class GetTalentViewListMessage extends ListMessage<Talent>{
+  public Uri: string = 'Talent/GetViewList';
+  public CharakterID: Number;
+  public TalentType: TalentTypeEnum;
+}
+
 export class GetLanguageListMessage extends ListMessage<Language>{
   public Uri: string = 'Talent/GetLanguageList';
   public CharakterID: Number;
@@ -84,15 +91,32 @@ export class SetLanguageMessage extends DataMessage<Language>{
   public CharakterID: Number;
 }
 
+export class GetNewTraitMessage extends Message<any>{
+  public Uri: string = 'Trait/New';
+  public CharakterID: Number;
+}
+export class GetTraitMessage extends ListMessage<any>{
+  public Uri: string = 'Trait/GetList';
+  public CharakterID: Number;
+}
+export class GetTraitGetTraitChoisesMessage extends ListMessage<any>{
+  public Uri: string = 'Trait/GetTraitChoises';
+  public CharakterID: Number;
+}
+export class SetTraitMessage extends DataMessage<any>{
+  public Uri: string = 'Trait/Set';
+  public CharakterID: Number;
+}
+
 export class ImportTalentMessage extends Message<void>{
   public Uri: string = 'Talent/Import';
-  public Weaponless : any;
-  public Close : any;
-  public Range : any;
-  public Language : any;
-  public Physical : any;
-  public Social : any;
-  public Nature : any;
+  public Weaponless: any;
+  public Close: any;
+  public Range: any;
+  public Language: any;
+  public Physical: any;
+  public Social: any;
+  public Nature: any;
   public Knowldage: any;
   public Crafting: any;
 }

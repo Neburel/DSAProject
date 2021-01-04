@@ -30,7 +30,7 @@ namespace DSALib2.Classes.Charakter
 
         protected override IAttributeRepository GetNewAttributeRepository()
         {
-            return new SQLAttributRepository(applicationContext, charakterID);
+            return new SQLAttributRepository(applicationContext, this, charakterID);
         }
         protected override IResourcesRepository GetNewResourcesRepository()
         {
@@ -43,7 +43,7 @@ namespace DSALib2.Classes.Charakter
                 new MagicResistance(Attribute),
                 new Vitality(Attribute)
             };
-            return new ResourceRepository(resourceList);
+            return new GeneralResourceRepository(this, resourceList);
         }
         protected override ITalentRepository GetNewTalentRepository()
         {
@@ -57,7 +57,7 @@ namespace DSALib2.Classes.Charakter
         }
         protected override ITraitRepository GetNewTraitRepository()
         {
-            throw new NotImplementedException();
+            return new SQLTraitRepository(applicationContext, this, this.charakterID);
         }
         protected override IValueRepository GetNewValueRepository()
         {
@@ -75,7 +75,7 @@ namespace DSALib2.Classes.Charakter
                 new SpeedLand(),
                 new Repute(),
             };
-            return new SQLValueRepository(applicationContext, list);
+            return new SQLValueRepository(applicationContext, this, list, charakterID);
         }
 
         protected override IAPRepository GetAPRepository()

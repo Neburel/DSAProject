@@ -1,80 +1,36 @@
-﻿using DSALib2.Classes.Charakter.Values.Settable;
-using DSALib2.Classes.Charakter.View;
+﻿using DSALib2.Classes.Charakter.Repository.General;
+using DSALib2.Classes.Charakter.Values.Settable;
 using DSALib2.Interfaces.Charakter;
-using DSALib2.Interfaces.Charakter.Repository;
 using DSALib2.SQLDataBase;
 using DSALib2.SQLDataBase.Repository;
 using System;
 
 using System.Collections.Generic;
-using System.Linq;
 
 namespace DSALib2.Classes.Charakter.Repository.SQL
 {
-    public class SQLValueRepository : BaseRepository<t_Values>, IValueRepository
+    public class SQLValueRepository : GeneralValueRepository
     {
-        private List<IValue> valueList;
-        public SQLValueRepository(ApplicationContext context, List<IValue> valueList) : base(context)
+        private InnerSQLRepository repo;
+        public SQLValueRepository(ApplicationContext context, AbstractCharakter abstractCharakter, List<IValue> valueList, int charakterID) : base(abstractCharakter, valueList)
         {
-            this.valueList = valueList ?? throw new ArgumentNullException(nameof(valueList));
+            repo = new InnerSQLRepository(context, charakterID);
         }
-        #region Getter
-        public int GetAKT(IValue item)
-        {
-            if (typeof(AbstractSettableValue).IsAssignableFrom(item.GetType()))
-            {
-                var typeString = item.GetType().Name;
-                return 0;
-            }
-            else
-            {
-                return item.Value;
-            }
-        }
-        public int GetMOD(IValue item)
-        {
-            return 0;
-        }
-        public int GetMAX(IValue item)
-        {
-            return GetAKT(item) + GetMOD(item);
-        }
-        public List<IValue> GetList()
-        {
-            return valueList;
-        }
-        public IValue GetItemByType(Type type)
-        {
-            return GetList().Where(x => x.GetType() == type).FirstOrDefault();
-        }
-        #endregion
-        #region Setter
-        public void SetAKT(AbstractSettableValue item, int value)
+
+        public override void SetAKT(AbstractSettableValue item, int value)
         {
             throw new NotImplementedException();
         }
-        #endregion
-        #region View
-        private ValueView GetView(IValue item)
+
+        protected override int GetAktSettable(AbstractSettableValue value)
         {
-            return new ValueView
-            {
-                AKT = GetAKT(item),
-                MOD = GetMOD(item),
-                MAX = GetMAX(item),
-                Name = item.Name
-            };
+            return 0;
         }
-        public List<ValueView> GetViewList()
+
+        private class InnerSQLRepository : BaseRepository<t_Values>
         {
-            var list = GetList();
-            var retList = new List<ValueView>();
-            foreach (var item in list)
-            {
-                retList.Add(GetView(item));
-            }
-            return retList;
+            private int charakterID;
+            public InnerSQLRepository(ApplicationContext context, int charakterID) : base(context) { this.charakterID = charakterID; }
         }
-        #endregion
     }
 }

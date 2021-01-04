@@ -30,7 +30,8 @@ namespace DSALib2.Classes.Tools
                 throw new ArgumentNullException("Talent Name is Null");
             }
             newTalent.Name = name;
-            newTalent.NameExtension = nameExtension;
+
+            newTalent.NameExtension = nameExtension != null && nameExtension != "" ? nameExtension : newTalent.NameExtension;
             newTalent.BE = be;
             newTalent.OrginalPosition = orginalPos;
 

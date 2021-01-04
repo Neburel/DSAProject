@@ -10,6 +10,22 @@ export enum TalentTypeEnum {
   close = 6,
   range = 7,
   weaponless = 8,
+  general = 9,
+  language = 10,
+}
+
+export enum TraitTypeEnum {
+  Keiner = 1,
+  Vorteil = 2,
+  Nachteil = 3,
+  Event = 4,
+  Belohnung = 5,
+  Quest = 6,
+  Geburstag = 7,
+  Title = 8,
+  Training = 9,
+  Errungenschaft = 10,
+  Buch = 11
 }
 
 export interface GenericDataTableColumn {
@@ -49,6 +65,7 @@ export class DBADataTableSelect {
 export abstract class Model {
 
 }
+
 export abstract class AKTMODMAX extends Model {
   public AKT: number;
   public MOD: number;
@@ -67,8 +84,10 @@ export class Attribut extends AKTMODMAX {
   public ID: number;
   public NameShort: string;
 }
+
 export class Resource extends AKTMODMAX {
 }
+
 export class Value extends AKTMODMAX {
 
 }
@@ -82,6 +101,7 @@ export class AP {
 }
 
 export class Talent {
+  public ID: number;
   public TAW: number;
   public AT: number;
   public PA: number;
@@ -89,6 +109,7 @@ export class Talent {
 
   public BE: string;
   public Name: string;
+  public NameExtension: string;
   public Probe: string;
   public ProbeString: string;
   public Spezialisierung: string;
@@ -98,6 +119,7 @@ export class Talent {
   public DeductionSelected: Deduction;
   public DeductionList: Deduction[];
 }
+
 export class Language {
   public TawSprache: number;
   public TawSchrift: number;
@@ -137,4 +159,37 @@ export class DSADataSource<T extends Model> {
   }
 
   disconnect() { }
+}
+
+export class IDValueView<T>{
+  public Name: string;
+  public ID: T;
+  public Value: number;
+}
+
+export class Trait {
+  public ID: number;
+  public Name: string;
+  public LongDescription: string;
+  public Description: string;
+  public Type: TraitTypeEnum;
+  public APInvest: number;
+  public APGain: number
+  public Value: string;
+  public GP: string;
+
+  public ValueList: IDValueView<string>[];
+  public TalentList: Talent[];
+  public AttributList: IDValueView<number>[];
+  public ResourceList: IDValueView<string>[];
+
+  public ModifyDate: Date;
+  public CreationDate: Date;
+}
+
+export class TalentTraitChoises {
+  public Taw: Talent;
+  public AT: Talent;
+  public PA: Talent;
+  public BL: Talent;
 }

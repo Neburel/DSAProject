@@ -14,6 +14,7 @@ namespace DSALib2.Interfaces.Charakter.Repository
         void SetAKT(AbstractSettableValue item, int value);
 
         IValue GetItemByType(Type type);
+        List<IValue> GetList();
         List<ValueView> GetViewList();
     }
 }

@@ -30,9 +30,10 @@ namespace DSALib2.Classes.Charakter.Repository.General
         }
         abstract protected int GetTAW(ITalent talent);
         abstract protected bool? GetMother(TalentSpeaking talent);
-        private int GetModTaW(ITalent talent)
-        {            
-            return GetDeduction(talent);
+        protected int GetModTaW(ITalent talent)
+        {       
+            var traitBonus =  this.charakter.Traits.GetTaW(talent);
+            return traitBonus + GetDeduction(talent);
         }
         private int GetMaxTaw(ITalent talent)
         {
@@ -40,7 +41,7 @@ namespace DSALib2.Classes.Charakter.Repository.General
 
             var taw = GetTAW(talent);
             var bonusTaw = GetModTaW(talent);
-
+            
             return taw + bonusTaw;
         }
         private int GetProbeValue(AbstractTalentGeneral talent)
@@ -104,17 +105,17 @@ namespace DSALib2.Classes.Charakter.Repository.General
         abstract protected int GetAT(AbstractTalentFighting talent);
         abstract protected int GetPA(AbstractTalentFighting talent);
         abstract protected int GetBL(AbstractTalentFighting talent);
-        private protected int GetModAT(AbstractTalentFighting talent)
+        protected int GetModAT(AbstractTalentFighting talent)
         {
-            return 0;
+            return this.charakter.Traits.GetAT(talent);
         }
-        private protected int GetModPA(AbstractTalentFighting talent)
+        protected int GetModPA(AbstractTalentFighting talent)
         {
-            return 0;
+            return this.charakter.Traits.GetPA(talent);
         }
-        private protected int GetModBL(AbstractTalentFighting talent)
+        protected int GetModBL(AbstractTalentFighting talent)
         {
-            return 0;
+            return this.charakter.Traits.GetBL(talent);
         }
         private int GetATMax(AbstractTalentFighting talent)
         {
@@ -220,6 +221,21 @@ namespace DSALib2.Classes.Charakter.Repository.General
                 Text = restString
             };
         }
+        private DeductionView GetDeductionView(ITalent talent)
+        {
+            var deductionID = this.GetDeductionID(talent);
+            if (deductionID != null)
+            {
+                return new DeductionView()
+                {
+                    ID = (Guid)deductionID
+                };
+            }
+            else
+            {
+                return null;
+            }
+        }
         private List<DeductionView> GetDeductionViewList(ITalent talent)
         {
             var deductionList = new List<DeductionView>();
@@ -237,21 +253,6 @@ namespace DSALib2.Classes.Charakter.Repository.General
             }
             return deductionList;
         }
-        private DeductionView GetDeductionView(ITalent talent)
-        {
-            var deductionID = this.GetDeductionID(talent);
-            if(deductionID != null)
-            {
-                return new DeductionView()
-                {
-                    ID = (Guid)deductionID
-                };
-            }
-            else
-            {
-                return null;
-            }
-        }
         private string GetString(string newValue, string currentText, string secondControll = null)
         {
             if ((currentText == string.Empty || currentText == null) && (secondControll == string.Empty || secondControll == null))
@@ -266,6 +267,16 @@ namespace DSALib2.Classes.Charakter.Repository.General
             {
                 return currentText.Trim() + ", " + newValue.Trim();
             }
+        }
+
+
+        public ITalent Get(Guid guid)
+        {
+            return talentList.Where(x => x.ID == guid).FirstOrDefault();
+        }
+        public List<ITalent> GetList<T>() where T : ITalent
+        {
+            return talentList.Where(x => typeof(T).IsAssignableFrom(x.GetType())).ToList();
         }
 
         public TalentView GetView(Guid guid)
@@ -290,7 +301,7 @@ namespace DSALib2.Classes.Charakter.Repository.General
         public List<TalentView> GetViewList<T>() where T : ITalent
         {
             var ret = new List<TalentView>();
-            var list = talentList.Where(x => x.GetType() == typeof(T)).ToList();
+            var list = talentList.Where(x => typeof(T).IsAssignableFrom(x.GetType())).ToList();
             foreach (var item in list.OrderBy(x => x.OrginalPosition))
             {
                 var newItem = CreateTalentView(item);
@@ -322,8 +333,7 @@ namespace DSALib2.Classes.Charakter.Repository.General
 
             return list;
         }
-
-
+        
         private TalentView CreateTalentView(ITalent item)
         {
             var newItem = new TalentView()

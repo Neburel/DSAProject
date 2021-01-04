@@ -66,7 +66,7 @@ export class LanguageViewComponent implements OnInit, AfterContentInit {
 
     public LoadDataMain() {
         this.dataTableMain.isLoading = true;
-        this.talentService.GetLanguageList(this.charakterService.CurrentCharakter).then(dataList => {
+        this.talentService.GetLanguageViewList(this.charakterService.CurrentCharakter).then(dataList => {
             this.dataSourceMain.data = AddDbaMatTableRecID<Language>(dataList, (element) => {
                 return element;
             });

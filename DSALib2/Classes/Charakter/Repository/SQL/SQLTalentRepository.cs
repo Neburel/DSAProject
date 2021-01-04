@@ -61,12 +61,28 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
         }
         public override void SetTalentbyView(TalentView view)
         {
-            this.talentRepository.SetTalent(
-                view.ID, view.TAW,
+            var talent = this.Get(view.ID);
+
+            var taw = view.TAW - this.GetModTaW(talent);
+
+            if (typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
+            {
+                var fightingTalent = (AbstractTalentFighting)talent;
+                this.talentRepository.SetTalent(
+                view.ID, 
+                taw,
                 view.DeductionSelected != null ? view.DeductionSelected.ID : null,
-                view.AT,
-                view.PA,
-                view.BL);
+                view.AT - GetModAT(fightingTalent),
+                view.PA - GetModPA(fightingTalent),
+                view.BL - GetModBL(fightingTalent));
+            }
+            else
+            {
+                this.talentRepository.SetTalent(
+                    view.ID,
+                    taw,
+                    view.DeductionSelected != null ? view.DeductionSelected.ID : null);
+            }
         }
         public override void SetTalentbyView(LanguageView view)
         {

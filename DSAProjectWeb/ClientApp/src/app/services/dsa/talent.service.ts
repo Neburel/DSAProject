@@ -3,7 +3,7 @@ import { Service } from '../base/service';
 import { WebCommunicationService } from '../base/web-communication.service';
 import { DialogService } from '../base/dialog.service';
 import * as XLSX from 'xlsx';
-import { GetLanguageListMessage, GetTalentListMessage, ImportTalentMessage, SetLanguageMessage, SetTalentMessage } from 'src/app/messages';
+import { GetLanguageListMessage, GetTalentViewListMessage, ImportTalentMessage, SetLanguageMessage, SetTalentMessage, GetTalentListMessage } from 'src/app/messages';
 import { Charakter, Language, Talent, TalentTypeEnum } from 'src/app/types';
 
 @Injectable({
@@ -24,27 +24,35 @@ export class TalentService extends Service {
         super(webCommunicationService, dialog);
     }
 
-    public GetTalentList(charakter: Charakter, talentType: TalentTypeEnum) : Promise<Talent[]> {
+    public GetTalentList(charakter: Charakter, talentType: TalentTypeEnum): Promise<Talent[]> {
         var message = new GetTalentListMessage();
         message.CharakterID = charakter.Id;
         message.TalentType = talentType;
-        
-        return this.sendMessage(message);
+
+        return this.sendListMessage(message);
     }
-    public GetLanguageList(charakter: Charakter) : Promise<Language[]> {
+
+    public GetTalentViewList(charakter: Charakter, talentType: TalentTypeEnum): Promise<Talent[]> {
+        var message = new GetTalentViewListMessage();
+        message.CharakterID = charakter.Id;
+        message.TalentType = talentType;
+
+        return this.sendListMessage(message);
+    }
+    public GetLanguageViewList(charakter: Charakter): Promise<Language[]> {
         var message = new GetLanguageListMessage();
         message.CharakterID = charakter.Id;
-        
+
         return this.sendMessage(message);
     }
 
-    public SetTalent(charakter: Charakter, talent: Talent) : Promise<Talent>{
+    public SetTalent(charakter: Charakter, talent: Talent): Promise<Talent> {
         var message = new SetTalentMessage();
         message.CharakterID = charakter.Id;
         message.Data = talent;
         return this.sendMessage(message);
     }
-    public SetLanguage(charakter: Charakter, talent: Language) : Promise<Language>{
+    public SetLanguage(charakter: Charakter, talent: Language): Promise<Language> {
         var message = new SetLanguageMessage();
         message.CharakterID = charakter.Id;
         message.Data = talent;

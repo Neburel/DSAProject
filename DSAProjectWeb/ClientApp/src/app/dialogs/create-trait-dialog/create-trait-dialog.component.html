@@ -1,0 +1,104 @@
+﻿<h2 mat-dialog-title>{{ Title }}</h2>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="FormGroup" (ngSubmit)="Save()" *ngIf="!Loading">
+        <div style="display: inline-flex; width: 100%; align-items: center;">
+            <mat-form-field style="flex: 1 0; margin-right: 10px;">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+            <mat-form-field appearance="fill" style="width: 200px; margin-right: 10px;">
+                <mat-label>Typ</mat-label>
+                <mat-select formControlName="type">
+                    <mat-option [value]=traitType *ngFor="let traitType of TraitTypeList">{{TraitTypeEnum[traitType]}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="example-full-width" style="width: 200px; margin-right: 10px;">
+                <mat-label>AP Verdient</mat-label>
+                <input matInput formControlName="apGain" type="number">
+            </mat-form-field>
+            <mat-form-field class="example-full-width" style="width: 200px;  margin-right: 10px;">
+                <mat-label>AP Inverstiert</mat-label>
+                <input matInput formControlName="apInvest" type="number">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field style="width: 100%;">
+                <mat-label>Beschreibung</mat-label>
+                <input matInput formControlName="description">
+            </mat-form-field>
+        </div>
+
+        <div style="display: inline-flex;">
+            <div>
+                <td> Wert</td>
+                <td>
+                    <div class='square-box' style="width: 30px; margin-left: 5px; margin-right: 5px;">
+                        <div class='square-content'>
+                            <div><span>{{Wert}}</span></div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <button mat-mini-fab class="small-icon-button" type="button" (click)="SetWert(1)">
+                        +
+                    </button>
+                    <button mat-mini-fab class="small-icon-button" type="button" (click)="SetWert(-1)">
+                        -
+                    </button>
+                    <button mat-mini-fab class="small-icon-button" type="button" (click)="SetWert('x')">
+                        x
+                    </button>
+                    <button mat-mini-fab class="small-icon-button" type="button" (click)="SetWert('')">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+                <td style="width: 100px;"></td>
+            </div>
+            <div>
+                <td> GP</td>
+                <td>
+                    <div class='square-box' style="width: 30px; margin-left: 5px; margin-right: 5px;">
+                        <div class='square-content'>
+                            <div><span>{{GP}}</span></div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <button mat-mini-fab class="small-icon-button" type="button" (click)="SetGP(1)">
+                        +
+                    </button>
+                    <button mat-mini-fab class="small-icon-button" type="button" (click)="SetGP(-1)">
+                        -
+                    </button>
+                    <button mat-mini-fab class="small-icon-button" type="button" (click)="SetGP('x')">
+                        x
+                    </button>
+                    <button mat-mini-fab class="small-icon-button" type="button" (click)="SetGP('')">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </div>
+        </div>
+
+        <div style=" display: inline-flex">
+            <app-id-value-table [data]="Attribute" style="padding-right: 15px;"></app-id-value-table>
+            <app-id-value-table [data]="Values" style="padding-right: 15px;"></app-id-value-table>
+            <app-id-value-table [data]="Resource" style="padding-right: 15px;"></app-id-value-table>
+
+            <div>
+                <app-trait-talent-choice [talentList]="TalentListComplete" (talentSelected)="TalentSelected($event)">
+                </app-trait-talent-choice>
+                <app-generic-mat-table [dataSource]="dataSourceTraitTalent" [columnsdef]="columnsdefMain"
+                    (reload)=LoadDataMain() [showHeader]=false>
+                </app-generic-mat-table>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <button mat-raised-button color="primary" style="margin: 5px;" type="submit">Speichern</button>
+            <button mat-raised-button color="primary" style="margin: 5px;" type="reset"
+                (click)="Cancel()">Abbrechen</button>
+        </div>
+    </form>
+</mat-dialog-content>

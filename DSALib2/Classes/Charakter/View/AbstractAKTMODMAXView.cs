@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DSALib2.Classes.Charakter.View
+﻿namespace DSALib2.Classes.Charakter.View
 {
     public class AbstractAKTMODMAXView
     {
@@ -10,6 +6,6 @@ namespace DSALib2.Classes.Charakter.View
         public int MOD { get; set; }
         public int MAX { get; set; }
         public string Name { get; set; }
-        public string ToolTop { get; set; }
+        public string ToolTip { get; set; }
     }
 }

@@ -91,7 +91,7 @@ export class TalentViewComponent implements OnInit {
 
   public LoadDataMain() {
     this.dataTableMain.isLoading = true;
-    this.talentService.GetTalentList(this.charakterService.CurrentCharakter, this.routeParam).then(dataList => {
+    this.talentService.GetTalentViewList(this.charakterService.CurrentCharakter, this.routeParam).then(dataList => {
       this.dataSourceMain.data = AddDbaMatTableRecID<Talent>(dataList, (element) => {
         element[CURRENTPROBE] = 0;
         return element;

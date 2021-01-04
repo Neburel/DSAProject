@@ -14,6 +14,12 @@ namespace DSALib2.SQLDataBase
         public DbSet<t_AP> t_AP { get; set; }
         public DbSet<T_Talente> T_Talente { get; set; }
 
+        public DbSet<T_Trait> T_Trait { get; set; }
+        public DbSet<T_TraitAttribute> T_TraitAttribute { get; set; }
+        public DbSet<T_TraitResources> T_TraitResources { get; set; }
+        public DbSet<T_TraitTalente> T_TraitTalente { get; set; }
+        public DbSet<T_TraitValues> T_TraitValues { get; set; }
+
         public ApplicationContext(DbContextOptions options) : base(options){}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -59,6 +65,10 @@ namespace DSALib2.SQLDataBase
     {
         public int CharakterID { get; set; }
     }
+    public abstract class BaseTabelTrait : BaseTabelCharakter
+    {
+        public int TraitID { get; set; }
+    }
     public class t_Attribute : BaseTabelCharakter
     {
         public int AttributID { get; set; }
@@ -90,5 +100,41 @@ namespace DSALib2.SQLDataBase
         public int? BL { get; set; }
         public string DeductionID { get; set; }
         public bool? Mother { get; set; }
+    }
+
+    public class T_Trait : BaseTabelCharakter
+    {
+        public int APGain { get; set; }
+        public int APInvested { get; set; }
+        public int Type { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Value { get; set; }
+        public string GP { get; set; }
+        public DateTime CreationDate { get; set; }
+        public DateTime ModifyDate { get; set; }
+    }
+    public class T_TraitAttribute : BaseTabelTrait
+    {
+        public int AttributID { get; set; }
+        public int Value { get; set; }
+    }
+    public class T_TraitResources : BaseTabelTrait
+    {
+        public int Value { get; set; }
+        public string Type { get; set; }
+    }
+    public class T_TraitValues : BaseTabelTrait
+    {
+        public int Value { get; set; }
+        public string Type { get; set; }
+    }
+    public class T_TraitTalente : BaseTabelTrait
+    {
+        public string TalentID { get; set; }
+        public int TAW { get; set; }
+        public int? AT { get; set; }
+        public int? PA { get; set; }
+        public int? BL { get; set; }
     }
 }

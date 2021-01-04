@@ -36,5 +36,8 @@ export function AddDbaMatTableRecID<T>(dataList: any[], editCallback: DbaMatTabl
             rows.push(element)
         });
     }
+    else {
+        dataList = [];
+    }
     return dataList;
 }

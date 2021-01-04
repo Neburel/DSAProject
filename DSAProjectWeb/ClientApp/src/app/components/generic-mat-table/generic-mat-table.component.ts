@@ -42,6 +42,9 @@ export class GenericMatTableComponent {
     @Input() deleteButton: boolean = false;
     @Input() exportButton: boolean = true;
     @Input() importButton: boolean = false;
+    @Input() showWuerfelEingabe: boolean = false;
+    @Input() showHeader: boolean = true;
+    @Input() showPaginator: boolean = true;
     @Input() component: any;
     @Input() dataSource: MatTableDataSource<any>;
     @Input() columnsdef: GenericDataTableColumn[];
@@ -144,7 +147,9 @@ export class GenericMatTableComponent {
         this.toggleColumns(this.dataTable['_elementRef'].nativeElement.clientWidth);
         this.length = (this.dataSource.data.length);
         // this.dataSource.paginator = this.paginator.paginator;
-        this.dataSource.paginator = this.paginator;
+        if (this.showPaginator) {
+            this.dataSource.paginator = this.paginator;
+        }
         this.dataSource.sort = this.sort;
         this.dataSource.sortingDataAccessor = (data: any, sortHeaderId: string) => {
             const value: any = data[sortHeaderId];
@@ -320,7 +325,6 @@ export class GenericMatTableComponent {
                     else {
                         newObject[label] = val[key];
                     }
-                    console.log(def.datatype);
                     if (def.datatype == DATATYPETEXTFREETEXT) {
                         var textView = newObject[label] as any as TextView;
                         var text = textView.Text;
