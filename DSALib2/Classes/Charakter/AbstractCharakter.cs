@@ -124,8 +124,10 @@ namespace DSALib2.Classes.Charakter
                         TalentView talentView = talentTraitViewList.Where(x => x.ID == innerItems.Key).FirstOrDefault(); ;
                         if (talentView == null && talent != null)
                         {
-                            talentView = new TalentView();
-                            talentView.ID = talent.ID;
+                            talentView = new TalentView
+                            {
+                                ID = talent.ID
+                            };
                             talentTraitViewList.Add(talentView);
                         }
 
@@ -140,8 +142,10 @@ namespace DSALib2.Classes.Charakter
                         TalentView talentView = talentTraitViewList.Where(x => x.ID == innerItems.Key).FirstOrDefault(); ;
                         if (talentView == null && talent != null)
                         {
-                            talentView = new TalentView();
-                            talentView.ID = talent.ID;
+                            talentView = new TalentView
+                            {
+                                ID = talent.ID
+                            };
                             talentTraitViewList.Add(talentView);
                         }
 
@@ -156,8 +160,10 @@ namespace DSALib2.Classes.Charakter
                         TalentView talentView = talentTraitViewList.Where(x => x.ID == innerItems.Key).FirstOrDefault(); ;
                         if (talentView == null && talent != null)
                         {
-                            talentView = new TalentView();
-                            talentView.ID = talent.ID;
+                            talentView = new TalentView
+                            {
+                                ID = talent.ID
+                            };
                             talentTraitViewList.Add(talentView);
                         }
 
@@ -192,8 +198,10 @@ namespace DSALib2.Classes.Charakter
 
                 if (talentView == null && talent != null)
                 {
-                    talentView = new TalentView();
-                    talentView.ID = talent.ID;
+                    talentView = new TalentView
+                    {
+                        ID = talent.ID
+                    };
                     talentViewList.Add(talentView);
                 }
 
@@ -209,8 +217,10 @@ namespace DSALib2.Classes.Charakter
 
                 if (talentView == null && talent != null)
                 {
-                    talentView = new TalentView();
-                    talentView.ID = talent.ID;
+                    talentView = new TalentView
+                    {
+                        ID = talent.ID
+                    };
                     talentViewList.Add(talentView);
                 }
 
@@ -226,8 +236,10 @@ namespace DSALib2.Classes.Charakter
 
                 if (talentView == null && talent != null)
                 {
-                    talentView = new TalentView();
-                    talentView.ID = talent.ID;
+                    talentView = new TalentView
+                    {
+                        ID = talent.ID
+                    };
                     talentViewList.Add(talentView);
                 }
 
@@ -243,8 +255,10 @@ namespace DSALib2.Classes.Charakter
 
                 if (talentView == null && talent != null)
                 {
-                    talentView = new TalentView();
-                    talentView.ID = talent.ID;
+                    talentView = new TalentView
+                    {
+                        ID = talent.ID
+                    };
                     talentViewList.Add(talentView);
                 }
                 talentView.DeductionSelected = new DeductionView()
@@ -305,9 +319,11 @@ namespace DSALib2.Classes.Charakter
             }
             #endregion
             #region Abenteuerpunkte
-            var apView = new APView();
-            apView.APGainHand = jsonCharakter.AktAP;
-            apView.APInvestHand = jsonCharakter.InvestAP;
+            var apView = new APView
+            {
+                APGainHand = jsonCharakter.AktAP,
+                APInvestHand = jsonCharakter.InvestAP
+            };
             #endregion
             #region Werte Setzen
             this.Description.SetByView(descriptionView);
@@ -418,22 +434,24 @@ namespace DSALib2.Classes.Charakter
             }
             #endregion
             #region Descriptor Speichern
-            charakter.Descriptors = new List<JSONDescriptor>();
-            charakter.Descriptors.Add(CreateDescriptior("Alter", descriptionView.Alter));
-            charakter.Descriptors.Add(CreateDescriptior("Anrede", descriptionView.Anrede));
-            charakter.Descriptors.Add(CreateDescriptior("Augenfarbe", descriptionView.Augenfarbe));
-            charakter.Descriptors.Add(CreateDescriptior("Familienstatus", (int)descriptionView.Familienstatus));
-            charakter.Descriptors.Add(CreateDescriptior("Geburstag", descriptionView.Geburstag));
-            charakter.Descriptors.Add(CreateDescriptior("Geschlecht", (int)descriptionView.Geschlecht));
-            charakter.Descriptors.Add(CreateDescriptior("Gewicht", descriptionView.Gewicht));
-            charakter.Descriptors.Add(CreateDescriptior("Glaube", descriptionView.Glaube));
-            charakter.Descriptors.Add(CreateDescriptior("Größe", descriptionView.Groesse));
-            charakter.Descriptors.Add(CreateDescriptior("Haarfarbe", descriptionView.Haarfarbe));
-            charakter.Descriptors.Add(CreateDescriptior("Hautfarbe", descriptionView.Hautfarbe));
-            charakter.Descriptors.Add(CreateDescriptior("Kultur-/en", descriptionView.Kultur));
-            charakter.Descriptors.Add(CreateDescriptior("Name", descriptionView.Name));
-            charakter.Descriptors.Add(CreateDescriptior("Profession", descriptionView.Profession));
-            charakter.Descriptors.Add(CreateDescriptior("Rasse-/en", descriptionView.Rasse));
+            charakter.Descriptors = new List<JSONDescriptor>
+            {
+                CreateDescriptior("Alter", descriptionView.Alter),
+                CreateDescriptior("Anrede", descriptionView.Anrede),
+                CreateDescriptior("Augenfarbe", descriptionView.Augenfarbe),
+                CreateDescriptior("Familienstatus", (int)descriptionView.Familienstatus),
+                CreateDescriptior("Geburstag", descriptionView.Geburstag),
+                CreateDescriptior("Geschlecht", (int)descriptionView.Geschlecht),
+                CreateDescriptior("Gewicht", descriptionView.Gewicht),
+                CreateDescriptior("Glaube", descriptionView.Glaube),
+                CreateDescriptior("Größe", descriptionView.Groesse),
+                CreateDescriptior("Haarfarbe", descriptionView.Haarfarbe),
+                CreateDescriptior("Hautfarbe", descriptionView.Hautfarbe),
+                CreateDescriptior("Kultur-/en", descriptionView.Kultur),
+                CreateDescriptior("Name", descriptionView.Name),
+                CreateDescriptior("Profession", descriptionView.Profession),
+                CreateDescriptior("Rasse-/en", descriptionView.Rasse)
+            };
             #endregion
             #region Traits Speichern
             charakter.Traits = new List<JSONTrait>();
@@ -521,8 +539,10 @@ namespace DSALib2.Classes.Charakter
 
             if (descriptor != null)
             {
-                Int32.TryParse(descriptor.DescriptionText, out int value);
-                return value;
+                if(int.TryParse(descriptor.DescriptionText, out int value))
+                {
+                    return value;
+                }
             }
             return 0;
         }

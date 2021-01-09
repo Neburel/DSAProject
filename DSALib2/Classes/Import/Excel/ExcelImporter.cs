@@ -79,8 +79,10 @@ namespace DSALib2.Classes.Import.Excel
                 var rowType = TalentExcelImportType(item);
                 if (rowType == ExcleRowType.Title)
                 {
-                    currentFamilyImport = new FamilyImporter();
-                    currentFamilyImport.Family = new LanguageFamily(RemoveTitel(item.Sprache));
+                    currentFamilyImport = new FamilyImporter
+                    {
+                        Family = new LanguageFamily(RemoveTitel(item.Sprache))
+                    };
                     pos = 0;
                     result.Add(currentFamilyImport);
                 }
@@ -96,11 +98,13 @@ namespace DSALib2.Classes.Import.Excel
                     }
                     if (!string.IsNullOrEmpty(item.Schrift))
                     {
-                        var itemWriting = new TalentExcelImport();
-                        itemWriting.BE = item.Komplex2;
-                        itemWriting.Talent = item.Schrift;
-                        itemWriting.OrginalPosition = pos;
- ;
+                        var itemWriting = new TalentExcelImport
+                        {
+                            BE = item.Komplex2,
+                            Talent = item.Schrift,
+                            OrginalPosition = pos
+                        };
+                        ;
                         writingList.Add(itemWriting);
                         currentFamilyImport.Writing.Add(itemWriting);
                     }
@@ -118,11 +122,8 @@ namespace DSALib2.Classes.Import.Excel
                 var rowType = TalentExcelImportType(item);
                 if (rowType == ExcleRowType.ValidTalent)
                 {
-                    string name;
-                    string nameExtension;
                     List<CharakterAttribut> probe = GetAttributProbe(item.Probe);
-
-                    GetName(item.Talent, out name, out nameExtension);
+                    GetName(item.Talent, out string name, out string nameExtension);
                     //Bereits ein Talent mit diesem namen vorhanden?
                     var existingItem = talentDic.Where(x => x.Value.Name == name).FirstOrDefault().Value;
                     if (existingItem == null)
@@ -180,7 +181,7 @@ namespace DSALib2.Classes.Import.Excel
                             var stringTalent = stringTalentReqg.Split(deductionString)[0].Trim();
                             var innerTalent = talentDic.Where(x => x.Value.Name.StartsWith(value, StringComparison.CurrentCulture));
 
-                            if (innerTalent.Count() > 0)
+                            if (innerTalent.Any())
                             {
                                 value = mainReqg.Split(deductionString)[0].Trim();
 
@@ -302,8 +303,7 @@ namespace DSALib2.Classes.Import.Excel
         #region Hilsmethoden
         private void GetName(string valueString, out string name, out string nameExtension)
         {
-            name            = string.Empty;
-            nameExtension   = string.Empty;
+            nameExtension = string.Empty;
             if (!string.IsNullOrEmpty(valueString) && valueString.Contains("("))
             {
                 var items = valueString.Split('(');

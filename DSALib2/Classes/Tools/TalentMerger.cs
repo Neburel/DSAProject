@@ -71,10 +71,6 @@ namespace DSALib2.Classes.Tools
             return newTalenList;
             //Nicht Gefundene Talente müssen mit einer ID Belegt werden
         }
-        public static void CheckDifferenzTalent(ITalent talent1, ITalent talent2)
-        {
-
-        }
         private static void CheckForDoubleNames(List<ITalent> talentList)
         {
             Debug.WriteLine(DEVIDER);
@@ -83,7 +79,7 @@ namespace DSALib2.Classes.Tools
             foreach (var item in talentList)
             {
                 var result = talentList.Where(x => x.Name == item.Name && x != item && item.GetType() == x.GetType()).ToList();
-                if (result.Count() > 1)
+                if (result.Count > 1)
                 {
                     talentfound = true;
                     foreach (var innerItem in result)

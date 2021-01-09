@@ -111,10 +111,8 @@ namespace DSAProject2Web.Server.Controllers
         [HttpPost]
         public string Import([FromBody] DataRequest<string> request)
         {
-            var x = JSONCharakter.DeSerializeJson(request.Data, out string errorstring);
-
-            var repo = new SQLCharakterRepository(Context);
-            var charakter = repo.CreateDSACharakter(Context, "New Charakter");
+            JSONCharakter x = JSONCharakter.DeSerializeJson(request.Data, out string errorstring);
+            var charakter = new SQLCharakterRepository(Context).CreateDSACharakter(Context, "New Charakter");
 
             var abstractcharakter = GetDSASQLCharakter(charakter.Id);
             abstractcharakter.Import(x);

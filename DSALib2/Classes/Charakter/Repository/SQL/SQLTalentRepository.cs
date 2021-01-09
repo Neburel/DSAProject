@@ -14,7 +14,7 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
 {
     public class SQLTalentRepository : GeneralTalentRepository
     {
-        private InnerSQLTalentRepository talentRepository;
+        private readonly InnerSQLTalentRepository talentRepository;
         public SQLTalentRepository(ApplicationContext context, AbstractCharakter charakter, int charakterID, List<ITalent> list, List<LanguageFamily> familieList) : base(charakter, list, familieList) {
             talentRepository = new InnerSQLTalentRepository(context, charakterID);
         }
@@ -70,7 +70,7 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
                 this.talentRepository.SetTalent(
                 view.ID, 
                 taw,
-                view.DeductionSelected != null ? view.DeductionSelected.ID : null,
+                view.DeductionSelected?.ID,
                 view.AT - GetModAT(fightingTalent),
                 view.PA - GetModPA(fightingTalent),
                 view.BL - GetModBL(fightingTalent));
@@ -80,7 +80,7 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
                 this.talentRepository.SetTalent(
                     view.ID,
                     taw,
-                    view.DeductionSelected != null ? view.DeductionSelected.ID : null);
+                    view.DeductionSelected?.ID);
             }
         }
         public override void SetbyView(LanguageView view)
@@ -91,7 +91,7 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
 
         private class InnerSQLTalentRepository : BaseRepository<T_Talente>
         {
-            private int charakterID;
+            private readonly int charakterID;
             public InnerSQLTalentRepository(ApplicationContext context, int charakterID) : base(context){ this.charakterID = charakterID; }
             internal T_Talente Get(ITalent talent)
             {
@@ -109,7 +109,7 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
                 tabel.AT = atValue;
                 tabel.PA = paValue;
                 tabel.BL = blValue;
-                tabel.DeductionID = deductionID != null ? deductionID.ToString() : null;
+                tabel.DeductionID = deductionID?.ToString();
                 tabel.Mother = mother;
                 Submit();
             }
