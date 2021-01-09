@@ -80,7 +80,17 @@ namespace DSALib2.Classes.Charakter
 
         protected override IAPRepository GetAPRepository()
         {
-            return new SQLAPRepository(applicationContext, charakterID);
+            return new SQLAPRepository(applicationContext, this, charakterID);
+        }
+
+        protected override IDescriptionRepository GetDescriptionRepository()
+        {
+            return new SQLDescriptionRepository(applicationContext, this, charakterID);
+        }
+
+        protected override IMoneyRepository GetMoneyRepository()
+        {
+            return new SQLMoneyRepository(applicationContext, charakterID);
         }
     }
 }

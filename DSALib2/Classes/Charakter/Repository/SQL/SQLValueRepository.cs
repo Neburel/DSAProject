@@ -6,6 +6,7 @@ using DSALib2.SQLDataBase.Repository;
 using System;
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DSALib2.Classes.Charakter.Repository.SQL
 {
@@ -19,11 +20,13 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
 
         public override void SetAKT(AbstractSettableValue item, int value)
         {
-            throw new NotImplementedException();
+            this.repo.Set(item.GetType().ToString(), value);
         }
 
         protected override int GetAktSettable(AbstractSettableValue value)
         {
+            var table = this.repo.Get(value.GetType().ToString());
+            if (table != null) return table.Value;
             return 0;
         }
 
@@ -31,6 +34,36 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
         {
             private int charakterID;
             public InnerSQLRepository(ApplicationContext context, int charakterID) : base(context) { this.charakterID = charakterID; }
+
+            public t_Values Get(string type)
+            {
+                return dbSet.Where(x => x.Type == type && x.CharakterID == charakterID).FirstOrDefault();
+            }
+            public List<t_Values> GetList()
+            {
+                var list = dbSet.Where(x => x.CharakterID == charakterID);
+                return list.ToList();
+            }
+            public void Set(string type, int value)
+            {
+                var akt = Get(type);
+                if (akt != null)
+                {
+                    akt.Value = value;
+                    Update(akt);
+                }
+                else
+                {
+                    akt = new t_Values()
+                    {
+                        CharakterID = charakterID,
+                        Type = type,
+                        Value = value
+                    };
+                    Insert(akt);
+                }
+                context.SaveChanges();
+            }
         }
     }
 }

@@ -33,5 +33,19 @@ namespace DSALib2.Utils
         Parade,
         Blocken
     }
+    public enum GeschlechtEnum
+    {
+        Weiblich = 1,
+        Mänlich = 0,
+        Geschlechtslos = 2
+    }
+    public enum FamilienstatusEnum
+    {
+        Ledig = 0,
+        Verheiratet = 1,
+        Geschieden = 2,
+        Verwitwet = 3,
+        Undefiniert = 4
+    }
 
 }

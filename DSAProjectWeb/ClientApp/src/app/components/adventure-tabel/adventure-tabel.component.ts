@@ -23,19 +23,20 @@ export class AdventureTabelComponent implements OnInit {
     private Load() {
         this.apService.Get(this.charakterService.CurrentCharakter).then(result => {
             this.AP = result;
+            console.log(result);
         })
     }
-    public InvestApClick() {
-        var inputData = new ApInputDialogOptions();
-        inputData.Invest = false;
-        inputData.ManuelAP = 1000;
-        inputData.AP = 10000;
-
+    public OpenDialog() {
         var config = new MatDialogConfig();
-        config.data = inputData;
+        config.data = this.AP;
 
         let dialogRef = this.dialog.open(ApInputDialogComponent, config);
-        var subscribtion = dialogRef.afterClosed().subscribe(next => {
+        var subscribtion = dialogRef.afterClosed().subscribe((next: AP) => {
+            if(next){
+                this.apService.Set(this.charakterService.CurrentCharakter, next).then(result =>{
+                    this.Load();
+                });
+            }
             subscribtion.unsubscribe();
         });
     }

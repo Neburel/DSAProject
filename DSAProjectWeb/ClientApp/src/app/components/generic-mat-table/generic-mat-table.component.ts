@@ -1,5 +1,5 @@
 ﻿import { animate, state, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, NgZone, Output, Renderer2, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, NgZone, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { EventEmitter } from '@angular/core';
@@ -35,7 +35,7 @@ export const DATATYPETEXTFREETEXT: string = "textfreeText";
     ],
 })
 /** GenericMatTable component*/
-export class GenericMatTableComponent {
+export class GenericMatTableComponent implements OnInit, AfterContentInit, AfterViewInit {
     @Input() tableName: string;
     @Input() editButton: boolean = false;
     @Input() createButton: boolean = false;
@@ -44,6 +44,7 @@ export class GenericMatTableComponent {
     @Input() importButton: boolean = false;
     @Input() showWuerfelEingabe: boolean = false;
     @Input() showHeader: boolean = true;
+    @Input() showSearch: boolean = true;
     @Input() showPaginator: boolean = true;
     @Input() component: any;
     @Input() dataSource: MatTableDataSource<any>;
@@ -72,7 +73,7 @@ export class GenericMatTableComponent {
     // MatTable
     @ViewChild('dataTable', { static: true }) dataTable: MatTable<Element>;
     @ViewChild(MatSort, { static: true }) sort: MatSort;
-    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
 
     // Allgemein
     public MIN_COLUMN_WIDTH: number = 200;
@@ -126,7 +127,7 @@ export class GenericMatTableComponent {
             // const tableWidth = this.table.nativeElement.clientWidth;
             this.toggleColumns(this.dataTable['_elementRef'].nativeElement.clientWidth);
         });
-    };
+    }
 
     //#region  Lifecycle
     ngOnInit() {
@@ -141,6 +142,8 @@ export class GenericMatTableComponent {
         if (this.fullscreen) {
             this.renderer.setStyle(this.dataTable['_elementRef'].nativeElement, 'height', 'calc(100vh - 250px)');
         }
+
+        console.log(this.showSearch);
     }
 
     ngAfterContentInit() {
@@ -158,6 +161,12 @@ export class GenericMatTableComponent {
         // this.paginator.updateGoto();
         this.highlight(null, false); //führt dazu das die Buttons auf den Richtigen zustand gesetz werden
         this._changeDetectorRef.checkNoChanges();
+    }
+
+    ngAfterViewInit(): void {
+        if (this.showPaginator) {
+            this.dataSource.paginator = this.paginator;
+        }
     }
 
     ngOnDestroy() {

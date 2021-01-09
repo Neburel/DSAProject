@@ -1,4 +1,5 @@
 ﻿import { Component, ViewChild, ElementRef } from '@angular/core';
+import { CharakterService } from 'src/app/services/dsa/charakter.service';
 import { TalentService } from 'src/app/services/dsa/talent.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { TalentService } from 'src/app/services/dsa/talent.service';
 export class SettingsViewComponent {
     @ViewChild('fileChooser') FileChooser: ElementRef;
 
-    constructor(private talentService: TalentService) {
+    constructor(private charakterService: CharakterService, private talentService: TalentService) {
 
     }
 

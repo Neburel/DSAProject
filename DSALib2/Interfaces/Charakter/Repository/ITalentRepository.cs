@@ -13,7 +13,7 @@ namespace DSALib2.Interfaces.Charakter.Repository
         List<TalentView> GetViewList<T>() where T : ITalent;
         List<LanguageView> GetViewList();
 
-        void SetTalentbyView(TalentView view);
-        void SetTalentbyView(LanguageView view);
+        void SetbyView(TalentView view);
+        void SetbyView(LanguageView view);
     }
 }

@@ -34,7 +34,7 @@ namespace DSALib2.Classes.Charakter.Repository.General
         {
             return resourceList;
         }
-        public IResource GetItemByType(Type type)
+        public IResource GetByType(Type type)
         {
             return this.GetList().Where(x => x.GetType() == type).FirstOrDefault();
         }

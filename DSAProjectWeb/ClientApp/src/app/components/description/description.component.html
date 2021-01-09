@@ -1,0 +1,60 @@
+﻿<div style="display: flex;" *ngIf="loading">
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td class="tdPadding">{{description.Name}}</td>
+
+            <td>Augenfarbe:</td>
+            <td class="tdPadding">{{description.Augenfarbe}}</td>
+
+            <td>Größe:</td>
+            <td class="tdPadding">{{description.Groesse}}</td>
+
+            <td>Familienstatus:</td>
+            <td class="tdPadding">{{ familienstatusEnum[description.Familienstatus]}}</td>
+        </tr>
+        <tr>
+            <td>Anrede:</td>
+            <td class="tdPadding">{{description.Anrede}}</td>
+
+            <td>Kultur-/en:</td>
+            <td class="tdPadding">{{description.Kultur}}</td>
+
+            <td>Gewicht:</td>
+            <td class="tdPadding">{{description.Gewicht}}</td>
+
+            <td>Geschlecht:</td>
+            <td class="tdPadding">{{ geschlechtEnum[description.Geschlecht]}}</td>
+        </tr>
+        <tr>
+            <td>Professionen:</td>
+            <td class="tdPadding">{{description.Profession}}</td>
+
+            <td>Glaube:</td>
+            <td class="tdPadding">{{description.Glaube}}</td>
+
+            <td>Alter:</td>
+            <td class="tdPadding">{{description.Alter}}</td>
+
+            <td>Haarfarbe:</td>
+            <td class="tdPadding">{{description.Haarfarbe}}</td>
+        </tr>
+        <tr>
+            <td>Rasse-/en:</td>
+            <td class="tdPadding">{{description.Rasse}}</td>
+
+            <td></td>
+            <td class="tdPadding"></td>
+
+            <td></td>
+            <td class="tdPadding"></td>
+
+            <td>Hautfarbe:</td>
+            <td class="tdPadding">{{description.Hautfarbe}}</td>
+        </tr>
+    </table>
+    <button mat-mini-fab class="small-icon-button" type="button" style="align-self: center;" (click)="OpenDialog()">
+        +
+    </button>
+</div>
+<hr style="width: 100%;">

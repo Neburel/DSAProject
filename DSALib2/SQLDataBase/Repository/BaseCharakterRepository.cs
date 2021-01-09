@@ -9,13 +9,13 @@ namespace DSALib2.SQLDataBase.Repository
         {
             this.charakterID = charakterID;
         }
-        protected TEntity GetTabel()
+        public TEntity Get()
         {
-            var tabel = dbSet.Where(x => x.Id == charakterID).FirstOrDefault();
+            var tabel = dbSet.Where(x => x.CharakterID == charakterID).FirstOrDefault();
             if (tabel == null)
             {
                 CreateNewEntry();
-                tabel = GetTabel();
+                tabel = Get();
             }
             return tabel;
         }

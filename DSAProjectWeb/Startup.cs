@@ -11,7 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using System.IO;
 using System.Data.SqlClient;
 using DSALib2.SQLDataBase;
-using System.Text;
 
 namespace DSAProject2Web
 {
@@ -110,8 +109,8 @@ namespace DSAProject2Web
             var x = new BrowserWindowOptions
             {
                 TitleBarStyle = TitleBarStyle.hidden,
-                Width = 1000,
-                Height = 1000
+                Width = 1280,
+                Height = 1024
             };
 
             Task.Run(async () => {

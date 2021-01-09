@@ -19,7 +19,7 @@ namespace DSALib2.Classes.Charakter.Values.Extended
         {
             this.attributeRepository = attributeRepository;
             this.resourcesRepository = resourcesRepository;
-            artifactControl = (MagicResistance)resourcesRepository.GetItemByType(typeof(MagicResistance));
+            artifactControl = (MagicResistance)resourcesRepository.GetByType(typeof(MagicResistance));
             if (artifactControl == null) throw new ArgumentNullException();
         }   
         protected int Calculate()

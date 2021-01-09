@@ -1,27 +1,27 @@
-﻿<div style="display: flex; width: 95%; flex-shrink: 0;">
+﻿<div *ngIf="!loading" style="display: flex; width: 95%; flex-shrink: 0;">
     <div style="width: 100%; margin-right: 2px;">
         <div style="display: flex;">
             <div class='square-box' style="width: 25%; height: 30px;">
                 <div class='square-content'>
-                    <div><span></span></div>
+                    <div><span>{{ money.Dublonen}} D</span></div>
                 </div>
             </div>
             <div style="width: 2px;"></div>
             <div class='square-box' style="width: 25%; height: 30px;">
                 <div class='square-content'>
-                    <div><span></span></div>
+                    <div><span>{{ money.Silber}} S</span></div>
                 </div>
             </div>
             <div style="width: 2px;"></div>
             <div class='square-box' style="width: 25%; height: 30px;">
                 <div class='square-content'>
-                    <div><span></span></div>
+                    <div><span>{{ money.Kupfer}} K</span></div>
                 </div>
             </div>
             <div style="width: 2px;"></div>
             <div class='square-box' style="width: 25%; height: 30px;">
                 <div class='square-content'>
-                    <div><span></span></div>
+                    <div><span>{{ money.Heller}} H</span></div>
                 </div>
             </div>
         </div>
@@ -29,13 +29,13 @@
         <div>
             <div class='square-box' style="width: 100%; height: 30px;">
                 <div class='square-content'>
-                    <div><span></span></div>
+                    <div><span>{{ money.BankDublonen}} D</span></div>
                 </div>
             </div>
         </div>
     </div>
     <div style="display: flex; align-items: center;">
-        <button mat-mini-fab class="small-icon-button" style="margin-right: 2px">
+        <button mat-mini-fab class="small-icon-button" style="margin-right: 2px" (click)="OpenDialog()">
             +
         </button>
     </div>

@@ -59,10 +59,9 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
             if (sql != null) return sql.Mother;
             return null;
         }
-        public override void SetTalentbyView(TalentView view)
+        public override void SetbyView(TalentView view)
         {
             var talent = this.Get(view.ID);
-
             var taw = view.TAW - this.GetModTaW(talent);
 
             if (typeof(AbstractTalentFighting).IsAssignableFrom(talent.GetType()))
@@ -84,7 +83,7 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
                     view.DeductionSelected != null ? view.DeductionSelected.ID : null);
             }
         }
-        public override void SetTalentbyView(LanguageView view)
+        public override void SetbyView(LanguageView view)
         {
             this.talentRepository.SetTalent(view.IDSprache, view.TawSprache, null, null, null, null, view.Mother);
             this.talentRepository.SetTalent(view.IDSchrift, view.TawSchrift, null, null, null, null, null);
@@ -96,7 +95,7 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
             public InnerSQLTalentRepository(ApplicationContext context, int charakterID) : base(context){ this.charakterID = charakterID; }
             internal T_Talente Get(ITalent talent)
             {
-                return dbSet.Where(x => x.Id == talent.ID.ToString() && x.CharakterID == charakterID).FirstOrDefault();
+                return dbSet.Where(x => x.TalentID == talent.ID.ToString() && x.CharakterID == charakterID).FirstOrDefault();
             }
             internal int GetDeduction(ITalent talent)
             {
@@ -117,7 +116,7 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
             #region Helper Funktions
             protected T_Talente GetTabel(Guid talentID)
             {
-                var tabel = dbSet.Where(x => x.Id == talentID.ToString() && x.CharakterID == charakterID).FirstOrDefault();
+                var tabel = dbSet.Where(x => x.TalentID == talentID.ToString() && x.CharakterID == charakterID).FirstOrDefault();
                 if (tabel == null)
                 {
                     CreateNewEntry(talentID);
@@ -129,7 +128,7 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
             {
                 var tabel = new T_Talente()
                 {
-                    Id = talentID.ToString(),
+                    TalentID = talentID.ToString(),
                     CharakterID = charakterID,
                     TAW = 0
                 };

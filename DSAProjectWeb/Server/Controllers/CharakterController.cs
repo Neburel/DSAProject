@@ -1,14 +1,16 @@
 ﻿using DSALib2.Classes.Charakter;
 using DSALib2.Classes.Charakter.Repository.SQL;
 using DSALib2.Classes.Charakter.Talente;
-using DSALib2.Classes.Charakter.View;
+using DSALib2.Classes.JSONSave;
 using DSALib2.SQLDataBase;
 using DSALib2.Utils;
 using DSAProject2Web.Server.Entities;
 using DSAProjectWeb.Server.ControllersBase;
+using DSAProjectWeb.Server.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace DSAProject2Web.Server.Controllers
@@ -47,6 +49,8 @@ namespace DSAProject2Web.Server.Controllers
             {
                 attributRepo.SetAKT(attribut, 9);
             }
+
+            return CreateResponse(charakter);
 
 
             //Test Charakter
@@ -96,11 +100,36 @@ namespace DSAProject2Web.Server.Controllers
 
         [Route("Set")]
         [HttpPost]
-        public string Set([FromBody]CharakterIDRequest request)
+        public string Set([FromBody]CharakterDataRequest<t_Charakter> request)
         {
             var repo = new SQLCharakterRepository(Context);
-            repo.SetCharakter(request.CharakterID);
+            repo.SetbyView(request.Data);
             return CreateResponse(repo.GetList());
         }
+
+        [Route("Import")]
+        [HttpPost]
+        public string Import([FromBody] DataRequest<string> request)
+        {
+            var x = JSONCharakter.DeSerializeJson(request.Data, out string errorstring);
+
+            var repo = new SQLCharakterRepository(Context);
+            var charakter = repo.CreateDSACharakter(Context, "New Charakter");
+
+            var abstractcharakter = GetDSASQLCharakter(charakter.Id);
+            abstractcharakter.Import(x);
+
+            return CreateResponse(charakter);
+        }
+        [Route("Export")]
+        [HttpPost]
+        public string Export([FromBody] CharakterDataRequest<t_Charakter> request)
+        {
+            var abstractcharakter = GetDSASQLCharakter(request.CharakterID);
+            var exportCharakter = abstractcharakter.Export();
+
+            return CreateResponse(exportCharakter.JSONContent);
+        }
+
     }
 }

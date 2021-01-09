@@ -1,3 +1,4 @@
-﻿<app-generic-mat-table [dataSource]="dataSourceMain" [columnsdef]="columnsdefMain" (reload)=LoadDataMain()
-    createButton=true editButton=true (openDialog)=openDialog($event)>
+﻿<app-generic-mat-table [tableName]="tableName" [dataSource]="dataSourceMain" [columnsdef]="columnsdefMain"
+    [exportButton]="showButton" (reload)=LoadDataMain() createButton=true editButton=true
+    (openDialog)=openDialog($event) [showSearch]="false">
 </app-generic-mat-table>

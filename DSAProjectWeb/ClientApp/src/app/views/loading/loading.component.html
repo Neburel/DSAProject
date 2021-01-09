@@ -9,5 +9,15 @@
     <li (click)="onSelect()">
       <span class="badge">-</span>Neu erstellen
     </li>
+    <li (click)="this.FileChooser.nativeElement.click();">
+      <span class="badge">-</span>Import
+    </li>
+    <li (click)="export()">
+      <span class="badge">-</span>Export All
+    </li>
   </ul>
+
+
 </div>
+
+<input #fileChooser style="display: none;" type="file" (change)="onImport($event.target.files)">

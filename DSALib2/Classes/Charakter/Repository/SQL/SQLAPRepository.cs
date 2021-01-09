@@ -1,95 +1,52 @@
-﻿using DSALib2.Classes.Charakter.View;
-using DSALib2.Interfaces.Charakter.Repository;
+﻿using DSALib2.Classes.Charakter.Repository.General;
+using DSALib2.Classes.Charakter.View;
 using DSALib2.SQLDataBase;
 using DSALib2.SQLDataBase.Repository;
-using System.Linq;
 
 namespace DSALib2.Classes.Charakter.Repository.SQL
 {
-    public class SQLAPRepository : BaseCharakterRepository<t_AP>, IAPRepository
+    public class SQLAPRepository : GeneralAPRepository
     {
-        public SQLAPRepository(ApplicationContext context, int charakterID) : base(context, charakterID){}
-        #region Getter
-        public int GetLevel()
+        private InnerSQLRepository repo;
+        public SQLAPRepository(ApplicationContext context, AbstractCharakter charakter, int charakterID) : base(charakter)
         {
-            var maxAP = GetAPEarnedMAX();
-            int result;
-            if (maxAP > 1000)
+            repo = new InnerSQLRepository(context, charakterID);
+        }
+
+        public override int GetAPEarnedAKT()
+        {
+            return this.repo.Get().AP;
+        }
+        public override int GetAPInvestAKT()
+        {
+            return this.repo.Get().APInvested;
+        }
+
+        public override void SetbyView(APView view)
+        {
+            var tabel = repo.Get();
+            tabel.AP = view.APGainHand;
+            tabel.APInvested = view.APInvestHand;
+
+            repo.Update(tabel);
+            repo.Submit();
+        }
+        private class InnerSQLRepository : BaseCharakterRepository<t_AP>
+        {
+            public InnerSQLRepository(ApplicationContext context, int charakterID) : base(context, charakterID) { }
+
+            protected override void CreateNewEntry()
             {
-                result = maxAP / 1000 + 4;
+                var tabel = new t_AP()
+                {
+                    AP = 0,
+                    APInvested = 0,
+                    CharakterID = charakterID
+                };
+                this.Insert(tabel);
+                this.Submit();
+
             }
-            else
-            {
-                result = maxAP / 200;
-            }
-            return 1 + result;            
         }
-        public int GetAPEarnedAKT()
-        {
-            var tabel = dbSet.Where(x => x.CharakterID == this.charakterID).FirstOrDefault();
-            if (tabel == null) return 0;
-            else return tabel.AP;
-        }
-        public int GetAPEarnedMOD()
-        {
-            return 0;
-        }
-        public int GetAPEarnedMAX()
-        {
-            return GetAPEarnedAKT() + GetAPEarnedMOD();
-        }
-        public int GetAPInvestedAKT()
-        {
-            var tabel = dbSet.Where(x => x.CharakterID == this.charakterID).FirstOrDefault();
-            if (tabel == null) return 0;
-            else return tabel.APInvested;
-        }
-        public int GetAPInvestedMOD()
-        {
-            return 0;
-        }
-        public int GetAPInvestedMAX()
-        {
-            return GetAPInvestedAKT() + GetAPInvestedMOD();
-        }
-        public APView GetView()
-        {
-            var ret = new APView()
-            {
-                AP = GetAPEarnedMAX(),
-                APInvested = GetAPInvestedMAX(),
-                Level = GetLevel()
-            };
-            ret.APLeft = ret.AP - ret.APInvested;
-            return ret;
-        }
-        #endregion
-        #region Setter
-        public void SetAPEarned(int value)
-        {
-            var tabel = GetTabel();
-            tabel.AP = value;
-            Submit();
-        }
-        public void SetAPInvested(int value)
-        {
-            var tabel = GetTabel();
-            tabel.APInvested = value;
-            Submit();
-        }       
-        #endregion
-        #region Helper Funktions
-        protected override void CreateNewEntry()
-        {
-            var tabel = new t_AP()
-            {
-                AP = 0,
-                APInvested = 0,
-                CharakterID = charakterID
-            };
-            this.Insert(tabel);
-            this.Submit();
-        }
-        #endregion
     }
 }

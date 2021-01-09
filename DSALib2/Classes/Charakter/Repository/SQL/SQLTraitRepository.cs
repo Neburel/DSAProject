@@ -78,7 +78,7 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
             foreach (var item in sqlresource)
             {
                 var innerType = DSAUtil.GetType(item.Type);
-                var innerItem = this.charakter.Resources.GetItemByType(innerType);
+                var innerItem = this.charakter.Resources.GetByType(innerType);
 
                 resourceList.Add(new IDValueView<string>
                 {
@@ -185,6 +185,16 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
             talentRepository.Submit();
         }
 
+        public override int GetAPEarned()
+        {
+            var x = this.traitRepository.GetTotalAPGain();
+            return x;
+        }
+        public override int GetAPInvest()
+        {
+            return this.traitRepository.GetTotalAPInvest();
+        }
+
         private class InnerSQLTraitRepository : BaseRepository<T_Trait>
         {
             private int charakterID;
@@ -216,6 +226,15 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
                 this.Insert(tabel);
                 this.Submit();
                 return tabel;
+            }
+
+            public int GetTotalAPGain()
+            {
+                return dbSet.Where(x => x.CharakterID == charakterID).Sum(x => x.APGain);
+            }
+            public int GetTotalAPInvest()
+            {
+                return dbSet.Where(x => x.CharakterID == charakterID).Sum(x => x.APInvested);
             }
         }
         private class SQLAttributRepository : BaseRepository<T_TraitAttribute>
@@ -253,6 +272,7 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
             }
             public void SetList(List<IDValueView<CharakterAttribut>> list, int traitID)
             {
+                if (list == null) return;
                 foreach(var item in list)
                 {
                     Set(item.ID, item.Value, traitID);
@@ -299,6 +319,7 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
             }
             public void SetList(List<IDValueView<string>> list, int traitID)
             {
+                if (list == null) return;
                 foreach (var item in list)
                 {
                     Set(item.ID, item.Value, traitID);
@@ -345,6 +366,7 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
             }
             public void SetList(List<IDValueView<string>> list, int traitID)
             {
+                if (list == null) return;
                 foreach (var item in list)
                 {
                     Set(item.ID, item.Value, traitID);
@@ -410,6 +432,7 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
             }
             public void SetList(List<TalentView> list, int traitID)
             {
+                if (list == null) return;
                 foreach (var item in list)
                 {
                     Set(item.ID.ToString(), traitID, item.TAW, item.AT, item.PA, item.BL);

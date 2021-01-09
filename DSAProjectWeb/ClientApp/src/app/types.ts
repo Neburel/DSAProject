@@ -28,6 +28,27 @@ export enum TraitTypeEnum {
   Buch = 11
 }
 
+export enum GeschlechtEnum {
+  Weiblich = 1,
+  Mänlich = 0,
+  Geschlechtslos = 2
+}
+export enum FamilienstatusEnum {
+  Ledig = 0,
+  Verheiratet = 1,
+  Geschieden = 2,
+  Verwitwet = 3,
+  Undefiniert = 4
+}
+
+export enum GeschlechtEnum {
+
+}
+
+export enum FamilienstatusEnum {
+
+}
+
 export interface GenericDataTableColumn {
   id: string;                 //Zugriff auf das Property Feld des Datentypes
   renderID?: string;          //ID die Benötigt wird, wenn für den Import ein zusätzliches Feld angelegt wird
@@ -93,11 +114,22 @@ export class Value extends AKTMODMAX {
 }
 
 export class AP {
-  public APAKT: number;
-  public AP: number;
-  public APLeft: number;
   public APInvested: number;
+  public APInvestHand: number;
+  public APInvestTrait: number;
+  public APGain: number;
+  public APGainHand: number;
+  public APGainTrait: number;
+  public APLeft: number;
   public Level: number;
+}
+
+export class Money {
+  public BankDublonen: number;
+  public Dublonen: number;
+  public Heller: number;
+  public Kupfer: number;
+  public Silber: number;
 }
 
 export class Talent {
@@ -192,4 +224,22 @@ export class TalentTraitChoises {
   public AT: Talent;
   public PA: Talent;
   public BL: Talent;
+}
+
+export class Description {
+  public Name: string;
+  public Anrede: string;
+  public Rasse: string;
+  public Kultur: string;
+  public Profession: string;
+  public Alter: number;
+  public Geburstag: string;
+  public Geschlecht: GeschlechtEnum;
+  public Familienstatus: FamilienstatusEnum;
+  public Hautfarbe: string;
+  public Haarfarbe: string;
+  public Augenfarbe: string;
+  public Glaube: string;
+  public Groesse: number;
+  public Gewicht: number;
 }

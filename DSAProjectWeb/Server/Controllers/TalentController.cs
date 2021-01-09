@@ -122,7 +122,7 @@ namespace DSAProject2Web.Server.Controllers
         {
             var charakter   = GetDSASQLCharakter(request);
             var talentRepo  = charakter.Talente;
-            talentRepo.SetTalentbyView(request.Data);
+            talentRepo.SetbyView(request.Data);
 
             var viewItem = talentRepo.GetView(request.Data.ID);
             return CreateResponse(viewItem);
@@ -133,7 +133,7 @@ namespace DSAProject2Web.Server.Controllers
         {
             var charakter = GetDSASQLCharakter(request);
             var talentRepo = charakter.Talente;
-            talentRepo.SetTalentbyView(request.Data);
+            talentRepo.SetbyView(request.Data);
 
             var viewItem = talentRepo.GetLanguageView(request.Data.IDSprache, request.Data.IDSchrift);
             return CreateResponse(viewItem);

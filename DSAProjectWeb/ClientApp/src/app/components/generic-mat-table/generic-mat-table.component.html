@@ -16,7 +16,7 @@
                 found"}}</button>
         </div>
 
-        <div class="filterHeader">
+        <div class="filterHeader" *ngIf="showSearch">
             <mat-icon matPrefix>search</mat-icon>
             <mat-form-field appearance="legacy" class="filterHeaderMatFormField">
                 <input matInput type="search" placeholder="Filter" class="search-input" (keyup)="applyFilter($event)">
@@ -50,7 +50,7 @@
         <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
     </div>
 
-    <mat-table #dataTable matTableExporter [dataSource]="dataSource" matSort multiTemplateDataRows cdkDropListGroup>
+    <mat-table #dataTable [dataSource]="dataSource" matSort multiTemplateDataRows style="overflow: hidden;">
 
         <!-- Toggle Button Start -->
         <ng-container matColumnDef="trigger">

@@ -4,24 +4,57 @@
     <form [formGroup]="FormGroup" (ngSubmit)="Save()">
         <table style="width:100%" style="margin-bottom: 10px;">
             <tr>
-                <th></th>
-                <th></th>
+                <td></td>
+                <th>Aktuell</th>
+                <th>Hinzufügen</th>
+                <th>Entfernen</th>
+                <th>Egebnis</th>
             </tr>
             <tr>
-                <td>AP:</td>
-                <td>{{data.AP}}</td>
+                <th style="text-align: left;">AP Verdient(Hand):</th>
+                <td>{{ap.APGainHand}}</td>
+                <td>
+                    <mat-form-field style="width: 100px;">
+                        <input formControlName="apGainPlus" type="number" matInput>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field style="width: 100px;">
+                        <input formControlName="apGainMinus" type="number" matInput>
+                    </mat-form-field>
+                </td>
+                <td>{{apGainResult}}</td>
             </tr>
             <tr>
-                <td>AP Eigenschaften:</td>
-                <td>{{data.ManuelAP}}</td>
+                <th style="text-align: left;">AP Investiert(Hand):</th>
+                <td>{{ap.APInvestHand}}</td>
+                <td>
+                    <mat-form-field style="width: 100px;">
+                        <input formControlName="apInvestPlus" type="number" matInput>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field style="width: 100px;">
+                        <input formControlName="apInvestMinus" type="number" matInput>
+                    </mat-form-field>
+                </td>
+                <td>{{apInvestResult}}</td>
+            </tr>
+            <tr>
+                <th style="text-align: left;">AP Verdient(Eigenschaften):</th>
+                <td>{{ap.APGainTrait}}</td>
+                <td></td>
+                <td></td>
+                <td>{{ap.APGainTrait}}</td>
+            </tr>
+            <tr>
+                <th style="text-align: left;">AP Investiert (Eigenschaften):</th>
+                <td>{{ap.APInvestTrait}}</td>
+                <td></td>
+                <td></td>
+                <td>{{ap.APInvestTrait}}</td>
             </tr>
         </table>
-        <div>
-            <mat-form-field>
-                <mat-label>Abenteuerpunkte</mat-label>
-                <input matInput formControlName="inputAbenteuerPunkte">
-            </mat-form-field>
-        </div>
         <div style="text-align: center;">
             <button mat-raised-button color="primary" style="margin: 5px;" type="submit">Speichern</button>
             <button mat-raised-button color="primary" style="margin: 5px;" type="reset"

@@ -1,0 +1,96 @@
+﻿<h2 mat-dialog-title>{{ Title }}</h2>
+<mat-dialog-content class="mat-typography">
+
+    <form [formGroup]="FormGroup" (ngSubmit)="Save()">
+
+        <table style="width:100%" style="margin-bottom: 10px;">
+            <tr>
+                <th></th>
+                <th style="text-align: center;">Aktuell</th>
+                <th style="text-align: center;">Plus</th>
+                <th style="text-align: center;">Minus</th>
+                <th style="text-align: center;">Ergebnis</th>
+            </tr>
+            <tr>
+                <th>Kupfer</th>
+                <td>{{money.Kupfer}}</td>
+                <td>
+                    <mat-form-field style="width: 100px;">
+                        <input formControlName="kupferPlus" type="number" matInput>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field style="width: 100px;">
+                        <input formControlName="kupferMinus" type="number" matInput>
+                    </mat-form-field>
+                </td>
+                <td style="text-align: center;">{{resultKupfer}}</td>
+            </tr>
+            <tr>
+                <th>Heller</th>
+                <td>{{money.Heller}}</td>
+                <td>
+                    <mat-form-field style="width: 100px;">
+                        <input formControlName="hellerPlus" type="number" matInput>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field style="width: 100px;">
+                        <input formControlName="hellerMinus" type="number" matInput>
+                    </mat-form-field>
+                </td>
+                <td style="text-align: center;">{{resultHeller}}</td>
+            </tr>
+            <tr>
+                <th>Silber</th>
+                <td>{{money.Silber}}</td>
+                <td>
+                    <mat-form-field style="width: 100px;">
+                        <input formControlName="silberPlus" type="number" matInput>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field style="width: 100px;">
+                        <input formControlName="silberMinus" type="number" matInput>
+                    </mat-form-field>
+                </td>
+                <td style="text-align: center;">{{resultSilber}}</td>
+            </tr>
+            <tr>
+                <th>Dublonen</th>
+                <td>{{money.Dublonen}}</td>
+                <td>
+                    <mat-form-field style="width: 100px;">
+                        <input formControlName="dublonenPlus"  type="number" matInput>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field style="width: 100px;">
+                        <input formControlName="dublonenMinus" type="number" matInput>
+                    </mat-form-field>
+                </td>
+                <td style="text-align: center;">{{resultDublonen}}</td>
+            </tr>
+            <tr>
+                <th>Bank(D)</th>
+                <td>{{money.BankDublonen}}</td>
+                <td>
+                    <mat-form-field style="width: 100px;">
+                        <input formControlName="bankPlus"type="number" matInput>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field style="width: 100px;">
+                        <input formControlName="bankMinus" type="number" matInput>
+                    </mat-form-field>
+                </td>
+                <td style="text-align: center;">{{resultBank}}</td>
+            </tr>
+        </table>
+        <div style="text-align: center;">
+            <button mat-raised-button color="primary" style="margin: 5px;" type="submit">Speichern</button>
+            <button mat-raised-button color="primary" style="margin: 5px;" type="reset"
+                (click)="Cancel()">Abbrechen</button>
+        </div>
+    </form>
+</mat-dialog-content>

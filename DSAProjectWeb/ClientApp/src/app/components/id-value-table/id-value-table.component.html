@@ -12,7 +12,7 @@
     <th cdk-header-cell *cdkHeaderCellDef>
       <p class="smallTabelHeader"></p>
     </th>
-    <td cdk-cell *cdkCellDef="let element">
+    <td cdk-cell *cdkCellDef="let element" style="display: flex;">
       <button *ngIf="!element.nobutton" mat-mini-fab class="small-icon-button" style="margin-right: 2px"
         (click)="ClickButton(element, 1)" type="button">
         +

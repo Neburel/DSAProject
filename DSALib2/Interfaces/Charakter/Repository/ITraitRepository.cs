@@ -14,6 +14,8 @@ namespace DSALib2.Interfaces.Charakter.Repository
         public int GetAT(AbstractTalentFighting value);
         public int GetPA(AbstractTalentFighting value);
         public int GetBL(AbstractTalentFighting value);
+        public int GetAPEarned();
+        public int GetAPInvest();
 
         public TraitView GetEmptyView();
         public List<TraitView> GetViewList();

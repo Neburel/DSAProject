@@ -29,6 +29,9 @@ import { TraitViewComponent } from './views/trait-view/trait-view.component';
 import { IdValueTableComponent } from './components/id-value-table/id-value-table.component';
 import { TraitTalentChoiceComponent } from './components/trait-talent-choice/trait-talent-choice.component';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { DescriptionComponent } from './components/description/description.component';
+import { DescriptionDialogComponent } from './dialogs/description-dialog/description-dialog.component';
+import { BankDialogComponent } from './dialogs/bank-dialog/bank-dialog.component';
 
 @NgModule({
   declarations: [
@@ -53,9 +56,12 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     TalentViewComponent,
     LanguageViewComponent,
     TraitViewComponent,
+    DescriptionComponent,
 
     TraitTalentChoiceComponent,
     CreateTraitDialogComponent,
+    DescriptionDialogComponent,
+    BankDialogComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -88,7 +94,10 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     ApInputDialogComponent,
     GenericMatTableComponent,
     AttributTabelComponent,
-    IdValueTableComponent
+    IdValueTableComponent,
+    DescriptionDialogComponent,
+    BankDialogComponent,
+    TraitViewComponent
   ],
 
   providers: [],

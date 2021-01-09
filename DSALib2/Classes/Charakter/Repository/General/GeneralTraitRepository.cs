@@ -19,6 +19,8 @@ namespace DSALib2.Classes.Charakter.Repository.General
         public abstract int GetAT(AbstractTalentFighting value);
         public abstract int GetPA(AbstractTalentFighting value);
         public abstract int GetBL(AbstractTalentFighting value);
+        public abstract int GetAPEarned();
+        public abstract int GetAPInvest();
 
         public TraitView GetEmptyView()
         {
@@ -93,7 +95,7 @@ namespace DSALib2.Classes.Charakter.Repository.General
             {
                 var value = pair.Value;
                 var type = DSAUtil.GetType(pair.ID);
-                var item = charakter.Resources.GetItemByType(type);
+                var item = charakter.Resources.GetByType(type);
                 ret = GenerateLongDescriptionHelper(value, ret, item.ShortName);
             }
 

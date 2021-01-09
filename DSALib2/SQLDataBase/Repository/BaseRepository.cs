@@ -59,13 +59,11 @@ namespace DSALib2.SQLDataBase.Repository
             dbSet.Add(entity);
         }
 
-
         public virtual void Delete(object id)
         {
             TEntity entityToDelete = dbSet.Find(id);
             Delete(entityToDelete);
         }
-
 
         public virtual void Delete(TEntity entityToDelete)
         {

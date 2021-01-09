@@ -1,0 +1,115 @@
+﻿<h2 mat-dialog-title>{{ Title }}</h2>
+<mat-dialog-content class="mat-typography">
+
+    <form [formGroup]="FormGroup" (ngSubmit)="Save()">
+        <table style="width:100%" style="margin-bottom: 10px;">
+            <tr>
+                <th>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Name</mat-label>
+                        <input formControlName="name" matInput>
+                    </mat-form-field>
+                </th>
+                <th>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Augen</mat-label>
+                        <input formControlName="augen" matInput>
+                    </mat-form-field>
+                </th>
+                <th>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Größe</mat-label>
+                        <input type="number" formControlName="groesse" matInput>
+                    </mat-form-field>
+                </th>
+                <th>
+                    <mat-form-field appearance="fill" style="width: 200px; margin-right: 10px;">
+                        <mat-label>Familienstatus</mat-label>
+                        <mat-select formControlName="familienstatus">
+                            <mat-option [value]=familienStatus *ngFor="let familienStatus of FamilienstatusList">
+                                {{FamilienstatusEnum[familienStatus]}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Anrede</mat-label>
+                        <input formControlName="anrede" matInput>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Kultur-/en</mat-label>
+                        <input formControlName="kultur" matInput>
+                    </mat-form-field>
+                </td>
+                <th>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Gewicht</mat-label>
+                        <input type="number" formControlName="gewicht" matInput>
+                    </mat-form-field>
+                </th>
+                <th>
+                    <mat-form-field appearance="fill" style="width: 200px; margin-right: 10px;">
+                        <mat-label>Geschlecht</mat-label>
+                        <mat-select formControlName="geschlecht">
+                            <mat-option [value]=GeschlechtList *ngFor="let GeschlechtList of GeschlechtList">
+                                {{GeschlechtEnum[GeschlechtList]}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Profession</mat-label>
+                        <input formControlName="profession" matInput>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Glaube</mat-label>
+                        <input formControlName="glaube" matInput>
+                    </mat-form-field>
+                </td>
+                <th>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Alter</mat-label>
+                        <input type="number" formControlName="alter" matInput>
+                    </mat-form-field>
+                </th>
+                <mat-form-field appearance="fill">
+                    <mat-label>Haarfarbe</mat-label>
+                    <input formControlName="haarfarbe" matInput>
+                </mat-form-field>
+            </tr>
+            <tr>
+                <td>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Rasse-/en</mat-label>
+                        <input formControlName="rasse" matInput>
+                    </mat-form-field>
+                </td>
+                <td></td>
+                <th>
+
+                </th>
+                <th>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Hautfarbe</mat-label>
+                        <input formControlName="hautfarbe" matInput>
+                    </mat-form-field>
+                </th>
+            </tr>
+        </table>
+        <div style="text-align: center;">
+            <button mat-raised-button color="primary" style="margin: 5px;" type="submit">Speichern</button>
+            <button mat-raised-button color="primary" style="margin: 5px;" type="reset"
+                (click)="Cancel()">Abbrechen</button>
+        </div>
+    </form>
+</mat-dialog-content>

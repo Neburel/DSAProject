@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DSALib2.Utils;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
 using System;
 using System.Data.SqlClient;
@@ -12,6 +13,8 @@ namespace DSALib2.SQLDataBase
         public DbSet<t_Charakter> t_Charakter { get; set; }
         public DbSet<t_Values> t_Values { get; set; }
         public DbSet<t_AP> t_AP { get; set; }
+        public DbSet<T_Money> T_Money { get; set; }
+        public DbSet<T_Descriptions> T_Descriptions { get; set; }
         public DbSet<T_Talente> T_Talente { get; set; }
 
         public DbSet<T_Trait> T_Trait { get; set; }
@@ -93,7 +96,7 @@ namespace DSALib2.SQLDataBase
     }
     public class T_Talente : BaseTabelCharakter
     {
-        new public string Id { get; set; }
+        public string TalentID { get; set; }
         public int TAW { get; set; }
         public int? AT { get; set; }
         public int? PA { get; set; }
@@ -136,5 +139,33 @@ namespace DSALib2.SQLDataBase
         public int? AT { get; set; }
         public int? PA { get; set; }
         public int? BL { get; set; }
+    }
+
+    public class T_Money : BaseTabelCharakter
+    {
+        public int BankDublonen { get; set; }
+        public int Dublonen { get; set; }
+        public int Silber { get; set; }
+        public int Kupfer { get; set; }
+        public int Heller { get; set; }
+    }
+
+    public class T_Descriptions : BaseTabelCharakter
+    {
+        public int Alter { get; set; }
+        public int Groesse { get; set; }
+        public int Gewicht { get; set; }
+        public GeschlechtEnum GeschlechtID { get; set; }
+        public FamilienstatusEnum FamilienstatusID { get; set; }
+        public string Name { get; set; }
+        public string Anrede { get; set; }
+        public string Rasse { get; set; }
+        public string Kultur { get; set; }
+        public string Profession { get; set; }
+        public string Geburstag { get; set; }
+        public string Hautfarbe { get; set; }
+        public string Haarfarbe { get; set; }
+        public string Augenfarbe { get; set; }
+        public string Glaube { get; set; }
     }
 }

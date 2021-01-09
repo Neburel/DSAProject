@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
   }
 
   public charakterChosed(charakter: Charakter) {
-    this.charakterService.SetCurrentCharakter(charakter).then(() => {
+    this.charakterService.SetCharakter(charakter).then(() => {
       this.loading = false;
       this.charakterChoise = true;
     });

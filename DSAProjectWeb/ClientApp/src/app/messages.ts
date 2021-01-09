@@ -1,5 +1,5 @@
 import { BehaviorSubject, Observable } from "rxjs";
-import { Model, Charakter, Attribut, Value, AP, Talent, TalentTypeEnum, Language } from "./types";
+import { Model, Charakter, Attribut, Value, AP, Talent, TalentTypeEnum, Language, Description, Money } from "./types";
 
 export abstract class Message<T extends Model | void> {
   public abstract Uri: string;
@@ -21,7 +21,14 @@ export abstract class ListMessage<T extends Model> extends Message<T> { }
 export class CreateCharakterMessage extends Message<void> {
   public Uri: string = 'Charakter/Create';
 }
-export class SetCharakterMessage extends Message<void> {
+export class ImportCharakterMessage extends DataMessage<any> {
+  public Uri: string = 'Charakter/Import';
+}
+export class ExportCharakterMessage extends Message<string> {
+  public Uri: string = 'Charakter/Export';
+  public CharakterID: number;
+}
+export class SetCharakterMessage extends DataMessage<Charakter> {
   public Uri: string = 'Charakter/Set';
   public CharakterID: number;
 }
@@ -56,13 +63,9 @@ export class GetValueListMessage extends ListMessage<Value>{
 export class GetAPMessage extends MessageCharakterID<AP>{
   public Uri: string = 'AP/Get'
 }
-export class SetAPMessage extends MessageCharakterID<void>{
+export class SetAPMessage extends DataMessage<AP>{
   public Uri: string = 'AP/Set'
-  public Value: Number;
-}
-export class SetAPInvestedMessage extends MessageCharakterID<void>{
-  public Uri: string = 'AP/SetInvested';
-  public Value: Number;
+  public CharakterID: Number;
 }
 
 export class GetTalentListMessage extends ListMessage<Talent>{
@@ -120,6 +123,25 @@ export class ImportTalentMessage extends Message<void>{
   public Knowldage: any;
   public Crafting: any;
 }
+
+export class GetDescriptionMessage extends Message<void>{
+  public Uri: string = 'Description/Get';
+  public CharakterID: Number;
+}
+export class SetDescriptionMessage extends DataMessage<Description>{
+  public Uri: string = 'Description/Set';
+  public CharakterID: Number;
+}
+
+export class GetMoneyMessage extends Message<void>{
+  public Uri: string = 'Money/Get';
+  public CharakterID: Number;
+}
+export class SetMoneyMessage extends DataMessage<Money>{
+  public Uri: string = 'Money/Set';
+  public CharakterID: Number;
+}
+
 
 export class TestMessage extends Message<void>{
   public Uri: string = 'Talent/Test';

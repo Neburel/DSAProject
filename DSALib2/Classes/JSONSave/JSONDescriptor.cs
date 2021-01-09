@@ -11,5 +11,10 @@ namespace DSALib2.Classes.JSONSave
         public string DescriptionTitle { get; set;}
         [DataMember]
         public string DescriptionText { get; set; }
+
+        public override string ToString()
+        {
+            return DescriptionTitle;
+        }
     }
 }

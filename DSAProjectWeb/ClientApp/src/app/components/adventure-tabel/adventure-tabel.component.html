@@ -6,20 +6,26 @@
     </tr>
     <tr>
         <td>Stufe</td>
-        <td style="display: flex; justify-content: center;">
-            <div class='square-box' style="width: 30px; height: 30px;">
+        <td style="display: flex;">
+            <div class='square-box' style="width: 30px; height: 30px; margin-right: 5px; margin-left: 30px;">
                 <div class='square-content'>
                     <div><span>{{AP.Level}}</span></div>
                 </div>
             </div>
+            <div style="display: flex; align-items: center;">
+                <button mat-mini-fab class="small-icon-button" style="margin-right: 2px" (click)=OpenDialog()>
+                    +
+                </button>
+            </div>
         </td>
-        <td></td>
+        <td>
+        </td>
     </tr>
     <tr>
         <td>Abenteuerpunkte</td>
         <div class='square-box' style="width: 100px; height: 30px;">
             <div class='square-content'>
-                <div><span>{{ AP.AP }}</span></div>
+                <div><span>{{ AP.APGain }}</span></div>
             </div>
         </div>
         <!-- <td>

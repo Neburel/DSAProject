@@ -1,13 +1,20 @@
-<div style="margin: 5px;">
-  <app-attribut-tabel style="float: left; margin-right: 20px;"></app-attribut-tabel>
-  <app-value-tabel style="float: left; margin-right: 20px"></app-value-tabel>
-  <div style="float: left;">
-    <div style="display: flex;">
-      <app-resource-tabel style="margin-right: 20px;"></app-resource-tabel>
-      <app-adventure-tabel style="margin-right: 20px;"></app-adventure-tabel>
+<div>
+  <div style="margin: 5px;">
+    <app-description></app-description>
+    <app-attribut-tabel style="float: left; margin-right: 20px;"></app-attribut-tabel>
+    <app-value-tabel style="float: left; margin-right: 20px"></app-value-tabel>
+    <div style="float: left;">
+      <div style="display: flex;">
+        <app-resource-tabel style="margin-right: 20px;"></app-resource-tabel>
+        <app-adventure-tabel style="margin-right: 20px;"></app-adventure-tabel>
+      </div>
+      <div style="margin-top: 20px;">
+        <app-bank></app-bank>
+      </div>
     </div>
-    <div style="margin-top: 20px;">
-      <app-bank></app-bank>
+    <div style="float: left; display: flex;">
+      <app-trait-view style="width: 600px; margin-right: 15px;" [vorteilView]="true"></app-trait-view>
+      <app-trait-view style="width: 600px;" [nachteilView]="true"></app-trait-view>
     </div>
   </div>
 </div>

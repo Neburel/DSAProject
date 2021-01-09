@@ -269,7 +269,6 @@ namespace DSALib2.Classes.Charakter.Repository.General
             }
         }
 
-
         public ITalent Get(Guid guid)
         {
             return talentList.Where(x => x.ID == guid).FirstOrDefault();
@@ -322,7 +321,7 @@ namespace DSALib2.Classes.Charakter.Repository.General
                 list.Add(HeaderItem);
                 var count = item.GetHighestPosition();
 
-                for(int i = 0; i< count; i++)
+                for(int i = 0; i<= count; i++)
                 {
                     item.Languages.TryGetValue(i, out TalentSpeaking currentLanguage);
                     item.Writings.TryGetValue(i, out TalentWriting currentWriting);
@@ -390,7 +389,7 @@ namespace DSALib2.Classes.Charakter.Repository.General
             return newItem;
         }
 
-        public abstract void SetTalentbyView(TalentView view);
-        public abstract void SetTalentbyView(LanguageView view);
+        public abstract void SetbyView(TalentView view);
+        public abstract void SetbyView(LanguageView view);
     }
 }

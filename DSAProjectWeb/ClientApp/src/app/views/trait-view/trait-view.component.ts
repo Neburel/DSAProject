@@ -1,4 +1,5 @@
-﻿import { Attribute, Component } from '@angular/core';
+﻿import { Attribute, Component, Input } from '@angular/core';
+import { ShowHideStyleBuilder } from '@angular/flex-layout';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { CreateTraitDialogComponent } from 'src/app/dialogs/create-trait-dialog/create-trait-dialog.component';
@@ -17,6 +18,11 @@ const CREATIONTIMESTRING = "CreationTimeString";
 })
 /** traitView component*/
 export class TraitViewComponent {
+    @Input() vorteilView: boolean = false;
+    @Input() nachteilView: boolean = false;
+
+    public showButton: boolean = false;
+    public tableName: string;
     public traitList: Trait[] = [];
     public dataSourceMain = new MatTableDataSource();
     public columnsdefMain: GenericDataTableColumn[];
@@ -24,26 +30,37 @@ export class TraitViewComponent {
 
     /** traitView ctor */
     constructor(private charakterService: CharakterService, private traitService: TraitService, private dialog: MatDialog) {
-        this.createTable();
-        this.LoadDataMain();
     }
     ngOnInit(): void {
+        this.createTable();
         this.LoadDataMain();
     }
 
     private createTable() {
+        var showShort = (this.nachteilView || this.vorteilView);
+        this.showButton = !showShort;
+
         this.columnsdefMain = [
-            { id: 'Name', label: 'Name', hideOrder: 0, width: 300 },
-            { id: TYPESTRING, label: 'Typ', hideOrder: 0, width: 100 },
-            { id: 'GP', label: 'GP', hideOrder: 0, width: 60 },
-            { id: 'Value', label: 'Value', hideOrder: 0, width: 60 },
+            { id: 'Name', label: 'Name', hideOrder: 0, width: 200 },
+            { id: TYPESTRING, label: 'Typ', hideOrder: 0, width: 100, hideColumn: showShort },
+            { id: 'GP', label: 'GP', hideOrder: 0, width: 40 },
+            { id: 'Value', label: 'Value', hideOrder: 0, width: 50 },
             { id: 'LongDescription', label: 'Beschreibung', hideOrder: 0 },
-            { id: CREATIONTIMESTRING, label: 'Erstellung', hideOrder: 0, width: 100 }
+            { id: CREATIONTIMESTRING, label: 'Erstellung', hideOrder: 0, width: 100, hideColumn: showShort }
         ]
     }
 
     public LoadDataMain() {
         this.traitService.GetList(this.charakterService.CurrentCharakter).then(result => {
+            if (this.vorteilView) {
+                this.tableName = "Vorteil";
+                result = result.filter(x => x.Type == TraitTypeEnum.Vorteil);
+            }
+            if (this.nachteilView) {
+                this.tableName = "Nachteil";
+                result = result.filter(x => x.Type == TraitTypeEnum.Nachteil);
+            }
+
             this.traitList = result;
             this.dataSourceMain.data = AddDbaMatTableRecID<Trait>(this.traitList, (element) => {
                 element[TYPESTRING] = TraitTypeEnum[element.Type];
@@ -66,17 +83,12 @@ export class TraitViewComponent {
                         this.LoadDataMain();
                     });
                 }
-
                 subscribtion.unsubscribe();
             });
-
         })
-
     }
 
     private PromiseGetTraitEvent(selectedElement: Trait): Promise<Trait> {
-        console.log(selectedElement);
-
         if (selectedElement) return new Promise<Trait>(resolve => { resolve(selectedElement) })
         else {
             return this.traitService.GetNew(this.charakterService.CurrentCharakter);
