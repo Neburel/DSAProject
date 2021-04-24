@@ -41,6 +41,7 @@ export class LoadingComponent implements OnInit {
   }
 
   public onImport(files: File[]) {
+    this.Loading = true;;
     let fileReader = new FileReader();
     var file = files[0] as File;
     if (file == null) return;
@@ -49,8 +50,8 @@ export class LoadingComponent implements OnInit {
     fileReader.onload = (e => {
       var jsonObject = JSON.parse(fileReader.result as string)
       this.charakterService.ImportCharakter(fileReader.result).then(result => {
-        console.log(result);
         this.emitEvent(result);
+        this.Loading = false;
       });
     })
     fileReader.readAsText(file);

@@ -8,7 +8,7 @@ import { CdkTableModule } from '@angular/cdk/table'
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './views/home/home.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AttributTabelComponent } from '../app/components/attribut-tabel/attribut-tabel.component';
 import { MessageDialogComponent } from './dialogs/message-dialog/message-dialog.component';
@@ -64,7 +64,8 @@ import { BankDialogComponent } from './dialogs/bank-dialog/bank-dialog.component
     BankDialogComponent,
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
     CdkTableModule,
@@ -82,7 +83,6 @@ import { BankDialogComponent } from './dialogs/bank-dialog/bank-dialog.component
       { path: 'traitpage', component: TraitViewComponent, pathMatch: 'full' },
       { path: '', component: HomeComponent, pathMatch: 'full' },
     ], { onSameUrlNavigation: 'reload' }),
-    NoopAnimationsModule
   ],
   exports: [
     ReactiveFormsModule,
