@@ -1,7 +1,7 @@
 ﻿import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Money } from 'src/app/types';
+import { Money } from 'src/app/types/types';
 
 @Component({
     selector: 'app-bank-dialog',

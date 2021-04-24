@@ -41,7 +41,7 @@ namespace DSALib2.Classes.Charakter
                 new KarmaEnergy(),
                 new KarmaEnergyNeutral(),
                 new MagicResistance(Attribute),
-                new Vitality(Attribute)
+                new Vitality(Attribute)                
             };
             return new GeneralResourceRepository(this, resourceList);
         }
@@ -49,7 +49,6 @@ namespace DSALib2.Classes.Charakter
         {
             var file        = System.IO.File.ReadAllText(jsonTalentPath);
             var jsonFile    = JSONTalentSaveFile.DeSerializeJson(file, out string error);
-
             var talentList  = TalentJsonLoader.LoadTalent(jsonFile.Talente);
             var families = TalentJsonLoader.LoadLanguageFamily(jsonFile.Families, talentList);
 
@@ -61,6 +60,7 @@ namespace DSALib2.Classes.Charakter
         }
         protected override IValueRepository GetNewValueRepository()
         {
+            var deathThresholdTime = new DeathThresholdTime(Attribute);
             var list = new List<IValue>()
             {
                 new BaseAttack(Attribute),
@@ -68,14 +68,17 @@ namespace DSALib2.Classes.Charakter
                 new BaseBlock(Attribute),
                 new BaseRange(Attribute),
                 new BaseInitiative(Attribute),
+                deathThresholdTime,
                 new ControllValue(),
                 new ArtifactControl(Attribute, Resources),
                 new WoundSwell(Attribute),
                 new Rapture(),
                 new SpeedLand(),
-                new Repute(),
+                new Repute()
             };
-            return new SQLValueRepository(applicationContext, this, list, charakterID);
+            var values = new SQLValueRepository(applicationContext, this, list, charakterID);
+            deathThresholdTime.SetValue(values);
+            return values;
         }
 
         protected override IAPRepository GetAPRepository()
@@ -91,6 +94,20 @@ namespace DSALib2.Classes.Charakter
         protected override IMoneyRepository GetMoneyRepository()
         {
             return new SQLMoneyRepository(applicationContext, charakterID);
+        }
+
+        public override void Delete()
+        {
+            ((SQLMoneyRepository)this.Money).Delete();
+            ((SQLAPRepository)this.AP).Delete();
+            ((SQLDescriptionRepository)this.Description).Delete();
+            ((SQLAttributRepository)this.Attribute).DeleteAll();
+            ((SQLTalentRepository) this.Talente).DeleteAll();
+            ((SQLTraitRepository)this.Traits).DeleteAll();
+
+            var repo = new SQLCharakterRepository(this.applicationContext);
+            repo.Delete(this.charakterID);
+            repo.Submit();
         }
     }
 }

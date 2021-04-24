@@ -88,6 +88,10 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
             this.talentRepository.SetTalent(view.IDSprache, view.TawSprache, null, null, null, null, view.Mother);
             this.talentRepository.SetTalent(view.IDSchrift, view.TawSchrift, null, null, null, null, null);
         }
+        public void DeleteAll()
+        {
+            this.talentRepository.DeleteAll();
+        }
 
         private class InnerSQLTalentRepository : BaseRepository<T_Talente>
         {
@@ -112,6 +116,15 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
                 tabel.DeductionID = deductionID?.ToString();
                 tabel.Mother = mother;
                 Submit();
+            }
+            public void DeleteAll()
+            {
+                var talentList = this.dbSet.Where(x => x.CharakterID == this.charakterID).ToList();
+                foreach(var item in talentList)
+                {
+                    this.Delete(item);
+                }
+                this.Submit();
             }
             #region Helper Funktions
             protected T_Talente GetTabel(Guid talentID)

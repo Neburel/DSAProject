@@ -355,6 +355,7 @@ namespace DSALib2.Classes.Charakter
             this.AP.SetbyView(apView);
             #endregion
         }
+        public abstract void Delete();
         public JSONCharakter Export()
         {
             var descriptionView = Description.GetView();
@@ -407,7 +408,7 @@ namespace DSALib2.Classes.Charakter
                 }
                 if (item.AT != null && item.AT > 0)
                 {
-                    charakter.TalentBL.Add(item.ID, (int)item.AT);
+                    charakter.TalentAT.Add(item.ID, (int)item.AT);
                 }
                 if (item.BL != null && item.BL > 0)
                 {

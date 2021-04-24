@@ -1,7 +1,7 @@
 import { WebCommunicationService } from './web-communication.service';
 import { DialogService } from './dialog.service';
-import { ListMessage, Message } from 'src/app/messages';
-import { Model } from 'src/app/types'
+import { Model } from 'src/app/types/types'
+import { ListMessage, Message } from 'src/app/messages/messages';
 
 export abstract class Service {
 

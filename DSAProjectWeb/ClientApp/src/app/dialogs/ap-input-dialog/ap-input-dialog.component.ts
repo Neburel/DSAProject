@@ -1,7 +1,7 @@
 ﻿import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AP } from 'src/app/types';
+import { AP } from 'src/app/types/types';
 
 export class ApInputDialogOptions {
     public Invest: boolean = false;

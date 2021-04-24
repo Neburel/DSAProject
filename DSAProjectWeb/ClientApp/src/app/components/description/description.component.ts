@@ -4,7 +4,7 @@ import { DescriptionDialogComponent } from 'src/app/dialogs/description-dialog/d
 import { DialogService } from 'src/app/services/base/dialog.service';
 import { CharakterService } from 'src/app/services/dsa/charakter.service';
 import { DescriptionService } from 'src/app/services/dsa/description.service';
-import { Description, FamilienstatusEnum, GeschlechtEnum } from 'src/app/types';
+import { Description, FamilienstatusEnum, GeschlechtEnum } from 'src/app/types/types';
 
 @Component({
     selector: 'app-description',

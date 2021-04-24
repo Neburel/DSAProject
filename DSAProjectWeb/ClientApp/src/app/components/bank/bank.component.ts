@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { BankDialogComponent } from 'src/app/dialogs/bank-dialog/bank-dialog.component';
 import { CharakterService } from 'src/app/services/dsa/charakter.service';
 import { MoneyService } from 'src/app/services/dsa/money.service';
-import { Money } from 'src/app/types';
+import { Money } from 'src/app/types/types';
 
 @Component({
     selector: 'app-bank',

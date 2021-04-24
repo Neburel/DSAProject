@@ -1,13 +1,13 @@
 ﻿import { Component, Inject, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { DateAdapter } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { GenericMatTableComponent } from 'src/app/components/generic-mat-table/generic-mat-table.component';
-import { TraitTalentChoiceComponent } from 'src/app/components/trait-talent-choice/trait-talent-choice.component';
 import { DialogService } from 'src/app/services/base/dialog.service';
 import { CharakterService } from 'src/app/services/dsa/charakter.service';
 import { TalentService } from 'src/app/services/dsa/talent.service';
-import { GenericDataTableColumn, IDValueView, Talent, TalentTypeEnum, Trait, TraitTypeEnum } from 'src/app/types';
+import { GenericDataTableColumn, IDValueView, Talent, TalentTypeEnum, Trait, TraitTypeEnum } from 'src/app/types/types';
 import { AddDbaMatTableRecID } from 'src/app/util/utilGenericDataTable';
 
 const WIDTHTAW = 100;
@@ -45,13 +45,14 @@ export class CreateTraitDialogComponent {
     private descriptionControl: FormControl = new FormControl('');
     private apGainControl: FormControl = new FormControl('', [Validators.required]);
     private apInvestControl: FormControl = new FormControl('', [Validators.required]);
-
+    private createDateControl: FormControl = new FormControl('', [Validators.required]);
     public FormGroup = new FormGroup({
         type: this.typeControl,
         name: this.nameControl,
         description: this.descriptionControl,
         apGain: this.apGainControl,
         apInvest: this.apInvestControl,
+        createDate: this.createDateControl
     });
 
     /** createTraitDialog ctor */
@@ -60,10 +61,13 @@ export class CreateTraitDialogComponent {
         private talentService: TalentService,
         private dialogService: DialogService,
         public dialogRef: MatDialogRef<CreateTraitDialogComponent>,
+        private dateAdapter: DateAdapter<Date>,
         @Inject(MAT_DIALOG_DATA) public data: Trait) {
     }
 
     ngOnInit() {
+        this.dateAdapter.setLocale("de");
+
         var generalTalentPromise = this.talentService.GetTalentList(this.charakterService.CurrentCharakter, TalentTypeEnum.general);
         var languageTalentPromise = this.talentService.GetTalentList(this.charakterService.CurrentCharakter, TalentTypeEnum.language);
         var closePromise = this.talentService.GetTalentList(this.charakterService.CurrentCharakter, TalentTypeEnum.close);
@@ -107,6 +111,7 @@ export class CreateTraitDialogComponent {
                 this.Values = this.data.ValueList;
                 this.Resource = this.data.ResourceList;
                 this.TalentListTrait = this.data.TalentList;
+                this.createDateControl.setValue(this.data.CreationDate);
             }
 
             this.LoadDataMain();
@@ -117,6 +122,7 @@ export class CreateTraitDialogComponent {
     }
     ngAfterContentInit(): void {
         this.dataSourceTraitTalent.data = [];
+        this.createDateControl.setValue(Date.now());
     }
 
     private createTable() {
@@ -209,15 +215,19 @@ export class CreateTraitDialogComponent {
         trait.Type = this.typeControl.value;
         trait.APGain = this.apGainControl.value;
         trait.APInvest = this.apInvestControl.value;
-        trait.GP = this.GP.toString();
-        trait.Value = this.Wert.toString();
+        if (this.GP) {
+            trait.GP = this.GP.toString();
+        }
+        if(this.Wert){
+            trait.Value = this.Wert.toString();
+        }
 
         trait.AttributList = this.Attribute;
         trait.ValueList = this.Values;
         trait.ResourceList = this.Resource;
         trait.TalentList = this.TalentListTrait;
 
-        if(this.data){
+        if (this.data) {
             trait.ID = this.data.ID;
         }
 

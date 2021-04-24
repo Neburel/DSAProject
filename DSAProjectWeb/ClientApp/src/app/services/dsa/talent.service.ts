@@ -3,8 +3,9 @@ import { Service } from '../base/service';
 import { WebCommunicationService } from '../base/web-communication.service';
 import { DialogService } from '../base/dialog.service';
 import * as XLSX from 'xlsx';
-import { GetLanguageListMessage, GetTalentViewListMessage, ImportTalentMessage, SetLanguageMessage, SetTalentMessage, GetTalentListMessage } from 'src/app/messages';
-import { Charakter, Language, Talent, TalentTypeEnum } from 'src/app/types';
+import { GetLanguageListMessage, GetTalentViewListMessage, ImportTalentMessage, SetLanguageMessage, SetTalentMessage, GetTalentListMessage, GetTalentViewMessage } from 'src/app/messages/messages';
+import { Charakter, Language, Talent, TalentTypeEnum } from 'src/app/types/types';
+import * as FileSaver from 'file-saver';
 
 @Injectable({
     providedIn: 'root'
@@ -32,6 +33,14 @@ export class TalentService extends Service {
         return this.sendListMessage(message);
     }
 
+    public GetTaletView(Charakter: Charakter, Guid: number): Promise<Talent>{
+        var message = new GetTalentViewMessage();
+        message.CharakterID = Charakter.Id;
+        message.TalentGuid = Guid;
+
+        return this.sendMessage<Talent>(message);
+    }
+
     public GetTalentViewList(charakter: Charakter, talentType: TalentTypeEnum): Promise<Talent[]> {
         var message = new GetTalentViewListMessage();
         message.CharakterID = charakter.Id;
@@ -39,6 +48,7 @@ export class TalentService extends Service {
 
         return this.sendListMessage(message);
     }
+
     public GetLanguageViewList(charakter: Charakter): Promise<Language[]> {
         var message = new GetLanguageListMessage();
         message.CharakterID = charakter.Id;
@@ -50,8 +60,12 @@ export class TalentService extends Service {
         var message = new SetTalentMessage();
         message.CharakterID = charakter.Id;
         message.Data = talent;
+
+        console.log(message);
+
         return this.sendMessage(message);
     }
+
     public SetLanguage(charakter: Charakter, talent: Language): Promise<Language> {
         var message = new SetLanguageMessage();
         message.CharakterID = charakter.Id;
@@ -60,7 +74,7 @@ export class TalentService extends Service {
     }
 
     public Import(file: File) {
-        return new Promise<void>((resolve, reject) => {
+        return new Promise<any>((resolve, reject) => {
             var fileReader = new FileReader();
             fileReader.readAsArrayBuffer(file);
 
@@ -95,8 +109,9 @@ export class TalentService extends Service {
                     message.Crafting = result[8];
 
 
-                    this.sendMessage(message).then(result => {
-                        resolve();
+                    this.sendMessage<any>(message).then(result => {
+                        this.saveToFileSystem(result);
+                        resolve(result);
                     }).catch(error => {
                         reject();
                     });
@@ -106,6 +121,7 @@ export class TalentService extends Service {
             }
         });
     }
+
     private importSheet(sheetName: string, workbook: XLSX.WorkBook): Promise<any[]> {
         return new Promise<any[]>((resolve, reject) => {
             var worksheet = workbook.Sheets[sheetName];
@@ -122,5 +138,10 @@ export class TalentService extends Service {
         });
     }
 
+    private saveToFileSystem(content, fileName: string = "Talente") {
+        content = JSON.stringify(content)
+        const data: Blob = new Blob([content]);
+        FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime());
+    }
 
 }

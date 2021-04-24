@@ -1,7 +1,7 @@
 ﻿import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Description, FamilienstatusEnum, GeschlechtEnum } from 'src/app/types';
+import { Description, FamilienstatusEnum, GeschlechtEnum } from 'src/app/types/types';
 
 @Component({
     selector: 'app-description-dialog',

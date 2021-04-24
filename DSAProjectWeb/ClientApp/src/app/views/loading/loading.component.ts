@@ -1,7 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { CharakterService } from 'src/app/services/dsa/charakter.service';
-import { Charakter } from 'src/app/types';
+import { Charakter } from 'src/app/types/types';
 import * as fileSaver from 'file-saver';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-loading',
@@ -66,6 +67,15 @@ export class LoadingComponent implements OnInit {
         fileSaver.saveAs(data, element.Name + '_export_' + new Date().getTime() + ".save");
       });
     });
+  }
+
+  public DeleteCharakter($event, charakter: Charakter) {
+    $event.stopPropagation();
+
+    this.charakterService.DeleteCharakter(charakter).then(result => {
+      this.CharakterList = result;
+    })
+
   }
 }
 

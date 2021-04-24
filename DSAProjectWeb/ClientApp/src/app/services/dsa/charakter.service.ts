@@ -2,8 +2,8 @@ import { Service } from '../base/service';
 import { WebCommunicationService } from '../base/web-communication.service';
 import { DialogService } from '../base/dialog.service';
 import { Injectable } from '@angular/core';
-import { Charakter } from 'src/app/types';
-import { GetCharakterListMesssage, CreateCharakterMessage, SetCharakterMessage, ImportCharakterMessage, ExportCharakterMessage } from 'src/app/messages';
+import { Charakter } from 'src/app/types/types';
+import { GetCharakterListMesssage, CreateCharakterMessage, SetCharakterMessage, ImportCharakterMessage, ExportCharakterMessage, DeleteCharakterMessage } from 'src/app/messages/messages';
 
 @Injectable({
     providedIn: 'root'
@@ -24,8 +24,14 @@ export class CharakterService extends Service {
         this.CurrentCharakter = charakter;
         var message = new SetCharakterMessage();
         message.CharakterID = charakter.Id;
-        message.Data =charakter;
+        message.Data = charakter;
         return this.sendMessage(message);
+    }
+
+    public DeleteCharakter(charakter: Charakter): Promise<Charakter[]> {
+        var message = new DeleteCharakterMessage();
+        message.CharakterID = charakter.Id;
+        return this.sendListMessage(message);
     }
 
     public CreateCharakter(): Promise<Charakter> {
@@ -33,12 +39,13 @@ export class CharakterService extends Service {
         return this.sendMessage<Charakter>(message);
     }
 
-    public ImportCharakter(data: any): Promise<Charakter>{
+    public ImportCharakter(data: any): Promise<Charakter> {
         var message = new ImportCharakterMessage();
         message.Data = data;
         return this.sendMessage(message);
     }
-    public Export(charakter: Charakter): Promise<string>{
+
+    public Export(charakter: Charakter): Promise<string> {
         var message = new ExportCharakterMessage();
         message.CharakterID = charakter.Id;
 

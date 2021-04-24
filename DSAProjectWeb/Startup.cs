@@ -58,7 +58,7 @@ namespace DSAProject2Web
             services.AddDbContext<ApplicationContext>(opts => opts.UseSqlServer(connectionString));
         
             //Configuration
-            Configuration.GetSection(TALENTJSONFILE).Value = @"D:\04_Projekte\DSAProject\DSAProjectWeb\Resources\Talente.json";
+            Configuration.GetSection(TALENTJSONFILE).Value = @"D:\04_Projekte\DSAProject\DSAProjectWeb\Resources\Talente18042021.json";
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -146,8 +146,14 @@ namespace DSAProject2Web
             var newDB = Path.Combine(electronUserDataPath, dbName);
             var newldfDB = Path.Combine(electronUserDataPath, ldfNmae);
 
-            if (System.IO.File.Exists(newDB))
+            if (System.IO.File.Exists(newDB) || System.IO.File.Exists(newldfDB))
             {
+                //Exestieren sie bereits, werdne sie verwendet
+                return;
+            }
+
+            if (System.IO.File.Exists(newDB))
+            { 
                 System.IO.File.Delete(newDB);
             }
 

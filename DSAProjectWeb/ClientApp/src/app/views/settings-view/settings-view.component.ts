@@ -24,6 +24,8 @@ export class SettingsViewComponent {
         if (file == null) return;
         this.FileChooser.nativeElement.value = '';
 
-        this.talentService.Import(file).then();
+        this.talentService.Import(file).then(result =>{
+            console.log(result);
+        });
     }
 }

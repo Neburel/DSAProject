@@ -1,6 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
-import { GetDescriptionMessage, SetDescriptionMessage } from 'src/app/messages';
-import { Charakter, Description } from 'src/app/types';
+import { GetDescriptionMessage, SetDescriptionMessage } from 'src/app/messages/messages';
+import { Charakter, Description } from 'src/app/types/types';
 import { DialogService } from '../base/dialog.service';
 import { Service } from '../base/service';
 import { WebCommunicationService } from '../base/web-communication.service';

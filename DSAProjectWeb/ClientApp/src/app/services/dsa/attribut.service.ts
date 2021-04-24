@@ -3,8 +3,8 @@ import { WebCommunicationService } from '../base/web-communication.service';
 import { DialogService } from '../base/dialog.service';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Attribut, Charakter } from 'src/app/types';
-import { GetAttributListMessage, SetAttributAkt } from 'src/app/messages';
+import { Attribut, Charakter } from 'src/app/types/types';
+import { GetAttributListMessage, SetAttributAkt } from 'src/app/messages/messages';
 
 @Injectable({
     providedIn: 'root'

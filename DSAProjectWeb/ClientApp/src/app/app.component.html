@@ -1,10 +1,11 @@
 <div *ngIf="loading">
 
 </div>
-<div *ngIf="!loading && !charakterChoise">
+<div *ngIf="!loading && !charakter">
   <app-loading (Choosed)="charakterChosed($event)"></app-loading>
 </div>
-<div *ngIf="!loading && charakterChoise">
+<div *ngIf="!loading && charakter">
+
   <mat-toolbar color="primary">
     <mat-toolbar-row>
       <button mat-icon-button>
@@ -16,8 +17,16 @@
       <button mat-icon-button [routerLink]="'/settings'">
         <mat-icon>settings</mat-icon>
       </button>
+      <button mat-icon-button>
+        <mat-icon [matMenuTriggerFor]="menu">account_circle_icon</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="abmelden()">Abmelden</button>
+      </mat-menu>
     </mat-toolbar-row>
   </mat-toolbar>
+
 
   <mat-sidenav-container>
     <mat-sidenav #sidenav>

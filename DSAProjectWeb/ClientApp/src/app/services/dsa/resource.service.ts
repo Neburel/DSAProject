@@ -1,9 +1,9 @@
 ﻿import { Injectable } from '@angular/core';
-import { Resource, Charakter } from 'src/app/types';
+import { Resource, Charakter } from 'src/app/types/types';
 import { Service } from '../base/service';
 import { WebCommunicationService } from '../base/web-communication.service';
 import { DialogService } from '../base/dialog.service';
-import { GetResourceListMessage } from 'src/app/messages';
+import { GetResourceListMessage } from 'src/app/messages/messages';
 
 @Injectable({
     providedIn: 'root'

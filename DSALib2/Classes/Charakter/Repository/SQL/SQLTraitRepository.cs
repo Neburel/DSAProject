@@ -168,6 +168,7 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
             trait.APInvested = view.APInvest;
 
             trait.ModifyDate = DateTime.Now;
+            trait.CreationDate = view.CreationDate;
 
             traitRepository.Update(trait);
             traitRepository.Submit();
@@ -195,10 +196,18 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
             return this.traitRepository.GetTotalAPInvest();
         }
 
-        private class InnerSQLTraitRepository : BaseRepository<T_Trait>
+        public void DeleteAll()
         {
-            private int charakterID;
-            public InnerSQLTraitRepository(ApplicationContext context, int charakterID) : base(context) { this.charakterID = charakterID; }
+            this.attributRepository.DeleteAll();
+            this.resourceRepository.DeleteAll();
+            this.valueRepository.DeleteAll();
+            this.talentRepository.DeleteAll();
+            this.traitRepository.DeleteAll();
+        }
+
+        private class InnerSQLTraitRepository : BaseCharakterRepository<T_Trait>
+        {
+            public InnerSQLTraitRepository(ApplicationContext context, int charakterID) : base(context, charakterID) { this.charakterID = charakterID; }
 
             public T_Trait Get(int? traitID)
             {
@@ -214,7 +223,7 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
             {
                 return dbSet.Where(x => x.CharakterID == charakterID).ToList();
             }
-            protected T_Trait CreateNewEntry()
+            override protected T_Trait CreateNewEntry()
             {
                 var tabel = new T_Trait()
                 {
@@ -235,6 +244,16 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
             public int GetTotalAPInvest()
             {
                 return dbSet.Where(x => x.CharakterID == charakterID).Sum(x => x.APInvested);
+            }
+
+            public void DeleteAll()
+            {
+                var talentList = this.dbSet.Where(x => x.CharakterID == this.charakterID).ToList();
+                foreach (var item in talentList)
+                {
+                    this.Delete(item);
+                }
+                this.Submit();
             }
         }
         private class SQLAttributRepository : BaseRepository<T_TraitAttribute>
@@ -283,6 +302,15 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
                 var list = dbSet.Where(x => x.CharakterID == charakterID && x.TraitID == traitID);
                 return list.ToList();
             }
+            public void DeleteAll()
+            {
+                var talentList = this.dbSet.Where(x => x.CharakterID == this.charakterID).ToList();
+                foreach (var item in talentList)
+                {
+                    this.Delete(item);
+                }
+                this.Submit();
+            }
         }
         private class SQLResourceRepository : BaseRepository<T_TraitResources>
         {
@@ -330,7 +358,18 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
                 var list = dbSet.Where(x => x.CharakterID == charakterID && x.TraitID == traitID);
                 return list.ToList();
             }
+
+            public void DeleteAll()
+            {
+                var talentList = this.dbSet.Where(x => x.CharakterID == this.charakterID).ToList();
+                foreach (var item in talentList)
+                {
+                    this.Delete(item);
+                }
+                this.Submit();
+            }
         }
+       
         private class SQLValueRepository : BaseRepository<T_TraitValues>
         {
             private int charakterID;
@@ -376,6 +415,16 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
             {
                 var list = dbSet.Where(x => x.CharakterID == charakterID && x.TraitID == traitID);
                 return list.ToList();
+            }
+
+            public void DeleteAll()
+            {
+                var talentList = this.dbSet.Where(x => x.CharakterID == this.charakterID).ToList();
+                foreach (var item in talentList)
+                {
+                    this.Delete(item);
+                }
+                this.Submit();
             }
         }
         private class SQLTalentRepository : BaseRepository<T_TraitTalente>
@@ -442,6 +491,15 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
             {
                 var list = dbSet.Where(x => x.CharakterID == charakterID && x.TraitID == traitID);
                 return list.ToList();
+            }
+            public void DeleteAll()
+            {
+                var talentList = this.dbSet.Where(x => x.CharakterID == this.charakterID).ToList();
+                foreach (var item in talentList)
+                {
+                    this.Delete(item);
+                }
+                this.Submit();
             }
         }
     }

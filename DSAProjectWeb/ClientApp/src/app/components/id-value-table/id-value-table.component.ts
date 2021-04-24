@@ -1,5 +1,5 @@
 ﻿import { Component, Input, OnInit } from '@angular/core';
-import { IDValueView } from 'src/app/types';
+import { IDValueView } from 'src/app/types/types';
 
 @Component({
     selector: 'app-id-value-table',

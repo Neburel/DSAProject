@@ -160,6 +160,15 @@ namespace DSALib2 {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Todesschwellenzeit ähnelt.
+        /// </summary>
+        internal static string DeathThresholdTime {
+            get {
+                return ResourceManager.GetString("DeathThresholdTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Ausdauer ähnelt.
         /// </summary>
         internal static string Endurance {

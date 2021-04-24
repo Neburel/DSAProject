@@ -21,6 +21,10 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
         {
             return this.repo.Get().APInvested;
         }
+        public void Delete()
+        {
+            repo.Delete();
+        }
 
         public override void SetbyView(APView view)
         {
@@ -35,7 +39,7 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
         {
             public InnerSQLRepository(ApplicationContext context, int charakterID) : base(context, charakterID) { }
 
-            protected override void CreateNewEntry()
+            protected override t_AP CreateNewEntry()
             {
                 var tabel = new t_AP()
                 {
@@ -45,7 +49,13 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
                 };
                 this.Insert(tabel);
                 this.Submit();
-
+                return tabel;
+            }
+            public void Delete()
+            {
+                var x = this.Get();
+                this.Delete(x);
+                this.Submit();
             }
         }
     }

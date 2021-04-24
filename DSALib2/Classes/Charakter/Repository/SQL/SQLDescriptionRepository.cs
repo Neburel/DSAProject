@@ -65,17 +65,30 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
             current.Name = tabel.Name;
         }
 
+        public void Delete()
+        {
+            repo.Delete();
+        }
+
         private class InnerSQLRepository : BaseCharakterRepository<T_Descriptions>
         {
             public InnerSQLRepository(ApplicationContext context, int charakterID) : base(context, charakterID) { }
 
-            protected override void CreateNewEntry()
+            protected override T_Descriptions CreateNewEntry()
             {
                 var tabel = new T_Descriptions()
                 {
                     CharakterID = charakterID
                 };
                 this.Insert(tabel);
+                this.Submit();
+                return tabel;
+            }
+
+            public void Delete()
+            {
+                var item = this.Get();
+                this.Delete(item);
                 this.Submit();
             }
         }

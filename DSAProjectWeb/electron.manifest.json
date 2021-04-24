@@ -8,9 +8,9 @@
   "singleInstance": true,
   "build": {
     "appId": "com.DSAProject2Web.app",
-    "productName": "DSAProject2Web",
+    "productName": "DSAProject",
     "copyright": "Copyright © 2019",
-    "buildVersion": "1.0.3",
+    "buildVersion": "1.0.4",
     "compression": "maximum",
     "directories": {
       "output": "../../../bin/Desktop"
@@ -32,7 +32,7 @@
         "filter": [ "**/*" ]
       },
       {
-        "from": "D:\\04_Projekte\\DSAProject\\DSAProjectWeb\\Resources\\Talente_01092019.json",
+        "from": "D:\\04_Projekte\\DSAProject\\DSAProjectWeb\\Resources\\Talente.json",
         "to": "bin/Resources/Talente.json",
         "filter": [ "**/*" ]
       }

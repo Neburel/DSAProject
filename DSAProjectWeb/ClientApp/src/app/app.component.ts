@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AppService } from './services/dsa/app.service';
-import { Charakter } from './types';
+import { Charakter } from './types/types';
 import { CharakterService } from './services/dsa/charakter.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { CharakterService } from './services/dsa/charakter.service';
 })
 export class AppComponent implements OnInit {
   public loading = true;
-  public charakterChoise = false;
+  public charakter: Charakter;
 
   title = 'app';
 
@@ -26,7 +26,11 @@ export class AppComponent implements OnInit {
   public charakterChosed(charakter: Charakter) {
     this.charakterService.SetCharakter(charakter).then(() => {
       this.loading = false;
-      this.charakterChoise = true;
+      this.charakter = charakter;
     });
+  }
+
+  public abmelden(){
+    this.charakter = null;
   }
 }

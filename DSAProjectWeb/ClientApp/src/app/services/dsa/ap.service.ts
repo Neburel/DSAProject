@@ -2,8 +2,8 @@
 import { Service } from '../base/service';
 import { WebCommunicationService } from '../base/web-communication.service';
 import { DialogService } from '../base/dialog.service';
-import { Charakter, AP } from 'src/app/types';
-import { GetAPMessage, SetAPMessage } from 'src/app/messages';
+import { Charakter, AP } from 'src/app/types/types';
+import { GetAPMessage, SetAPMessage } from 'src/app/messages/messages';
 
 @Injectable({
     providedIn: 'root'

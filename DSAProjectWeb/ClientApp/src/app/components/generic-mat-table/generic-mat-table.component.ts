@@ -3,7 +3,7 @@ import { AfterContentInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetecto
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { EventEmitter } from '@angular/core';
-import { DBADataTableButton, GenericDataTableColumn, DBADataTableSelect, TextView } from 'src/app/types';
+import { DBADataTableButton, GenericDataTableColumn, DBADataTableSelect, TextView } from 'src/app/types/types';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';

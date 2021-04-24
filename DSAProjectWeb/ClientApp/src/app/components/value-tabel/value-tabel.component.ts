@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { AttributService } from 'src/app/services/dsa/attribut.service';
 import { ValueService } from 'src/app/services/dsa/value.service';
-import { DSADataSource, Value } from 'src/app/types';
+import { DSADataSource, Value } from 'src/app/types/types';
 import { CharakterService } from 'src/app/services/dsa/charakter.service';
 
 @Component({

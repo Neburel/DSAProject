@@ -14,6 +14,7 @@ using DSAProjectWeb.Server.Entities;
 using DSAProjectWeb.Server.Util;
 using DSALib2.Classes.Charakter.Talente.TalentFighting;
 using DSALib2.Classes.Charakter.Talente;
+using System.Collections.Generic;
 
 namespace DSAProject2Web.Server.Controllers
 {
@@ -174,9 +175,48 @@ namespace DSAProject2Web.Server.Controllers
                 social: request.Social,
                 language: request.Language);
 
-            TalentMerger.Test(importResult.TalentList, jsonTalentList, importResult.OldNameDictionary);
+            var result = TalentMerger.Test(importResult.TalentList, jsonTalentList, importResult.OldNameDictionary);
+            var list = new List<JSONTalent>();
+            foreach(var item in result)
+            {
+                var talent = TalentHelper.CreateJSON(item);
+                list.Add(talent);
+                talent.JSONContent = null;
+            }
 
-            return CreateResponse();
+            var languageList = new List<JSONTalentLanguageFamily>();
+            foreach(var item in importResult.LanguageFamilyList)
+            {
+                var jsonLanguageFamilie = new JSONTalentLanguageFamily();
+                jsonLanguageFamilie.Languages = new Dictionary<int, System.Guid>();
+                jsonLanguageFamilie.Writings = new Dictionary<int, System.Guid>();
+                jsonLanguageFamilie.Name = item.Name;
+
+                foreach(var langaugeItem in item.Languages)
+                {
+                    if(langaugeItem.Value != null) { 
+                        jsonLanguageFamilie.Languages.Add(langaugeItem.Key, langaugeItem.Value.ID);
+                    }
+                }
+                foreach (var writingItems in item.Writings)
+                {
+                    if(writingItems.Value != null) { 
+                        jsonLanguageFamilie.Writings.Add(writingItems.Key, writingItems.Value.ID);
+                    }
+                }
+                languageList.Add(jsonLanguageFamilie);
+
+            }
+
+            var saveFile = new JSONTalentSaveFile();
+            saveFile.Talente    = list;
+            saveFile.Families = languageList;
+
+            //Clear JSONContent
+            saveFile.JSONContent = null;
+            
+
+            return CreateResponse(saveFile.JSONContent);
         }
     }
 }

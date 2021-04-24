@@ -94,7 +94,7 @@
                         </button>
                     </div>
                 </span>
-                <span *ngIf="column['datatype'] === 'selection'" style="width: 100%;">
+                <span *ngIf="column['datatype'] === 'selection' && row[column.selectionListID].length > 0" style="width: 100%;">
                     <select #t style="border-color: transparent; width: 100%;"
                         (change)="column['clickEvent'](row, t.value)">
                         <option value="">Wähle Ableitung</option>

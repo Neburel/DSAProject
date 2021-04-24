@@ -1,11 +1,11 @@
 ﻿import { Injectable } from '@angular/core';
 import { from } from 'rxjs';
-import { Charakter } from 'src/app/types';
+import { Charakter } from 'src/app/types/types';
 import { DialogService } from '../base/dialog.service';
 import { Service } from '../base/service';
 import { WebCommunicationService } from '../base/web-communication.service';
-import { Money } from '../../types';
-import { GetMoneyMessage, SetMoneyMessage } from 'src/app/messages';
+import { Money } from '../../types/types';
+import { GetMoneyMessage, SetMoneyMessage } from 'src/app/messages/messages';
 
 @Injectable({
     providedIn: 'root'

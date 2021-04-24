@@ -1,11 +1,10 @@
 ﻿import { Attribute, Component, Input } from '@angular/core';
-import { ShowHideStyleBuilder } from '@angular/flex-layout';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { CreateTraitDialogComponent } from 'src/app/dialogs/create-trait-dialog/create-trait-dialog.component';
 import { CharakterService } from 'src/app/services/dsa/charakter.service';
 import { TraitService } from 'src/app/services/dsa/trait.service';
-import { GenericDataTableColumn, Trait, TraitTypeEnum } from 'src/app/types';
+import { GenericDataTableColumn, Trait, TraitTypeEnum } from 'src/app/types/types';
 import { AddDbaMatTableRecID } from 'src/app/util/utilGenericDataTable';
 
 const TYPESTRING = "TypeString";

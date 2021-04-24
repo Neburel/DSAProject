@@ -150,6 +150,9 @@
   <data name="ControllValueShort" xml:space="preserve">
     <value>BW</value>
   </data>
+  <data name="DeathThresholdTime" xml:space="preserve">
+    <value>Todesschwellenzeit</value>
+  </data>
   <data name="Endurance" xml:space="preserve">
     <value>Ausdauer</value>
   </data>

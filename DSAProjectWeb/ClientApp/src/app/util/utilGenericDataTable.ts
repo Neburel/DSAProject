@@ -1,5 +1,5 @@
 ﻿import { EventEmitter } from "@angular/core";
-import { DBADataTableButton } from "../types";
+import { DBADataTableButton } from "../types/types";
 
 export type CallbackGetDeletePromise<T> = (element: T) => Promise<void>;
 export type DbaMatTableCallbackButton<T> = (selectedList: T[]) => void;

@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpEventType } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
 import { SendMessageService } from './send-message.service';
-import { Model } from 'src/app/types';
-import { Message, ListMessage } from 'src/app/messages';
+import { Model } from 'src/app/types/types';
+import { ListMessage, Message } from 'src/app/messages/messages';
 
 
 @Injectable({

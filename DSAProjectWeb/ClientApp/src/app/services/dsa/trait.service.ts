@@ -1,6 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
-import { GetNewTraitMessage, GetTraitGetTraitChoisesMessage as GetTraitChoisesMessage, GetTraitMessage, SetTraitMessage } from 'src/app/messages';
-import { Charakter, Trait } from 'src/app/types';
+import { GetNewTraitMessage, GetTraitGetTraitChoisesMessage as GetTraitChoisesMessage, GetTraitMessage, SetTraitMessage } from 'src/app/messages/messages';
+import { Charakter, Trait } from 'src/app/types/types';
 import { DialogService } from '../base/dialog.service';
 import { Service } from '../base/service';
 import { WebCommunicationService } from '../base/web-communication.service';

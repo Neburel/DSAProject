@@ -19,5 +19,10 @@ namespace DSALib2.Classes.Charakter.View
         public TextView RequirementText { get; set; }
         public DeductionView DeductionSelected { get; set; }
         public List<DeductionView> DeductionList { get; set; }
+
+        public override string ToString()
+        {
+            return Name + " " + this.ID.ToString();
+        }
     }
 }

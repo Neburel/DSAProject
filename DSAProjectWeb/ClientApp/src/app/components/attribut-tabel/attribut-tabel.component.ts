@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AttributService } from 'src/app/services/dsa/attribut.service';
-import { Attribut, DSADataSource } from 'src/app/types';
+import { Attribut, DSADataSource } from 'src/app/types/types';
 import { CharakterService } from 'src/app/services/dsa/charakter.service';
 
 export interface PeriodicElement {

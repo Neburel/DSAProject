@@ -107,6 +107,18 @@ namespace DSAProject2Web.Server.Controllers
             return CreateResponse(repo.GetList());
         }
 
+        [Route("Delete")]
+        [HttpPost]
+        public string Delete([FromBody] CharakterIDRequest request)
+        {
+            var charakter = this.GetDSASQLCharakter(request);
+            charakter.Delete();
+
+            var repo = new SQLCharakterRepository(Context);
+
+            return CreateResponse(repo.GetList());
+        }
+
         [Route("Import")]
         [HttpPost]
         public string Import([FromBody] DataRequest<string> request)
@@ -119,6 +131,7 @@ namespace DSAProject2Web.Server.Controllers
 
             return CreateResponse(charakter);
         }
+        
         [Route("Export")]
         [HttpPost]
         public string Export([FromBody] CharakterDataRequest<t_Charakter> request)

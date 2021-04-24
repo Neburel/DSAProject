@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { GenericMatTableComponent } from 'src/app/components/generic-mat-table/generic-mat-table.component';
 import { CharakterService } from 'src/app/services/dsa/charakter.service';
 import { TalentService } from 'src/app/services/dsa/talent.service';
-import { GenericDataTableColumn, Language } from 'src/app/types';
+import { GenericDataTableColumn, Language } from 'src/app/types/types';
 import { AddDbaMatTableRecID } from 'src/app/util/utilGenericDataTable';
 
 const CURRENTPROBE = "CurrentProbe";
@@ -67,6 +67,7 @@ export class LanguageViewComponent implements OnInit, AfterContentInit {
     public LoadDataMain() {
         this.dataTableMain.isLoading = true;
         this.talentService.GetLanguageViewList(this.charakterService.CurrentCharakter).then(dataList => {
+            console.log(dataList);
             this.dataSourceMain.data = AddDbaMatTableRecID<Language>(dataList, (element) => {
                 return element;
             });

@@ -10,7 +10,7 @@ namespace DSALib2.Classes.Charakter.Values.Extended
         public int Value { get => Calculate(); }
         public string Name => DSALib2.Resources.ArtifactControl;
         public string ShortName { get => Name; }
-        public string InfoText => "MR + IN";
+        public string InfoText => "IN + MU + MR";
 
         private IAttributeRepository attributeRepository;
         private IResourcesRepository resourcesRepository;
@@ -24,9 +24,10 @@ namespace DSALib2.Classes.Charakter.Values.Extended
         }   
         protected int Calculate()
         {
-            var initiative = attributeRepository.GetMAX(Utils.CharakterAttribut.Intuition);
-            var mr          = resourcesRepository.GetMAX(artifactControl);
-            return initiative + mr;
+            var initiative      = attributeRepository.GetMAX(Utils.CharakterAttribut.Intuition);
+            var mut             = attributeRepository.GetMAX(Utils.CharakterAttribut.Mut);
+            var mr              = resourcesRepository.GetMAX(artifactControl);
+            return initiative + mut + mr;
         }
     }
 }

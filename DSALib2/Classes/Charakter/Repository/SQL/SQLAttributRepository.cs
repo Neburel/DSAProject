@@ -42,6 +42,10 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
         {
             repo.Set(attribut, value);    
         }
+        public void DeleteAll()
+        {
+            this.repo.DeleteAll();
+        }
 
         private class InnerSQLRepository : BaseRepository<t_Attribute>
         {
@@ -77,7 +81,15 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
                 }
                 context.SaveChanges();
             }
-            
+            public void DeleteAll()
+            {
+                var itemList = this.GetList();
+                foreach(var item in itemList)
+                {
+                    this.Delete(item);
+                }
+                this.Submit();
+            }
         }
     }
 }

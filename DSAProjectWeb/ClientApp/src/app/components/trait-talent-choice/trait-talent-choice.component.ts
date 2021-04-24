@@ -4,7 +4,7 @@ import { MatSelect } from '@angular/material/select';
 
 import { ReplaySubject, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
-import { Talent } from 'src/app/types';
+import { Talent } from 'src/app/types/types';
 
 @Component({
   selector: 'app-trait-talent-choice',

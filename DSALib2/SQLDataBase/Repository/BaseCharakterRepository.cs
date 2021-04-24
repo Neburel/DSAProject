@@ -19,6 +19,15 @@ namespace DSALib2.SQLDataBase.Repository
             }
             return tabel;
         }
-        protected abstract void CreateNewEntry();
+        public void DeleteAll()
+        {
+            var talentList = this.dbSet.Where(x => x.CharakterID == this.charakterID).ToList();
+            foreach (var item in talentList)
+            {
+                this.Delete(item);
+            }
+            this.Submit();
+        }
+        protected abstract TEntity CreateNewEntry();
     }
 }

@@ -70,6 +70,7 @@ namespace DSALib2.Classes.Charakter.Repository.General
                 ResourceList = resourceList,
                 ValueList = valueList,
                 TalentList = new List<TalentView>(),
+                CreationDate = System.DateTime.Now
             };
         }
         public abstract List<TraitView> GetViewList();

@@ -3,8 +3,14 @@
 
   <ul class="heroes">
     <li *ngFor="let charakter of CharakterList" (click)="onSelect(charakter)" style="word-wrap: inherit;">
-      <span class="badge">{{charakter.Id}}</span> {{charakter.Name}} Erstellt: {{charakter.Created | date:'mediumDate'}}
-      Letze Verwendung: {{charakter.LastUsed | date:'mediumDate'}}
+      <span class="badge">{{charakter.Id}}</span>
+      {{charakter.Name}} Erstellt: {{charakter.Created | date:'mediumDate'}} Letze Verwendung: {{charakter.LastUsed |
+      date:'mediumDate'}}
+
+      <button mat-mini-fab class="small-icon-button" style="margin-right: 2px" (click)="DeleteCharakter($event, charakter)">
+        <mat-icon>delete</mat-icon>
+      </button>
+
     </li>
     <li (click)="onSelect()">
       <span class="badge">-</span>Neu erstellen

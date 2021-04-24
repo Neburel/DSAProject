@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { ResourceService } from 'src/app/services/dsa/resource.service';
-import { Resource, DSADataSource } from 'src/app/types';
+import { Resource, DSADataSource } from 'src/app/types/types';
 import { AttributService } from 'src/app/services/dsa/attribut.service';
 import { CharakterService } from 'src/app/services/dsa/charakter.service';
 

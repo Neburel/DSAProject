@@ -8,6 +8,7 @@ namespace DSAProject2Web
     {
         public static void Main(string[] args)
         {
+            //electronize build /target win, ausführen in NPM
             CreateHostBuilder(args).Build().Run();
         }
 

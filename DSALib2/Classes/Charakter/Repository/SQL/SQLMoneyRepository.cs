@@ -38,11 +38,15 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
             this.repo.Update(current);
             repo.Submit();
         }
+        public void Delete()
+        {
+            repo.Delete();
+        }
         private class InnerSQLRepository : BaseCharakterRepository<T_Money>
         {
             public InnerSQLRepository(ApplicationContext context, int charakterID) : base(context, charakterID) { }
 
-            protected override void CreateNewEntry()
+            protected override T_Money CreateNewEntry()
             {
                 var tabel = new T_Money()
                 {
@@ -55,7 +59,13 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
                 };
                 this.Insert(tabel);
                 this.Submit();
-
+                return tabel;
+            }
+            public void Delete()
+            {
+                var value = this.Get();
+                base.Delete(value);
+                this.Submit();
             }
         }
 
