@@ -19,25 +19,25 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
             talentRepository = new InnerSQLTalentRepository(context, charakterID);
         }
         
-        protected override int GetTAW(ITalent talent)
+        public override int GetTAW(ITalent talent)
         {
             var sql = this.talentRepository.Get(talent);
             if (sql != null) return sql.TAW;
             else return 0;
         }
-        protected override int GetAT(AbstractTalentFighting talent)
+        public override int GetAT(AbstractTalentFighting talent)
         {
             var sql = this.talentRepository.Get(talent);
             if (sql != null) return sql.AT != null ? (int)sql.AT : 0;
             else return 0;
         }
-        protected override int GetPA(AbstractTalentFighting talent)
+        public override int GetPA(AbstractTalentFighting talent)
         {
             var sql = this.talentRepository.Get(talent);
             if (sql != null) return sql.PA != null ? (int)sql.PA : 0;
             else return 0;
         }
-        protected override int GetBL(AbstractTalentFighting talent)
+        public override int GetBL(AbstractTalentFighting talent)
         {
             var sql = this.talentRepository.Get(talent);
             if (sql != null) return sql.BL != null ? (int)sql.BL : 0;

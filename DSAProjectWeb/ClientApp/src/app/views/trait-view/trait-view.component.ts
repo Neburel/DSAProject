@@ -1,10 +1,11 @@
 ﻿import { Attribute, Component, Input } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { unwatchFile } from 'fs';
 import { CreateTraitDialogComponent } from 'src/app/dialogs/create-trait-dialog/create-trait-dialog.component';
 import { CharakterService } from 'src/app/services/dsa/charakter.service';
 import { TraitService } from 'src/app/services/dsa/trait.service';
-import { GenericDataTableColumn, Trait, TraitTypeEnum } from 'src/app/types/types';
+import { DBADataTableSelect, GenericDataTableColumn, Trait, TraitTypeEnum } from 'src/app/types/types';
 import { AddDbaMatTableRecID } from 'src/app/util/utilGenericDataTable';
 
 const TYPESTRING = "TypeString";
@@ -20,12 +21,16 @@ export class TraitViewComponent {
     @Input() vorteilView: boolean = false;
     @Input() nachteilView: boolean = false;
 
+    private currentFilter: TraitTypeEnum;
+
     public showButton: boolean = false;
     public tableName: string;
     public traitList: Trait[] = [];
     public dataSourceMain = new MatTableDataSource();
     public columnsdefMain: GenericDataTableColumn[];
     public attributData: Attribute[];
+    public matOptionList: DBADataTableSelect[] = [];
+
 
     /** traitView ctor */
     constructor(private charakterService: CharakterService, private traitService: TraitService, private dialog: MatDialog) {
@@ -33,6 +38,16 @@ export class TraitViewComponent {
     ngOnInit(): void {
         this.createTable();
         this.LoadDataMain();
+
+        for (const value in TraitTypeEnum) {
+            if (typeof TraitTypeEnum[value] !== "string") {
+                var item = new DBADataTableSelect();
+                item.label = value;
+                item.id = TraitTypeEnum[value];
+                this.matOptionList.push(item);
+            }
+        }
+        this.currentFilter = TraitTypeEnum.Keiner;
     }
 
     private createTable() {
@@ -54,19 +69,36 @@ export class TraitViewComponent {
             if (this.vorteilView) {
                 this.tableName = "Vorteil";
                 result = result.filter(x => x.Type == TraitTypeEnum.Vorteil);
+                this.matOptionList = [];
             }
             if (this.nachteilView) {
                 this.tableName = "Nachteil";
                 result = result.filter(x => x.Type == TraitTypeEnum.Nachteil);
+                this.matOptionList = [];
             }
 
             this.traitList = result;
-            this.dataSourceMain.data = AddDbaMatTableRecID<Trait>(this.traitList, (element) => {
-                element[TYPESTRING] = TraitTypeEnum[element.Type];
-                element[CREATIONTIMESTRING] = new Date(element.CreationDate).toLocaleDateString();
-                return element;
-            });
+            this.LoadDataMain2(result, this.currentFilter);
         })
+    }
+
+    private LoadDataMain2(dataList: Trait[], filter: TraitTypeEnum) {
+        if (filter == TraitTypeEnum.Keiner) {
+            var list = dataList;
+        }
+        else {
+            var list = dataList.filter(x => x.Type == filter);
+        }
+
+        console.log(list);
+        console.log(filter);
+
+        this.dataSourceMain.data = AddDbaMatTableRecID<Trait>(list, (element) => {
+            element[TYPESTRING] = TraitTypeEnum[element.Type];
+            element[CREATIONTIMESTRING] = new Date(element.CreationDate).toLocaleDateString();
+            return element;
+        });
+
     }
 
     public openDialog(event: Trait[]) {
@@ -92,5 +124,9 @@ export class TraitViewComponent {
         else {
             return this.traitService.GetNew(this.charakterService.CurrentCharakter);
         }
+    }
+
+    public SelectionChanged($event) {
+        this.LoadDataMain2(this.traitList, $event);
     }
 }

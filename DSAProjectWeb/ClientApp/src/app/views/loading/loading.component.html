@@ -26,9 +26,14 @@
     <li (click)="export()">
       <span class="badge">-</span>Export All
     </li>
+    <li (click)="talentImportFileChooser()">
+      <span class="badge">-</span>Talent Importer
+    </li>
   </ul>
 
 
 </div>
 
 <input #fileChooser style="display: none;" type="file" (change)="onImport($event.target.files)">
+<input #fileChooser style="display: none;" type="file"
+  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="talentImport($event)">

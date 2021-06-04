@@ -7,17 +7,7 @@
                         <h2>Stammdaten</h2>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-
-                <div class="flex-container" fxLayout="row">
-                    <div fxFlex="2 1">
-                        <mat-label>
-                            <h3>Talent Importer</h3>
-                        </mat-label>
-                    </div>
-                    <div fxFlex><button mat-mini-fab (click)="talentImportFileChooser()">
-                            <mat-icon>settings</mat-icon>
-                        </button></div>
-                </div>
+              
             </mat-expansion-panel>
         </mat-accordion>
     </div>
@@ -25,5 +15,3 @@
 
 
 
-<input #fileChooser style="display: none;" type="file"
-    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="talentImport($event)">

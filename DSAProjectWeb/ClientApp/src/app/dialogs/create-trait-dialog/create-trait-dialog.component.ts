@@ -212,6 +212,7 @@ export class CreateTraitDialogComponent {
 
         var trait = new Trait();
         trait.Name = this.nameControl.value;
+        trait.Description = this.descriptionControl.value;
         trait.Type = this.typeControl.value;
         trait.APGain = this.apGainControl.value;
         trait.APInvest = this.apInvestControl.value;
@@ -226,6 +227,7 @@ export class CreateTraitDialogComponent {
         trait.ValueList = this.Values;
         trait.ResourceList = this.Resource;
         trait.TalentList = this.TalentListTrait;
+        trait.CreationDate = this.createDateControl.value;
 
         if (this.data) {
             trait.ID = this.data.ID;

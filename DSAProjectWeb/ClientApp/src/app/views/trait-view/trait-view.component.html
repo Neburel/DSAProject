@@ -1,4 +1,4 @@
 ﻿<app-generic-mat-table [tableName]="tableName" [dataSource]="dataSourceMain" [columnsdef]="columnsdefMain"
     [exportButton]="showButton" (reload)=LoadDataMain() createButton=true editButton=true
-    (openDialog)=openDialog($event) [showSearch]="false">
+    (openDialog)=openDialog($event) [showSearch]="false" matOptionTitle="matOptionTitle" [matOptionList]="matOptionList" (headerSelectChanged)="SelectionChanged($event)">
 </app-generic-mat-table>

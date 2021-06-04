@@ -1,4 +1,5 @@
-﻿using DSALib2.Classes.Charakter.View;
+﻿using DSALib2.Classes.Charakter.Talente;
+using DSALib2.Classes.Charakter.View;
 using System;
 using System.Collections.Generic;
 
@@ -12,6 +13,11 @@ namespace DSALib2.Interfaces.Charakter.Repository
         List<ITalent> GetList<T>() where T : ITalent;
         List<TalentView> GetViewList<T>() where T : ITalent;
         List<LanguageView> GetViewList();
+
+        int GetTAW(ITalent talent);
+        int GetAT(AbstractTalentFighting talent);
+        int GetPA(AbstractTalentFighting talent);
+        int GetBL(AbstractTalentFighting talent);
 
         void SetbyView(TalentView view);
         void SetbyView(LanguageView view);

@@ -28,7 +28,7 @@ namespace DSALib2.Classes.Charakter.Repository.General
             this.familieList = familieList;
             this.charakter = charakter;
         }
-        abstract protected int GetTAW(ITalent talent);
+        abstract public int GetTAW(ITalent talent);
         abstract protected bool? GetMother(TalentSpeaking talent);
         protected int GetModTaW(ITalent talent)
         {       
@@ -102,9 +102,9 @@ namespace DSALib2.Classes.Charakter.Repository.General
             var value = charakter.Values.GetItemByType(typeof(BaseBlock));
             return this.charakter.Values.GetMAX(value) + this.GetBLMax(talent);
         }
-        abstract protected int GetAT(AbstractTalentFighting talent);
-        abstract protected int GetPA(AbstractTalentFighting talent);
-        abstract protected int GetBL(AbstractTalentFighting talent);
+        abstract public int GetAT(AbstractTalentFighting talent);
+        abstract public int GetPA(AbstractTalentFighting talent);
+        abstract public int GetBL(AbstractTalentFighting talent);
         protected int GetModAT(AbstractTalentFighting talent)
         {
             return this.charakter.Traits.GetAT(talent);

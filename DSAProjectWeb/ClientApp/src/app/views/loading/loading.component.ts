@@ -3,6 +3,7 @@ import { CharakterService } from 'src/app/services/dsa/charakter.service';
 import { Charakter } from 'src/app/types/types';
 import * as fileSaver from 'file-saver';
 import { Observable } from 'rxjs';
+import { TalentService } from 'src/app/services/dsa/talent.service';
 
 @Component({
   selector: 'app-loading',
@@ -12,7 +13,7 @@ import { Observable } from 'rxjs';
 /** loading component*/
 export class LoadingComponent implements OnInit {
   /** loading ctor */
-  constructor(private charakterService: CharakterService) { }
+  constructor(private charakterService: CharakterService, private talentService: TalentService) { }
   @ViewChild('fileChooser') FileChooser: ElementRef;
   @Output() Choosed: EventEmitter<Charakter> = new EventEmitter();
   public Loading: boolean = true;
@@ -77,6 +78,21 @@ export class LoadingComponent implements OnInit {
       this.CharakterList = result;
     })
 
+  }
+
+
+  public talentImportFileChooser() {
+    this.FileChooser.nativeElement.click();
+  }
+
+  public talentImport(event) {
+    var file = event.target.files[0] as File;
+    if (file == null) return;
+    this.FileChooser.nativeElement.value = '';
+
+    this.talentService.Import(file).then(result => {
+      console.log(result);
+    });
   }
 }
 

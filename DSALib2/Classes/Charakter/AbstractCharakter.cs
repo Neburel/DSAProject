@@ -177,7 +177,7 @@ namespace DSALib2.Classes.Charakter
                 }
             }
             #endregion
-            #region Talente Laden
+            #region Talente Laden            
             var talentViewList = new List<TalentView>();
             foreach (var item in jsonCharakter.TalentTAW)
             {
@@ -360,7 +360,7 @@ namespace DSALib2.Classes.Charakter
         {
             var descriptionView = Description.GetView();
             var attributViewList = Attribute.GetViewList();
-            var talentView = Talente.GetViewList<ITalent>();
+            var talentlist = Talente.GetList<ITalent>();
             var languageTalents = Talente.GetViewList();
             var traitViewList = Traits.GetViewList();
             var moneyView = Money.GetView();
@@ -396,27 +396,41 @@ namespace DSALib2.Classes.Charakter
             charakter.DeductionTalent = new Dictionary<Guid, Guid>();
             charakter.MotherLanguages = new Dictionary<Guid, bool>();
 
-            foreach (var item in talentView)
+            foreach (var item in talentlist)
             {
-                if (item.TAW > 0)
+                var view = this.talente.GetView(item.ID);
+                var taw = this.talente.GetTAW(item);
+
+                if(taw > 0)
                 {
-                    charakter.TalentTAW.Add(item.ID, item.TAW);
+                    charakter.TalentTAW.Add(item.ID, taw);
                 }
-                if (item.PA != null && item.PA > 0)
+
+                if (typeof(AbstractTalentFighting).IsAssignableFrom(item.GetType()))
                 {
-                    charakter.TalentPA.Add(item.ID, (int)item.PA);
+                    var talentFighting = (AbstractTalentFighting)item;
+                    var pa = this.talente.GetPA(talentFighting);
+                    var at = this.talente.GetAT(talentFighting);
+                    var bl = this.talente.GetBL(talentFighting);
+
+                    if (pa > 0)
+                    {
+                        charakter.TalentPA.Add(item.ID, pa);
+                    }
+                    if (at > 0)
+                    {
+                        charakter.TalentAT.Add(item.ID, at);
+                    }
+                    if (bl > 0)
+                    {
+                        charakter.TalentBL.Add(item.ID, bl);
+                    }
                 }
-                if (item.AT != null && item.AT > 0)
+
+
+                if (view.DeductionSelected != null)
                 {
-                    charakter.TalentAT.Add(item.ID, (int)item.AT);
-                }
-                if (item.BL != null && item.BL > 0)
-                {
-                    charakter.TalentBL.Add(item.ID, (int)item.BL);
-                }
-                if (item.DeductionSelected != null)
-                {
-                    charakter.DeductionTalent.Add(item.ID, item.DeductionSelected.ID);
+                    charakter.DeductionTalent.Add(item.ID, view.DeductionSelected.ID);
                 }
             }
 
@@ -426,7 +440,7 @@ namespace DSALib2.Classes.Charakter
             }
 
             charakter.TalentGuidsNames = new Dictionary<Guid, string>();
-            foreach (var item in talentView)
+            foreach (var item in talentlist)
             {
                 if (!charakter.TalentGuidsNames.ContainsKey(item.ID))
                 {
