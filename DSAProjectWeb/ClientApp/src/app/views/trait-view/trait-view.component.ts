@@ -1,7 +1,6 @@
 ﻿import { Attribute, Component, Input } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { unwatchFile } from 'fs';
 import { CreateTraitDialogComponent } from 'src/app/dialogs/create-trait-dialog/create-trait-dialog.component';
 import { CharakterService } from 'src/app/services/dsa/charakter.service';
 import { TraitService } from 'src/app/services/dsa/trait.service';
@@ -66,6 +65,7 @@ export class TraitViewComponent {
 
     public LoadDataMain() {
         this.traitService.GetList(this.charakterService.CurrentCharakter).then(result => {
+            console.log(result);
             if (this.vorteilView) {
                 this.tableName = "Vorteil";
                 result = result.filter(x => x.Type == TraitTypeEnum.Vorteil);
@@ -89,10 +89,6 @@ export class TraitViewComponent {
         else {
             var list = dataList.filter(x => x.Type == filter);
         }
-
-        console.log(list);
-        console.log(filter);
-
         this.dataSourceMain.data = AddDbaMatTableRecID<Trait>(list, (element) => {
             element[TYPESTRING] = TraitTypeEnum[element.Type];
             element[CREATIONTIMESTRING] = new Date(element.CreationDate).toLocaleDateString();
@@ -128,5 +124,12 @@ export class TraitViewComponent {
 
     public SelectionChanged($event) {
         this.LoadDataMain2(this.traitList, $event);
+    }
+
+    public deleteClicked(trait: Trait[]){
+        console.log(trait);
+        this.traitService.Delete(this.charakterService.CurrentCharakter, trait[0]).then(() =>{
+            this.LoadDataMain()
+        });
     }
 }

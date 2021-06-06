@@ -23,7 +23,6 @@ export class AdventureTabelComponent implements OnInit {
     private Load() {
         this.apService.Get(this.charakterService.CurrentCharakter).then(result => {
             this.AP = result;
-            console.log(result);
         })
     }
     public OpenDialog() {

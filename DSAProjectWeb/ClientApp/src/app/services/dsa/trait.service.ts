@@ -1,5 +1,5 @@
 ﻿import { Injectable } from '@angular/core';
-import { GetNewTraitMessage, GetTraitGetTraitChoisesMessage as GetTraitChoisesMessage, GetTraitMessage, SetTraitMessage } from 'src/app/messages/messages';
+import { DeleteTraitMessage, GetNewTraitMessage, GetTraitMessage, SetTraitMessage } from 'src/app/messages/messages';
 import { Charakter, Trait } from 'src/app/types/types';
 import { DialogService } from '../base/dialog.service';
 import { Service } from '../base/service';
@@ -29,6 +29,13 @@ export class TraitService extends Service {
 
     public Set(charakter: Charakter, data: Trait): Promise<void> {
         var message = new SetTraitMessage();
+        message.CharakterID = charakter.Id;
+        message.Data = data;
+        return this.sendMessage(message);
+    }
+
+    public Delete(charakter: Charakter, data: Trait): Promise<void>{
+        var message = new DeleteTraitMessage();
         message.CharakterID = charakter.Id;
         message.Data = data;
         return this.sendMessage(message);

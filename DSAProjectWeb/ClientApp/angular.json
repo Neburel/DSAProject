@@ -24,8 +24,7 @@
             ],
             "styles": [
               "src/styles/custom-theme.scss",
-              "src/styles/styles.scss",
-              "src/styles/variables.scss"
+              "src/styles/styles.scss"
             ],
             "scripts": [],
             "aot": true

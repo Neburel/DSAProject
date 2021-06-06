@@ -85,8 +85,14 @@ namespace DSALib2.Classes.Charakter.Repository.SQL
         }
         public override void SetbyView(LanguageView view)
         {
-            this.talentRepository.SetTalent(view.IDSprache, view.TawSprache, null, null, null, null, view.Mother);
-            this.talentRepository.SetTalent(view.IDSchrift, view.TawSchrift, null, null, null, null, null);
+            var talentSchrift = this.Get(view.IDSchrift);
+            var talentSprache = this.Get(view.IDSprache);
+
+            var tawSchrift  = view.TawSchrift - this.GetModTaW(talentSchrift);
+            var tawSprache  = view.TawSprache - this.GetModTaW(talentSprache);
+
+            this.talentRepository.SetTalent(view.IDSprache, tawSprache, null, null, null, null, view.Mother);
+            this.talentRepository.SetTalent(view.IDSchrift, tawSchrift, null, null, null, null, null);
         }
         public void DeleteAll()
         {

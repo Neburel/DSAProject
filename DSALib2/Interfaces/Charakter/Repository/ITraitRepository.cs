@@ -21,5 +21,6 @@ namespace DSALib2.Interfaces.Charakter.Repository
         public List<TraitView> GetViewList();
 
         public void SetByView(TraitView view);
+        public void DeleteByView(TraitView view);
     }
 }

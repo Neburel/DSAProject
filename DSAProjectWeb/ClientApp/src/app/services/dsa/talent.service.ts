@@ -61,8 +61,6 @@ export class TalentService extends Service {
         message.CharakterID = charakter.Id;
         message.Data = talent;
 
-        console.log(message);
-
         return this.sendMessage(message);
     }
 

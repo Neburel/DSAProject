@@ -40,5 +40,14 @@ namespace DSAProjectWeb.Server.Controllers
             charakter.Traits.SetByView(request.Data);
             return CreateResponse(charakter.Traits.GetViewList());
         }
+
+        [Route("Delete")]
+        [HttpPost]
+        public string DeleteTrait([FromBody] CharakterDataRequest<TraitView> request)
+        {
+            var charakter = GetDSASQLCharakter(request);
+            charakter.Traits.DeleteByView(request.Data);
+            return CreateResponse();
+        }
     }
 }

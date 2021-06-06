@@ -76,6 +76,7 @@ namespace DSALib2.Classes.Charakter.Repository.General
         public abstract List<TraitView> GetViewList();
         
         public abstract void SetByView(TraitView view);
+        public abstract void DeleteByView(TraitView view);
 
         protected string GenerateLongDescription(TraitView trait)
         {

@@ -1,0 +1,7 @@
+@import "./mcgpalette";
+
+$app-primary: mat-palette($md-mcgpalette0);
+$app-accent: mat-palette($md-mcgpalette0);
+$theme: mat-light-theme($app-primary, $app-accent);
+$highlight: mat-palette($md-mcgpalette0);
+$app-warn: mat-palette($mat-red);

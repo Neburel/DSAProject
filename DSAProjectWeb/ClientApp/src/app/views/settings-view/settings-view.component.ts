@@ -25,7 +25,6 @@ export class SettingsViewComponent {
         this.FileChooser.nativeElement.value = '';
 
         this.talentService.Import(file).then(result =>{
-            console.log(result);
         });
     }
 }

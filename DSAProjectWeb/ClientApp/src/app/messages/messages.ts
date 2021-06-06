@@ -1,5 +1,5 @@
 import { BehaviorSubject, Observable } from "rxjs";
-import { Charakter, Attribut, Value, AP, Language, Description, Money, Model } from "../types/types";
+import { Charakter, Attribut, Value, AP, Language, Description, Money, Model, Trait } from "../types/types";
 
 export * from './talentmessages';
 export * from './baseMessages';
@@ -88,6 +88,11 @@ export class GetTraitGetTraitChoisesMessage extends ListMessage<any>{
 }
 export class SetTraitMessage extends DataMessage<any>{
   public Uri: string = 'Trait/Set';
+  public CharakterID: Number;
+}
+
+export class DeleteTraitMessage extends DataMessage<Trait>{
+  public Uri: string = 'Trait/Delete';
   public CharakterID: Number;
 }
 

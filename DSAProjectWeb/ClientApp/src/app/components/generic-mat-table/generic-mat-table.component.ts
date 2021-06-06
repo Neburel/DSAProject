@@ -142,8 +142,6 @@ export class GenericMatTableComponent implements OnInit, AfterContentInit, After
         if (this.fullscreen) {
             this.renderer.setStyle(this.dataTable['_elementRef'].nativeElement, 'height', 'calc(100vh - 250px)');
         }
-
-        console.log(this.showSearch);
     }
 
     ngAfterContentInit() {
@@ -299,11 +297,7 @@ export class GenericMatTableComponent implements OnInit, AfterContentInit, After
     }
 
     public deleteAction(selected) {
-        this.dialogService.showOkCancelDialog("Test", "Test").subscribe(result => {
-            if (result) {
-                this.deleteClicked.emit(selected)
-            }
-        })
+        this.deleteClicked.emit(selected)
     }
 
     private export() {

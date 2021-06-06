@@ -4,7 +4,7 @@
 <div *ngIf="!loading && !charakter">
   <app-loading (Choosed)="charakterChosed($event)"></app-loading>
 </div>
-<div *ngIf="!loading && charakter">
+<div *ngIf="!loading && charakter" mat-app-background>
 
   <mat-toolbar color="primary">
     <mat-toolbar-row>
@@ -72,7 +72,6 @@
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-      <!-- <div *ngIf="login" style="height: 88vh;"> -->
       <div style="min-height: 88vh;">
         <router-outlet></router-outlet>
       </div>

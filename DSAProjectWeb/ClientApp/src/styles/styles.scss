@@ -31,7 +31,7 @@ body{
   position: relative;
   width: 50%;
   overflow: hidden;
-  background: mat-color($primary, default);
+  background: mat-color($app-primary, default);
 }
 
 .square-box:before {

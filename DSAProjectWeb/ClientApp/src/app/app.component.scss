@@ -1,9 +1,24 @@
-.menu-spacer {
-    flex: 1 1 auto;
-  } 
+.mat-sidenav-container {
+  height: 100%;
+}
 
-  .mat-expansion-panel-header{
-    padding: 0px;
-    padding-right: 24px;
-  }
+.mat-sidenav {
+  width: 320px;
+}
 
+.card-wrapper {
+width: calc(100% - 48px);
+max-width: 460px;
+margin: 24px auto;
+
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+
+text-decoration: none;
+}
+
+.mat-card {
+width: 100%;
+}

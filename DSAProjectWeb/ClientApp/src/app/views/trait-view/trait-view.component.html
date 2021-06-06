@@ -1,4 +1,5 @@
 ﻿<app-generic-mat-table [tableName]="tableName" [dataSource]="dataSourceMain" [columnsdef]="columnsdefMain"
-    [exportButton]="showButton" (reload)=LoadDataMain() createButton=true editButton=true
-    (openDialog)=openDialog($event) [showSearch]="false" matOptionTitle="matOptionTitle" [matOptionList]="matOptionList" (headerSelectChanged)="SelectionChanged($event)">
+    [exportButton]="showButton" (reload)=LoadDataMain() createButton=true editButton=true deleteButton=true
+    (openDialog)=openDialog($event) [showSearch]="false" matOptionTitle="matOptionTitle" [matOptionList]="matOptionList"
+    (headerSelectChanged)="SelectionChanged($event)" (deleteClicked)="deleteClicked($event)">
 </app-generic-mat-table>

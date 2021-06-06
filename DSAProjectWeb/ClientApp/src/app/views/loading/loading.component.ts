@@ -91,7 +91,6 @@ export class LoadingComponent implements OnInit {
     this.FileChooser.nativeElement.value = '';
 
     this.talentService.Import(file).then(result => {
-      console.log(result);
     });
   }
 }

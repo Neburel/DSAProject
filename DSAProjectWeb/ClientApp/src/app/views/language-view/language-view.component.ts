@@ -67,7 +67,6 @@ export class LanguageViewComponent implements OnInit, AfterContentInit {
     public LoadDataMain() {
         this.dataTableMain.isLoading = true;
         this.talentService.GetLanguageViewList(this.charakterService.CurrentCharakter).then(dataList => {
-            console.log(dataList);
             this.dataSourceMain.data = AddDbaMatTableRecID<Language>(dataList, (element) => {
                 return element;
             });
@@ -81,7 +80,6 @@ export class LanguageViewComponent implements OnInit, AfterContentInit {
     }
     public probeInput(value: number) {
         this.dataTableMain.dataSource.data.forEach((element: Language) => {
-            console.log(element.IsTitle);
 
             if (!element.IsTitle) {
                 var probeWriting = Number(element.ProbeSchrift) - value;

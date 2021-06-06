@@ -1,4 +1,4 @@
-﻿@import '../../../styles/variables.scss';
+﻿@import "./../../../styles/_variables";
 
 .m8 {
   margin: 8px;
@@ -43,8 +43,8 @@
     font-family: "Courier New", Courier, monospace;
     line-height: 14px;
     content: "+";
-    background-color: mat-color($primary); 
-}
+    background-color: mat-color($app-primary);
+  }
 }
 
 .dbaMatTableHeader {
@@ -74,14 +74,12 @@
   align-items: center;
   padding: 0 24px;
 }
-.filterHeaderMatFormField{
+.filterHeaderMatFormField {
   min-width: 300px;
 }
 .filterSelectHeader {
   min-width: 260px;
   align-items: center;
-}
-.mat-table{  
 }
 
 .mat-header-row {
@@ -92,7 +90,7 @@
 }
 
 .mat-row.hovered {
-  background: mat-color($secondary);
+  background: mat-color($app-accent);
 }
 
 .mat-row.highlighted {
@@ -103,32 +101,29 @@
   margin-right: 10px;
 }
 
-
-
 .mat-header-row,
 .mat-row {
   min-height: 35px;
-  z-index:1;
+  z-index: 1;
 }
-.progress-bar{
-  height:5px;
+.progress-bar {
+  height: 5px;
 }
-.mat-header-cell{
+.mat-header-cell {
   font-weight: bolder;
   font-size: 14px;
 }
 
-.mat-cell, .mat-header-cell{
+.mat-cell,
+.mat-header-cell {
   padding: 0px 10px 0px 10px;
 }
 
-
-::ng-deep .select{
-  background-color:mat-color($primary);
-  
+::ng-deep .select {
+  background-color: mat-color($app-primary);
 }
-::ng-deep .page{
-  background-color:mat-color($secondary);  
+::ng-deep .page {
+  background-color: mat-color($app-accent);
 }
 
 table {
@@ -138,25 +133,26 @@ table {
   border: 1px solid #ddd;
 }
 
-th, td {
+th,
+td {
   text-align: left;
   padding-right: 4px;
 }
 
-.contain{
-  object-fit:contain;
+.contain {
+  object-fit: contain;
 }
 
-.mat-cell{
+.mat-cell {
   border-left: 2px solid rgba(0, 0, 0, 0.12);
-  }
+}
 
-  ::ng-deep .mat-select-panel.example-long-panel { 
-    max-height: 500px;
-  }
+::ng-deep .mat-select-panel.example-long-panel {
+  max-height: 500px;
+}
 
-  .title{
-    border-left: 2px solid rgba(0, 0, 0, 0);
-    font-size: larger;
-    font-style: italic;
-  }
+.title {
+  border-left: 2px solid rgba(0, 0, 0, 0);
+  font-size: larger;
+  font-style: italic;
+}
